@@ -1,7 +1,7 @@
 package dao;
 import java.util.List;
 import org.springframework.dao.DataAccessException;
-import com.example.coursemos.domain.Points;
+import domain.Points;
 
 public interface PointsDao {
 	List<Points> getPointListByUserId(int userId) throws DataAccessException;

@@ -3,7 +3,7 @@ package dao;
 import java.util.List;
 import org.springframework.dao.DataAccessException;
 
-import com.example.coursemos.domain.UserCoupon;
+import domain.UserCoupon;
 
 public interface UserCouponDao {
 	

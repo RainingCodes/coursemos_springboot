@@ -4,7 +4,7 @@ import java.util.List;
 
 import org.springframework.dao.DataAccessException;
 
-import com.example.coursemos.domain.Report;
+import domain.Report;
 
 public interface ReportDao {
 	List<Report> getReportByReportId(int reportId) throws DataAccessException;
