@@ -1,20 +1,22 @@
+</body>
+</html>
 <!DOCTYPE html>
 <html>
 <meta charset="UTF-8">
 <head>
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
-  <title>제휴 상세보기</title>
+  <title>코스 신고</title>
 </head>
 <body>
 <div class="container">
-  <h1 align="center">제휴 상세보기</h1><br>
+  <h1 align="center">코스 신고</h1><br>
   <h4 align="center">{{userName}}님의 <b>{{companyName}}</b>에 관한 정보입니다.</h4>
     <table class="table table-striped">
       <thead>
         <th v-for = "item in header">{{item}}</th>
       </thead>
       <tbody>
-        <tr v-for="line in userdata">
+        <tr v-for="line in ranking">
           <td v-for="item in line"><span v-html="item"></span></td>
         </tr>
       </tbody>
@@ -25,12 +27,9 @@
   new Vue({
     el : '.container', 
       data : {
-        header: ["쿠폰 등록 수","발행 수","이용 수", "가게 등록 해지", "제휴 만료 기간"] ,
-        userdata:[
-          ['2','100','33','<a href="">해지하기</a>','2022-12-21']
-        ],
-        userName : "솜솜",
-        companyName : "솜솜이의 커피숍",
+        report: ["스팸홍보/도배글입니다.", "허위 정보를 담고있습니다.", "악의적 비하 내용을 담고있습니다.", "불쾌한 표현이 있습니다.", "불법 정보를 포함하고 있습니다."],
+        userName : "솜솜이",
+        content : "이 코스 정말 좋아요 추천합니다.",
       }
     })
 </script>
