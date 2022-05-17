@@ -1,0 +1,44 @@
+@charset "UTF-8";
+	table {
+		width : 100%;
+	}
+	.left {
+		width : 30%;
+	}
+	.logo {
+		width : 40%;
+	}
+	.right {
+		width : 30%;
+	}
+	td {
+		text-align:center;
+	}
+	.logo input{
+		width : 30%;
+		object-fit: contain;
+	}
+.tooltip {
+  position: relative;
+  display: inline-block;
+  border-bottom: 1px dotted black;
+}
+
+.tooltip .tooltiptext {
+  visibility: hidden;
+  background-color: black;
+  color: #fff;
+  text-align: center;
+  border-radius: 6px;
+  
+  /* Position the tooltip */
+  position: absolute;
+  z-index: 1;
+  top: 100%;
+  left: 50%;
+  margin-left: -60px;
+}
+
+.tooltip:hover .tooltiptext {
+  visibility: hidden;
+}
