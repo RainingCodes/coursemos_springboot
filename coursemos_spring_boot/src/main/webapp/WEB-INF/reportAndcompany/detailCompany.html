@@ -2,74 +2,37 @@
 <html>
 <meta charset="UTF-8">
 <head>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
   <title>제휴 상세보기</title>
 </head>
-<style>
-
-  * {
-    margin: auto;
-  }
-
-  .contents {
-    text-align: left;
-    font-size : 20px;
-    border:5px solid #eaeaea;
-    border-collapse : collapse;
-  }
-
-  .result {
-    text-align : center;
-  }
-
-  .item img {
-    margin : 20px;
-  }
-
-  caption {
-    margin : 10px;
-  }
-
-  .menu {
-    text-align : center;
-    background-color : #eaeaea;
-  }
-
-  th, td {
-    padding: 10px;
-  }
-
-
-</style>
 <body>
-<div>
-    <h1 align="center">제휴 상세보기</h1>
-   	<br>
-   	
-      <table class="contents" border="1">
-      	<caption>솜솜님의 가게 1에 관한 정보입니다.</caption>
-        <tr>
-  			<td width = "200px" class = "menu">쿠폰 등록 수</td>
-  			<td width = "200px">2</td>
-  		</tr>
-        <tr>
-  			<td width = "200px" class = "menu">쿠폰 발행 수</td>
-  			<td width = "200px">100개</td>
-  		</tr>
-        <tr>
-  			<td width = "200px" class = "menu">쿠폰 이용 수</td>
-  			<td width = "200px">33개</td>
-  		</tr>
-  		<tr>
-  			<td width = "200px" class = "menu">가게 등록 해지</td>
-  			<td width = "200px"><a href="">해지하기</a></td>
-  		</tr>
-  		<tr>
-  			<td width = "200px" class = "menu">제휴 만료 기간</td>
-  			<td width = "200px">2022-12-21</td>
-  		</tr>
-      </table>
-
-  </div>
-
-</body>
+<div class="container">
+  <h1 align="center">제휴 상세보기</h1><br>
+  <h4 align="center">{{userName}}님의 <b>{{companyName}}</b>에 관한 정보입니다.</h4>
+    <table class="table table-striped">
+      <thead>
+        <th v-for = "item in header">{{item}}</th>
+      </thead>
+      <tbody>
+        <tr v-for="line in ranking">
+          <td v-for="item in line"><span v-html="item"></span></td>
+        </tr>
+      </tbody>
+    </table>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+<script>
+  new Vue({
+    el : '.container', 
+      data : {
+        header: ["쿠폰 등록 수","발행 수","이용 수", "가게 등록 해지", "제휴 만료 기간"] ,
+        ranking:[
+          ['2','100','33','<a href="">해지하기</a>','2022-12-21']
+        ],
+        userName : "솜솜",
+        companyName : "솜솜이의 커피숍",
+      }
+    })
+</script>
 </html>
+

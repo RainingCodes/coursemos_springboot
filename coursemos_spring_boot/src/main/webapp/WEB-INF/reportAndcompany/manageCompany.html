@@ -2,74 +2,36 @@
 <html>
 <meta charset="UTF-8">
 <head>
-  <title>제휴 관리</title>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
+  <title>나의 제휴업체 관리</title>
 </head>
-<style>
-
-  * {
-    margin: auto;
-  }
-
-  .contents {
-    text-align: left;
-    font-size : 20px;
-    border:5px solid #eaeaea;
-    border-collapse : collapse;
-  }
-
-  .result {
-    text-align : center;
-  }
-
-  .item img {
-    margin : 20px;
-  }
-
-  caption {
-    margin : 10px;
-  }
-
-  .menu {
-    text-align : center;
-    background-color : #eaeaea;
-  }
-
-  th, td {
-    padding: 10px;
-  }
-
-
-</style>
 <body>
-<div>
-    <h1 align="center">제휴 관리</h1>
-   	<br>
-   	
-      <table class="contents" border="1">
-      	<caption>솜솜님이 등록한 제휴 정보입니다.</caption>
-        <tr>
-  			<td width = "200px" class = "menu">등록한 가게</td>
-  			<td width = "200px" class = "menu">쿠폰 관리</td>
-  			<td width = "200px" class = "menu">상세 관리</td>
-  		</tr>
-        <tr>
-  			<td>가게1</td>
-  			<td><a href="">이동하기</a></td>
-  			<td><a href="">이동하기</a></td>
-  		</tr>
-        <tr>
-  			<td>가게2</td>
-  			<td><a href="">이동하기</a></td>
-  			<td><a href="">이동하기</a></td>
-  		</tr>
-  		<tr>
-  			<td>가게3</td>
-  			<td><a href="">이동하기</a></td>
-  			<td><a href="">이동하기</a></td>
-  		</tr>
-      </table>
-
-  </div>
-
-</body>
+<div class="container">
+  <h1 align="center">제휴 관리</h1>
+    <table class="table table-striped">
+      <thead>
+        <th v-for = "item in header">{{item}}</th>
+      </thead>
+      <tbody>
+        <tr v-for="line in ranking">
+          <td v-for="item in line"><span v-html="item"></span></td>
+        </tr>
+      </tbody>
+    </table>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+<script>
+  new Vue({
+    el : '.container', 
+      data : {
+        header: ["제휴 업체","제휴 관리","쿠폰 관리", "제휴 만료"] ,
+        ranking:[
+          ['솜솜이의 커피숍','<a href="">이동하기</a>','<a href="">이동하기</a>', '2022-12-21'],
+          ['솜솜이의 방탈출가게','<a href="">이동하기</a>','<a href="">이동하기</a>', '2022-12-20'],
+          ['솜솜이의 전시관','<a href="">이동하기</a>','<a href="">이동하기</a>','2022-12-22']
+        ]
+      }
+    })
+</script>
 </html>
+
