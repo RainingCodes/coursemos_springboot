@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html>
+<meta charset="UTF-8">
+<head>
+  <title>사업자 등록</title>
+</head>
+<style>
+
+  * {
+    margin: auto;
+  }
+
+  .contents {
+    text-align: left;
+    font-size : 20px; 
+    border:5px solid #eaeaea;
+    border-collapse : collapse;
+  }
+
+  .result {
+    text-align : center;
+  }
+
+  .item img {
+    margin : 20px;
+  }
+
+  caption {
+    font-weight : bold;
+    margin : 20px;
+  }
+
+  .menu {
+    text-align : center;
+  }
+
+  td {
+    padding: 20px;
+  }
+</style>
+<body>
+<div>
+      <table class="contents" border="1">
+        <caption size="20px" align="center"><h2>사업자 등록</h2></caption>
+        <tr>
+  			<td width = "200px" class = "menu">가게명</td>
+  			<td width = "300px">
+  				<input type="text" size = "20">
+  			</td>
+  		</tr>
+        <tr>
+  			<td class = "menu">업종</td>
+  			<td>
+  				<input type="text" size = "10">
+  				<input type="button" value="찾기">
+  			</td>
+  		</tr>
+        <tr>
+  			<td class = "menu">대표자명</td>
+  			<td>
+  				<input type="text" size = "20">
+  			</td>
+  		</tr>
+  		<tr>
+  			<td class = "menu">사업자 등록번호</td>
+  			<td>
+  				<input type="text" size = "20">
+  			</td>
+  		</tr>
+  		<tr>
+  			<td class = "menu">전화번호</td>
+  			<td>
+  				<select name = "phone">
+  					<option value="1" selected>010</option>
+  					<option value="2">011</option>
+  					<option value="3">017</option>
+  					<option value="4">070</option>
+  					<option value="5">080</option>
+  				</select> -
+  				<input type="text" maxlength = "4" size = "4"> -
+  				<input type="text" maxlength = "4" size = "4">
+  			</td>
+  		</tr>
+  		<tr>
+  			<td class = "menu">주소</td>
+        	<td>
+  				<input type="text" size = "10">
+  				<input type="button" value="우편번호 찾기">
+           		<br>
+            	<input type="text" size = "30">
+  			</td>
+  		</tr>
+  		<tr>
+  			<td colspan = "2" class = "menu">
+  				<input type="button"  style="padding: 20px;" value="접수하기">
+  				<span>&nbsp;&nbsp;</span>
+  				<input type="reset"  style="padding: 20px;" value="취소하기">
+  			</td>
+  		</tr>
+      </table>
+
+  </div>
+
+</body>
+</html>
