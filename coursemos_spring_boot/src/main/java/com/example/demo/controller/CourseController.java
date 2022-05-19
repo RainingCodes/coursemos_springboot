@@ -9,14 +9,19 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 @Controller
-
 public class CourseController {
-	@RequestMapping("/writeCourse")
-	public ModelAndView index() {
-		ModelAndView mav = new ModelAndView("writeCourse");
+	@RequestMapping("course/writeCourse")
+	public ModelAndView writeCourse() {
+		ModelAndView mav = new ModelAndView("/course/writeCourse");
 		return mav;
 	}
-		
+
+	
+	@RequestMapping("course/view")
+	public ModelAndView viewCourse() {
+		ModelAndView mav = new ModelAndView("/course/view");
+		return mav;
+	}
 //	
 //	@GetMapping
 //	public String writeCourseForm() {
