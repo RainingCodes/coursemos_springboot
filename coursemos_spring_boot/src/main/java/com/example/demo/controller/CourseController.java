@@ -15,13 +15,13 @@ public class CourseController {
 		ModelAndView mav = new ModelAndView("/course/writeCourse");
 		return mav;
 	}
+
 	
 	@RequestMapping("course/view")
 	public ModelAndView viewCourse() {
 		ModelAndView mav = new ModelAndView("/course/view");
 		return mav;
 	}
-	
 //	
 //	@GetMapping
 //	public String writeCourseForm() {
