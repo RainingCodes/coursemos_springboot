@@ -21,7 +21,7 @@ public class CourseController {
 		ModelAndView mav = new ModelAndView("/course/view");
 		return mav;
 	}
-		
+	
 //	
 //	@GetMapping
 //	public String writeCourseForm() {

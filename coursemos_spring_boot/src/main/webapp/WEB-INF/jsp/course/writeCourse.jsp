@@ -8,9 +8,9 @@
 <meta name="author" content="" />
 <title>코스 작성</title>
 <!-- Favicon-->
-<link rel="icon" type="image/x-icon" href="../../assets/favicon.ico" />
+<link rel="icon" type="image/x-icon" href="../assets/favicon.ico" />
 <!-- Core theme CSS (includes Bootstrap)-->
-<link href="../../css/styles.css" rel="stylesheet" />
+<link href="../css/styles.css" rel="stylesheet" />
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor" crossorigin="anonymous">
 </head>
 <body>
@@ -24,7 +24,7 @@
                     </ul>
                 </div>
                 <div align="center">
-                	<button class="navbar-brand" type="button" style="border:none;"><img src="../../img/logo.png" style="width:100px;"></button>
+                	<button class="navbar-brand" type="button" style="border:none;"><img src="../img/logo.png" style="width:100px;"></button>
 	                <!-- <a class="navbar-brand" href="#!">코스모스</a> -->
                 </div>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span></button>
@@ -41,7 +41,7 @@
         <!-- Page content-->
         <div class="container mt-5">
             <div class="row">
-            	<form action="" method="post">
+            	<form action="view" method="post">
                 <div class="col-lg-8">
                     <!-- Post content-->
                     <article>
@@ -51,9 +51,9 @@
                             <!-- Post title-->
 							<div class="card-body">
 								<div class="input-group">
-									<input class="form-control" type="text" v-model="inputTitle" placeholder="코스 이름을 입력하세요" required>
+									<input class="form-control" type="text" v-model="inputTitle" placeholder="코스 이름을 입력하세요" >
 								</div>
-								<div v-if="!titleValid">유효하지 않은 제목입니다.</div>
+								<!-- <div v-if="!titleValid">유효하지 않은 제목입니다.</div> -->
 							</div>
 						</header>
 					
@@ -63,7 +63,7 @@
 					<br><br><br>
 					<h5>코스를 대표하는 이미지를 업로드하세요</h5>
 					<input type="file" id="real-input" class="image_inputType_file"
-						accept="../img/*" required>
+						accept="../img/*">
 					<br><br><br>
 					<div class="upload"></div>
 					<h5>코스의 분위기를 선택하세요</h5>
