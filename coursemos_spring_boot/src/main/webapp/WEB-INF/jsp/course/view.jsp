@@ -50,18 +50,20 @@
 		</div>
 	</nav>
 	<!-- Page content-->
+	<form action="" method="post">
 	<div class="container mt-5">
 		<div class="row">
 			<div class="col-lg-8">
 				<!-- Post content-->
-				<article>
+				<article style="margin-left:25%;">
 					<!-- Post header-->
 					<header class="mb-4">
 						<h1 style="text-align: center;">코스 상세페이지</h1>
-						<p></p>
-						<!-- Post title-->
-						<h4 style="font-weight:bold;">서울 랜드마크 투어</h4>
 					</header>
+					<div>
+					<p></p>
+					<!-- Post title-->
+					<h4 style="font-weight:bold;">서울 랜드마크 투어</h4><br>
 					<!-- Preview image figure-->
 					<h5 style="font-weight:bold;">코스 대표 이미지</h5>
 					<img class="img-fluid rounded" id="preview-image" src="../img/seoul.png" /> <br>
@@ -112,6 +114,14 @@
 						</tr>
 					</table>
 					<br>
+					</div>
+					<div align="center">
+					<button type="submit" style="width:20%; height:40px; border:none; border-radius:5px; text-align: center; background-color:#0d6efd; color: white;">SNS 공유하기</button>
+					<button type="submit" style="width:20%; height:40px; border:none; border-radius:5px; text-align: center; background-color:#0d6efd; color: white;">좋아요</button>
+					<button type="submit" style="width:20%; height:40px; border:none; border-radius:5px; text-align: center; background-color:#0d6efd; color: white;">스크랩</button>
+					<!-- 추후 비활성화/활성화 조건 적용하기 -->
+					<button type="submit" style="width:20%; height:40px; border:none; border-radius:5px; text-align: center; background-color:#ced4da;">쿠폰 발급</button>
+					</div>
 				</article>
 				<br>
 				<br>
@@ -160,6 +170,7 @@
 			</div>
 		</div>
 	</div>
+	</form>
 	<!-- Footer-->
 	<footer class="py-5 bg-dark">
 		<div class="container">

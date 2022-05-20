@@ -10,16 +10,24 @@ import org.springframework.web.servlet.ModelAndView;
 
 @Controller
 public class CourseController {
-	@RequestMapping("course/writeCourse")
+	
+	ModelAndView mav;
+	
+	@RequestMapping("course/registerForm")
 	public ModelAndView writeCourse() {
-		ModelAndView mav = new ModelAndView("/course/writeCourse");
+		mav = new ModelAndView("/course/registerForm");
 		return mav;
 	}
 
-	
 	@RequestMapping("course/view")
 	public ModelAndView viewCourse() {
-		ModelAndView mav = new ModelAndView("/course/view");
+		mav = new ModelAndView("/course/view");
+		return mav;
+	}
+	
+	@RequestMapping("course/list")
+	public ModelAndView viewCourseList() {
+		mav = new ModelAndView("/course/list");
 		return mav;
 	}
 //	
