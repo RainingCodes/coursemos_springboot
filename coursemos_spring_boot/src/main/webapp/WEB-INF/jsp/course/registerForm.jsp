@@ -39,8 +39,8 @@
             </div>
         </nav>
         <!-- Page content-->
-        <div class="container mt-5">
-            <div class="row">
+        <div class="container mt-5" >
+            <div class="row" style="margin-left:25%;">
             	<form action="view" method="post">
                 <div class="col-lg-8">
                     <!-- Post content-->
@@ -51,7 +51,7 @@
                             <!-- Post title-->
 							<div class="card-body">
 								<div class="input-group">
-									<input class="form-control" type="text" v-model="inputTitle" placeholder="코스 이름을 입력하세요" >
+									<input class="form-control" type="text" v-model="inputTitle" placeholder="코스 이름을 입력하세요" required>
 								</div>
 								<!-- <div v-if="!titleValid">유효하지 않은 제목입니다.</div> -->
 							</div>
@@ -63,30 +63,30 @@
 					<br><br><br>
 					<h5>코스를 대표하는 이미지를 업로드하세요</h5>
 					<input type="file" id="real-input" class="image_inputType_file"
-						accept="../img/*">
+						accept="../img/*" required>
 					<br><br><br>
 					<div class="upload"></div>
 					<h5>코스의 분위기를 선택하세요</h5>
 					<div class="selectTaste" style="display:inline-block; width: 300px; line-height: 45px;">
-						<input type="checkbox" name="category" v-for="item in taste"><span v-html="item"></span>
-						<!-- <input type="checkbox" name="category" value=""> 활동적인
-						<input type="checkbox" name="category" value=""> 잔잔한
-						<input type="checkbox" name="category" value=""> 힐링
-						<input type="checkbox" name="category" value=""> 자연적인
-						<input type="checkbox" name="category" value=""> 공식적인
-						<input type="checkbox" name="category" value=""> 체험적
-						<input type="checkbox" name="category" value=""> 즐거운
-						<input type="checkbox" name="category" value=""> 복고풍 -->
+						<!-- <input type="checkbox" name="category" v-for="item in taste"><span v-html="item"></span> -->
+						<input type="checkbox" name="category" value="active"> 활동적인
+						<input type="checkbox" name="category" value="calm"> 잔잔한
+						<input type="checkbox" name="category" value="healing"> 힐링
+						<input type="checkbox" name="category" value="nature"> 자연적인
+						<input type="checkbox" name="category" value="official"> 공식적인
+						<input type="checkbox" name="category" value="experience"> 체험적
+						<input type="checkbox" name="category" value="entertaining"> 즐거운
+						<input type="checkbox" name="category" value="retro"> 복고풍
 					</div>
 					<br><br><br>
 					<!-- 코스 추가 -->
                   		<h5>코스 경로에 추가할 장소를 입력하세요 
 						<input type="button" name="add" value="+" id="add_btn" style="border:none;border-radius:5px; text-align: center; margin-left:45%;height: 30px;"></h5>
-						<input class="form-control" type="text" placeholder="코스 명칭" style="width:90%"><br>
-						<div style="float:left; width:70%;"><input type="text" class="form-control" id="sample5_address" placeholder="상세 주소"></div>
+						<input class="form-control" type="text" placeholder="코스 명칭" style="width:90%" required><br>
+						<div style="float:left; width:70%;"><input type="text" class="form-control" id="sample5_address" placeholder="상세 주소" required></div>
 						<div style="float:right; margin-right: 90px;"><input type="button" style="border:none; border-radius:5px; text-align: center; width: 120px; height: 33px;" onclick="sample5_execDaumPostcode()" value="주소 검색"></div><br><br>
-						<input class="form-control" type="text" placeholder="소요 비용(원)" style="width:90%"><br>
-						<input class="form-control" type="text" placeholder="소요 시간(분)" style="width:90%"><br>
+						<input class="form-control" type="text" placeholder="소요 비용(원)" style="width:90%" required><br>
+						<input class="form-control" type="text" placeholder="소요 시간(분)" style="width:90%" required><br>
                        	<!-- 지도 -->
                        	<div id="map" style="width:300px;height:300px;margin-top:10px;display:none"></div>
 
@@ -96,7 +96,7 @@
 						<br><br><br>						
                         <!-- Post content-->
                         <h5>코스에 대한 설명을 입력하세요</h5>
-                        <input class="form-control" type="text" style="height:300px"><br>
+                        <input class="form-control" type="text" style="height:300px" required><br>
                         <button type="submit" style="width:100%; height:40px; border:none; border-radius:5px; text-align: center;">등록하기</button>
                     </article>
                     <br><br><br>
@@ -114,32 +114,11 @@
                             </div>
                         </div>
                     </div> -->
-                    <!-- Categories widget-->
-                    <div class="card mb-4">
-                        <div class="card-header">제휴 업체 둘러보기</div>
-                        <div class="card-body">
-                            <div class="row">
-                                <div class="col-sm-6">
-                                    <ul class="list-unstyled mb-0">
-                                        <li><a href="#!">솜솜월드</a></li>
-                                        <li><a href="#!">향수 공방 'scent'</a></li>
-                                        <li><a href="#!">고양이카페 '양갱'</a></li>
-                                    </ul>
-                                </div>
-                                <div class="col-sm-6">
-                                    <ul class="list-unstyled mb-0">
-                                        <li><a href="#!">솜솜 시네마</a></li>
-                                        <li><a href="#!">목화 카페</a></li>
-                                    </ul>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <!-- Side widget-->
-                    <div class="card mb-4">
+					<!-- 위젯-->
+                    <!-- <div class="card mb-4">
                         <div class="card-header">Side Widget</div>
                         <div class="card-body">You can put anything you want inside of these side widgets. They are easy to use, and feature the Bootstrap 5 card component!</div>
-                    </div>
+                    </div> -->
                 </div>
             </div>
         </div>
