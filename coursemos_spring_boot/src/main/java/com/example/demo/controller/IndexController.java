@@ -12,4 +12,9 @@ public class IndexController {
 		ModelAndView mav = new ModelAndView("index"); 
 		return mav;
 	}
+	@RequestMapping("/login")
+	public ModelAndView login() {
+		ModelAndView mav = new ModelAndView("login"); 
+		return mav;
+	}
 }
