@@ -116,11 +116,13 @@
 					<br>
 					</div>
 					<div align="center">
-					<button type="submit" style="width:20%; height:40px; border:none; border-radius:5px; text-align: center; background-color:#0d6efd; color: white;">SNS 공유하기</button>
-					<button type="submit" style="width:20%; height:40px; border:none; border-radius:5px; text-align: center; background-color:#0d6efd; color: white;">좋아요</button>
-					<button type="submit" style="width:20%; height:40px; border:none; border-radius:5px; text-align: center; background-color:#0d6efd; color: white;">스크랩</button>
+					<button type="submit" style="width:15%; height:40px; border:none; border-radius:5px; text-align: center; background-color:#0d6efd; color: white;">SNS 공유</button>
+					<button type="submit" style="width:15%; height:40px; border:none; border-radius:5px; text-align: center; background-color:#0d6efd; color: white;">좋아요</button>
+					<img style="width:20px; height:20px;" src="../../img/like.png" />
+					<button type="submit" style="width:15%; height:40px; border:none; border-radius:5px; text-align: center; background-color:#0d6efd; color: white;">스크랩</button>
 					<!-- 추후 비활성화/활성화 조건 적용하기 -->
-					<button type="submit" style="width:20%; height:40px; border:none; border-radius:5px; text-align: center; background-color:#ced4da;">쿠폰 발급</button>
+					<button type="submit" style="width:15%; height:40px; border:none; border-radius:5px; text-align: center; background-color:#ced4da;">쿠폰 발급</button>
+					<button type="submit" style="width:15%; height:40px; border:none; border-radius:5px; text-align: center; background-color:#ced4da;">삭제</button>
 					</div>
 				</article>
 				<br>
