@@ -6,11 +6,11 @@
 <meta charset="UTF-8">
 <head>
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
-  <title>리뷰 신고</title>
+  <title>코스 신고</title>
 </head>
 <body>
 <div class="container">
-  <h1 align="center">리뷰 신고</h1><br>
+  <h1 align="center">코스 신고</h1><br>
     <table class="table">
       <thead>
       	<tr>
@@ -27,7 +27,7 @@
 	    </tr>
 	    <tr>
 	        <td>
-	        	<form:radiobuttons path="reportCategory" items="${ReportCodes}" itemLabel="label" itemValue="code"></form:radiobuttons>
+	        	<form:radiobuttons path="reportCategory" items="${ReportCodes}" itemLabel="label" itemValue="code"/>
 	        </td>
 	    </tr>
 	    <tr>

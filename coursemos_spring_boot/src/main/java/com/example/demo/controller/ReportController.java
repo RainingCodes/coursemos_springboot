@@ -12,30 +12,25 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
-import domain.Report;
+import domain.Report; // 이것도 주소바꾸거나 scan포함시켜야함 잊지말기
+import lombok.*;
 
 @Controller
 public class ReportController {
-	
-	private static final String MEMBER_REGISTRATION_FORM = "member/performRegistrationForm";
-	
+	@Getter @Setter @AllArgsConstructor
 	public class ReportCodes {
 		public String code;
 		public String label;
-		
-		protected ReportCodes(String code, String label) {
-			code = this.code;
-			label = this.label;
-		}
 	}
+	
 	@ModelAttribute("ReportCodes")
 	protected List<ReportCodes> referenceData1() throws Exception {
 		List<ReportCodes> ReportCodes = new ArrayList<ReportCodes>();
-		ReportCodes.add(new ReportCodes("1","스팸홍보/도배글입니다."));
-		ReportCodes.add(new ReportCodes("2", "허위 정보를 담고있습니다."));
-		ReportCodes.add(new ReportCodes("3","악의적 비하 내용을 담고있습니다."));
-		ReportCodes.add(new ReportCodes("4","불쾌한 표현이 있습니다."));
-		ReportCodes.add(new ReportCodes("5","불법 정보를 포함하고 있습니다."));
+		ReportCodes.add(new ReportCodes("spam","스팸홍보/도배글입니다."));
+		ReportCodes.add(new ReportCodes("lie", "허위 정보를 담고있습니다."));
+		ReportCodes.add(new ReportCodes("mali","악의적 비하 내용을 담고있습니다."));
+		ReportCodes.add(new ReportCodes("unpl","불쾌한 표현이 있습니다."));
+		ReportCodes.add(new ReportCodes("ille","불법 정보를 포함하고 있습니다."));
 		return ReportCodes;
 	}
 	
@@ -57,8 +52,12 @@ public class ReportController {
 	@RequestMapping(value = "/report/course/{courseId}", method = RequestMethod.GET)
 	public String courseReportForm(@PathVariable String courseId, Model model) {
 		model.addAttribute("courseId", courseId);
+		
 		//서비스로 게시글 제목, 글쓴이 가져오는 것 나중에 구현해서 모델에 연결해서 리턴
-		return MEMBER_REGISTRATION_FORM;
+		model.addAttribute("reportTitle", "test");
+		model.addAttribute("reportUserName", "test2");
+		
+		return "report/courseReport";
 	}
 	
 	@RequestMapping(value = "/report/course/{courseId}", method = RequestMethod.POST)
@@ -70,14 +69,17 @@ public class ReportController {
 		return "course/{courseId}";
 	}
 	
-	@RequestMapping(value = "/report/course/{reviewId}", method = RequestMethod.GET)
-	public String reviewReportForm(@PathVariable String courseId, Model model) {
-		model.addAttribute("courseId", courseId);
+	@RequestMapping(value = "/report/review/{reviewId}", method = RequestMethod.GET)
+	public String reviewReportForm(@PathVariable String reviewId, Model model) {
+		model.addAttribute("reviewId", reviewId);
 		//서비스로 게시글 제목, 글쓴이 가져오는 것 나중에 구현해서 모델에 연결해서 리턴
-		return MEMBER_REGISTRATION_FORM;
+		model.addAttribute("reportTitle", "test");
+		model.addAttribute("reportUserName", "test2");
+		
+		return "report/reviewReport";
 	}
 	
-	@RequestMapping(value = "/report/course/{reviewId}", method = RequestMethod.POST)
+	@RequestMapping(value = "/report/review/{reviewId}", method = RequestMethod.POST)
 	public String reviewReportRegister(
 			@ModelAttribute("Report") Report courseReport) {
 		
