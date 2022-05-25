@@ -4,7 +4,7 @@ import java.util.List;
 
 import org.springframework.dao.DataAccessException;
 
-import domain.Company;
+import com.example.demo.domain.Company;
 
 public interface CompanyDao {
 	List<Company> getCompanyByUserId(int userId) throws DataAccessException;

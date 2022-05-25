@@ -1,7 +1,8 @@
 package dao;
 import java.util.List;
 import org.springframework.dao.DataAccessException;
-import domain.Review;
+
+import com.example.demo.domain.Review;
 
 public interface ReviewDao {
 	Review getReviewByReviewId(int reviewId) throws DataAccessException;

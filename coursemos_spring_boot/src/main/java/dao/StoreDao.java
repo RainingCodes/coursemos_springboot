@@ -1,6 +1,6 @@
 package dao;
 
-import domain.Store;
+import com.example.demo.domain.Store;
 
 public interface StoreDao {
 	

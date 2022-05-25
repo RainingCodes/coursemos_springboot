@@ -2,11 +2,11 @@ package dao;
 import java.util.List;
 import org.springframework.dao.DataAccessException;
 
-import domain.Review;
-import domain.Course;
-import domain.Report;
-import domain.Company;
-import domain.Coupon;
+import com.example.demo.domain.Company;
+import com.example.demo.domain.Coupon;
+import com.example.demo.domain.Course;
+import com.example.demo.domain.Report;
+import com.example.demo.domain.Review;
 
 public interface MyDataDao {
 	List<Review> getReviewListByUserId(int userId) throws DataAccessException;

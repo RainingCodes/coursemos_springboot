@@ -12,7 +12,8 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
-import domain.Report; // 이것도 주소바꾸거나 scan포함시켜야함 잊지말기
+import com.example.demo.domain.Report;
+
 import lombok.*;
 
 @Controller

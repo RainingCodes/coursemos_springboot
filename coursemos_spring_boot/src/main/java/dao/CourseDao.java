@@ -4,7 +4,7 @@ import java.util.List;
 
 import org.springframework.dao.DataAccessException;
 
-import domain.Course;
+import com.example.demo.domain.Course;
 
 public interface CourseDao {
 

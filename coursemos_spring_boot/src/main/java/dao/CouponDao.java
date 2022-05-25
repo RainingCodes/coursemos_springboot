@@ -2,7 +2,8 @@ package dao;
 
 import java.util.List;
 import org.springframework.dao.DataAccessException;
-import domain.Coupon;
+
+import com.example.demo.domain.Coupon;
 
 public interface CouponDao {
 	List<Coupon> getCouponByCompanyId(int companyId) throws DataAccessException;

@@ -1,7 +1,7 @@
 package dao;
-import domain.User;
-
 import org.springframework.dao.DataAccessException;
+
+import com.example.demo.domain.User;
 public interface UserDao {
 
 	  User getUser(int userId) throws DataAccessException;
