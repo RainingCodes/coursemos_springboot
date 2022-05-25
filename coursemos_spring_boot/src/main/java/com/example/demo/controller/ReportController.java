@@ -62,12 +62,12 @@ public class ReportController {
 	}
 	
 	@RequestMapping(value = "/report/course/{courseId}", method = RequestMethod.POST)
-	public String courseReportRegister(
+	public String courseReportRegister(@PathVariable String courseId,
 			@ModelAttribute("Report") Report courseReport) {
 		
 		//서비스 구현해서 report값 return하고 원래 course게시글로 이동
 		
-		return "course/{courseId}";
+		return "course/"+courseId;
 	}
 	
 	@RequestMapping(value = "/report/review/{reviewId}", method = RequestMethod.GET)
@@ -81,11 +81,11 @@ public class ReportController {
 	}
 	
 	@RequestMapping(value = "/report/review/{reviewId}", method = RequestMethod.POST)
-	public String reviewReportRegister(
+	public String reviewReportRegister(@PathVariable String reviewId,
 			@ModelAttribute("Report") Report courseReport) {
 		
 		//서비스 구현해서 report값 return하고 원래 review게시글로 이동
 		
-		return "review/{reviewId}"; // 이 주소가 맞나?...
+		return "review/"+reviewId; // 이 주소가 맞나?...
 	}
 }
