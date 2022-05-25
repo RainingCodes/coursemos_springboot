@@ -11301,9 +11301,9 @@ textarea.form-control-lg {
 }
 
 #sidebar-wrapper .list-group {
-  width: 15rem;
+	width : 30px;
 }
 
 #page-content-wrapper {
-  min-width: 100vw;
+  width : 30px;
 }
