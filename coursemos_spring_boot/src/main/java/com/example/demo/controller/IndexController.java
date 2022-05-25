@@ -17,4 +17,19 @@ public class IndexController {
 		ModelAndView mav = new ModelAndView("login"); 
 		return mav;
 	}
+	@RequestMapping("/mock")
+	public ModelAndView mock() {
+		ModelAndView mav = new ModelAndView("mock");
+		return mav;
+	}
+	@RequestMapping("/mypage")
+	public ModelAndView mypage() {
+		ModelAndView mav = new ModelAndView("mypage");
+		return mav;
+	}
+	@RequestMapping("/points")
+	public ModelAndView points() {
+		ModelAndView mav = new ModelAndView("points");
+		return mav;
+	}
 }
