@@ -1,7 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 
-<%@ include file="IncludeTop.jsp"  %>
+<%@ include file="header/IncludeTop.jsp"  %>
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800;900&display=swap');
 
@@ -79,6 +79,7 @@ function kakaoLogin() {
                     	<div class="loginBtn"><a href="javascript:kakaoLogin()"><img alt="카카오 로그인" src="../img/kakao_login.png" width=200 height=50></a></div>
                     	<div class="loginBtn"><a href="/"><img alt="네이버 로그인" src="../img/naver_login.png" width=200 height=50></a></div>
                     	<div class="loginBtn"><a href="/"><img alt="구글 로그인" src="../img/google_login.png" width=200 height=50></a></div>
+                    	<div class="loginBtn"><a href="/mock">임시로그인</a>
                 </div>
             </div>
         </div>
