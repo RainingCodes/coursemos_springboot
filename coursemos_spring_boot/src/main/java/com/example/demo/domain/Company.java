@@ -86,6 +86,9 @@ public class Company {
 		this.accept = accept;
 		this.storeId= storeId;
 	}
+	public Company() {
+		// TODO Auto-generated constructor stub
+	}
 	
 	
 }
