@@ -4,17 +4,13 @@
 <head>
 <meta charset="UTF-8">
 <title>코스모스</title>
-<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/vu	e/dist/vue.js"></script>
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
 <style scoped>
-	
-	.searchNMap {
-		padding : 30px;
-	}
     #map {
+    	margin: 0 25%;
         border: 1px #a8a8a8 solid;
-        float : left;
-        width : 700px;
+        width : 800px;
         height : 700px;
     }
     input {
@@ -36,7 +32,6 @@
 		object-fit: contain;
 	}
 	search, search2, #plus {
-		
 		margin : 10px;
 	}
 	.tooltip {
