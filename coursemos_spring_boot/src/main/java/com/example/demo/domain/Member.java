@@ -15,9 +15,9 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
-@Getter
-@NoArgsConstructor
-@Entity
+//@Getter
+//@NoArgsConstructor
+//@Entity
 @SuppressWarnings("serial")
 //public class Member extends BaseEntity implements Serializable {
 public class Member  implements Serializable {
