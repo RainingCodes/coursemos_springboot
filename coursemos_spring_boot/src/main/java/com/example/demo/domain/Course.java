@@ -75,5 +75,8 @@ public class Course implements Serializable {
 		this.storeId = storeId;
 		this.taste = taste;
 	}
+	public Course() {
+		// TODO Auto-generated constructor stub
+	}
 
 }
