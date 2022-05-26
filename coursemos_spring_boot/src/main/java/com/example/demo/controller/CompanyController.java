@@ -40,24 +40,25 @@ public class CompanyController {
 		//유저 세션유지 해야할듯???
 		int memberId = 0;
 		
-		return "company/list/"+memberId;
+		return "/company/list";
 	}
 	
-	@RequestMapping("/company/list/{userId}")
-	public ModelAndView companyList(@PathVariable String userId) {
+	@RequestMapping("/company/list")
+	public ModelAndView companyList() {
 		ModelAndView mav = new ModelAndView("company/manageCompany");
 		
 		//userId 기준으로 회사 정보 받아와서 넣고 넘기기
-		mav.addObject("greeting", "test");
+		mav.addObject("companyList", "test");
+		
 		return mav;
 	}
 	
-	@RequestMapping("/company/{userId}/{companyId}")
-	public ModelAndView companyDetail() {	
-		ModelAndView mav = new ModelAndView("company/detailComany");
+	@RequestMapping("/company/list/detail")
+	public ModelAndView companyDetail(@PathVariable String companyId) {	
+		ModelAndView mav = new ModelAndView("company/detailCompany");
 		
 		//companyId로 회사 상세정보 받아와서 넣고 넘기기
-		mav.addObject("greeting", "test");
+		mav.addObject("company", "test");
 		return mav;
 	}
 }
