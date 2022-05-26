@@ -81,18 +81,72 @@
 					<br><br><br>
 					<!-- 코스 추가 -->
                   		<h5>코스 경로에 추가할 장소를 입력하세요 
-						<input type="button" name="add" value="+" id="add_btn" style="border:none;border-radius:5px; text-align: center; margin-left:45%;height: 30px;"></h5>
+						<input type="button" name="add" onclick="addPlace()" value="+" id="add_btn" style="border:none;border-radius:5px; text-align: center; margin-left:45%;height: 30px;"></h5>
 						<input class="form-control" type="text" placeholder="코스 명칭" style="width:90%" required><br>
-						<div style="float:left; width:70%;"><input type="text" class="form-control" id="sample5_address" placeholder="상세 주소" required></div>
-						<div style="float:right; margin-right: 90px;"><input type="button" style="border:none; border-radius:5px; text-align: center; width: 120px; height: 33px;" onclick="sample5_execDaumPostcode()" value="주소 검색"></div><br><br>
+						<div style="float:left; width:70%;">
+							<input type="text" class="form-control" id="keyword" placeholder="상세 주소" required>
+						</div>
+						<div style="float:right; margin-right: 75px;"><input type="button" style="border:none; border-radius:5px; text-align: center; width: 100px; height: 33px;" value="주소 검색"></div><br><br>
 						<input class="form-control" type="text" placeholder="소요 비용(원)" style="width:90%" required><br>
 						<input class="form-control" type="text" placeholder="소요 시간(분)" style="width:90%" required><br>
-                       	<!-- 지도 -->
-                       	<div id="map" style="width:300px;height:300px;margin-top:10px;display:none"></div>
+                   
+                   <!-- 지도 -->
+                       	<div id="map" style="width:600px;height:300px;margin-top:10px;"></div>
+						<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=c17b5563968f2fffd356919521833ce2&libraries=services"></script>
+						<script>
+// 마커를 클릭하면 장소명을 표출할 인포윈도우 입니다
+var infowindow = new kakao.maps.InfoWindow({zIndex:1});
 
+var mapContainer = document.getElementById('map'), // 지도를 표시할 div 
+    mapOption = {
+        center: new kakao.maps.LatLng(37.566826, 126.9786567), // 지도의 중심좌표
+        level: 3 // 지도의 확대 레벨
+    };  
 
-					<!-- 	<img class="img-fluid rounded" id="preview-image"
-						src="https://dummyimage.com/900x400/ced4da/6c757d.jpg" /> -->
+// 지도를 생성합니다    
+var map = new kakao.maps.Map(mapContainer, mapOption); 
+
+// 장소 검색 객체를 생성합니다
+var ps = new kakao.maps.services.Places(); 
+
+// 키워드로 장소를 검색합니다
+ps.keywordSearch('동덕여대', placesSearchCB); 
+
+// 키워드 검색 완료 시 호출되는 콜백함수 입니다
+function placesSearchCB (data, status, pagination) {
+    if (status === kakao.maps.services.Status.OK) {
+
+        // 검색된 장소 위치를 기준으로 지도 범위를 재설정하기위해
+        // LatLngBounds 객체에 좌표를 추가합니다
+        var bounds = new kakao.maps.LatLngBounds();
+
+        for (var i=0; i<data.length; i++) {
+            displayMarker(data[i]);    
+            bounds.extend(new kakao.maps.LatLng(data[i].y, data[i].x));
+        }       
+
+        // 검색된 장소 위치를 기준으로 지도 범위를 재설정합니다
+        map.setBounds(bounds);
+    } 
+}
+
+// 지도에 마커를 표시하는 함수입니다
+function displayMarker(place) {
+    
+    // 마커를 생성하고 지도에 표시합니다
+    var marker = new kakao.maps.Marker({
+        map: map,
+        position: new kakao.maps.LatLng(place.y, place.x) 
+    });
+
+    // 마커에 클릭이벤트를 등록합니다
+    kakao.maps.event.addListener(marker, 'click', function() {
+        // 마커를 클릭하면 장소명이 인포윈도우에 표출됩니다
+        infowindow.setContent('<div style="padding:5px;font-size:12px;">' + place.place_name + '</div>');
+        infowindow.open(map, marker);
+    });
+}
+</script>
 						<br><br><br>						
                         <!-- Post content-->
                         <h5>코스에 대한 설명을 입력하세요</h5>
@@ -124,14 +178,12 @@
         </div>
         <!-- Footer-->
         <footer class="py-5 bg-dark">
-            <div class="container"><p class="m-0 text-center text-white">Copyright &copy; Your Website 2022</p></div>
+            <div class="container"><p class="m-0 text-center text-white">Copyright &copy; Coursemos 2022</p></div>
         </footer>
         <!-- Bootstrap core JS-->
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
         <!-- Core theme JS-->
         <script src="js/scripts.js"></script>
-        <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
-		<script	src="//dapi.kakao.com/v2/maps/sdk.js?appkey=76e55c5ff78afa2dcf5a29a283774395&libraries=services"></script>
 		<script>
 	    /* new Vue({
 	    	el: '.selectTaste',
@@ -139,7 +191,7 @@
 	    		taste: ['활동적인', '잔잔한', '힐링', '자연적인', '공식적인', '체험적', '즐거운', '복고풍']
 	    	}
 	    }) */
-		
+	   
 	    	export default {
  			data() {
    				return {
@@ -154,53 +206,7 @@
 			    }
 			 }
 			}
-	    
-			var mapContainer = document.getElementById('map'), // 지도를 표시할 div
-      			mapOption = {
-          			center: new daum.maps.LatLng(37.537187, 127.005476), // 지도의 중심좌표
-          			level: 5 // 지도의 확대 레벨
-      			};
-
-		    //지도를 미리 생성
-		    var map = new daum.maps.Map(mapContainer, mapOption);
-		    //주소-좌표 변환 객체를 생성
-		    var geocoder = new daum.maps.services.Geocoder();
-		    //마커를 미리 생성
-		    var marker = new daum.maps.Marker({
-		        position: new daum.maps.LatLng(37.537187, 127.005476),
-		        map: map
-		    });
-
-
-		    function sample5_execDaumPostcode() {
-		        new daum.Postcode({
-		            oncomplete: function(data) {
-		                var addr = data.address; // 최종 주소 변수
-		
-		                // 주소 정보를 해당 필드에 넣는다.
-		                document.getElementById("sample5_address").value = addr;
-		                // 주소로 상세 정보를 검색
-		                geocoder.addressSearch(data.address, function(results, status) {
-		                    // 정상적으로 검색이 완료됐으면
-		                    if (status === daum.maps.services.Status.OK) {
-		
-		                        var result = results[0]; //첫번째 결과의 값을 활용
-		
-		                        // 해당 주소에 대한 좌표를 받아서
-		                        var coords = new daum.maps.LatLng(result.y, result.x);
-		                        // 지도를 보여준다.
-		                        mapContainer.style.display = "block";
-		                        map.relayout();
-		                        // 지도 중심을 변경한다.
-		                        map.setCenter(coords);
-		                        // 마커를 결과값으로 받은 위치로 옮긴다.
-		                        marker.setPosition(coords)
-		                    }
-		                });
-		            }
-		        }).open();
-		    }
-	</script>
+	    </script>
 	<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.5/dist/umd/popper.min.js" integrity="sha384-Xe+8cL9oJa6tN/veChSP7q+mnSPaj5Bcu9mPX5F5xIGE0DVittaqT5lorf0EI7Vk" crossorigin="anonymous"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/js/bootstrap.min.js" integrity="sha384-kjU+l4N0Yf4ZOJErLsIcvOU2qSb74wXpOhqTvwVx3OElZRweTnQ6d31fXEoRD1Jy" crossorigin="anonymous"></script>
 </body>
