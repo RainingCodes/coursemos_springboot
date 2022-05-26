@@ -38,9 +38,9 @@ public class CompanyController {
 		//DB 등록
 		//등록하면 userid값 받아서제휴 등록 리스트창으로
 		//유저 세션유지 해야할듯???
-		int userId = 0;
+		int memberId = 0;
 		
-		return "company/list/"+userId;
+		return "company/list/"+memberId;
 	}
 	
 	@RequestMapping("/company/list/{userId}")
