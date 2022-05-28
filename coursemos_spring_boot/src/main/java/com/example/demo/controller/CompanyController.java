@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.example.demo.domain.Company;
@@ -36,9 +37,8 @@ public class CompanyController {
 	public String companyRegister(Model model) {
 		
 		//DB 등록
-		//등록하면 userid값 받아서제휴 등록 리스트창으로
+		//등록하면 제휴 등록 리스트창으로
 		//유저 세션유지 해야할듯???
-		int memberId = 0;
 		
 		return "/company/list";
 	}
@@ -54,11 +54,21 @@ public class CompanyController {
 	}
 	
 	@RequestMapping("/company/list/detail")
-	public ModelAndView companyDetail(@PathVariable String companyId) {	
+	public ModelAndView companyDetail(@RequestParam("companyId") String companyId) {	
 		ModelAndView mav = new ModelAndView("company/detailCompany");
 		
 		//companyId로 회사 상세정보 받아와서 넣고 넘기기
 		mav.addObject("company", "test");
 		return mav;
 	}
+	
+	@RequestMapping("/company/list/detail/stop")
+	public String companyStopConnect(@RequestParam("companyId") String companyId) {	
+		
+		//db 연동해서 값 바꾸고 리턴
+		
+		return "/company/list/detail";
+	}
+	
+	
 }
