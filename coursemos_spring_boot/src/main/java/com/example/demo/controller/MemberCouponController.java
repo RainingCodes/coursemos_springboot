@@ -7,6 +7,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.example.demo.domain.MemberCoupon;
+
 public class MemberCouponController {
 	
 	
@@ -21,6 +23,22 @@ public class MemberCouponController {
 		//3. 기간 만료인지 확인(use 반영)
 		
 		mav.addObject("mcList", mcList);
+		return mav;
+	}
+	
+	@RequestMapping("/company/list/coupon/detail/use")
+	public String useMemberCoupon(@RequestParam("memberCouponId") String memberCouponId) {	
+		// db 처리 후 원래 페이지로
+		return "/company/list/coupon/detail";
+	}
+	
+	@RequestMapping("/user/coupon")
+	public ModelAndView MymemberCouponList(@RequestParam("memberId") String memberId) {	
+		ModelAndView mav = new ModelAndView("coupon/detailCoupon");
+		
+		List<MemberCoupon> memberCouponList = new ArrayList<MemberCoupon>();
+			
+		mav.addObject("memberCouponList", memberCouponList);
 		return mav;
 	}
 }
