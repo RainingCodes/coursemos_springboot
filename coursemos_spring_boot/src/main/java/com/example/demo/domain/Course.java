@@ -17,7 +17,9 @@ public class Course implements Serializable {
 	private int likes;
 	private Date writtenDate;
 	
-	
+	public Course() {
+		
+	}
 	
 	public Course(int courseId, String courseName, String courseContents, String[] coordinates, int travelTime,
 			int memberId, String taste, String photo, int likes, Date writtenDate) {
