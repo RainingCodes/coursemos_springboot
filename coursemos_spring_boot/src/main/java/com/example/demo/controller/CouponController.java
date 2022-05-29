@@ -62,6 +62,13 @@ public class CouponController {
 		return "/company/list/coupon";
 	}
 
-	
+	@RequestMapping("/company/list/coupon/stop")
+	public String stopProvideCoupon(@RequestParam("couponId") String couponId) {	
+		ModelAndView mav = new ModelAndView("coupon/manageCoupon");
+		
+		//db에서 지우고 쿠폰리스트로 리턴
+		
+		return "/company/list/coupon";
+	}
 	
 }

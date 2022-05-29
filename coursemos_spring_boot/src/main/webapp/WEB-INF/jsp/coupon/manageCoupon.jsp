@@ -22,6 +22,7 @@
 		<th>쿠폰 내용</th>
 		<th>쿠폰 발급기간</th>
 		<th>발급 후 이용 기간</th>
+		<th>갯수 제한</th>
 		<th>발급 중단</th>
 		<th>사용 관리</th>
 	</tr>
@@ -33,6 +34,11 @@
 		<td>${coupon.period}</td>
 		<td>${coupon.day}</td>
 		<td>${coupon.limit}</td>
+		<td>
+        	<a href='<c:url value="/company/list/coupon/stop">
+          	<c:param name="couponId" value="${coupon.couponId}"/></c:url>'>
+          	<b>중단하기</b></a>
+     	</td>
 		<td>
         	<a href='<c:url value="/company/list/coupon/detail">
           	<c:param name="couponId" value="${coupon.couponId}"/></c:url>'>
