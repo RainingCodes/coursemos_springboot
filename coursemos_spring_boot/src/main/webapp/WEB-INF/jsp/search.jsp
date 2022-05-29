@@ -93,7 +93,7 @@
           <div class="accordion accordion-flush" id="accordionFlushExample">
            <div class="accordion-item">
               <h2 class="accordion-header" id="flush-headingOne">
-                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseOne" aria-expanded="false" aria-controls="flush-collapseOne">
+                <button class="accordion-button collapsed" type="button" onclick="displayCourse('${cate.coordinates[0]}', '${cate.coordinates[1]}', '${cate.coordinates[2]}')" data-bs-toggle="collapse" data-bs-target="#flush-collapseOne" aria-expanded="false" aria-controls="flush-collapseOne">
                     ${cate.courseId}
                   <i class="bi bi-heart-fill"></i>${cate.courseContents}
                 </button>
@@ -134,7 +134,8 @@
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
               </div>
               <div class="modal-body">
-                ${cate.taste}
+                ${cate.taste} |
+                ${cate.coordinates[0] }
               </div>
               <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
@@ -435,6 +436,29 @@
                 markers = [];
             }
 
+            function displayCourse(data0, data1, data2) {
+            	// 선을 구성하는 좌표 배열입니다. 이 좌표들을 이어서 선을 표시합니다
+            	console.log(data0);
+            	console.log(data1);
+            	console.log(data2);
+            	var linePath = [
+            	    new kakao.maps.LatLng(data0),
+            	    new kakao.maps.LatLng(data1),
+            	    new kakao.maps.LatLng(data2) 
+            	];
+
+            	// 지도에 표시할 선을 생성합니다
+            	var polyline = new kakao.maps.Polyline({
+            	    path: linePath, // 선을 구성하는 좌표배열 입니다
+            	    strokeWeight: 5, // 선의 두께 입니다
+            	    strokeColor: '#FFAE00', // 선의 색깔입니다
+            	    strokeOpacity: 0.7, // 선의 불투명도 입니다 1에서 0 사이의 값이며 0에 가까울수록 투명합니다
+            	    strokeStyle: 'solid' // 선의 스타일입니다
+            	});
+
+            	// 지도에 선을 표시합니다 
+            	polyline.setMap(map);  
+            }
             // 검색결과 목록 하단에 페이지번호를 표시는 함수입니다
             function displayPagination(pagination) {
                 var paginationEl = document.getElementById('pagination'),
