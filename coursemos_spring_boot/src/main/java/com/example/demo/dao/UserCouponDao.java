@@ -3,12 +3,12 @@ package com.example.demo.dao;
 import java.util.List;
 import org.springframework.dao.DataAccessException;
 
-import com.example.demo.domain.UserCoupon;
+import com.example.demo.domain.MemberCoupon;
 
 public interface UserCouponDao {
 	
-	List<UserCoupon> getUserCouponByUserId(int userId) throws DataAccessException;
-	List<UserCoupon> getUserCouponByCouponId(int couponId) throws DataAccessException;
+	List<MemberCoupon> getUserCouponByUserId(int userId) throws DataAccessException;
+	List<MemberCoupon> getUserCouponByCouponId(int couponId) throws DataAccessException;
 	int useUserCoupon(int userCouponId) throws DataAccessException;
-	void insertUserCoupon(UserCoupon userCoupon) throws DataAccessException;
+	void insertUserCoupon(MemberCoupon userCoupon) throws DataAccessException;
 }
