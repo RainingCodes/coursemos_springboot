@@ -40,13 +40,13 @@ public class SearchService {
 	
 	public List<Course> getCourseList() {
 		List<Course> cList = new ArrayList<Course>();
-		cList.add(new Course(nextCourseId, "서울시티투어", "서울의 전경을 한 눈에 볼 수 있는 코스로 자연 경관과 도시 경관 모두 볼 수 있습니다.", 240, 1, null, "healing"));
+		//cList.add(new Course(nextCourseId, "서울시티투어", "서울의 전경을 한 눈에 볼 수 있는 코스로 자연 경관과 도시 경관 모두 볼 수 있습니다.", "(37.577552, 126.976869)|(37.551245, 126.988216)|(37.522470, 126.939713)", 240, 1, "healing", "https://dummyimage.com/500x500/ced4da/6c757d.jpg", 2, 2022-05-03));
 		//courseMap.put(nextCourseId, cList.get(nextCourseId));
 		nextCourseId++;
-		cList.add(new Course(nextCourseId, "방탈출 마스터", "강남 내 방탈출 카페 마스터가 되고 싶은 사람들 모여라", 300, 3, null, "entertain"));
+		//cList.add(new Course(nextCourseId, "방탈출 마스터", "강남 내 방탈출 카페 마스터가 되고 싶은 사람들 모여라", 300, 3, null, "entertain"));
 		//courseMap.put(nextCourseId, cList.get(nextCourseId));
 		nextCourseId++;
-		cList.add(new Course(nextCourseId, "'카페투어'", "커피와 디저트를 좋아하는 사람을 위한 코스.", 120, 1, null, "calm"));
+		//cList.add(new Course(nextCourseId, "'카페투어'", "커피와 디저트를 좋아하는 사람을 위한 코스.", 120, 1, null, "calm"));
 		//courseMap.put(nextCourseId, cList.get(nextCourseId));
 		nextCourseId++;
 		return cList;
