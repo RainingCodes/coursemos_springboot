@@ -29,7 +29,7 @@
 			</div>
 			<div align="center">
 				<button class="navbar-brand" type="button" style="border: none;">
-					<img src="../img/logo.png" style="width: 100px;">
+					<img src="../../img/logo.png" style="width: 100px;">
 				</button>
 				<!-- <a class="navbar-brand" href="#!">코스모스</a> -->
 			</div>
@@ -66,7 +66,7 @@
 					<h4 style="font-weight:bold;">서울 랜드마크 투어</h4><br>
 					<!-- Preview image figure-->
 					<h5 style="font-weight:bold;">코스 대표 이미지</h5>
-					<img class="img-fluid rounded" id="preview-image" src="../img/seoul.png" /> <br>
+					<img class="img-fluid rounded" id="preview-image" src="../../img/seoul.png" /> <br>
 					<br>
 					<br>
 					<div class="upload"></div>
@@ -104,8 +104,73 @@
 					<br>
 					<!-- 지도 -->
 					<h5 style="font-weight:bold;">코스 경로 미리보기</h5>
-					<img class="img-fluid rounded" id="preview-image" src="../img/path.png" /> <br>
-					<br>
+					<!-- 지도를 표시할 div 입니다 -->
+					<div id="map" style="width:100%;height:350px;"></div>
+					
+					<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=c17b5563968f2fffd356919521833ce2"></script>
+					<script>
+					var mapContainer = document.getElementById('map'), // 지도를 표시할 div
+					    mapOption = { 
+					        center: new kakao.maps.LatLng(33.450701, 126.570667), // 지도의 중심좌표
+					        level: 3 // 지도의 확대 레벨
+					    };
+					
+					// 지도를 표시할 div와  지도 옵션으로  지도를 생성합니다
+					var map = new kakao.maps.Map(mapContainer, mapOption); 
+					
+					var positions = [
+					    {
+					        title: '카카오', 
+					        latlng: new kakao.maps.LatLng(33.450705, 126.570677)
+					    },
+					    {
+					        title: '텃밭', 
+					        latlng: new kakao.maps.LatLng(33.450879, 126.569940)
+					    },
+					    {
+					        title: '생태연못', 
+					        latlng: new kakao.maps.LatLng(33.450936, 126.569477)
+					    },	
+					    {
+					        title: '근린공원',
+					        latlng: new kakao.maps.LatLng(33.451393, 126.570738)
+					    }
+					];
+	
+							
+					var linePath = new Array();
+					for (var i = 0; i < positions.length; i++) {
+					    
+					    // 마커 이미지의 이미지 크기 입니다
+					    var imageSize = new kakao.maps.Size(35, 35); 
+					    
+					    // 마커 이미지를 생성합니다    
+					    var markerImage = new kakao.maps.MarkerImage("../../img/place" + (i+1) +".png", imageSize);
+					    
+					    // 마커를 생성합니다
+					    var marker = new kakao.maps.Marker({
+					        map: map, // 마커를 표시할 지도
+					        position: positions[i].latlng, // 마커를 표시할 위치
+					        title : positions[i].title, // 마커의 타이틀, 마커에 마우스를 올리면 타이틀이 표시됩니다
+					        image : markerImage // 마커 이미지
+					    });
+					    
+					    linePath[i] = positions[i].latlng;
+					}
+					
+					
+					var polyline = new kakao.maps.Polyline({
+						path: linePath,
+						strokeWeight: 5,
+						strokeColor: '#FFAE00',
+						strokeOpacity: 0.7,
+						strokeStyle: 'solid'
+					});
+					
+					polyline.setMap(map);
+				
+					</script>
+					<br><br>
 					<!-- Post content-->
 					<h5 style="font-weight:bold;">코스에 대한 설명</h5>
 					<table class="form-control" style="height:200px; border-radius: 5px;">
