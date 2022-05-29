@@ -438,13 +438,14 @@
 
             function displayCourse(data0, data1, data2) {
             	// 선을 구성하는 좌표 배열입니다. 이 좌표들을 이어서 선을 표시합니다
-            	console.log(data0);
-            	console.log(data1);
-            	console.log(data2);
+            	var d0 = data0.split(',');
+            	var d1 = data1.split(',');
+            	var d2 = data2.split(',');
+            	
             	var linePath = [
-            	    new kakao.maps.LatLng(data0),
-            	    new kakao.maps.LatLng(data1),
-            	    new kakao.maps.LatLng(data2) 
+            	    new kakao.maps.LatLng(parseFloat(d0[0]), parseFloat(d0[1])),
+            	    new kakao.maps.LatLng(parseFloat(d1[0]), parseFloat(d1[1])),
+            	    new kakao.maps.LatLng(parseFloat(d2[0]), parseFloat(d2[1])) 
             	];
 
             	// 지도에 표시할 선을 생성합니다
