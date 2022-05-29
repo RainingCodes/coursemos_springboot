@@ -65,7 +65,7 @@
 							<div class="card-body">
 								<div class="input-group">
 									<input class="form-control" type="text" v-model="inputTitle"
-										placeholder="코스 이름을 입력하세요" required>
+										placeholder="코스 이름을 입력하세요">
 								</div>
 								<!-- <div v-if="!titleValid">유효하지 않은 제목입니다.</div> -->
 							</div>
@@ -78,7 +78,7 @@
 						<br>
 						<h5>코스를 대표하는 이미지를 업로드하세요</h5>
 						<input type="file" id="real-input" class="image_inputType_file"
-							accept="../img/*" required> <br>
+							accept="../img/*"> <br>
 						<br>
 						<br>
 						<div class="upload"></div>
@@ -97,6 +97,19 @@
 						</div>
 						<br><br>						
 						<!-- 지도 -->
+						<input class="form-control" id='keyword' style="float:left; width:75%;" onchange='onClickBtn()' placeholder="장소 검색">
+						<script>
+						function onClickBtn()  {
+						  let name = document.getElementById('keyword').value;
+						  ps.keywordSearch(name, placesSearchCB);
+						}
+						</script>
+						<div style="float: right; margin-right: 60px;">
+							<input type="button" onclick="onClickBtn();"
+								style="border: none; border-radius: 5px; text-align: center; margin-left:10px; width: 80px; height: 34px;"
+								value="검색">
+						</div>
+						<br><br>
 						<div id="map"
 							style="width: 600px; height: 300px; margin-top: 10px;"></div>
 						<script type="text/javascript"
@@ -141,91 +154,62 @@
 							    } 
 							}
 							
-							/* // 지도에 마커를 표시하는 함수입니다
+							 // 지도에 마커를 표시하는 함수입니다
 							function displayMarker(place) {
 							    
+								let coord = new kakao.maps.LatLng(place.y, place.x);
+								 
 							    // 마커를 생성하고 지도에 표시합니다
 							    var marker = new kakao.maps.Marker({
 							        map: map,
-							        position: new kakao.maps.LatLng(place.y, place.x) 
-							    });
+							        position: coord 
+							    });   
 							
-							     // 마커에 클릭이벤트를 등록합니다
+							    // 마커에 클릭이벤트를 등록합니다
 							    kakao.maps.event.addListener(marker, 'click', function() {
 							        // 마커를 클릭하면 장소명이 인포윈도우에 표출됩니다
 							        infowindow.setContent('<div style="padding:5px;font-size:12px;">' + place.place_name + '</div>');
 							        infowindow.open(map, marker);
-							    }); 		   		    
+					        
+							        document.getElementById('placeName').value = place.place_name;
+							        
+							        let lat = place.y;
+							    	let lng = place.x;
+							    	getAddr(lat, lng);
+							    });	   	
+							    
+							    
+							}		
+							function getAddr(lat, lng){
+								let geocoder = new kakao.maps.services.Geocoder();
+								
+								let coord = new kakao.maps.LatLng(lat, lng);
+								let callback = function(result, status){
+									if (status == kakao.maps.services.Status.OK){
+										document.getElementById('address').value = result[0].address.address_name;
+										document.getElementById('road_address').value = result[0].road_address.address_name;
+									}
+								};
+								geocoder.coord2Address(coord.getLng(), coord.getLat(), callback);
+							}
+							
+							
 							 
-							} */
-							
-							function displayMarker(place){
-								var marker = new kakao.maps.Marker({
-									map: map,
-									position: new kakao.maps.LatLng(place.y, place.x)
-								});
-								
-								kakao.maps.event.addListener(map, 'click', function(mouseEvent){
-								    	searchDetailAddrFromCoords(mouseEvent.latLng, function(result, status){
-								    		
-								    		if (status === kakao.maps.services.Status.OK) {
-								                var detailAddr = !!result[0].road_address ? '<div>도로명주소 : ' + result[0].road_address.address_name + '</div>' : '';
-								                detailAddr += '<div>지번 주소 : ' + result[0].address.address_name + '</div>';
-								                
-								                var content = '<div style="width:auto;height:auto;padding:10px;font-size:12px;" class="bAddr">' + detailAddr + '</div>';
-	
-								                // 마커를 클릭한 위치에 표시합니다 
-								                marker.setPosition(mouseEvent.latLng);
-								                marker.setMap(map);
-	
-								                // 인포윈도우에 클릭한 위치에 대한 법정동 상세 주소정보를 표시합니다
-								                infowindow.setContent(content);
-								                infowindow.open(map, marker);
-								            } 
-								    									    		
-								    	});
-				    	
-								}); 
-								
-								
-							
-							}
-							// 중심 좌표나 확대 수준이 변경됐을 때 지도 중심 좌표에 대한 주소 정보를 표시하도록 이벤트를 등록합니다
-							kakao.maps.event.addListener(map, 'idle', function() {
-							    searchAddrFromCoords(map.getCenter(), displayCenterInfo);
-							});
-							
-							function searchDetailAddrFromCoords(coords, callback) {
-							    // 좌표로 법정동 상세 주소 정보를 요청합니다
-							    geocoder.coord2Address(coords.getLng(), coords.getLat(), callback);
-							}
-							
-					
-							
 							</script>
-						<br><br>
+						<br>
+										
 						<!-- 코스 추가 -->
 						<h5>코스 경로에 추가할 장소를 입력하세요 <input type="button" name="add" onclick="addPlace()" value="+" id="add_btn" style="border: none; border-radius: 5px; text-align: center; margin-left: 30%; height: 30px;"></h5>
-						<input class="form-control" id='keyword' style="float:left; width:70%;" onchange='onClickBtn()' placeholder="장소 검색">
-						<script>
-						function onClickBtn()  {
-						  let name = document.getElementById('keyword').value;
-						  ps.keywordSearch(name, placesSearchCB);
-						}
-						</script>
-						<div style="float: right; margin-right: 75px;">
-							<input type="button" onclick="onClickBtn();"
-								style="border: none; border-radius: 5px; text-align: center; width: 100px; height: 33px;"
-								value="검색">
-						</div>
-						<br><br>
-						<input class="form-control" type="text" placeholder="상세 주소" style="width: 90%" required>
-						<br> <input class="form-control" type="text"
-							placeholder="소요 비용(원)" style="width: 90%" required><br>
-						<input class="form-control" type="text" placeholder="소요 시간(분)" style="width: 90%" required><br>					
+						<input class="form-control" type="text" placeholder="장소" id='placeName' style="width: 95%"><br> 
+						<input class="form-control" type="text" placeholder="상세 주소(지번)" id='address' style="width: 95%">
+						<input class="form-control" type="text" placeholder="상세 주소(도로명, 없을 경우 지번주소만 표시됩니다.)" id='road_address' style="width: 95%"><br> 
+
+						<input class="form-control" type="text"
+							placeholder="소요 비용(원)" style="width: 95%"><br>
+						<input class="form-control" type="text" placeholder="소요 시간(분)" style="width: 95%"><br>					
                         <!-- Post content-->
                         <h5>코스에 대한 설명을 입력하세요</h5>
-                        <input class="form-control" type="text" style="height:300px" required><br>
+                        <input class="form-control" type="text" style="height:300px"><br>
                         <button type="submit" style="width:100%; height:40px; border:none; border-radius:5px; text-align: center;">등록하기</button>
                     </article>
                     <br><br><br>
