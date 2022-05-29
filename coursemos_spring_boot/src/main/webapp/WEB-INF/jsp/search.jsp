@@ -38,7 +38,7 @@
 	}
 	#courseList {
         position:absolute;
-        top:150px;
+        top:300px;
         left:200px;
         width:300px;
         height:250px;
@@ -145,8 +145,8 @@
         </div>
         </c:forEach>
         </div>
+        <!-- <ul id="placesList"></ul> -->
         
-        <ul id="placesList"></ul>
         <div id="pagination"></div>
         <p id="result"></p>
         <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=c17b5563968f2fffd356919521833ce2&libraries=services"></script>
