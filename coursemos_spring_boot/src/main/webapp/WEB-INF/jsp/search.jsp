@@ -1,5 +1,9 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+    <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+    <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+	<%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
+    <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -32,6 +36,13 @@
     .has-search .form-control {
 	    padding-left: 2.375rem;
 	}
+	#courseList {
+        position:absolute;
+        top:150px;
+        left:200px;
+        width:300px;
+        height:250px;
+    }
 </style>
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.7.1/font/bootstrap-icons.css">
 <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css">    
@@ -61,27 +72,79 @@
         <div class="search">
         <div id="menu_wrap" class="bg_white">
 	        <div class="option">
-	            <form id="search" onsubmit="searchPlaces(); return false;">
+	            <!-- <form id="search" onsubmit="searchPlaces(); return false;"> --> 
+	            <form id="search" method="POST">
 	                <input class="form-control" type="text" id="keyword" placeholder="장소를 입력하세요.">
 	                <button type="submit">검색하기</button> 
 	                <br>
 	                <input id="plus" type="button" onclick="add_Place()" value="+"/>
 	            </form>
-	            <div id="categoryButton">
-		        	<button type="button" class="btn btn-primary">Primary</button>
-					<button type="button" class="btn btn-secondary">Secondary</button>
-					<button type="button" class="btn btn-success">Success</button>
-					<button type="button" class="btn btn-danger">Danger</button>
-					<button type="button" class="btn btn-warning">Warning</button>
-					<button type="button" class="btn btn-info">Info</button>
-					<button type="button" class="btn btn-light">Light</button>
-					<button type="button" class="btn btn-dark">Dark</button>
-		        </div>
+	            <c:forEach var="cate" items="${tList}">
+	            	<button type="button" class="btn btn-primary">${cate}</button>
+	            </c:forEach>
 			</div>
         </div>
         <div id="searchResult"></div>
         </div>   
         <div id="map"></div>
+        
+        <div id="courseList">
+        <c:forEach var="cate" items="${cList}">
+          <div class="accordion accordion-flush" id="accordionFlushExample">
+           <div class="accordion-item">
+              <h2 class="accordion-header" id="flush-headingOne">
+                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseOne" aria-expanded="false" aria-controls="flush-collapseOne">
+                    ${cate.courseId}
+                  <i class="bi bi-heart-fill"></i>${cate.courseContents}
+                </button>
+              </h2>
+              <div id="flush-collapseOne" class="accordion-collapse collapse" aria-labelledby="flush-headingOne" data-bs-parent="#accordionFlushExample">
+                <div class="accordion-body">
+                  <button class="list-group-item d-flex justify-content-between align-items-start" data-bs-toggle="modal" data-bs-target="#exampleModal" style="background-color:antiquewhite">
+                    <div class="mx-sm-5 me-auto">
+                      <div class="fw-bold">Subheading</div>
+                      Cras justo odio
+                    </div>
+                    <i class="bi bi-heart-fill"></i>14
+                  </button>
+                  <button class="list-group-item d-flex justify-content-between align-items-start" style="background-color:rgb(255, 253, 121)"> 
+                    <div class="mx-sm-5 me-auto">
+                      <div class="fw-bold">Subheading</div>
+                      Cras justo odio
+                    </div>
+                    <i class="bi bi-heart-fill"></i>14
+                  </button>
+                  <button class="list-group-item d-flex justify-content-between align-items-start" style="background-color:rgb(253, 242, 86)">
+                    <div class="mx-sm-5 me-auto">
+                      <div class="fw-bold">Subheading</div>
+                      Cras justo odio
+                    </div>
+                    <i class="bi bi-heart-fill"></i>14
+                  </button>
+                </div>
+              </div>
+            </div>
+        </div>
+        <!-- Modal -->
+        <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+          <div class="modal-dialog">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+              </div>
+              <div class="modal-body">
+                ${cate.taste}
+              </div>
+              <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary">Save changes</button>
+              </div>
+            </div>
+          </div>
+        </div>
+        </c:forEach>
+        </div>
         
         <ul id="placesList"></ul>
         <div id="pagination"></div>
