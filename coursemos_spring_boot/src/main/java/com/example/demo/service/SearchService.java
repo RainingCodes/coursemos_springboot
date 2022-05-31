@@ -40,7 +40,7 @@ public class SearchService {
 	}
 	
 	public List<Course> getCourseList() {
-		String[] coorArr = {"(37.577552, 126.976869)", "(37.551245, 126.988216)", "(37.522470, 126.939713)"};
+		String[] coorArr = {"37.577552,126.976869", "37.551245,126.988216", "37.522470,126.939713"};
 		Date date = new Date();
 		List<Course> cList = new ArrayList<Course>();
 		cList.add(new Course(nextCourseId, "서울시티투어", "서울의 전경을 한 눈에 볼 수 있는 코스로 자연 경관과 도시 경관 모두 볼 수 있습니다.", coorArr, 240, 1, "healing", "https://dummyimage.com/500x500/ced4da/6c757d.jpg", 2, date));

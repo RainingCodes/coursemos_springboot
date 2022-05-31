@@ -35,8 +35,8 @@
 	            document.getElementById('plus').remove();
 	        }
 	        const remove = (obj) => {
-	            document.getElementById('search').removeChild(obj.parentNode);
-	            const search = document.getElementById("search");
+	            document.getElementById('search1').removeChild(obj.parentNode);
+	            const search = document.getElementById("search1");
 	            var newPlus = document.createElement('input');
 	            newPlus.setAttribute("id", "plus");
 	            newPlus.setAttribute("type", "button");
