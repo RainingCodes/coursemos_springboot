@@ -13,23 +13,22 @@
 </style>
 </head>
 <body>
-        <div class="search">
-            <form id="search" onsubmit="searchPlaces();">
-            	<search>
-	                <input id="keyword1" type="text" placeholder="장소를 입력하세요.">
-	            </search>
-                <input id="plus" type="button" value="+" onclick="add_Place()"/>
-            </form>
-        </div> 
+	<div class="search">
+    	<form id="search" onsubmit="searchPlaces();">
+        	<search>
+        		<input id="keyword1" type="text" placeholder="장소를 입력하세요.">
+			</search>
+        	<input id="plus" type="button" value="+" onclick="add_Place()"/>
+        </form>
+    </div> 
         
 <div id="map"></div>        
 
-<h1 id="header">test</h1>
 <form onsubmit="searchPlaces(); return false;">
-<button type="submit">검색하기</button>
+	<button type="submit">검색하기</button>
 </form>
-<button id="javascript_btn1" type="button">중간지점 찾기</button>
 
+<button id="javascript_btn1" type="button">중간지점 찾기</button>
 
 <form name="result" method="post" action="<c:url value='/course/search'/>">
 	<input type="hidden" name="x" value=0>
@@ -42,12 +41,16 @@
 
 <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=c17b5563968f2fffd356919521833ce2&libraries=services"></script>
 <script>
+
+var existTwoSearchForm = false;
+
 const add_Place = () => {
 	const search = document.getElementById("search");
 	const search2 = document.createElement('search2');
 	search2.innerHTML = "<input id='keyword2' type='text' placeholder='장소를 입력하세요.' ><input type='button' value='-' onclick='remove(this)'>";
 	search.appendChild(search2);
 	document.getElementById('plus').remove();
+	existTwoSearchForm = true;
 }
 	        
 const remove = (obj) => {
@@ -59,9 +62,9 @@ const remove = (obj) => {
 	newPlus.setAttribute("value", "+");
 	newPlus.setAttribute("onclick", "add_Place()");
 	search.appendChild(newPlus);
+	existTwoSearchForm = false;
 }	
-</script>
-<script>
+
 // 마커를 클릭하면 장소명을 표출할 인포윈도우 입니다
 var infowindow = new kakao.maps.InfoWindow({zIndex:1});
 
@@ -96,16 +99,20 @@ function searchPlaces() {
 	y = 0;
     removeMarker();
     var keyword1 = document.getElementById('keyword1').value;
-    var keyword2 = document.getElementById('keyword2').value;
-
+    
+    if (existTwoSearchForm == true) {
+    	var keyword2 = document.getElementById('keyword2').value;
+    }
+    
     if (!keyword1.replace(/^\s+|\s+$/g, '')) {
         alert('키워드를 입력해주세요!');
         return false;
     }
     // 장소검색 객체를 통해 키워드로 장소검색을 요청합니다
     ps.keywordSearch(keyword1, placesSearchCB);
-    ps.keywordSearch(keyword2, placesSearchCB);
-	
+    if (existTwoSearchForm == true) {
+    	ps.keywordSearch(keyword2, placesSearchCB);
+    }
     
 }   
     
