@@ -63,7 +63,10 @@
 					<div>
 					<p></p>
 					<!-- Post title-->
-					<h4 style="font-weight:bold;">서울 랜드마크 투어</h4><br>
+					<h4 style="font-weight:bold;" id="courseTitle">서울 랜드마크 투어</h4><br>
+					<!-- <input id="courseTitle" type="text" value="제목"> -->
+
+					
 					<!-- Preview image figure-->
 					<h5 style="font-weight:bold;">코스 대표 이미지</h5>
 					<img class="img-fluid rounded" id="preview-image" src="../../img/seoul.png" /> <br>
@@ -71,13 +74,45 @@
 					<br>
 					<div class="upload"></div>
 					<h5 style="font-weight:bold;">코스의 분위기</h5>
-					<div>활동적인, 즐거운</div>
+					<!-- <div>활동적인, 즐거운</div> -->
+					<div>
+						<% for (int i = 0; i < 3; i++){%>
+							<div>코스 분위기 <%=i %></div>
+						<% }%>
+					</div>
 					<br>
 					<br>
 					<br>
 					<h5 style="font-weight:bold;">코스 경로 살펴보기</h5>
 					<br>
-					<table style="border-radius: 5px; width: 80%">
+					
+					<table>
+					<%
+					for (int i = 0; i < 3; i++){ %>
+						<tr>
+							<th>장소<%=i+1%></th>
+						</tr>
+						
+						<tr>
+							<td>주소<%=i+1 %></td>
+						</tr>
+						<tr>
+							<td id="cost"><%=(i+1)*1000 %></td>
+						</tr>
+						<tr>
+							<td id="travelTime">소요시간 <%=i+1 %>(분)</td>
+						</tr>
+						<tr>
+							<td><br></td>
+						</tr>
+					<%
+					
+					
+					} %>
+					
+					</table>
+					
+					<!-- <table style="border-radius: 5px; width: 80%">
 						<tr>
 							<th>남산타워</th>
 						</tr>
@@ -99,7 +134,7 @@
 						<tr>
 							<td>3,000(원)</td>
 						</tr>
-					</table>
+					</table> -->
 					
 					<br>
 					<!-- 지도 -->
@@ -263,20 +298,67 @@
 						</tr>
 					</table>
 					<br>
+					
 					</div>
 					<div align="center">
-					<button type="submit" style="width:15%; height:40px; border:none; border-radius:5px; text-align: center; background-color:#0d6efd; color: white;">SNS 공유</button>
-					<button type="submit" style="width:15%; height:40px; border:none; border-radius:5px; text-align: center; background-color:#0d6efd; color: white;">좋아요</button>
-					<img style="width:20px; height:20px;" src="../../img/like.png" />
-					<button type="submit" style="width:15%; height:40px; border:none; border-radius:5px; text-align: center; background-color:#0d6efd; color: white;">스크랩</button>
+
+					<a id="kakao-link-btn" href="javascript:kakaoShare();" style="width:15%; height:2px;">
+						<img
+							src = "https://developers.kakao.com/assets/img/about/logos/kakaolink/kakaolink_btn_medium.png"
+							alt="카카오톡 공유"
+						/>
+					</a>
+
+					<!-- kakao sdk 호출 -->
+					<script src="https://developers.kakao.com/sdk/js/kakao.js"></script>
+					
+					<script type="text/javascript">
+					  // SDK를 초기화 합니다. 사용할 앱의 JavaScript 키를 설정해 주세요.
+					  Kakao.init('76e55c5ff78afa2dcf5a29a283774395');
+					
+					  // SDK 초기화 여부를 판단합니다.
+					  console.log(Kakao.isInitialized());
+				
+					
+					  function kakaoShare() {
+					    Kakao.Link.sendDefault({
+					        objectType: 'commerce',
+					        content: {
+					          title: '당신에게 맞는 코스를 찾아보세요!',
+					          imageUrl: '',
+					          link: {
+					            mobileWebUrl: 'http://localhost:8080/',
+					            webUrl: 'http://localhost:8080/',
+					          },
+					        },
+					        commerce: {	        	
+					          productName: document.getElementById("courseTitle").innerText,
+					          regularPrice: Number(document.getElementById("cost").innerText)
+					        },
+					        buttons: [
+					          {
+					            title: '자세히보기',
+					            link: {
+					              mobileWebUrl: 'http://localhost:8080/course/view/1',
+					              webUrl: 'http://localhost:8080/course/view/1',
+					            },
+					          },
+					        ],
+					    })
+					  }
+					</script>
+
+					<img style="width:10%; height:10%;" src="../../img/like.png" />
+					<img style="width:10%; height:10%;'" src="../../img/scrap.png"/>
+					<!-- <button type="submit" style="width:20%; height:60px; border:none; border-radius:5px; text-align: center; background-color:#0d6efd; color: white;">스크랩</button> -->
 					<!-- 추후 비활성화/활성화 조건 적용하기 -->
-					<button type="submit" style="width:15%; height:40px; border:none; border-radius:5px; text-align: center; background-color:#ced4da;">쿠폰 발급</button>
-					<button type="submit" style="width:15%; height:40px; border:none; border-radius:5px; text-align: center; background-color:#ced4da;">삭제</button>
+					<button type="submit" style="width:20%; height:60px; border:none; border-radius:5px; text-align: center; background-color:#ced4da;">쿠폰 발급</button>
+					<button type="submit" style="width:20%; height:60px; border:none; border-radius:5px; text-align: center; background-color:#ced4da;">삭제</button>
 					</div>
+				<br>
+				<br>
+				<br>
 				</article>
-				<br>
-				<br>
-				<br>
 			</div>
 			<!-- Side widgets-->
 			<div class="col-lg-4">
@@ -325,7 +407,7 @@
 	<!-- Footer-->
 	<footer class="py-5 bg-dark">
 		<div class="container">
-			<p class="m-0 text-center text-white">Copyright &copy; Your Website 2022</p>
+			<p class="m-0 text-center text-white">Copyright &copy; Coursemos 2022</p>
 		</div>
 	</footer>
 	<!-- Bootstrap core JS-->
