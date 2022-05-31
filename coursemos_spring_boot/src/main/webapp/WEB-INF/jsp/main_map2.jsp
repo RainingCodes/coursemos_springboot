@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -25,11 +26,18 @@
 
 <h1 id="header">test</h1>
 <form onsubmit="searchPlaces(); return false;">
-<!-- 키워드 : <input type="text" value="화랑로 13길 60" id="keyword1" size="15"/>
-키워드 : <input type="text" value="홍대입구역" id="keyword2" size="15"/> -->
 <button type="submit">검색하기</button>
 </form>
 <button id="javascript_btn1" type="button">중간지점 찾기</button>
+
+
+<form name="result" method="post" action="<c:url value='/course/search'/>">
+	<input type="hidden" name="x" value=0>
+	<input type="hidden" name="y" value=0>
+	<input type="submit" value="코스찾기">
+</form>
+
+
 
 
 <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=c17b5563968f2fffd356919521833ce2&libraries=services"></script>
@@ -75,6 +83,8 @@ var y = 0;
 document.getElementById("javascript_btn1").addEventListener("click", javascript_onclikc);
 function javascript_onclikc(){
 	alert(x+", "+y);
+	document.result.x.value = x;
+	document.result.y.value = y;
 	ps.categorySearch('SW8', placesSearchCategoryCB, {
     	location: new kakao.maps.LatLng(y, x)
     });
@@ -149,6 +159,10 @@ function removeMarker() {
         markers[i].setMap(null);
     }   
     markers = [];
+}
+
+function placeSubmit() {
+	form.submit();
 }
 </script>
     </body>
