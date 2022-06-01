@@ -72,17 +72,6 @@
 								<!-- <div v-if="!titleValid">유효하지 않은 제목입니다.</div> -->
 							</div>
 						</header>
-
-						<!-- Preview image figure-->
-						<img class="img-fluid rounded" id="preview-image"
-							src="https://dummyimage.com/900x400/ced4da/6c757d.jpg" /> <br>
-						<br>
-						<br>
-						<h5>코스를 대표하는 이미지를 업로드하세요</h5>
-						<input type="file" id="real-input" class="image_inputType_file"
-							accept="../img/*" required> <br>
-						<br>
-						<br>
 						<div class="upload"></div>
 						<h5>코스의 분위기를 선택하세요</h5>
 						<div class="selectTaste"
@@ -174,7 +163,7 @@
 							        infowindow.setContent('<div style="padding:5px;font-size:12px;">' + place.place_name + '</div>');
 							        infowindow.open(map, marker);
 					        
-							        document.getElementById('placeName').value = place.place_name;
+							        document.getElementById('resultPlaceName').value = place.place_name;
 							        
 							        let lat = place.y;
 							    	let lng = place.x;
@@ -189,16 +178,34 @@
 								let coord = new kakao.maps.LatLng(lat, lng);
 								let callback = function(result, status){
 									if (status == kakao.maps.services.Status.OK){
-										document.getElementById('address').value = result[0].address.address_name;
-										document.getElementById('road_address').value = result[0].road_address.address_name;
+										document.getElementById('resultAddress').value = result[0].address.address_name;
+										document.getElementById('resultRoadAddress').value = result[0].road_address.address_name;
 									}
 								};
 								geocoder.coord2Address(coord.getLng(), coord.getLat(), callback);
-							}	 
+							}
+							function copy_to_clipboard(a) {    
+								  var copyText = document.getElementById(a);
+								  copyText.select();
+								  copyText.setSelectionRange(0, 99999);
+								  document.execCommand("Copy");
+								  alert('복사되었습니다.');
+								}
+
 							</script>
+						
+						<br><b>마커를 클릭하면 해당 장소의 이름과 주소가 표시됩니다.
+						<br>복사/붙여넣기로 간편하게 아래 폼을 완성해보세요!</b><br>
+						<br>
+						<b>장소: </b><input type="text" size="59.5px" style="border:none;" id="resultPlaceName" readonly><input type="button" style="height:23px;border:none;border-radius:5px;" onclick="copy_to_clipboard('resultPlaceName')" value="복사"><br>
+						<b>지번 주소: </b><input type="text" size="54.5px" style="border:none;" id="resultAddress" readonly><input type="button" style="height:23px;border:none;border-radius:5px;" onclick="copy_to_clipboard('resultAddress')" value="복사"><br>
+						<b>도로명 주소: </b><input type="text" size="52px" style="border:none;" id="resultRoadAddress" placeholder="없을 경우 지번주소만 표시됩니다." readonly><input type="button" style="height:23px;border:none;border-radius:5px;" onclick="copy_to_clipboard('resultRoadAddress')" value="복사"><br>
+						
+							
+							
 						<br>					
 						<!-- 코스 추가 -->
-						<h5>코스 경로에 추가할 장소를 입력하세요 <input type="button" name="add" value="+" id="add_btn" style="border: none; border-radius: 5px; text-align: center; margin-left: 30%; height: 30px;"></h5>
+						<h5>최대 3군데의 장소를 추가할 수 있습니다 <input type="button" name="add" value="+" id="add_btn" style="border: none; border-radius: 5px; text-align: center; margin-left: 30%; height: 30px;"></h5>
 						<input type="hidden" id="place" name="place">
 						<script language="JavaScript">
 						var cnt = 1; 
@@ -207,13 +214,10 @@
 								  if(cnt >= 3)
 									  alert("최대 입력 값을 초과했습니다.");
 								  else {
-									  cnt++;
-									  
-									  
+									  cnt++;	  
 									  $("#description").before('<hr style="width: 95%"><b>'+cnt+'번째 장소</b>'+ '<br><p><input class="form-control" type="text" placeholder="장소" id="placeName" style="width: 95%" required><br><input class="form-control" type="text" placeholder="상세 주소(지번)" id="address" style="width: 95%" required><input class="form-control" type="text" placeholder="상세 주소(도로명, 없을 경우 지번주소만 표시됩니다.)" id="road_address" style="width: 95%"><br> <input class="form-control" type="text"	placeholder="소요 비용(원)" style="width: 95%" required><br><input class="form-control" type="text" placeholder="소요 시간(분)" style="width: 95%" required></p>');
 									  //$("#place").val(cnt);
-									  }
-								  
+									  }			  
 							  });
 							});
 						
@@ -223,7 +227,7 @@
 						<b>1번째 장소</b>
 						<input class="form-control" type="text" placeholder="장소" id='placeName' style="width: 95%" required><br> 
 						<input class="form-control" type="text" placeholder="상세 주소(지번)" id='address' style="width: 95%" required>
-						<input class="form-control" type="text" placeholder="상세 주소(도로명, 없을 경우 지번주소만 표시됩니다.)" id='road_address' style="width: 95%"><br> 
+						<input class="form-control" type="text" placeholder="상세 주소(도로명, 없을 경우 생략)" id='road_address' style="width: 95%"><br> 
 
 						<input class="form-control" type="text"	placeholder="소요 비용(원)" style="width: 95%" required><br>
 						<input class="form-control" type="text" placeholder="소요 시간(분)" style="width: 95%" required><br>					
