@@ -1,7 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
-<script src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
-
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
@@ -15,6 +13,7 @@
 <link href="../css/styles.css" rel="stylesheet" />
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor" crossorigin="anonymous">
 </head>
+<script src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
 <body>
 	<!-- Responsive navbar-->
 	<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
@@ -81,7 +80,6 @@
 							<input type="checkbox" name="category" value="calm">잔잔한
 							<input type="checkbox" name="category" value="healing">힐링
 							<input type="checkbox" name="category" value="nature">자연적인<br>
-							<input type="checkbox" name="category" value="official">공식적인
 							<input type="checkbox" name="category" value="experience">체험적
 							<input type="checkbox" name="category" value="entertaining">즐거운
 							<input type="checkbox" name="category" value="retro">복고풍
@@ -200,9 +198,6 @@
 						<b>장소: </b><input type="text" size="59.5px" style="border:none;" id="resultPlaceName" readonly><input type="button" style="height:23px;border:none;border-radius:5px;" onclick="copy_to_clipboard('resultPlaceName')" value="복사"><br>
 						<b>지번 주소: </b><input type="text" size="54.5px" style="border:none;" id="resultAddress" readonly><input type="button" style="height:23px;border:none;border-radius:5px;" onclick="copy_to_clipboard('resultAddress')" value="복사"><br>
 						<b>도로명 주소: </b><input type="text" size="52px" style="border:none;" id="resultRoadAddress" placeholder="없을 경우 지번주소만 표시됩니다." readonly><input type="button" style="height:23px;border:none;border-radius:5px;" onclick="copy_to_clipboard('resultRoadAddress')" value="복사"><br>
-						
-							
-							
 						<br>					
 						<!-- 코스 추가 -->
 						<h5>최대 3군데의 장소를 추가할 수 있습니다 <input type="button" name="add" value="+" id="add_btn" style="border: none; border-radius: 5px; text-align: center; margin-left: 30%; height: 30px;"></h5>
