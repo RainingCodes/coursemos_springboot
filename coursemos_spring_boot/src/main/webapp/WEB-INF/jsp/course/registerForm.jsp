@@ -1,5 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
+<script src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
+
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
@@ -53,7 +55,7 @@
 	<!-- Page content-->
 	<div class="container mt-5">
 		<div class="row" style="margin-left: 25%;">
-			<form action="view" method="post">
+			<form name="form" method="POST" action="<c:url value='/course/view'/>">
 				<div class="col-lg-8">
 					<!-- Post content-->
 					<article>
@@ -65,7 +67,7 @@
 							<div class="card-body">
 								<div class="input-group">
 									<input class="form-control" type="text" v-model="inputTitle"
-										placeholder="코스 이름을 입력하세요">
+										placeholder="코스 이름을 입력하세요" required>
 								</div>
 								<!-- <div v-if="!titleValid">유효하지 않은 제목입니다.</div> -->
 							</div>
@@ -78,7 +80,7 @@
 						<br>
 						<h5>코스를 대표하는 이미지를 업로드하세요</h5>
 						<input type="file" id="real-input" class="image_inputType_file"
-							accept="../img/*"> <br>
+							accept="../img/*" required> <br>
 						<br>
 						<br>
 						<div class="upload"></div>
@@ -97,6 +99,7 @@
 						</div>
 						<br><br>						
 						<!-- 지도 -->
+						<h5>코스 경로에 추가할 장소를 입력하세요.</h5>
 						<input class="form-control" id='keyword' style="float:left; width:75%;" onchange='onClickBtn()' placeholder="장소 검색">
 						<script>
 						function onClickBtn()  {
@@ -191,25 +194,42 @@
 									}
 								};
 								geocoder.coord2Address(coord.getLng(), coord.getLat(), callback);
-							}
-							
-							
-							 
+							}	 
 							</script>
-						<br>
-										
+						<br>					
 						<!-- 코스 추가 -->
-						<h5>코스 경로에 추가할 장소를 입력하세요 <input type="button" name="add" onclick="addPlace()" value="+" id="add_btn" style="border: none; border-radius: 5px; text-align: center; margin-left: 30%; height: 30px;"></h5>
-						<input class="form-control" type="text" placeholder="장소" id='placeName' style="width: 95%"><br> 
-						<input class="form-control" type="text" placeholder="상세 주소(지번)" id='address' style="width: 95%">
+						<h5>코스 경로에 추가할 장소를 입력하세요 <input type="button" name="add" value="+" id="add_btn" style="border: none; border-radius: 5px; text-align: center; margin-left: 30%; height: 30px;"></h5>
+						<input type="hidden" id="place" name="place">
+						<script language="JavaScript">
+						var cnt = 1; 
+						$(document).ready(function () {
+							  $(document).on("click", "input[name='add']", function () {
+								  if(cnt >= 3)
+									  alert("최대 입력 값을 초과했습니다.");
+								  else {
+									  cnt++;
+									  
+									  
+									  $("#description").before('<hr style="width: 95%"><b>'+cnt+'번째 장소</b>'+ '<br><p><input class="form-control" type="text" placeholder="장소" id="placeName" style="width: 95%" required><br><input class="form-control" type="text" placeholder="상세 주소(지번)" id="address" style="width: 95%" required><input class="form-control" type="text" placeholder="상세 주소(도로명, 없을 경우 지번주소만 표시됩니다.)" id="road_address" style="width: 95%"><br> <input class="form-control" type="text"	placeholder="소요 비용(원)" style="width: 95%" required><br><input class="form-control" type="text" placeholder="소요 시간(분)" style="width: 95%" required></p>');
+									  //$("#place").val(cnt);
+									  }
+								  
+							  });
+							});
+						
+						</script>
+						
+						<br>
+						<b>1번째 장소</b>
+						<input class="form-control" type="text" placeholder="장소" id='placeName' style="width: 95%" required><br> 
+						<input class="form-control" type="text" placeholder="상세 주소(지번)" id='address' style="width: 95%" required>
 						<input class="form-control" type="text" placeholder="상세 주소(도로명, 없을 경우 지번주소만 표시됩니다.)" id='road_address' style="width: 95%"><br> 
 
-						<input class="form-control" type="text"
-							placeholder="소요 비용(원)" style="width: 95%"><br>
-						<input class="form-control" type="text" placeholder="소요 시간(분)" style="width: 95%"><br>					
+						<input class="form-control" type="text"	placeholder="소요 비용(원)" style="width: 95%" required><br>
+						<input class="form-control" type="text" placeholder="소요 시간(분)" style="width: 95%" required><br>					
                         <!-- Post content-->
-                        <h5>코스에 대한 설명을 입력하세요</h5>
-                        <input class="form-control" type="text" style="height:300px"><br>
+                        <h5 id="description">코스에 대한 설명을 입력하세요</h5>
+                        <input class="form-control" type="text" style="height:300px" required><br>
                         <button type="submit" style="width:100%; height:40px; border:none; border-radius:5px; text-align: center;">등록하기</button>
                     </article>
                     <br><br><br>
