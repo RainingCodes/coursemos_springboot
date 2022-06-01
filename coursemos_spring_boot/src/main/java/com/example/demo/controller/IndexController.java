@@ -17,7 +17,7 @@ public class IndexController {
 		ModelAndView mav = new ModelAndView("login"); 
 		return mav;
 	}
-	@RequestMapping("user/login")
+	@RequestMapping("/member/login")
 	public ModelAndView login2() {
 		ModelAndView mav = new ModelAndView("login2"); 
 		return mav;
