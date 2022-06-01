@@ -105,6 +105,7 @@ function javascript_onclikc(){
 function searchPlaces() {
 	x = 0;
 	y = 0;
+	clickSubwayButton = false;
     removeMarker();
     var keyword1 = document.getElementById('keyword1').value;
     
