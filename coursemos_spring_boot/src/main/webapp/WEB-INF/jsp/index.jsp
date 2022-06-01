@@ -10,6 +10,6 @@
 </head>
 <body>
 <%@ include file="header/IncludeTop.jsp"  %>
-<%@ include file="main_map2.jsp" %>
+<%@ include file="main_map.jsp" %>
 </body>
 </html>
