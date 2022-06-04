@@ -76,11 +76,16 @@ public class SearchPlaceController {
 	@PostMapping
 	public ModelAndView submit() {
 		ModelAndView mav = new ModelAndView(SEARCH_VIEW); // view 이름: "hello"    
-		List<Course> cList = searchService.getCourseList();
+		//List<Course> cList = searchService.getCourseList();
+		//mav.addObject("cList", cList);
+		double x = 37.577552;
+		double y = 126.976869;
+		mav.addObject("x", x);
+		mav.addObject("y", y);
+		List<Course> cList = searchService.getCourseList(x, y);
 		mav.addObject("cList", cList);
 		List<String> tList = searchService.getTasteCategory(null);
 		mav.addObject("tList", tList);
-		
 		
 	   return mav;   
 	}
