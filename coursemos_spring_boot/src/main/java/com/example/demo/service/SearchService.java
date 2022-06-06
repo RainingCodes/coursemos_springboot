@@ -69,16 +69,6 @@ public class SearchService {
 		
 		return cList;
 	}
-/*	
-	public List<Courset> getCoursetList(double x, double y, String station) {
-		
-		Date date = new Date();
-		List<Course> cList = new ArrayList<Course>();
-		cList.add(new Course(nextCourseId, "서울시티투어", "서울의 전경을 한 눈에 볼 수 있는 코스로 자연 경관과 도시 경관 모두 볼 수 있습니다.",  1, "healing", 0, "https://dummyimage.com/500x500/ced4da/6c757d.jpg", 2, date));
-		nextCourseId++;
 
-		
-		return cList;
-	}*/
 	
 }
