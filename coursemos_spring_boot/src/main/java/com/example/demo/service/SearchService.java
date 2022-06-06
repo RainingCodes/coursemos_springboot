@@ -11,7 +11,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.ModelAttribute;
 
 import com.example.demo.domain.Course;
-import com.example.demo.domain.Courset;
 import com.example.demo.domain.TasteCategory;
 
 @Service
