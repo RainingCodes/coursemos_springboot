@@ -96,9 +96,6 @@
 	        
 			<div id="map"></div>        
           <div id="searchResult"></div>
-          
-          <p id="data"></p>
-         
          
           <div id="map"></div>
             
@@ -201,10 +198,10 @@
  
             <p id="result"></p>
 
-            <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=c17b5563968f2fffd356919521833ce2&libraries=services"></script>
-            
-            <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+			<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=c17b5563968f2fffd356919521833ce2&libraries=services"></script>
 
+            <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+            <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
 
             <script>
             var existTwoSearchForm = false;
@@ -245,10 +242,6 @@
            
 			function makeMarker(xml) {
             	 var xmlData = xhr.responseXML;
-                 console.log(xmlData.getElementsByTagName("NUM")[0].firstChild.nodeValue);
-                 console.log(xmlData.getElementsByTagName("FAC_NAME")[0].firstChild.nodeValue);
-                 console.log(xmlData.getElementsByTagName("ADDR")[0].firstChild.nodeValue);
-                 console.log(xmlData.getElementsByTagName("FAC_DESC")[0].firstChild.nodeValue);
                 var x = xmlData.getElementsByTagName("X_COORD")[0].firstChild.nodeValue;
 				var y = xmlData.getElementsByTagName("Y_COORD")[0].firstChild.nodeValue;
 				var c = xmlData.getElementsByTagName("FAC_DESC")[0].firstChild.nodeValue
