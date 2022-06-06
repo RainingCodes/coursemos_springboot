@@ -200,24 +200,7 @@
             
  
             <p id="result"></p>
-            <!--  
-            <nav aria-label="Page navigation example">
-			  <ul class="pagination">
-			    <li class="page-item">
-			      <a class="page-link" href="#" aria-label="Previous">
-			        <span aria-hidden="true">&laquo;</span>
-			      </a>
-			    </li>
-			    <li class="page-item"><a class="page-link" href="#">1</a></li>
-			    <li class="page-item"><a class="page-link" href="#">2</a></li>
-			    <li class="page-item"><a class="page-link" href="#">3</a></li>
-			    <li class="page-item">
-			      <a class="page-link" href="#" aria-label="Next">
-			        <span aria-hidden="true">&raquo;</span>
-			      </a>
-			    </li>
-			  </ul>
-			</nav>-->
+
             <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=c17b5563968f2fffd356919521833ce2&libraries=services"></script>
             
             <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
@@ -249,61 +232,63 @@
             
             //const url = 'https://api.odcloud.kr/api/15097002/v1/uddi:fb5d5e53-c0e6-446e-967c-94aea2dd4a2d?page=1&perPage=10&serviceKey=JII1QyQevHCT6KwLF5oLNwVmQrzSuKpTCt4pQSECQZFZtQ7Mg7k8uk38UCRIkewT1FpfCH%2Fy%2BKQ1eyVQRK4ZFw%3D%3D';
             const url = 'http://openapi.seoul.go.kr:8088/6243537573636e7338366274636b76/xml/culturalSpaceInfo/1/1';
-            
-            
-            fetch(url)
-           	.then((response) => response.text())
-  			.then((data) => console.log(data));
-           // .then(res => res.json())
-           // .then(myJson => {
-            	//console.log(res);
-            	/*const stores = myJson.row;
-            	document.getElementById('data').innerText = JSON.stringify(myJson, null, 1);
-	            	for (var i = 0; i < stores.length; i ++) {
-					    // 마커를 생성합니다
-					    var marker = new kakao.maps.Marker({
-					        map: map, // 마커를 표시할 지도
-					        position: new kakao.maps.LatLng(37.577552, 126.976869)
-					    });
-					
-					    // 마커에 표시할 인포윈도우를 생성합니다 
-					    var infowindow = new kakao.maps.InfoWindow({
-					        content: stores[i][FAC_NAME] // 인포윈도우에 표시할 내용
-					    }); 
-					    
-					
-					    // 마커에 mouseover 이벤트와 mouseout 이벤트를 등록합니다
-					    // 이벤트 리스너로는 클로저를 만들어 등록합니다 
-					    // for문에서 클로저를 만들어 주지 않으면 마지막 마커에만 이벤트가 등록됩니다
-					    kakao.maps.event.addListener(marker, 'mouseover', makeOverListener(map, marker, infowindow));
-					    kakao.maps.event.addListener(marker, 'mouseout', makeOutListener(infowindow));
-					}
-	            	
-	            	// 인포윈도우를 표시하는 클로저를 만드는 함수입니다 
-	            	function makeOverListener(map, marker, infowindow) {
-	            	    return function() {
-	            	    	infowindow.open(map, marker);
-	            	    };
-	            	}
-
-	            	// 인포윈도우를 닫는 클로저를 만드는 함수입니다 
-	            	function makeOutListener(infowindow) {
-	            	    return function() {
-	            	    	infowindow.close();
-	            	    };
-	            	}*/
-
-            //}) 
+            var xhr = new XMLHttpRequest();
+            xhr.open('GET', url);
+            xhr.onreadystatechange = function () {
+            if (this.readyState == xhr.DONE) { // <== 정상적으로 준비되었을때
+		            if(xhr.status == 200||xhr.status == 201){ // <== 호출 상태가 정상적일때
+		            	makeMarker(xhr);
+		            }
+	            }
+            };
+            xhr.send('')
            
+			function makeMarker(xml) {
+            	 var xmlData = xhr.responseXML;
+                 console.log(xmlData.getElementsByTagName("NUM")[0].firstChild.nodeValue);
+                 console.log(xmlData.getElementsByTagName("FAC_NAME")[0].firstChild.nodeValue);
+                 console.log(xmlData.getElementsByTagName("ADDR")[0].firstChild.nodeValue);
+                 console.log(xmlData.getElementsByTagName("FAC_DESC")[0].firstChild.nodeValue);
+                var x = xmlData.getElementsByTagName("X_COORD")[0].firstChild.nodeValue;
+				var y = xmlData.getElementsByTagName("Y_COORD")[0].firstChild.nodeValue;
+				var c = xmlData.getElementsByTagName("FAC_DESC")[0].firstChild.nodeValue
+            	var marker = new kakao.maps.Marker({
+                    map: map, // 마커를 표시할 지도
+                    position: new kakao.maps.LatLng(x, y) // 마커의 위치
+                });
 
-            // 마커를 클릭하면 장소명을 표출할 인포윈도우 입니다
-            var infowindow = new kakao.maps.InfoWindow({zIndex:1});
+                // 마커에 표시할 인포윈도우를 생성합니다 
+                var infowindow = new kakao.maps.InfoWindow({
+                    content: c // 인포윈도우에 표시할 내용
+                });
+                
+                // 마커에 mouseover 이벤트와 mouseout 이벤트를 등록합니다
+                // 이벤트 리스너로는 클로저를 만들어 등록합니다 
+                // for문에서 클로저를 만들어 주지 않으면 마지막 마커에만 이벤트가 등록됩니다
+                kakao.maps.event.addListener(marker, 'mouseover', makeOverListener(map, marker, infowindow));
+                kakao.maps.event.addListener(marker, 'mouseout', makeOutListener(infowindow));
+            }
+	
+	            // 인포윈도우를 표시하는 클로저를 만드는 함수입니다 
+	            function makeOverListener(map, marker, infowindow) {
+	                return function() {
+	                    infowindow.open(map, marker);
+	                };
+	            }
+	
+	            // 인포윈도우를 닫는 클로저를 만드는 함수입니다 
+	            function makeOutListener(infowindow) {
+	                return function() {
+	                    infowindow.close();
+	                };
+	            }
 
-            var mapContainer = document.getElementById('map'), // 지도를 표시할 div 
+	            
+	            var mapContainer = document.getElementById('map'), // 지도를 표시할 div 
                 mapOption = {
-                    center: new kakao.maps.LatLng(37.566826, 126.9786567), // 지도의 중심좌표
+                    center: new kakao.maps.LatLng(37.577552,126.976869), // 지도의 중심좌표
                     level: 3 // 지도의 확대 레벨
-                };  
+                }; 
 
             // 지도를 생성합니다    
             var map = new kakao.maps.Map(mapContainer, mapOption); 
