@@ -1,82 +1,85 @@
 package com.example.demo.domain;
 
 import java.io.Serializable;
+import java.sql.Date;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.persistence.Column;
+import javax.persistence.Embedded;
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
+import javax.persistence.PrimaryKeyJoinColumn;
+import javax.persistence.SecondaryTable;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
+import javax.persistence.Transient;
+
 
 import org.springframework.data.annotation.Id;
+import org.springframework.web.bind.annotation.ModelAttribute;
+
+import lombok.Getter;
+import lombok.Setter;
+
+
 
 //import com.example.dto.OAuthAttributes.OAuthAttributesBuilder;
 
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
 
-//@Getter
-//@NoArgsConstructor
 //@Entity
 @SuppressWarnings("serial")
+//@SecondaryTable(name="MYREVIEWS", pkJoinColumns=@PrimaryKeyJoinColumn(
+//		name="memberId", referencedColumnName="memberId"))
+//@SecondaryTable(name="MYCOURSES", pkJoinColumns=@PrimaryKeyJoinColumn(
+//		name="memberId", referencedColumnName="memberId"))
 //public class Member extends BaseEntity implements Serializable {
 public class Member  implements Serializable {
   /* Private Fields */
 
-  @Id
-  @GeneratedValue(strategy = GenerationType.IDENTITY)
+  @Id @Getter @Setter
   private Long id;
   
-  @Column(nullable=false)
+  @Column(nullable=false, unique=true) @Getter @Setter
   private String nickName;
-  @Column(nullable = false)
-  private int gender;
-  @Column(nullable = false)
-  private String birth;
-  @Column(nullable = false)
-  private String userName;
-  @Column()
-  private String taste;
   
-  private MyData myData;
+  @Column(nullable=false) @Getter @Setter
+  private String password;
   
+  @Column(nullable = false) @Getter @Setter
+  private int genderCode;
+  
+  
+  @Temporal(TemporalType.DATE) @Getter @Setter
+  @Column(nullable = false)
+  private Date birth;
+  
+  @Column() @Getter @Setter
+  private String tasteCode;
+  
+  @Transient @Getter @Setter
+  private int point;
+  
+  //@Transient
+  //@Embedded @Getter @Setter
+  //private MyData myData;
+  
+  @Transient
   private Role role;
 
   /* JavaBeans Properties */
 
-  public String getNickName() { return nickName; }
-  public void setNickName(String nickName) { this.nickName = nickName; }
-  public int getGender() {
-	  return gender;
-	  }
-  public void setGender(int gender) {
-	  this.gender = gender;
-	  }
-  public String getBirth() {
-	  return birth;
-	  }
-  public void setBirth(String birth) {
-	  this.birth = birth;
-	  }
-  public String getUserName() {
-	  return userName;
+  
+  public Member() {
+	  super();
+	  this.nickName = "";
+	  this.password = "";
+	  this.genderCode = 0;
+	  this.birth = new Date(System.currentTimeMillis());
+	  this.tasteCode = null;
+	  this.point = 20;
+	  this.role = Role.USER;
+	  //this.myData = new MyData();
   }
-  public void setUserName(String userName) {
-	  this.userName = userName;
-	  }
-  public String getTaste() {
-	  return taste;
-	  }
-  public void setTaste(String taste) {
-	  this.taste = taste;
-	  }
-  public MyData getMyData() {
-	  return myData;
-	  }
-  public void setMyData(MyData myData) {
-	  this.myData = myData;
-	  }
-//@Builder
 //public Member(String nickName, int gender, String birth, String userName, String taste, Role role) {
 //		super();
 //		this.nickName = nickName;
@@ -86,10 +89,6 @@ public class Member  implements Serializable {
 //		this.taste = taste;
 //		this.role = role;
 //	}
-public void setRole(Role role) {
-	this.role = role;
-}
-public String getRoleKey() {
-	return this.role.getKey();
-}
+
+	
 }
