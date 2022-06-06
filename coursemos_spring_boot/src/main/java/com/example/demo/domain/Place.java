@@ -9,7 +9,7 @@ import lombok.Setter;
 public class Place {
 	int placeId;
 	String taste;
-	String name;
+	String placeName;
 	double x;
 	double y;
 	String subway;
