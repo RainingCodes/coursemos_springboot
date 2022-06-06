@@ -2,7 +2,7 @@ package com.example.demo.dao;
 import org.springframework.dao.DataAccessException;
 
 import com.example.demo.domain.Member;
-public interface UserDao {
+public interface MemberDao {
 
 	  Member getUser(int userId) throws DataAccessException;
 

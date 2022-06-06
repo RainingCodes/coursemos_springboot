@@ -1,17 +1,14 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-
-<%@ include file="header/IncludeTop.jsp"  %>
+<%@ include file="../header/IncludeTop.jsp"  %>
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800;900&display=swap');
-
 * {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
     font-family: 'Poppins', sans-serif
 }
-
 .container {
 	width : 30%;
     margin: 20px auto;
@@ -35,20 +32,22 @@
 .mt-5, .c {
 	text-align : center;
 }
-
-.box:active,
-.box:visited {
-    border: 2px solid black;
-}
-
-.box:hover {
-    border: 2px solid black;
-}
 .container .box {
 	display:block;
     border: 2px solid transparent;
     color: #615f5fdd;
     margin : 15px auto;
+}
+#login2, #join {
+	display: inline-block;
+	border-radius:5px;
+}
+#login2 > a, #join > a {
+	text-decoration:none;
+	color: white;
+}
+.space {
+	height : 80px;
 }
 </style>
 <script src="https://developers.kakao.com/sdk/js/kakao.js"></script>
@@ -79,7 +78,10 @@ function kakaoLogin() {
                     	<div class="loginBtn"><a href="javascript:kakaoLogin()"><img alt="카카오 로그인" src="../img/kakao_login.png" width=200 height=50></a></div>
                     	<div class="loginBtn"><a href="/"><img alt="네이버 로그인" src="../img/naver_login.png" width=200 height=50></a></div>
                     	<div class="loginBtn"><a href="/"><img alt="구글 로그인" src="../img/google_login.png" width=200 height=50></a></div>
-                    	<div class="loginBtn"><a href="/mock">임시로그인</a>
+                    	<div class="loginBtn"><a href="/mock">임시로그인</a></div>
+                    	<div class="loginBtn btn-dark btn-sm" id="login2"><a href="/login2">다른 방법으로 로그인</a></div>
+                    	<div class="loginBtn btn-secondary btn-sm" id="join"><a href="/join">회원가입</a></div>
+                    	<div class="space">&nbsp;</div>
                 </div>
             </div>
         </div>
