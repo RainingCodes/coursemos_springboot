@@ -5,6 +5,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.autoconfigure.data.web.SpringDataWebProperties.Pageable;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -82,7 +84,10 @@ public class SearchPlaceController {
 		double y = 126.976869;
 		mav.addObject("x", x);
 		mav.addObject("y", y);
-		List<Course> cList = searchService.getCourseList(x, y);
+		String station = "시청역";
+		mav.addObject("station", station);
+		List<Course> cList = searchService.getCourseList(x, y, station);
+		//Page<Course> cList = 
 		mav.addObject("cList", cList);
 		List<String> tList = searchService.getTasteCategory(null);
 		mav.addObject("tList", tList);

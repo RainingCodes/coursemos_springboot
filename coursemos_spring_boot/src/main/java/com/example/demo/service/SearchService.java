@@ -55,7 +55,7 @@ public class SearchService {
 //		return cList;
 //	}
 	
-	public List<Course> getCourseList(double x, double y) {
+	public List<Course> getCourseList(double x, double y, String station) {
 		String[] coorArr = {"37.577552,126.976869", "37.551245,126.988216", "37.522470,126.939713"};
 		
 		Date date = new Date();
@@ -66,6 +66,7 @@ public class SearchService {
 		nextCourseId++;
 		cList.add(new Course(nextCourseId, "'카페투어'", "커피와 디저트를 좋아하는 사람을 위한 코스.", coorArr, 120, 1, "calm", "https://dummyimage.com/500x500/ced4da/6c757d.jpg", 4, date ));
 		nextCourseId++;
+		
 		return cList;
 	}
 	
