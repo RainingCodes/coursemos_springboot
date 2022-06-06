@@ -97,9 +97,6 @@
 			<div id="map"></div>        
           <div id="searchResult"></div>
          
-          <div id="map"></div>
-            
-	    
             <div id="courseList">
             <c:forEach var="cate" items="${cList}">
               <div class="accordion accordion-flush" id="accordionFlushExample">
@@ -228,7 +225,7 @@
             }	
             
             //const url = 'https://api.odcloud.kr/api/15097002/v1/uddi:fb5d5e53-c0e6-446e-967c-94aea2dd4a2d?page=1&perPage=10&serviceKey=JII1QyQevHCT6KwLF5oLNwVmQrzSuKpTCt4pQSECQZFZtQ7Mg7k8uk38UCRIkewT1FpfCH%2Fy%2BKQ1eyVQRK4ZFw%3D%3D';
-            const url = 'http://openapi.seoul.go.kr:8088/6243537573636e7338366274636b76/xml/culturalSpaceInfo/1/1';
+            const url = 'http://openapi.seoul.go.kr:8088/6243537573636e7338366274636b76/xml/culturalSpaceInfo/30/30';
             var xhr = new XMLHttpRequest();
             xhr.open('GET', url);
             xhr.onreadystatechange = function () {
@@ -239,12 +236,11 @@
 	            }
             };
             xhr.send('')
-           
 			function makeMarker(xml) {
-            	 var xmlData = xhr.responseXML;
+            	var xmlData = xhr.responseXML;
                 var x = xmlData.getElementsByTagName("X_COORD")[0].firstChild.nodeValue;
 				var y = xmlData.getElementsByTagName("Y_COORD")[0].firstChild.nodeValue;
-				var c = xmlData.getElementsByTagName("FAC_DESC")[0].firstChild.nodeValue
+				var c = xmlData.getElementsByTagName("FAC_NAME")[0].firstChild.nodeValue;
             	var marker = new kakao.maps.Marker({
                     map: map, // 마커를 표시할 지도
                     position: new kakao.maps.LatLng(x, y) // 마커의 위치
@@ -252,7 +248,8 @@
 
                 // 마커에 표시할 인포윈도우를 생성합니다 
                 var infowindow = new kakao.maps.InfoWindow({
-                    content: c // 인포윈도우에 표시할 내용
+    					content: c // 인포윈도우에 표시할 내용
+              
                 });
                 
                 // 마커에 mouseover 이벤트와 mouseout 이벤트를 등록합니다
