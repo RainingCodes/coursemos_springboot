@@ -31,9 +31,9 @@ public class JpaReportDao implements ReportDao {
 
 	@Override
 	public void insertReport(Report report) throws DataAccessException {
-		int newReportId = sequenceDao.getNextId("reportnum");
-    	report.setReportId(newReportId);
-		em.persist(report);
+//		int newReportId = sequenceDao.getNextId("reportnum");
+//    	report.setReportId(newReportId);
+//		em.persist(report);
 	}
 
 	@Override
