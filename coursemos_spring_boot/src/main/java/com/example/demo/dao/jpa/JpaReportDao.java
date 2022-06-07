@@ -6,21 +6,16 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.TypedQuery;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
 import org.springframework.stereotype.Repository;
 
 import com.example.demo.dao.ReportDao;
-import com.example.demo.dao.SequenceDao;
 import com.example.demo.domain.Report;
 
 @Repository
 public class JpaReportDao implements ReportDao {
 	@PersistenceContext
     private EntityManager em;
-	
-//	@Autowired
-//	private SequenceDao sequenceDao;
 
 	@Override
 	public List<Report> getAllReport() throws DataAccessException {
@@ -31,9 +26,7 @@ public class JpaReportDao implements ReportDao {
 
 	@Override
 	public void insertReport(Report report) throws DataAccessException {
-//		int newReportId = sequenceDao.getNextId("reportnum");
-//    	report.setReportId(newReportId);
-//		em.persist(report);
+		em.persist(report);
 	}
 
 	@Override

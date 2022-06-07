@@ -1,10 +1,13 @@
 package com.example.demo.controller;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -13,11 +16,15 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 import com.example.demo.domain.Report;
+import com.example.demo.service.ReportService;
 
 import lombok.*;
 
 @Controller
 public class ReportController {
+	@Autowired
+	private ReportService reportService;
+	
 	@Getter @Setter @AllArgsConstructor
 	public class ReportCodes {
 		public String code;
@@ -39,19 +46,17 @@ public class ReportController {
 	public Report formBacking(HttpServletRequest request) {
 		if (request.getMethod().equalsIgnoreCase("GET")) {
 			Report courseReport = new Report();
-//		    courseReport.setCourseId(Integer.parseInt(courseId));
-//		    courseReport.setUserId(-1); //세션처리 해야할듯
-//		    courseReport.setReviewId(-1);
-//		    courseReport.setWrittenDate(null);
-//		    courseReport.setState(false);
-		    //reportcategory, reportid는 나중에
+		    courseReport.setCourseId(-1);
+		    courseReport.setUserId(-1); //세션처리 해야할듯
+		    courseReport.setWrittenDate(null);
+		    courseReport.setState(false);
 			return courseReport;
 		}
 		else return new Report();
 	}
 	
 	@RequestMapping(value = "/report/course/{courseId}", method = RequestMethod.GET)
-	public String courseReportForm(@PathVariable String courseId, Model model) {
+	public String courseReportForm(@PathVariable int courseId, Model model) {
 		model.addAttribute("courseId", courseId);
 		
 		//서비스로 게시글 제목, 글쓴이 가져오는 것 나중에 구현해서 모델에 연결해서 리턴
@@ -62,11 +67,16 @@ public class ReportController {
 	}
 	
 	@RequestMapping(value = "/report/course/{courseId}", method = RequestMethod.POST)
-	public String courseReportRegister(@PathVariable String courseId,
+	public String courseReportRegister(@PathVariable int courseId,
 			@ModelAttribute("Report") Report courseReport) {
 		
-		//서비스 구현해서 report값 return하고 원래 course게시글로 이동
+		courseReport.setCourseId(courseId);
+		long miliseconds = System.currentTimeMillis();
+	    Date current = new Date(miliseconds);
+		courseReport.setWrittenDate(current);
 		
+		//서비스 구현해서 report값 return하고 원래 course게시글로 이동
+		reportService.insertAccount(courseReport);
 		return "course/"+courseId;
 	}
 	
