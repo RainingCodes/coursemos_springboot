@@ -19,8 +19,8 @@ public class JpaReportDao implements ReportDao {
 	@PersistenceContext
     private EntityManager em;
 	
-	@Autowired
-	private SequenceDao sequenceDao;
+//	@Autowired
+//	private SequenceDao sequenceDao;
 
 	@Override
 	public List<Report> getAllReport() throws DataAccessException {
