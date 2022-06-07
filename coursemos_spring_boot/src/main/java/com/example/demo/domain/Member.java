@@ -2,24 +2,17 @@ package com.example.demo.domain;
 
 import java.io.Serializable;
 import java.sql.Date;
-import java.util.ArrayList;
-import java.util.List;
 
 import javax.persistence.Column;
-import javax.persistence.Embedded;
-import javax.persistence.Entity;
-import javax.persistence.PrimaryKeyJoinColumn;
-import javax.persistence.SecondaryTable;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.persistence.Transient;
 
-
 import org.springframework.data.annotation.Id;
-import org.springframework.web.bind.annotation.ModelAttribute;
 
 import lombok.Getter;
 import lombok.Setter;
+import lombok.ToString;
 
 
 
@@ -27,6 +20,7 @@ import lombok.Setter;
 
 
 //@Entity
+@ToString(exclude = "password")
 @SuppressWarnings("serial")
 //@SecondaryTable(name="MYREVIEWS", pkJoinColumns=@PrimaryKeyJoinColumn(
 //		name="memberId", referencedColumnName="memberId"))
@@ -36,24 +30,27 @@ import lombok.Setter;
 public class Member  implements Serializable {
   /* Private Fields */
 
-  @Id @Getter @Setter
+  @Id @Getter @Setter 
   private Long id;
   
-  @Column(nullable=false, unique=true) @Getter @Setter
+  @Column(nullable=false, unique=true) @Getter @Setter 
   private String nickName;
   
-  @Column(nullable=false) @Getter @Setter
+  
+  @Column(nullable=false) @Setter @Getter
   private String password;
   
-  @Column(nullable = false) @Getter @Setter
-  private int genderCode;
+  @Column(nullable=false) @Getter @Setter
+  private Character type;
   
+  @Column(nullable=false, name="gender") @Getter @Setter
+  private Integer genderCode;
   
   @Temporal(TemporalType.DATE) @Getter @Setter
   @Column(nullable = false)
   private Date birth;
   
-  @Column() @Getter @Setter
+  @Column(name="taste") @Getter @Setter
   private String tasteCode;
   
   @Transient @Getter @Setter
@@ -61,23 +58,21 @@ public class Member  implements Serializable {
   
   //@Transient
   //@Embedded @Getter @Setter
-  //private MyData myData;
+  private MyData myData;
   
-  @Transient
-  private Role role;
 
   /* JavaBeans Properties */
 
   
   public Member() {
 	  super();
-	  this.nickName = "";
-	  this.password = "";
-	  this.genderCode = 0;
+	  this.nickName = null;
+	  this.password = null;
+	  this.genderCode = null;
 	  this.birth = new Date(System.currentTimeMillis());
+	  this.type = 'E';
 	  this.tasteCode = null;
 	  this.point = 20;
-	  this.role = Role.USER;
 	  //this.myData = new MyData();
   }
 //public Member(String nickName, int gender, String birth, String userName, String taste, Role role) {
