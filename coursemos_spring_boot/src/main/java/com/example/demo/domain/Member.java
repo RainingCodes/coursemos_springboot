@@ -5,9 +5,12 @@ import java.sql.Date;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Transient;
 
 import javax.persistence.Id;
+import javax.persistence.SequenceGenerator;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -20,6 +23,11 @@ import lombok.ToString;
 
 @Entity
 @ToString(exclude = "password")
+@SequenceGenerator(
+		  name = "MEMBER_SEQ_GENERATOR", 
+		  sequenceName = "MEMBER_SEQ", // 매핑할 데이터베이스 시퀀스 이름 
+		  initialValue = 1,
+		  allocationSize = 1)
 @SuppressWarnings("serial")
 //@SecondaryTable(name="MYREVIEWS", pkJoinColumns=@PrimaryKeyJoinColumn(
 //		name="memberId", referencedColumnName="memberId"))
@@ -28,8 +36,9 @@ import lombok.ToString;
 //public class Member extends BaseEntity implements Serializable {
 public class Member  implements Serializable {
   /* Private Fields */
-
-  @Id @Column(name="memberId") @Getter @Setter 
+	
+  @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "MEMBER_SEQ_GENERATOR")
+  @Id @Column(name="memberId")
   private Long id;
   
   @Column(nullable=false, unique=true) @Getter @Setter 
@@ -57,7 +66,7 @@ public class Member  implements Serializable {
   
   //@Transient
   //@Embedded @Getter @Setter
-  private MyData myData;
+  //private MyData myData;
   
 
   /* JavaBeans Properties */
