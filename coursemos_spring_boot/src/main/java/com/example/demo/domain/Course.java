@@ -3,37 +3,39 @@ package com.example.demo.domain;
 import java.io.Serializable;
 import java.util.Date;
 
+import javax.persistence.Entity;
+
 @SuppressWarnings("serial")
 public class Course implements Serializable {
 
 	private int courseId;
 	private String courseName;
 	private String courseContents;
-	private String[] coordinates; //좌표
-	private int travelTime;
 	private int memberId;
 	private String taste;
-	private String photo;
 	private int likes;
 	private Date writtenDate;
+	private int place1;
+	private int place2;
+	private int place3;
 	
 	public Course() {
 		
 	}
 	
-	public Course(int courseId, String courseName, String courseContents, String[] coordinates, int travelTime,
-			int memberId, String taste, String photo, int likes, Date writtenDate) {
+	public Course(int courseId, String courseName, String courseContents, int memberId, String taste, int likes,
+			Date writtenDate, int place1, int place2, int place3) {
 		super();
 		this.courseId = courseId;
 		this.courseName = courseName;
 		this.courseContents = courseContents;
-		this.coordinates = coordinates;
-		this.travelTime = travelTime;
 		this.memberId = memberId;
 		this.taste = taste;
-		this.photo = photo;
 		this.likes = likes;
 		this.writtenDate = writtenDate;
+		this.place1 = place1;
+		this.place2 = place2;
+		this.place3 = place3;
 	}
 	public int getCourseId() {
 		return courseId;
@@ -53,18 +55,6 @@ public class Course implements Serializable {
 	public void setCourseContents(String courseContents) {
 		this.courseContents = courseContents;
 	}
-	public String[] getCoordinates() {
-		return coordinates;
-	}
-	public void setCoordinates(String[] coordinates) {
-		this.coordinates = coordinates;
-	}
-	public int getTravelTime() {
-		return travelTime;
-	}
-	public void setTravelTime(int travelTime) {
-		this.travelTime = travelTime;
-	}
 	public int getMemberId() {
 		return memberId;
 	}
@@ -77,12 +67,6 @@ public class Course implements Serializable {
 	public void setTaste(String taste) {
 		this.taste = taste;
 	}
-	public String getPhoto() {
-		return photo;
-	}
-	public void setPhoto(String photo) {
-		this.photo = photo;
-	}
 	public int getLikes() {
 		return likes;
 	}
@@ -94,7 +78,25 @@ public class Course implements Serializable {
 	}
 	public void setWrittenDate(Date writtenDate) {
 		this.writtenDate = writtenDate;
-	} 
+	}
+	public int getPlace1() {
+		return place1;
+	}
+	public void setPlace1(int place1) {
+		this.place1 = place1;
+	}
+	public int getPlace2() {
+		return place2;
+	}
+	public void setPlace2(int place2) {
+		this.place2 = place2;
+	}
+	public int getPlace3() {
+		return place3;
+	}
+	public void setPlace3(int place3) {
+		this.place3 = place3;
+	}
 	
 	
 
