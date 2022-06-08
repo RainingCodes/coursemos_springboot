@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
+<%@ taglib uri="http://www.springframework.org/tags/form" prefix="form"%>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
@@ -54,7 +55,7 @@
 	<!-- Page content-->
 	<div class="container mt-5">
 		<div class="row" style="margin-left: 25%;">
-			<form name="form" method="POST" action="view/1"> <!-- 추후 수정 필요 -->
+			<form:form name="form" method="POST" action="view/1"> <!-- 추후 수정 필요 -->
 				<div class="col-lg-8">
 					<!-- Post content-->
 					<article>
@@ -66,7 +67,8 @@
 							<div class="card-body">
 								<div class="input-group">
 									<input class="form-control" name="inputTitle" type="text" v-model="inputTitle"
-										placeholder="코스 이름을 입력하세요" required>
+										placeholder="코스 이름을 입력하세요">
+									<form:errors path="course.name"/>
 								</div>
 								<!-- <div v-if="!titleValid">유효하지 않은 제목입니다.</div> -->
 							</div>
@@ -121,7 +123,7 @@
 							var geocoder = new kakao.maps.services.Geocoder();
 							
 							// 장소 검색 객체를 생성합니다
-							var ps = new kakao.maps.services.Places(); 
+							var ps = new kakao.maps.services.Places();
 							
 							// 키워드로 장소를 검색합니다
 							ps.keywordSearch('', placesSearchCB); 
@@ -137,7 +139,7 @@
 							        for (var i=0; i<data.length; i++) {
 							            displayMarker(data[i]);    
 							            bounds.extend(new kakao.maps.LatLng(data[i].y, data[i].x));
-							        }       
+							        }
 							
 							        // 검색된 장소 위치를 기준으로 지도 범위를 재설정합니다
 							        map.setBounds(bounds);
@@ -162,7 +164,7 @@
 							        infowindow.open(map, marker);
 					        
 							        document.getElementById('resultPlaceName').value = place.place_name;
-							        
+							     		        
 							        let lat = place.y;
 							    	let lng = place.x;
 							    	getAddr(lat, lng);
@@ -182,6 +184,7 @@
 								};
 								geocoder.coord2Address(coord.getLng(), coord.getLat(), callback);
 							}
+							
 							function copy_to_clipboard(a) {    
 								  var copyText = document.getElementById(a);
 								  copyText.select();
@@ -189,12 +192,11 @@
 								  document.execCommand("Copy");
 								  alert('복사되었습니다.');
 							}
-
 							</script>
 						
 						<br><b>마커를 클릭하면 해당 장소의 이름과 주소가 표시됩니다.
 						<br>복사/붙여넣기로 간편하게 아래 폼을 완성해보세요!</b><br>
-						<br>
+						<br>					
 						<b>장소: </b><input type="text" size="59.5px" style="border:none;" name="resultPlaceName" id="resultPlaceName" readonly><input type="button" style="height:23px;border:none;border-radius:5px;" onclick="copy_to_clipboard('resultPlaceName')" value="복사"><br>
 						<b>지번 주소: </b><input type="text" size="54.5px" style="border:none;" name="resultAddress" id="resultAddress" readonly><input type="button" style="height:23px;border:none;border-radius:5px;" onclick="copy_to_clipboard('resultAddress')" value="복사"><br>
 						<b>도로명 주소: </b><input type="text" size="52px" style="border:none;" name="resultRoadAddress" id="resultRoadAddress" placeholder="없을 경우 지번주소만 표시됩니다." readonly><input type="button" style="height:23px;border:none;border-radius:5px;" onclick="copy_to_clipboard('resultRoadAddress')" value="복사"><br>
@@ -220,16 +222,18 @@
 						<br>
 						<b>1번째 장소</b>
 						<input class="form-control" type="text" placeholder="장소" id='placeName1' name="placeName1" style="width: 95%" required><br> 
-						<input class="form-control" type="text" placeholder="상세 주소(지번)" id='address1' name="address1" style="width: 95%" required>
+						<input class="form-control" type="text" placeholder="상세 주소(지번)" id='address1' name="address1" onchange="onChangeAddress()" style="width: 95%" required>
 						<input class="form-control" type="text" placeholder="상세 주소(도로명, 없을 경우 생략)" name="road_address1" id='road_address1' style="width: 95%"><br> 					
                         <!-- Post content-->
                         <h5 id="description">코스에 대한 설명을 입력하세요</h5>
-                        <input class="form-control" name="contents" type="text" style="height:300px" required><br>
+                        <input class="form-control" name="contents" type="text" style="height:300px">
+                        <form:errors path="course.contents"/>
+                        <br>
                         <button type="submit" style="width:100%; height:40px; border:none; border-radius:5px; text-align: center;">등록하기</button>
                     </article>
                     <br><br><br>
                 </div>
-                </form>
+                </form:form>
                 <!-- Side widgets-->
                 <div class="col-lg-4">
                     <!-- Search widget-->
@@ -285,17 +289,4 @@
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/js/bootstrap.min.js" integrity="sha384-kjU+l4N0Yf4ZOJErLsIcvOU2qSb74wXpOhqTvwVx3OElZRweTnQ6d31fXEoRD1Jy" crossorigin="anonymous"></script>
 </body>
 <input type="button" name="add" value="+" id="add_btn" style="border:none;border-radius:5px; text-align: center; margin-left:300px; height: 30px;">
-<script>
-    	function getImageFiles(e) {
-    	  const files = e.currentTarget.files;
-   		  console.log(typeof files, files);
-    	}
-
-    	const realUpload = document.querySelector('.real-input');
-    	const upload = document.querySelector('.upload');
-
-    	upload.addEventListener('click', () => realUpload.click());
-    	realUpload.addEventListener('change', getImageFiles);
-</script>
-
 </html>
