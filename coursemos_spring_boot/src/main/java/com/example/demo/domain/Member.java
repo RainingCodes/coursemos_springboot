@@ -38,7 +38,7 @@ public class Member  implements Serializable {
   /* Private Fields */
 	
   @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "MEMBER_SEQ_GENERATOR")
-  @Id @Column(name="memberId")
+  @Id @Column(name="memberId") @Getter
   private Long id;
   
   @Column(nullable=false, unique=true) @Getter @Setter 
@@ -61,8 +61,8 @@ public class Member  implements Serializable {
   @Column(name="taste") @Getter @Setter
   private String tasteCode;
   
-  @Transient @Getter @Setter
-  private int point;
+  @Column(nullable=false) @Getter @Setter
+  private int points;
   
   //@Transient
   //@Embedded @Getter @Setter
@@ -80,7 +80,7 @@ public class Member  implements Serializable {
 	  this.birth = new Date(System.currentTimeMillis());
 	  this.type = 'E';
 	  this.tasteCode = null;
-	  this.point = 20;
+	  this.points = 20;
 	  //this.myData = new MyData();
   }
 //public Member(String nickName, int gender, String birth, String userName, String taste, Role role) {
