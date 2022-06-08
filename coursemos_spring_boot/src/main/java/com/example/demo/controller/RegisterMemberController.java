@@ -26,7 +26,7 @@ import lombok.Setter;
 @RequestMapping(value="/join")
 public class RegisterMemberController {
 	
-	@ModelAttribute("member") // MemberInfo 객체의 이름 지정
+	@ModelAttribute("member")
 	public Member formBacking(HttpServletRequest request) {
 		Member member = new Member(); // MemberInfo 객체 생성
 		return member; // session에 “member” 이름으로 저장됨
@@ -39,7 +39,7 @@ public class RegisterMemberController {
 	}
 	
 	@RequestMapping(method=RequestMethod.POST)
-	public String submit(@SessionAttribute Member member,
+	public String submit(@ModelAttribute Member member,
 	BindingResult result, SessionStatus status) {
 		new MemberValidator().validate(member, result);
 		if (result.hasErrors()) {
