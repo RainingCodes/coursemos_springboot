@@ -54,7 +54,7 @@
 	<!-- Page content-->
 	<div class="container mt-5">
 		<div class="row" style="margin-left: 25%;">
-			<form name="form" method="POST" action="<c:url value='/course/view'/>">
+			<form name="form" method="POST" action="view/1"> <!-- 추후 수정 필요 -->
 				<div class="col-lg-8">
 					<!-- Post content-->
 					<article>
@@ -65,7 +65,7 @@
 							<!-- Post title-->
 							<div class="card-body">
 								<div class="input-group">
-									<input class="form-control" type="text" v-model="inputTitle"
+									<input class="form-control" name="inputTitle" type="text" v-model="inputTitle"
 										placeholder="코스 이름을 입력하세요" required>
 								</div>
 								<!-- <div v-if="!titleValid">유효하지 않은 제목입니다.</div> -->
@@ -76,13 +76,13 @@
 						<div class="selectTaste"
 							style="display: inline-block; width: 300px; line-height: 45px;">
 							<!-- <input type="checkbox" name="category" v-for="item in taste"><span v-html="item"></span> -->
-							<input type="checkbox" name="category" value="active">활동적인
-							<input type="checkbox" name="category" value="calm">잔잔한
-							<input type="checkbox" name="category" value="healing">힐링
-							<input type="checkbox" name="category" value="nature">자연적인<br>
-							<input type="checkbox" name="category" value="experience">체험적
-							<input type="checkbox" name="category" value="entertaining">즐거운
-							<input type="checkbox" name="category" value="retro">복고풍
+							<input type="checkbox" name="category" value="활동적인">활동적인
+							<input type="checkbox" name="category" value="잔잔한">잔잔한
+							<input type="checkbox" name="category" value="힐링">힐링
+							<input type="checkbox" name="category" value="자연적인">자연적인<br>
+							<input type="checkbox" name="category" value="체험적">체험적
+							<input type="checkbox" name="category" value="즐거운">즐거운
+							<input type="checkbox" name="category" value="복고풍">복고풍
 						</div>
 						<br><br>						
 						<!-- 지도 -->
@@ -188,16 +188,16 @@
 								  copyText.setSelectionRange(0, 99999);
 								  document.execCommand("Copy");
 								  alert('복사되었습니다.');
-								}
+							}
 
 							</script>
 						
 						<br><b>마커를 클릭하면 해당 장소의 이름과 주소가 표시됩니다.
 						<br>복사/붙여넣기로 간편하게 아래 폼을 완성해보세요!</b><br>
 						<br>
-						<b>장소: </b><input type="text" size="59.5px" style="border:none;" id="resultPlaceName" readonly><input type="button" style="height:23px;border:none;border-radius:5px;" onclick="copy_to_clipboard('resultPlaceName')" value="복사"><br>
-						<b>지번 주소: </b><input type="text" size="54.5px" style="border:none;" id="resultAddress" readonly><input type="button" style="height:23px;border:none;border-radius:5px;" onclick="copy_to_clipboard('resultAddress')" value="복사"><br>
-						<b>도로명 주소: </b><input type="text" size="52px" style="border:none;" id="resultRoadAddress" placeholder="없을 경우 지번주소만 표시됩니다." readonly><input type="button" style="height:23px;border:none;border-radius:5px;" onclick="copy_to_clipboard('resultRoadAddress')" value="복사"><br>
+						<b>장소: </b><input type="text" size="59.5px" style="border:none;" name="resultPlaceName" id="resultPlaceName" readonly><input type="button" style="height:23px;border:none;border-radius:5px;" onclick="copy_to_clipboard('resultPlaceName')" value="복사"><br>
+						<b>지번 주소: </b><input type="text" size="54.5px" style="border:none;" name="resultAddress" id="resultAddress" readonly><input type="button" style="height:23px;border:none;border-radius:5px;" onclick="copy_to_clipboard('resultAddress')" value="복사"><br>
+						<b>도로명 주소: </b><input type="text" size="52px" style="border:none;" name="resultRoadAddress" id="resultRoadAddress" placeholder="없을 경우 지번주소만 표시됩니다." readonly><input type="button" style="height:23px;border:none;border-radius:5px;" onclick="copy_to_clipboard('resultRoadAddress')" value="복사"><br>
 						<br>					
 						<!-- 코스 추가 -->
 						<h5>최대 3군데의 장소를 추가할 수 있습니다 <input type="button" name="add" value="+" id="add_btn" style="border: none; border-radius: 5px; text-align: center; margin-left: 30%; height: 30px;"></h5>
@@ -210,25 +210,21 @@
 									  alert("최대 입력 값을 초과했습니다.");
 								  else {
 									  cnt++;	  
-									  $("#description").before('<hr style="width: 95%"><b>'+cnt+'번째 장소</b>'+ '<br><p><input class="form-control" type="text" placeholder="장소" id="placeName" style="width: 95%" required><br><input class="form-control" type="text" placeholder="상세 주소(지번)" id="address" style="width: 95%" required><input class="form-control" type="text" placeholder="상세 주소(도로명, 없을 경우 지번주소만 표시됩니다.)" id="road_address" style="width: 95%"><br> <input class="form-control" type="text"	placeholder="소요 비용(원)" style="width: 95%" required><br><input class="form-control" type="text" placeholder="소요 시간(분)" style="width: 95%" required></p>');
+									  $("#description").before('<hr style="width: 95%"><b>'+cnt+'번째 장소</b>'+ '<br><p><input class="form-control" type="text" placeholder="장소" name="placeName'+cnt+'" style="width: 95%" required><br><input class="form-control" type="text" placeholder="상세 주소(지번)" name="address' + cnt +'" style="width: 95%" required><input class="form-control" type="text" placeholder="상세 주소(도로명, 없을 경우 지번주소만 표시됩니다.)" name="road_address' + cnt + '" style="width: 95%"><br></p>');
 									  //$("#place").val(cnt);
 									  }			  
 							  });
 							});
 						
 						</script>
-						
 						<br>
 						<b>1번째 장소</b>
-						<input class="form-control" type="text" placeholder="장소" id='placeName' style="width: 95%" required><br> 
-						<input class="form-control" type="text" placeholder="상세 주소(지번)" id='address' style="width: 95%" required>
-						<input class="form-control" type="text" placeholder="상세 주소(도로명, 없을 경우 생략)" id='road_address' style="width: 95%"><br> 
-
-						<input class="form-control" type="text"	placeholder="소요 비용(원)" style="width: 95%" required><br>
-						<input class="form-control" type="text" placeholder="소요 시간(분)" style="width: 95%" required><br>					
+						<input class="form-control" type="text" placeholder="장소" id='placeName1' name="placeName1" style="width: 95%" required><br> 
+						<input class="form-control" type="text" placeholder="상세 주소(지번)" id='address1' name="address1" style="width: 95%" required>
+						<input class="form-control" type="text" placeholder="상세 주소(도로명, 없을 경우 생략)" name="road_address1" id='road_address1' style="width: 95%"><br> 					
                         <!-- Post content-->
                         <h5 id="description">코스에 대한 설명을 입력하세요</h5>
-                        <input class="form-control" type="text" style="height:300px" required><br>
+                        <input class="form-control" name="contents" type="text" style="height:300px" required><br>
                         <button type="submit" style="width:100%; height:40px; border:none; border-radius:5px; text-align: center;">등록하기</button>
                     </article>
                     <br><br><br>

@@ -4,11 +4,10 @@ import java.io.Serializable;
 import java.sql.Date;
 
 import javax.persistence.Column;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
+import javax.persistence.Entity;
 import javax.persistence.Transient;
 
-import org.springframework.data.annotation.Id;
+import javax.persistence.Id;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -19,7 +18,7 @@ import lombok.ToString;
 //import com.example.dto.OAuthAttributes.OAuthAttributesBuilder;
 
 
-//@Entity
+@Entity
 @ToString(exclude = "password")
 @SuppressWarnings("serial")
 //@SecondaryTable(name="MYREVIEWS", pkJoinColumns=@PrimaryKeyJoinColumn(
@@ -30,7 +29,7 @@ import lombok.ToString;
 public class Member  implements Serializable {
   /* Private Fields */
 
-  @Id @Getter @Setter 
+  @Id @Column(name="memberId") @Getter @Setter 
   private Long id;
   
   @Column(nullable=false, unique=true) @Getter @Setter 
@@ -46,7 +45,7 @@ public class Member  implements Serializable {
   @Column(nullable=false, name="gender") @Getter @Setter
   private Integer genderCode;
   
-  @Temporal(TemporalType.DATE) @Getter @Setter
+  @Getter @Setter
   @Column(nullable = false)
   private Date birth;
   

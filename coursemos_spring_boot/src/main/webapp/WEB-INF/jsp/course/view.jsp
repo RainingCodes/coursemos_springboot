@@ -1,5 +1,25 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%
+	String inputTitle = request.getParameter("inputTitle");
+	String placeName1 = request.getParameter("placeName1");
+	String placeName2 = request.getParameter("placeName2") == null ? "": request.getParameter("placeName2");
+	String placeName3 = request.getParameter("placeName3") == null ? "": request.getParameter("placeName3");
+	String[] placeNameList = {placeName1, placeName2, placeName3};
+	
+	String address1 = request.getParameter("address1");
+	String address2 = request.getParameter("address2") == null ? "": request.getParameter("address2");
+	String address3 = request.getParameter("address3") == null ? "": request.getParameter("address3");
+	String[] addressList = {address1, address2, address3};
+	
+	String roadAddress1 = request.getParameter("road_address1"); //서울특별시 성북구 화랑로13길 60
+	String roadAddress2 = request.getParameter("road_address2") == null ? "": request.getParameter("road_address2");
+	String roadAddress3 = request.getParameter("road_address3") == null ? "": request.getParameter("road_address3");
+	String roadAddressList[] = {roadAddress1, roadAddress2, roadAddress3};
+	
+	String[] category = request.getParameterValues("category");
+	String contents = request.getParameter("contents");
+%>    
 <!DOCTYPE html>
 <html>
 <head>
@@ -21,10 +41,8 @@
 		<div class="container">
 			<div>
 				<ul class="navbar-nav ms-auto mb-2 mb-lg-0">
-					<li class="nav-item"><a class="nav-link active" href="#!">코스
-							등록</a></li>
-					<li class="nav-item"><a class="nav-link active" href="#!">제휴
-							등록</a></li>
+					<li class="nav-item"><a class="nav-link active" href="#!">코스 등록</a></li>
+					<li class="nav-item"><a class="nav-link active" href="#!">제휴 등록</a></li>
 				</ul>
 			</div>
 			<div align="center">
@@ -51,7 +69,10 @@
 	</nav>
 	<!-- Page content-->
 	<form action="" method="post">
-	<div class="container mt-5">
+		<script type="text/javascript"
+			src="//dapi.kakao.com/v2/maps/sdk.js?c17b5563968f2fffd356919521833ce2&libraries=services"></script>
+		
+		<div class="container mt-5">
 		<div class="row">
 			<div class="col-lg-8">
 				<!-- Post content-->
@@ -63,88 +84,52 @@
 					<div>
 					<p></p>
 					<!-- Post title-->
-					<h4 style="font-weight:bold;" id="courseTitle">서울 랜드마크 투어</h4><br>
+					<h4 style="font-weight:bold;" id="courseTitle"><%=inputTitle %></h4><br>
 					<!-- <input id="courseTitle" type="text" value="제목"> -->
-
-					
-					<!-- Preview image figure-->
-					<h5 style="font-weight:bold;">코스 대표 이미지</h5>
-					<img class="img-fluid rounded" id="preview-image" src="../../img/seoul.png" /> <br>
-					<br>
-					<br>
 					<div class="upload"></div>
 					<h5 style="font-weight:bold;">코스의 분위기</h5>
 					<!-- <div>활동적인, 즐거운</div> -->
 					<div>
-						<% for (int i = 0; i < 3; i++){%>
-							<div>코스 분위기 <%=i %></div>
+						<% for (int i = 0; i < category.length; i++){%>
+							<div><%=category[i] %></div>
 						<% }%>
 					</div>
 					<br>
 					<br>
-					<br>
 					<h5 style="font-weight:bold;">코스 경로 살펴보기</h5>
 					<br>
-					
 					<table>
 					<%
-					for (int i = 0; i < 3; i++){ %>
+					for (int i = 0; placeNameList[i] != ""; i++){ %>
 						<tr>
-							<th>장소<%=i+1%></th>
-						</tr>
-						
-						<tr>
-							<td>주소<%=i+1 %></td>
+							<th><div id="exPlace<%=i+1%>"><%=placeNameList[i] %></div></th>
 						</tr>
 						<tr>
-							<td id="cost"><%=(i+1)*1000 %></td>
+							<td><div id="exAddress<%=i+1%>">지번 주소: <%=addressList[i]%></div></td>
 						</tr>
 						<tr>
-							<td id="travelTime">소요시간 <%=i+1 %>(분)</td>
+							<td><div id="exRoadAddress<%=i+1%>">도로명 주소: <%=roadAddressList[i]%></div></td>
 						</tr>
 						<tr>
 							<td><br></td>
 						</tr>
-					<%
-					
-					
+					<%	
 					} %>
-					
 					</table>
 					
-					<!-- <table style="border-radius: 5px; width: 80%">
-						<tr>
-							<th>남산타워</th>
-						</tr>
-						<tr>
-							<td>서울시 용산구 남산공원길 105</td>
-						</tr>
-						<tr>
-							<td>16,000(원)</td>
-						</tr>
-						<tr>
-							<td><br></td>
-						</tr>
-						<tr>
-							<th>경복궁</th>
-						</tr>
-						<tr>
-							<td>서울시 용산구 남산공원길 105</td>
-						</tr>
-						<tr>
-							<td>3,000(원)</td>
-						</tr>
-					</table> -->
+					<div id="coordXY1" style="display:none;"></div>
+					<div id="coordXY2"></div>
+					<div id="coordXY3"></div>
 					
-					<br>
 					<!-- 지도 -->
-					<h5 style="font-weight:bold;">코스 경로 미리보기</h5>
+					<h5 style="font-weight:bold;">코스 경로 미리보기<input type="button" value="경로 확인" id="pathButton" style="border: none; border-radius: 5px; text-align: center; margin-left: 55%;" onClick="viewPath();"></h5>
 					<!-- 지도를 표시할 div 입니다 -->
 					<div id="map" style="width:100%;height:350px;"></div>
 					
-					<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=c17b5563968f2fffd356919521833ce2"></script>
+					<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=c17b5563968f2fffd356919521833ce2&libraries=services"></script>
 					<script>
-					var MARKER_WIDTH = 33, // 기본, 클릭 마커의 너비
+					
+ 					var MARKER_WIDTH = 33, // 기본, 클릭 마커의 너비
 				    MARKER_HEIGHT = 36, // 기본, 클릭 마커의 높이
 				    OFFSET_X = 12, // 기본, 클릭 마커의 기준 X좌표
 				    OFFSET_Y = MARKER_HEIGHT, // 기본, 클릭 마커의 기준 Y좌표
@@ -165,136 +150,84 @@
 					
 					var mapContainer = document.getElementById('map'), // 지도를 표시할 div
 					    mapOption = { 
-					        center: new kakao.maps.LatLng(33.450701, 126.570667), // 지도의 중심좌표
-					        level: 3 // 지도의 확대 레벨
-					    };
+					        center: new kakao.maps.LatLng(37.566826, 126.9786567), // 지도의 중심좌표
+					        level: 6 // 지도의 확대 레벨
+					};
 					
+					// 주소-좌표 변환 객체를 생성합니다
+					var geocoder = new kakao.maps.services.Geocoder();
+				    
 					// 지도를 표시할 div와  지도 옵션으로  지도를 생성합니다
-					var map = new kakao.maps.Map(mapContainer, mapOption); 
+					var map = new kakao.maps.Map(mapContainer, mapOption);     
 					
-					var positions = [
-					    {
-					        title: '카카오',
-					        latlng: new kakao.maps.LatLng(33.450705, 126.570677)
-					    },
-					    {
-					        title: '텃밭', 
-					        latlng: new kakao.maps.LatLng(33.450879, 126.569940)
-					    },
-					    {
-					        title: '생태연못', 
-					        latlng: new kakao.maps.LatLng(33.450936, 126.569477)
-					    }
-					];
+					var roadAddressText1 = '<%=roadAddress1%>';
+					var roadAddressText2 = '<%=roadAddress2%>';
+					var roadAddressText3 = '<%=roadAddress3%>';
 					
-					// 지도 위에 마커를 표시합니다
-					for (var i = 0, len = positions.length; i < len; i++) {
-					    var gapX = (MARKER_WIDTH + SPRITE_GAP), // 스프라이트 이미지에서 마커로 사용할 이미지 X좌표 간격 값
-					        originY = (MARKER_HEIGHT + SPRITE_GAP) * i, // 스프라이트 이미지에서 기본, 클릭 마커로 사용할 Y좌표 값
-					        overOriginY = (OVER_MARKER_HEIGHT + SPRITE_GAP) * i, // 스프라이트 이미지에서 오버 마커로 사용할 Y좌표 값
-					        normalOrigin = new kakao.maps.Point(0, originY), // 스프라이트 이미지에서 기본 마커로 사용할 영역의 좌상단 좌표
-					        clickOrigin = new kakao.maps.Point(gapX, originY), // 스프라이트 이미지에서 마우스오버 마커로 사용할 영역의 좌상단 좌표
-					        overOrigin = new kakao.maps.Point(gapX * 2, overOriginY); // 스프라이트 이미지에서 클릭 마커로 사용할 영역의 좌상단 좌표
+					var coordXY1 = document.getElementById("coordXY1");
+					var coordXY2 = document.getElementById("coordXY2");
+					var coordXY3 = document.getElementById("coordXY3");
+					
+					coordXY1.innerHtTML = "<input type='hidden'>";
+					var callback = function(result, status) {
+					    if (status === kakao.maps.services.Status.OK) {	
+					    	var coords = new kakao.maps.LatLng(result[0].y, result[0].x);
 					        
-					    // 마커를 생성하고 지도위에 표시합니다
-					    addMarker(positions[i].latlng, normalOrigin, overOrigin, clickOrigin);
-					}
-
-					// 마커를 생성하고 지도 위에 표시하고, 마커에 mouseover, mouseout, click 이벤트를 등록하는 함수입니다
-					function addMarker(position, normalOrigin, overOrigin, clickOrigin) {
-
-					    // 기본 마커이미지, 오버 마커이미지, 클릭 마커이미지를 생성합니다
-					    var normalImage = createMarkerImage(markerSize, markerOffset, normalOrigin),
-					        overImage = createMarkerImage(overMarkerSize, overMarkerOffset, overOrigin),
-					        clickImage = createMarkerImage(markerSize, markerOffset, clickOrigin);
-					    
-					    // 마커를 생성하고 이미지는 기본 마커 이미지를 사용합니다
-					    var marker = new kakao.maps.Marker({
-					        map: map,
-					        position: position,
-					        image: normalImage
-					    });
-
-					    // 마커 객체에 마커아이디와 마커의 기본 이미지를 추가합니다
-					    marker.normalImage = normalImage;
-
-					    // 마커에 mouseover 이벤트를 등록합니다
-					    kakao.maps.event.addListener(marker, 'mouseover', function() {
-
-					        // 클릭된 마커가 없고, mouseover된 마커가 클릭된 마커가 아니면
-					        // 마커의 이미지를 오버 이미지로 변경합니다
-					        if (!selectedMarker || selectedMarker !== marker) {
-					            marker.setImage(overImage);
-					        }
-					    });
-
-					    // 마커에 mouseout 이벤트를 등록합니다
-					    kakao.maps.event.addListener(marker, 'mouseout', function() {
-
-					        // 클릭된 마커가 없고, mouseout된 마커가 클릭된 마커가 아니면
-					        // 마커의 이미지를 기본 이미지로 변경합니다
-					        if (!selectedMarker || selectedMarker !== marker) {
-					            marker.setImage(normalImage);
-					        }
-					    });
-
-					    // 마커에 click 이벤트를 등록합니다
-					    kakao.maps.event.addListener(marker, 'click', function() {
-
-					        // 클릭된 마커가 없고, click 마커가 클릭된 마커가 아니면
-					        // 마커의 이미지를 클릭 이미지로 변경합니다
-					        if (!selectedMarker || selectedMarker !== marker) {
-
-					            // 클릭된 마커 객체가 null이 아니면
-					            // 클릭된 마커의 이미지를 기본 이미지로 변경하고
-					            !!selectedMarker && selectedMarker.setImage(selectedMarker.normalImage);
-
-					            // 현재 클릭된 마커의 이미지는 클릭 이미지로 변경합니다
-					            marker.setImage(clickImage);
-					        }
-
-					        // 클릭된 마커를 현재 클릭된 마커 객체로 설정합니다
-					        selectedMarker = marker;
-					    });
-					}
-
-					// MakrerImage 객체를 생성하여 반환하는 함수입니다
-					function createMarkerImage(markerSize, offset, spriteOrigin) {
-					    var markerImage = new kakao.maps.MarkerImage(
-					        SPRITE_MARKER_URL, // 스프라이트 마커 이미지 URL
-					        markerSize, // 마커의 크기
-					        {
-					            offset: offset, // 마커 이미지에서의 기준 좌표
-					            spriteOrigin: spriteOrigin, // 스트라이프 이미지 중 사용할 영역의 좌상단 좌표
-					            spriteSize: spriteImageSize // 스프라이트 이미지의 크기
-					        }
-					    );
-					    
-					    return markerImage;
-					}
-								
-					var linePath = new Array();
-					for (var i = 0; i < positions.length; i++) {
-					    linePath[i] = positions[i].latlng;
-					}
+						     // 결과값으로 받은 위치를 마커로 표시합니다
+						        var marker = new kakao.maps.Marker({
+						            map: map,
+						            position: coords
+						        });
+						     
+		
+						        // 지도의 중심을 결과값으로 받은 위치로 이동시킵니다
+						        map.setCenter(coords);
+						        coordXY1.innerHTML += result[0].y + ", " + result[0].x + "|";
+					    }
+					};
+	
+					geocoder.addressSearch(roadAddressText1, callback);
+					geocoder.addressSearch(roadAddressText2, callback);
+					geocoder.addressSearch(roadAddressText3, callback);
 					
-					var polyline = new kakao.maps.Polyline({
-						path: linePath,
-						strokeWeight: 5,
-						strokeColor: '#FFAE00',
-						strokeOpacity: 0.7,
-						strokeStyle: 'solid'
-					});
-					
-					polyline.setMap(map);
-				
+					function viewPath(){
+						var splitedCoords = coordXY1.innerText.split("|");
+						
+						var linePath = new Array();
+						
+						for (var i = 0; i < splitedCoords.length; i++) {
+							
+							var CoordsPair = splitedCoords[i].split(",")
+							var y = parseFloat(CoordsPair[0]);
+							var x = parseFloat(CoordsPair[1]);
+															
+							if (y && x){
+							linePath[i] = new kakao.maps.LatLng(y, x);								
+							}
+						}
+						
+						//alert(linePath);
+						var polyline = new kakao.maps.Polyline({
+							path: linePath,
+							strokeWeight: 5,
+							strokeColor: '#FF0000',
+							strokeOpacity: 0.7,
+							strokeStyle: 'solid'
+						});
+						
+						polyline.setMap(map);
+						
+					}
+
+
 					</script>
 					<br><br>
+		
 					<!-- Post content-->
 					<h5 style="font-weight:bold;">코스에 대한 설명</h5>
 					<table class="form-control" style="height:200px; border-radius: 5px;">
 						<tr>
-							<td>서울에서 가장 인기 있는 관광지를 운행하는 투어입니다. 티켓 한 장 가격으로 서울의 유명관광지를 순환 운행하는 버스를 하루 종일 이용할 수 있습니다. 서울을 처음 방문한 관광객에게 이보다 좋은 관광수단은 없습니다.</td>
+							<td><%=contents%></td>
 						</tr>
 					</table>
 					<br>
