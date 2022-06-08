@@ -75,8 +75,8 @@
 	        <a href="/"><img alt="로고" src="../img/logo.png" width="200"></a>
 	    </td>
 	    <td class="right" v-model="user">
-	      <a href="/mypage">{{user.nickname}}</a>님 안녕하세요. 
-	      <a>{{user.points}}</a> Points
+	      <a href="/mypage">{{sessionMember.nickName}}</a>님 안녕하세요. 
+	      <a>{{sessionMember.points}}</a> Points
 	      	<span data-toggle="tooltip" class="tooltip-text">
 			      <table class="table table-striped">
 			      	<tbody>
