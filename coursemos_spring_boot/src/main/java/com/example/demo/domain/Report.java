@@ -16,13 +16,13 @@ public class Report {
 	@Id
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "REPORT_SEQ_GENERATOR")
 	private int reportId;
-	private int userId;
+	private int memberId;
 	
 	@Column(name="category")
 	private String reportCategory;
 	private Date writtenDate;
-	private boolean state;
+	private String state;
 	
-	private int courseId;
-	private int reviewId;
+	private Integer courseId;
+	private Integer reviewId;
 }

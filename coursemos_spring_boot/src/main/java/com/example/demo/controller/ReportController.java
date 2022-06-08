@@ -1,6 +1,5 @@
 package com.example.demo.controller;
 
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -46,10 +45,6 @@ public class ReportController {
 	public Report formBacking(HttpServletRequest request) {
 		if (request.getMethod().equalsIgnoreCase("GET")) {
 			Report courseReport = new Report();
-		    courseReport.setCourseId(-1);
-		    courseReport.setUserId(-1); //세션처리 해야할듯
-		    courseReport.setWrittenDate(null);
-		    courseReport.setState(false);
 			return courseReport;
 		}
 		else return new Report();
@@ -71,13 +66,16 @@ public class ReportController {
 			@ModelAttribute("Report") Report courseReport) {
 		
 		courseReport.setCourseId(courseId);
+		courseReport.setReviewId(null);
 		long miliseconds = System.currentTimeMillis();
 	    Date current = new Date(miliseconds);
 		courseReport.setWrittenDate(current);
+		courseReport.setState("F");
+		courseReport.setMemberId(5);
 		
 		//서비스 구현해서 report값 return하고 원래 course게시글로 이동
 		reportService.insertAccount(courseReport);
-		return "course/"+courseId;
+		return "course/";
 	}
 	
 	@RequestMapping(value = "/report/review/{reviewId}", method = RequestMethod.GET)
