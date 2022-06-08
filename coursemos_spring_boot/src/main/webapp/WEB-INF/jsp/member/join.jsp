@@ -112,7 +112,7 @@ $( document ).ready( function() {
 							</tr>
 							<tr>
 								<td class="labels"><form:label path="tasteCode">선호하는 코스 분위기</form:label></td>
-								<td class="datas"><form:checkboxes path="tasteCode" items="${tasteCodes}" itemLabel="label" itemValue="code" /></td>
+								<td class="datas"><form:radiobuttons path="tasteCode" items="${tasteCodes}" itemLabel="label" itemValue="code" /></td>
 							</tr>
 							<tr>
 								<td class="smallSpace" colspan=2></td>
