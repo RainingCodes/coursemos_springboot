@@ -3,28 +3,33 @@ package com.example.demo.controller;
 import java.util.ArrayList;
 import java.util.List;
 import javax.servlet.http.HttpServletRequest;
+
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.SessionAttribute;
 import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.bind.support.SessionStatus;
 
 import com.example.demo.domain.Member;
+import com.example.demo.service.MemberService;
 import com.example.demo.validator.MemberValidator;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
+import lombok.ToString;
 
 
 @Controller
 @SessionAttributes("member")
 @RequestMapping(value="/join")
 public class RegisterMemberController {
+	@Autowired
+	private MemberService memberService;
 	
 	@ModelAttribute("member")
 	public Member formBacking(HttpServletRequest request) {
@@ -46,6 +51,8 @@ public class RegisterMemberController {
 			return "member/join";
 		}
 		System.out.println(member);
+		memberService.insertMember(member);
+		System.out.println("머지");
 		status.setComplete(); // session 종료 (“member” 객체 참조가 삭제됨)
 		return "index"; // “member” 객체가 view에 전달됨 (request를 통해) 
 	}
@@ -72,12 +79,12 @@ public class RegisterMemberController {
 		tasteCodes.add(new Taste("cal", "잔잔한"));
 		return tasteCodes;	
 	}
-	@Getter @Setter @AllArgsConstructor
+	@Getter @Setter @AllArgsConstructor @ToString
 	public class Gender {
 		private int code;
 		private String label;
 	}
-	@Getter @Setter @AllArgsConstructor
+	@Getter @Setter @AllArgsConstructor @ToString
 	public class Taste {
 		private String code;
 		private String label;
