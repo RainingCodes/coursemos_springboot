@@ -18,12 +18,7 @@ public class ReportServiceImpl implements ReportService {
 	@Autowired 
 	@Qualifier("jpaReportDao")
 	private ReportDao reportDao;
-
-	@Override
-	public List<Report> getAllReport() {
-		return reportDao.getAllReport();
-	}
-
+	
 	@Override
 	public void insertAccount(Report report) {
 		reportDao.insertReport(report);		
@@ -32,6 +27,16 @@ public class ReportServiceImpl implements ReportService {
 	@Override
 	public void updateAccount(Report report) {
 		reportDao.updateReport(report);
+	}
+
+	@Override
+	public List<Report> getAllCourseReport() {
+		return reportDao.getAllCourseReport();
+	}
+
+	@Override
+	public List<Report> getAllReviewReport() {
+		return reportDao.getAllReviewReport();
 	}
 	
 	

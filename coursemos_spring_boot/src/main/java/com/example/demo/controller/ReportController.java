@@ -71,10 +71,11 @@ public class ReportController {
 	    Date current = new Date(miliseconds);
 		courseReport.setWrittenDate(current);
 		courseReport.setState("F");
-		courseReport.setMemberId(5);
+		courseReport.setMemberId(7);
 		
 		//서비스 구현해서 report값 return하고 원래 course게시글로 이동
 		reportService.insertAccount(courseReport);
+		
 		return "course/";
 	}
 	
