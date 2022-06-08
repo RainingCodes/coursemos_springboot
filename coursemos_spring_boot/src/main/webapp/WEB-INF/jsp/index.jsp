@@ -9,14 +9,13 @@
 <title>코스모스</title>
 </head>
 <body>
-<c:choose>  <!-- if, else의 시작임을 정의 -->
-	<c:when test="${sessionMember}"> <!-- if와 동일 -->
+
+	<c:if test="${sessionMember}"> <!-- if와 동일 -->
 		<%@ include file="header/IncludeTopMember.jsp"  %>
-	</c:when> <!-- if 종료 -->
-	<c:otherwise> <!-- else와 동일 -->
-		<%@ include file="header/IncludeTop.jsp"  %>
-	</c:otherwise> <!-- else 종료 -->
-</c:choose>  <!-- if, else의 종료임을 정의-->
+	</c:if> <!-- if 종료 -->
+<%@ include file="header/IncludeTop.jsp"  %>
+	
+
 
 
 <%@ include file="main_map.jsp" %>
