@@ -3,6 +3,7 @@ package com.example.demo.controller;
 import java.util.ArrayList;
 import java.util.List;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -15,6 +16,7 @@ import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.bind.support.SessionStatus;
 
 import com.example.demo.domain.Member;
+import com.example.demo.domain.SessionMember;
 import com.example.demo.service.MemberService;
 import com.example.demo.validator.MemberValidator;
 
@@ -45,15 +47,16 @@ public class RegisterMemberController {
 	
 	@RequestMapping(method=RequestMethod.POST)
 	public String submit(@ModelAttribute Member member,
-	BindingResult result, SessionStatus status) {
+	BindingResult result, SessionStatus status, HttpServletRequest request) {
 		new MemberValidator().validate(member, result);
 		if (result.hasErrors()) {
 			return "member/join";
 		}
-		System.out.println(member);
 		memberService.insertMember(member);
-		System.out.println("머지");
+		SessionMember sessionMember = new SessionMember(member.getId(), member.getNickName(), member.getPassword(), member.getPoints());
 		status.setComplete(); // session 종료 (“member” 객체 참조가 삭제됨)
+		HttpSession session = request.getSession();
+		session.setAttribute("memberSession", sessionMember);
 		return "index"; // “member” 객체가 view에 전달됨 (request를 통해) 
 	}
 	
