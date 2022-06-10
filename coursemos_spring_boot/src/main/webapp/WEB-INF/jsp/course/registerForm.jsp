@@ -55,7 +55,7 @@
 	<!-- Page content-->
 	<div class="container mt-5">
 		<div class="row" style="margin-left: 25%;">
-			<form:form name="form" method="POST" action="view/1"> <!-- 추후 수정 필요 -->
+			<form:form modelAttribute="course" name="form" method="POST">
 				<div class="col-lg-8">
 					<!-- Post content-->
 					<article>
@@ -66,9 +66,9 @@
 							<!-- Post title-->
 							<div class="card-body">
 								<div class="input-group">
-									<input class="form-control" name="inputTitle" type="text" v-model="inputTitle"
-										placeholder="코스 이름을 입력하세요">
-									<form:errors path="course.name"/>
+									<form:input path="courseName" class="form-control" name="inputTitle" type="text" v-model="inputTitle"
+										placeholder="코스 이름을 입력하세요"/>
+									<form:errors path="courseName"/>
 								</div>
 								<!-- <div v-if="!titleValid">유효하지 않은 제목입니다.</div> -->
 							</div>
@@ -227,7 +227,7 @@
                         <!-- Post content-->
                         <h5 id="description">코스에 대한 설명을 입력하세요</h5>
                         <input class="form-control" name="contents" type="text" style="height:300px">
-                        <form:errors path="course.contents"/>
+                        <form:errors path="courseContents"/>
                         <br>
                         <button type="submit" style="width:100%; height:40px; border:none; border-radius:5px; text-align: center;">등록하기</button>
                     </article>
