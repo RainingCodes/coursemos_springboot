@@ -18,9 +18,16 @@ public class JpaReportDao implements ReportDao {
     private EntityManager em;
 
 	@Override
-	public List<Report> getAllReport() throws DataAccessException {
+	public List<Report> getAllCourseReport() throws DataAccessException {
 		TypedQuery<Report> query = em.createQuery(
-                "select report from Report report", Report.class);
+                "select r from Report r " + "where r.courseId IS NOT NULL", Report.class);
+        return query.getResultList();
+	}
+	
+	@Override
+	public List<Report> getAllReviewReport() throws DataAccessException {
+		TypedQuery<Report> query = em.createQuery(
+                "select r from Report r " + "where r.reviewId IS NOT NULL", Report.class);
         return query.getResultList();
 	}
 
@@ -33,4 +40,6 @@ public class JpaReportDao implements ReportDao {
 	public void updateReport(Report report) throws DataAccessException {
 		em.merge(report);
 	}
+
+	
 }
