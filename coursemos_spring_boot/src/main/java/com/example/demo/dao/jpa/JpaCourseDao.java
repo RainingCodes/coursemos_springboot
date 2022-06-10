@@ -5,12 +5,14 @@ import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
+import javax.persistence.TypedQuery;
 
 import org.springframework.dao.DataAccessException;
 import org.springframework.stereotype.Repository;
 
 import com.example.demo.dao.CourseDao;
 import com.example.demo.domain.Course;
+import com.example.demo.domain.TasteCategory;
 
 @Repository
 public class JpaCourseDao implements CourseDao{
@@ -69,8 +71,10 @@ public class JpaCourseDao implements CourseDao{
 
 	@Override
 	public List<Course> searchCourseListByPlace(String place1, String place2) throws DataAccessException {
-		// TODO Auto-generated method stub
-		return null;
+			TypedQuery<Course> query = em.createQuery(
+	                "select c from Course c", Course.class);
+	        return query.getResultList();
+
 	}
 
 	@Override
@@ -89,6 +93,13 @@ public class JpaCourseDao implements CourseDao{
 	public List<Course> getCourseListByTime(String place1, String place2) throws DataAccessException {
 		// TODO Auto-generated method stub
 		return null;
+	}
+
+	@Override
+	public List<Course> getCourseList(double x, double y, String station) throws DataAccessException {
+		TypedQuery<Course> query = em.createQuery(
+                "select c from Course c", Course.class);
+        return query.getResultList();
 	}
 	
 }

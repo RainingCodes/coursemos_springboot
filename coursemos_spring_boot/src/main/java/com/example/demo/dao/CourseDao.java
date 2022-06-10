@@ -32,6 +32,7 @@ public interface CourseDao {
 
 	List<Course> getCourseListByTime(String place1, String place2) throws DataAccessException;	
 	
+	List<Course> getCourseList(double x, double y, String station) throws DataAccessException;	
 	
 	
 	

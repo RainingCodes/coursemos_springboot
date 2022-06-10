@@ -95,14 +95,14 @@
 	   		</div> 
 	        
 			<div id="map"></div>        
-          <div id="searchResult"></div>
+			<div id="searchResult"></div>
          
             <div id="courseList">
             <c:forEach var="cate" items="${cList}">
               <div class="accordion accordion-flush" id="accordionFlushExample">
-               <div class="accordion-item">
-                  <h2 class="accordion-header" id="${cate.courseId}">
-                    <button class="accordion-button collapsed" type="button" onclick="displayCourse('${cate.coordinates[0]}', '${cate.coordinates[1]}', '${cate.coordinates[2]}')" data-bs-toggle="collapse" data-bs-target="#flush-collapseOne_${cate.courseId}" aria-expanded="false" aria-controls="flush-collapseOne_${cate.courseId}">
+               <div class="accordion-item"> 
+                  <h2 class="accordion-header" id="${cate.courseId}"> 
+                    <button class="accordion-button collapsed" type="button" onclick="displayCourse('37.577552,126.976869','37.551245,126.988216','37.522470,126.939713')" data-bs-toggle="collapse" data-bs-target="#flush-collapseOne_${cate.courseId}" aria-expanded="false" aria-controls="flush-collapseOne_${cate.courseId}">
                         ${cate.courseId}
                       <i class="bi bi-heart-fill"></i>${cate.courseContents}
                     </button>
@@ -162,7 +162,7 @@
                   </div>
                   <div class="modal-body">
                     ${cate.taste} |
-                    ${cate.photo}
+                   
                   </div>
                   <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
