@@ -81,7 +81,7 @@
 		        <form onsubmit="searchPlaces(); return false;" method="post">
 					<button type="submit">검색하기</button>
 					<c:forEach var="cate" items="${tList}">
-		    	    	<button type="button" class="btn btn-primary">${cate}</button>
+		    	    	<button type="button" class="btn btn-primary">${cate.name}</button>
 		    	    </c:forEach>
 				</form>
 			
@@ -374,7 +374,7 @@
             	var polyline = new kakao.maps.Polyline({
             	    path: linePath, // 선을 구성하는 좌표배열 입니다
             	    strokeWeight: 5, // 선의 두께 입니다
-            	    strokeColor: '#FFAE00', // 선의 색깔입니다
+            	    strokeColor: '#FF0000', // 선의 색깔입니다
             	    strokeOpacity: 0.7, // 선의 불투명도 입니다 1에서 0 사이의 값이며 0에 가까울수록 투명합니다
             	    strokeStyle: 'solid' // 선의 스타일입니다
             	});
