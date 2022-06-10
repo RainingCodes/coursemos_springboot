@@ -27,6 +27,7 @@
 	    </tr>
 	    <tr>
 	        <td>
+		        <form:errors path="reportCategory"/>
 	        	<form:radiobuttons path="reportCategory" items="${ReportCodes}" itemLabel="label" itemValue="code"/>
 	        </td>
 	    </tr>
