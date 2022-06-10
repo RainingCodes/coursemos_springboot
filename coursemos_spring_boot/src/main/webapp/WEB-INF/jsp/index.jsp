@@ -13,7 +13,10 @@
 	<c:if test="${sessionMember}"> <!-- if와 동일 -->
 		<%@ include file="header/IncludeTopMember.jsp"  %>
 	</c:if> <!-- if 종료 -->
-<%@ include file="header/IncludeTop.jsp"  %>
+	<c:if test="${sessionMember ==null }">
+		<%@ include file="header/IncludeTop.jsp"  %>
+	</c:if>
+
 	
 
 
