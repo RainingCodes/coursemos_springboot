@@ -11,7 +11,9 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.example.demo.domain.Course;
+import com.example.demo.domain.TasteCategory;
 import com.example.demo.service.SearchService;
+import com.example.demo.service.TasteService;
 @RestController
 @RequestMapping("/course/detailedSearch")
 public class SearchCategoryController {
@@ -21,6 +23,11 @@ public class SearchCategoryController {
 	private SearchService searchService;
 	public void setSearchService(SearchService searchService) {
 		this.searchService = searchService;
+	}
+	@Autowired
+	private TasteService tasteService;
+	public void setTasteService(TasteService tasteService) {
+		this.tasteService = tasteService;
 	}
 	
 	@PostMapping
@@ -38,8 +45,8 @@ public class SearchCategoryController {
 		List<Course> cList = searchService.getCourseList(x, y, station);
 		//Page<Course> cList = 
 		mav.addObject("cList", cList);
-		List<String> tList = searchService.getTasteCategory(null);
-		mav.addObject("tList", tList);
+		//List<String> tList = tasteService.getCategoryList();
+		//mav.addObject("tList", tList);
 		
 	   return mav;   
 	}
