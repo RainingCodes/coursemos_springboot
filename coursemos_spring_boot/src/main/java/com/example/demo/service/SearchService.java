@@ -14,6 +14,7 @@ import java.util.Map;
 import javax.sql.DataSource;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataAccessException;
 import org.springframework.jdbc.datasource.DataSourceUtils;
 import org.springframework.jdbc.support.JdbcUtils;
 import org.springframework.jdbc.support.SQLExceptionTranslator;
@@ -24,9 +25,35 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import com.example.demo.domain.Course;
 import com.example.demo.domain.TasteCategory;
 
-@Service
-public class SearchService {
-	private SQLExceptionTranslator exceptionTranslator = new SQLStateSQLExceptionTranslator();
+public interface SearchService {
+	Course getCourseByCourseId(String courseId) throws DataAccessException;
+	
+	
+	void insertCourse(Course course) throws DataAccessException;
+
+	List<Course> searchCourseListByPlace(String place) throws DataAccessException;
+
+	List<Course> getCourseListByTaste(String taste) throws DataAccessException;
+
+	List<Course> getCourseListByLike(int like) throws DataAccessException;
+
+	List<Course> getCourseListByTime(int time) throws DataAccessException;
+
+	List<Course> searchCourseListByKeyword(String keyword) throws DataAccessException;
+
+	List<Course> searchCourseListByPlace(String place1, String place2) throws DataAccessException;
+
+	List<Course> getCourseListByTaste(String place1, String place2, String taste) throws DataAccessException;
+
+	List<Course> getCourseListByLike(String place1, String place2) throws DataAccessException;
+
+	List<Course> getCourseListByTime(String place1, String place2) throws DataAccessException;
+
+	List<Course> getCourseList(double x, double y, String station) throws DataAccessException;
+
+
+	
+	/*private SQLExceptionTranslator exceptionTranslator = new SQLStateSQLExceptionTranslator();
 	private DataSource dataSource;
 	
 	@Autowired
@@ -63,7 +90,7 @@ public class SearchService {
 		
 		Date date = new Date();
 		List<Course> cList = new ArrayList<Course>();
-		return cList;
+		return cList; */
 		/*
 		cList.add(new Course(nextCourseId, "서울시티투어", "서울의 전경을 한 눈에 볼 수 있는 코스로 자연 경관과 도시 경관 모두 볼 수 있습니다.", coorArr, 240, 1, "healing", "https://dummyimage.com/500x500/ced4da/6c757d.jpg", 2, date));
 		nextCourseId++;
@@ -107,9 +134,9 @@ public class SearchService {
 			JdbcUtils.closeStatement(stmt);
 			DataSourceUtils.releaseConnection(conn, dataSource);
 			
-		}*/
+		}
 		
-	}
+	}*/
 
 	
 }
