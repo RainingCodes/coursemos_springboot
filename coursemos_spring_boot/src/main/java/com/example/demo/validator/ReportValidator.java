@@ -1,9 +1,7 @@
 package com.example.demo.validator;
 
-
 import org.springframework.validation.Errors;
 import org.springframework.validation.Validator;
-
 import com.example.demo.domain.Report;
 
 public class ReportValidator implements Validator{
@@ -18,7 +16,7 @@ public class ReportValidator implements Validator{
 	public void validate(Object target, Errors errors) {
 		// TODO Auto-generated method stub
 		Report report = (Report) target;
-		if(report.getReportCategory() == null)
+		if (report.getReportCategory() == null)
 			errors.rejectValue("reportCategory", "required");
 		
 	}
