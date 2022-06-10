@@ -4,33 +4,25 @@ package com.example.demo.domain;
 //	Active, Nature, Retro
 //}
 import java.io.Serializable;
+import java.util.Date;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+import lombok.ToString;
+
+@Entity
 @SuppressWarnings("serial")
+@Getter @Setter @ToString @AllArgsConstructor @NoArgsConstructor
 public class TasteCategory implements Serializable {
 
-  /* Private Fields */
+	@Id
+	@Column(nullable=false)
+	private String name;
 
-//  private String categoryId;
-  private String name;
-//  private String description;
-
-  /* JavaBeans Properties */
-
-  public TasteCategory(Object object) {
-	// TODO Auto-generated constructor stub
-}
-//public String getCategoryId() { return categoryId; }
-//  public void setCategoryId(String categoryId) { this.categoryId = categoryId.trim(); }
-
-  public String getName() { return name; }
-  public void setName(String name) { this.name = name; }
-
-//  public String getDescription() { return description; }
-//  public void setDescription(String description) { this.description = description; }
-
-  /* Public Methods */
-
-//  public String toString() {
-//    return getCategoryId();
-//  }
 }
