@@ -5,6 +5,7 @@ import java.util.Date;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
+import javax.persistence.Id;
 import javax.persistence.SequenceGenerator;
 
 import lombok.AllArgsConstructor;
@@ -21,6 +22,7 @@ import lombok.ToString;
 		  allocationSize = 1)
 @Setter @Getter @ToString @AllArgsConstructor @NoArgsConstructor 
 public class MemberCoupon {
+	@Id
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "MEMBERCOUPON_SEQ_GENERATOR")
 	private int userCouponId;
 	private boolean used;
