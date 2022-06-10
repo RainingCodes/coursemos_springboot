@@ -9,6 +9,7 @@ import javax.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -16,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 
 import com.example.demo.domain.Report;
 import com.example.demo.service.ReportService;
+import com.example.demo.validator.ReportValidator;
 
 import lombok.*;
 
@@ -64,20 +66,23 @@ public class ReportController {
 	
 	@RequestMapping(value = "/report/course/{courseId}", method = RequestMethod.POST)
 	public String courseReportRegister(@PathVariable int courseId,
-			@ModelAttribute("Report") Report courseReport) {
+			@ModelAttribute("Report") Report courseReport, BindingResult result) {
 		
+		new ReportValidator().validate(courseReport, result);
+		if (result.hasErrors()) {
+			return "report/courseReport";
+		}
+
 		courseReport.setCourseId(courseId);
 		courseReport.setReviewId(null);
 		long miliseconds = System.currentTimeMillis();
 	    Date current = new Date(miliseconds);
 		courseReport.setWrittenDate(current);
 		courseReport.setState("F");
-		courseReport.setMemberId(7);
-		
-		//서비스 구현해서 report값 return하고 원래 course게시글로 이동
+		courseReport.setMemberId(7); // 세션 완성되면 설정하기
 		reportService.insertReport(courseReport);
 		
-		return "course/";
+		return "redirect:"; //코스 상세 jsp 나오면 다시 돌아가도록 설정
 	}
 	
 	@RequestMapping(value = "/report/review/{reviewId}", method = RequestMethod.GET)
@@ -96,6 +101,6 @@ public class ReportController {
 		
 		//서비스 구현해서 report값 return하고 원래 review게시글로 이동
 		
-		return "review/"+reviewId; // 이 주소가 맞나?...
+		return "redirect:"; //코스 상세 jsp 나오면 다시 돌아가도록 설정
 	}
 }

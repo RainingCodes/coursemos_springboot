@@ -18,6 +18,7 @@ public class Report {
 	private int reportId;
 	private int memberId;
 	
+	
 	@Column(name="category")
 	private String reportCategory;
 	private Date writtenDate;
