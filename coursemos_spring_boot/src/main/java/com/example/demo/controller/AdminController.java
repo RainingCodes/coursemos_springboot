@@ -65,11 +65,22 @@ public class AdminController {
 	
 	@RequestMapping("/admin/company")
 	public ModelAndView adminCompany() {
-		ModelAndView mav = new ModelAndView("admin/report");
+		ModelAndView mav = new ModelAndView("admin/company");
 		
 		List<Company> list = companyService.getAllCompany();
 		mav.addObject("companyList", list);
 		
 		return mav;
+	}
+	
+	@RequestMapping("/admin/company/process")
+	public String companyProcess(@RequestParam("companyId") int companyId,
+			@RequestParam("accept") int accept) {
+		
+		Company company = companyService.getCompanyByCompanyId(companyId);
+		company.setAccept(accept);
+		companyService.updateCompany(company);
+
+		return "redirect:/admin/company";
 	}
 }

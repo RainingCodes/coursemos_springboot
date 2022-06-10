@@ -15,32 +15,44 @@
 <h3>처리 전</h3>
 <table class="table">
 	<tr>
-		<th>reportId</th>
-		<th>category</th>
-		<th>신고자</th>
-		<th>courseId</th>
-		<th>완료 처리</th>
+		<th>companyId</th>
+		<th>회사명</th>
+		<th>등록자</th>
+		<th>전화번호</th>
+		<th>주소</th>
+		<th>등록 허가</th>
+		<th>등록 거부</th>
 	</tr>
 
-	<c:forEach var="list" items="${reportList}">
-	<c:if test="${list.state eq 'F'}">
+	<c:forEach var="list" items="${companyList}">
+	<c:if test="${list.accept eq 0}">
 	<tr>
 		<td>
-			${list.reportId}
+			${list.companyId}
 		</td>
 		<td>
-			${list.reportCategory}
+			${list.companyName}
 		</td>
 		<td>
 			${list.memberId}
 		</td>
 		<td>
-			${list.courseId}
+			${list.phone}
 		</td>
 		<td>
-		<a href='<c:url value="/admin/report/course/process">
-          	<c:param name="reportId" value="${list.reportId}"/></c:url>'>
-          	<b>처리하기</b></a>
+			${list.address}
+		</td>
+		<td>
+		<a href='<c:url value="/admin/company/process">
+          	<c:param name="companyId" value="${list.companyId}"/>
+          	<c:param name="accept" value="1"/></c:url>'>
+          	<b>허가하기</b></a>
+		</td>
+		<td>
+		<a href='<c:url value="/admin/company/process">
+          	<c:param name="companyId" value="${list.companyId}"/>
+          	<c:param name="accept" value="2"/></c:url>'>
+          	<b>거부하기</b></a>
 		</td>
     </tr>
     </c:if>
@@ -50,30 +62,37 @@
 <h3>처리 완료</h3>
 <table class="table">
 	<tr>
-		<th>reportId</th>
-		<th>category</th>
-		<th>신고자</th>
-		<th>courseId</th>
-		<th>완료 처리</th>
+		<th>companyId</th>
+		<th>회사명</th>
+		<th>등록자</th>
+		<th>전화번호</th>
+		<th>주소</th>
+		<th>초기화</th>
 	</tr>
 
-	<c:forEach var="list" items="${reportList}">
-	<c:if test="${list.state eq 'T'}">
+	<c:forEach var="list" items="${companyList}">
+	<c:if test="${list.accept ne 0}">
 	<tr>
 		<td>
-			${list.reportId}
+			${list.companyId}
 		</td>
 		<td>
-			${list.reportCategory}
+			${list.companyName}
 		</td>
 		<td>
 			${list.memberId}
 		</td>
 		<td>
-			${list.courseId}
+			${list.phone}
 		</td>
 		<td>
-			처리 완료
+			${list.address}
+		</td>
+		<td>
+		<a href='<c:url value="/admin/company/process">
+          	<c:param name="companyId" value="${list.companyId}"/>
+          	<c:param name="accept" value="0"/></c:url>'>
+          	<b>초기화</b></a>
 		</td>
     </tr>
     </c:if>
