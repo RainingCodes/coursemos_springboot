@@ -18,6 +18,7 @@
 	String roadAddressList[] = {roadAddress1, roadAddress2, roadAddress3};
 	
 	String[] category = request.getParameterValues("category");
+	
 	String contents = request.getParameter("contents");
 %>    
 <!DOCTYPE html>
@@ -255,18 +256,14 @@
 					
 					  function kakaoShare() {
 					    Kakao.Link.sendDefault({
-					        objectType: 'commerce',
+					        objectType: 'feed',
 					        content: {
 					          title: '당신에게 맞는 코스를 찾아보세요!',
 					          imageUrl: '',
 					          link: {
-					            mobileWebUrl: 'http://localhost:8080/',
-					            webUrl: 'http://localhost:8080/',
+					            mobileWebUrl: 'http://localhost:8080/course/view/1',
+					            webUrl: 'http://localhost:8080/course/view/1',
 					          },
-					        },
-					        commerce: {	        	
-					          productName: document.getElementById("courseTitle").innerText,
-					          regularPrice: Number(document.getElementById("cost").innerText)
 					        },
 					        buttons: [
 					          {

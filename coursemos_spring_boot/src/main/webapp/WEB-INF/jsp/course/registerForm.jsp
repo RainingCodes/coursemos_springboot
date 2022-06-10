@@ -16,7 +16,23 @@
 </head>
 <script src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
 <body>
-	<!-- Responsive navbar-->
+
+<form:form modelAttribute="course" method="post">
+
+<form:label path="courseName">코스 이름</form:label>
+<form:input path="courseName"/>
+<form:errors path="courseName"/>
+
+<form:label path="courseContents">내용</form:label>
+<form:input path="courseContents"/>
+<form:errors path="courseContents"/>
+<input type="submit" value="등록"/>
+
+</form:form>
+
+
+<%-- 
+<!-- Responsive navbar-->
 	<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
 		<div class="container">
 			<div>
@@ -66,18 +82,16 @@
 							<!-- Post title-->
 							<div class="card-body">
 								<div class="input-group">
-									<form:input path="courseName" class="form-control" name="inputTitle" type="text" v-model="inputTitle"
+									<form:input path="courseName" class="form-control" name="inputTitle" type="text"
 										placeholder="코스 이름을 입력하세요"/>
 									<form:errors path="courseName"/>
 								</div>
-								<!-- <div v-if="!titleValid">유효하지 않은 제목입니다.</div> -->
 							</div>
 						</header>
 						<div class="upload"></div>
 						<h5>코스의 분위기를 선택하세요</h5>
 						<div class="selectTaste"
 							style="display: inline-block; width: 300px; line-height: 45px;">
-							<!-- <input type="checkbox" name="category" v-for="item in taste"><span v-html="item"></span> -->
 							<input type="checkbox" name="category" value="활동적인">활동적인
 							<input type="checkbox" name="category" value="잔잔한">잔잔한
 							<input type="checkbox" name="category" value="힐링">힐링
@@ -287,6 +301,20 @@
 	    </script>
 	<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.5/dist/umd/popper.min.js" integrity="sha384-Xe+8cL9oJa6tN/veChSP7q+mnSPaj5Bcu9mPX5F5xIGE0DVittaqT5lorf0EI7Vk" crossorigin="anonymous"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/js/bootstrap.min.js" integrity="sha384-kjU+l4N0Yf4ZOJErLsIcvOU2qSb74wXpOhqTvwVx3OElZRweTnQ6d31fXEoRD1Jy" crossorigin="anonymous"></script>
+
+
+
+ --%>
+
+
+
+
+
+
+
+
+
+
 </body>
 <input type="button" name="add" value="+" id="add_btn" style="border:none;border-radius:5px; text-align: center; margin-left:300px; height: 30px;">
 </html>
