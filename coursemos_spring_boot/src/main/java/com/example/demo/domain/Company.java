@@ -2,43 +2,31 @@ package com.example.demo.domain;
 
 import java.util.Date;
 
-import lombok.Getter;
-import lombok.Setter;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.SequenceGenerator;
 
-@Setter @Getter
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+import lombok.ToString;
+
+@Entity
+@SequenceGenerator(
+		  name = "COMPANY_SEQ_GENERATOR", 
+		  sequenceName = "COMPANY_SEQ", // 매핑할 데이터베이스 시퀀스 이름 
+		  initialValue = 1,
+		  allocationSize = 1)
+@Setter @Getter @ToString @AllArgsConstructor @NoArgsConstructor 
 public class Company {
-	private int companyId;
-	private int memberId;
+	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "COMPANY_SEQ_GENERATOR")
+	private Integer companyId;
+	private Integer memberId;
 	private String name;
 	private String phone;
 	private String address;
 	private Date registerDate;
-	private int accept;
-	
-	public Company(int memberId, String name, String phone, String address,Date registerDate) {
-		companyId = -1;
-		this.memberId = memberId;
-		this.name = name;
-		this.phone = phone;
-		this.address = address;
-		this.registerDate = registerDate;
-		accept = 0;
-	}
-	
-	public Company(int companyId, int memberId, String name, String phone, String address, Date registerDate,
-			int accept) {
-		super();
-		this.companyId = companyId;
-		this.memberId = memberId;
-		this.name = name;
-		this.phone = phone;
-		this.address = address;
-		this.registerDate = registerDate;
-		this.accept = accept;
-	}
-	public Company() {
-		// TODO Auto-generated constructor stub
-	}
-	
-	
+	private Integer accept;
 }

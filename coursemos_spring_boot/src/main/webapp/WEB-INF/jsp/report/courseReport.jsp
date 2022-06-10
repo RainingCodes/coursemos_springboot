@@ -7,6 +7,13 @@
 <head>
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
   <title>코스 신고</title>
+  <style type="text/css">
+  	.error {
+		color:red;
+		font-size:15px;
+		font-weight:bold;
+	}
+  </style>
 </head>
 <body>
 <div class="container">
@@ -27,8 +34,9 @@
 	    </tr>
 	    <tr>
 	        <td>
-		        <form:errors path="reportCategory"/>
+		        
 	        	<form:radiobuttons path="reportCategory" items="${ReportCodes}" itemLabel="label" itemValue="code"/>
+	        	<span><br><form:errors path="reportCategory" cssClass="error"/></span>
 	        </td>
 	    </tr>
 	    <tr>

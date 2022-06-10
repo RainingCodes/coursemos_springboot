@@ -2,43 +2,31 @@ package com.example.demo.domain;
 
 import java.util.Date;
 
-import lombok.Getter;
-import lombok.Setter;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.SequenceGenerator;
 
-@Setter @Getter
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+import lombok.ToString;
+
+@Entity
+@SequenceGenerator(
+		  name = "COUPON_SEQ_GENERATOR", 
+		  sequenceName = "COUPON_SEQ", // 매핑할 데이터베이스 시퀀스 이름 
+		  initialValue = 1,
+		  allocationSize = 1)
+@Setter @Getter @ToString @AllArgsConstructor @NoArgsConstructor 
 public class Coupon {
+	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "COUPON_SEQ_GENERATOR")
 	private int couponId;
 	private int companyId;
 	private String contents;
 	private Date period;
 	private int limit;
 	private int day;
-	private int state;
-	
-	public Coupon(int couponId, int companyId, String contents, Date period, int limit, int day, int state) {
-		super();
-		this.couponId = couponId;
-		this.companyId = companyId;
-		this.contents = contents;
-		this.period = period;
-		this.limit = limit;
-		this.day = day;
-		this.state = state;
-	}
-	
-	public Coupon(int companyId, String contents, Date period, int limit, int day) {
-		super();
-		couponId = -1;
-		this.companyId = companyId;
-		this.contents = contents;
-		this.period = period;
-		this.limit = limit;
-		this.day = day;
-		state = 0;
-	}
-	public Coupon() {
-		// TODO Auto-generated constructor stub
-	}
-	
-	
+	private int state;	
 }

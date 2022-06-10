@@ -22,7 +22,7 @@ public class CompanyController {
 	public Company formBacking(HttpServletRequest request) {
 		if (request.getMethod().equalsIgnoreCase("GET")) {
 			Company company = new Company();
-			// 기본값은 나중에 설정
+			
 			return company;
 		}
 		else return new Company();

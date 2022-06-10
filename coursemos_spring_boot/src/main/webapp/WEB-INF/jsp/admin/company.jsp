@@ -5,12 +5,12 @@
 <html>
 <head>
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
-<title>신고 상세보기</title>
+<title>제휴 상세보기</title>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 </head>
 <body>
 <div class="container">
-<center><h1>${type} 신고 관리 페이지</h1></center>
+<center><h1>제휴 관리 페이지</h1></center>
 
 <h3>처리 전</h3>
 <table class="table">

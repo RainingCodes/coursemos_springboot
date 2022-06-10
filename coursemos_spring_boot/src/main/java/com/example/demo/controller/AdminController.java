@@ -58,4 +58,15 @@ public class AdminController {
 		
 		return mav;
 	}
+	
+	@RequestMapping("/admin/company")
+	public ModelAndView adminCompany() {
+		ModelAndView mav = new ModelAndView("admin/report");
+		
+		List<Report> list = reportService.getAllCourseReport();
+		mav.addObject("reportList", list);
+		mav.addObject("type", "course");
+		
+		return mav;
+	}
 }
