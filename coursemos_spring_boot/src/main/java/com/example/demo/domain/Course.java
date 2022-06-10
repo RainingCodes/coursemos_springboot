@@ -9,6 +9,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.SequenceGenerator;
+import javax.persistence.Table;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -18,6 +19,7 @@ import lombok.ToString;
 
 
 @Entity
+@Table(name="COURSE")
 @SuppressWarnings("serial")
 @Getter @Setter @ToString @AllArgsConstructor @NoArgsConstructor
 @SequenceGenerator(
@@ -38,25 +40,25 @@ public class Course implements Serializable {
 	@Column(nullable=false)
 	private String courseContents;
 	
-	@Column(nullable=false)
-	private int memberId;
+	@Column
+	private Integer memberId;
 	
 	@Column(nullable=false)
 	private String taste;
 	
 	@Column(nullable=false)
-	private int likes;
+	private Integer likes;
 	
 	@Column(nullable=false)
 	private Date writtenDate;
 	
-	@Column(nullable=false)
-	private int place1;
+	@Column
+	private Integer placeId1;
 	
-	@Column(nullable=false)
-	private int place2;
+	@Column
+	private Integer placeId2;
 	
-	@Column(nullable=false)
-	private int place3;
+	@Column
+	private Integer placeId3;
 	
 }

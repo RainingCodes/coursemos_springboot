@@ -73,7 +73,7 @@ public class SearchServiceImpl implements SearchService {
 		@Override
 		public List<Course> getCourseList(double x, double y, String station) throws DataAccessException {
 			// TODO Auto-generated method stub
-			return null;
+			return courseDao.getCourseList(x, y, station);
 		}
 
 
