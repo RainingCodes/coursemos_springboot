@@ -45,6 +45,7 @@ public class ReportController {
 	public Report formBacking(HttpServletRequest request) {
 		if (request.getMethod().equalsIgnoreCase("GET")) {
 			Report courseReport = new Report();
+			courseReport.setReportCategory(null);
 			return courseReport;
 		}
 		else return new Report();
@@ -74,7 +75,7 @@ public class ReportController {
 		courseReport.setMemberId(7);
 		
 		//서비스 구현해서 report값 return하고 원래 course게시글로 이동
-		reportService.insertAccount(courseReport);
+		reportService.insertReport(courseReport);
 		
 		return "course/";
 	}

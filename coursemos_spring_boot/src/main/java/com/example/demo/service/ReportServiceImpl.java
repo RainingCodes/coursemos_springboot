@@ -20,12 +20,12 @@ public class ReportServiceImpl implements ReportService {
 	private ReportDao reportDao;
 	
 	@Override
-	public void insertAccount(Report report) {
+	public void insertReport(Report report) {
 		reportDao.insertReport(report);		
 	}
 
 	@Override
-	public void updateAccount(Report report) {
+	public void updateReport(Report report) {
 		reportDao.updateReport(report);
 	}
 
@@ -37,6 +37,11 @@ public class ReportServiceImpl implements ReportService {
 	@Override
 	public List<Report> getAllReviewReport() {
 		return reportDao.getAllReviewReport();
+	}
+
+	@Override
+	public Report getReportById(int reportId) {
+		return reportDao.getReportById(reportId);
 	}
 	
 	

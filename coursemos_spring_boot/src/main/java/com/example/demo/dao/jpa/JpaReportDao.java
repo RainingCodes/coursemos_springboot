@@ -30,6 +30,11 @@ public class JpaReportDao implements ReportDao {
                 "select r from Report r " + "where r.reviewId IS NOT NULL", Report.class);
         return query.getResultList();
 	}
+	
+	@Override
+	public Report getReportById(int ReportId) throws DataAccessException {
+		return em.find(Report.class, ReportId);
+	}
 
 	@Override
 	public void insertReport(Report report) throws DataAccessException {
