@@ -8,13 +8,17 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.example.demo.domain.Company;
 import com.example.demo.domain.Report;
+import com.example.demo.service.CompanyService;
 import com.example.demo.service.ReportService;
 
 @Controller
 public class AdminController {
 	@Autowired
 	private ReportService reportService;
+	@Autowired
+	private CompanyService companyService;
 	
 	@RequestMapping("/admin")
 	public String adminPage() {
@@ -63,9 +67,8 @@ public class AdminController {
 	public ModelAndView adminCompany() {
 		ModelAndView mav = new ModelAndView("admin/report");
 		
-		List<Report> list = reportService.getAllCourseReport();
-		mav.addObject("reportList", list);
-		mav.addObject("type", "course");
+		List<Company> list = companyService.getAllCompany();
+		mav.addObject("companyList", list);
 		
 		return mav;
 	}

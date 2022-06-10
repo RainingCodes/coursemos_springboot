@@ -25,10 +25,10 @@ public class JpaCompanyDao implements CompanyDao {
 	}
 	
 	@Override
-	public List<Company> getCompanyByUserId(int userId) throws DataAccessException {
+	public List<Company> getCompanyByMemberId(int memberId) throws DataAccessException {
 		TypedQuery<Company> query = em.createQuery(
-                "select c from Report c " + "where c.userId = ?1", Company.class);
-		query.setParameter("userId", userId);
+                "select c from Company c " + "where c.memberId = ?1", Company.class);
+		query.setParameter(1, memberId);
         return query.getResultList();
 	}
 

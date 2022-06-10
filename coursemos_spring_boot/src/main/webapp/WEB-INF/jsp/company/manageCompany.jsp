@@ -21,7 +21,7 @@
 	<c:forEach var="company" items="${companyList}">
 	<tr>
 		<td>
-			${company.name}
+			${company.companyName}
 		</td>
 		<td>
         	<a href='<c:url value="/company/list/coupon">

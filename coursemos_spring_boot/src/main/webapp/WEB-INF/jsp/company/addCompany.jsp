@@ -13,8 +13,8 @@
 <table class="table">
 	<form:form modelAttribute="Company">
 	<tr>
-		<td class="text-center"><form:label path="name">가게명</form:label></td>
-		<td><form:input path="name" /><br></td>
+		<td class="text-center"><form:label path="companyName">가게명</form:label></td>
+		<td><form:input path="companyName" /><br></td>
 	</tr>
 	<tr>
 		<td class="text-center"><form:label path="companyId">사업자등록번호</form:label></td>

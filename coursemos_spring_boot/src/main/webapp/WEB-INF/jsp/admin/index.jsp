@@ -9,7 +9,7 @@
 </head>
 <body>
 <a href="/admin/report/course">코스 관리 페이지 이동</a><br>
-<a href="/admin/report/reivew">리뷰 관리 페이지 이동</a>
+<a href="/admin/report/reivew">리뷰 관리 페이지 이동</a><br>
 <a href="/admin/company">제휴 관리</a>
 </body>
 </html>

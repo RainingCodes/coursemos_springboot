@@ -1,7 +1,11 @@
 package com.example.demo.controller;
 
+import java.util.Date;
+import java.util.List;
+
 import javax.servlet.http.HttpServletRequest;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -11,16 +15,18 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.example.demo.domain.Company;
+import com.example.demo.service.CompanyService;
 
 
 @Controller
 public class CompanyController {
+	@Autowired
+	private CompanyService companyService;
 	
 	@ModelAttribute("Company")
 	public Company formBacking(HttpServletRequest request) {
 		if (request.getMethod().equalsIgnoreCase("GET")) {
 			Company company = new Company();
-			
 			return company;
 		}
 		else return new Company();
@@ -32,21 +38,27 @@ public class CompanyController {
 	}
 	
 	@RequestMapping(value = "/company/register", method = RequestMethod.POST)
-	public String companyRegister(Model model) {
+	public String companyRegister(@ModelAttribute("Company") Company company, Model model) {
 		
-		//DB 등록
-		//등록하면 제휴 등록 리스트창으로
-		//유저 세션유지 해야할듯???
+		//사업자등록번호는 무조건 10자리임(이거 나중에 세팅)
+		//전화번호도 세팅
 		
-		return "/company/list";
+		long miliseconds = System.currentTimeMillis();
+	    Date current = new Date(miliseconds);
+	    company.setRegisterDate(current);
+	    company.setAccept(0);
+	    company.setMemberId(7); // 세션 완성되면 설정하기
+	    companyService.insertCompany(company);
+		
+		return "redirect:/company/list";
 	}
 	
 	@RequestMapping("/company/list")
 	public ModelAndView companyList() {
 		ModelAndView mav = new ModelAndView("company/manageCompany");
 		
-		//userId 기준으로 회사 정보 받아와서 넣고 넘기기
-		mav.addObject("companyList", "test");
+		List<Company> list = companyService.getCompanyByMemberId(7); // 세션 완성되면 설정하기
+		mav.addObject("companyList", list);
 		
 		return mav;
 	}
