@@ -10,11 +10,9 @@ public interface CourseDao {
 
 	Course getCourseByCourseId(String courseId) throws DataAccessException;
 	
-	int getTotalTravelTime(int totalTravel) throws DataAccessException;
-	
 	void insertCourse(Course course) throws DataAccessException;
 
-	int deleteCourse(int courseId) throws DataAccessException;
+	void deleteCourse(Course course) throws DataAccessException;
 	
 	// ��Ұ� �� ���� �Է� �� ���
 	List<Course> searchCourseListByPlace(String place) throws DataAccessException;
