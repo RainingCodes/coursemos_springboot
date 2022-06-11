@@ -8,6 +8,21 @@
 <title>제휴 상세보기</title>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 </head>
+<script>
+
+function submitForm() {
+	var answer = confirm("정말로 해지하시겠습니까? 되돌릴 수 없습니다.");
+	
+	if(answer) {
+		alert('제휴가 해지되었습니다.')
+		form.submit();
+	} else {
+	}
+}
+
+
+
+</script>
 <body>
 <div class="container">
 <center><h1>제휴 상세보기</h1></center>
@@ -37,9 +52,12 @@
 	<tr>
 		<c:if test="${company.accept eq 1}">
 		<td>제휴 해지하기</td>
-		<td><a href='<c:url value="/company/list/detail/stop">
-          	<c:param name="companyId" value="${company.companyId}"/></c:url>'>
-          	<b>해지하기</b></a></td>
+		<td>
+		<form name="form" method="post" action="<c:url value='/company/list/detail/stop' />">
+			<input type="hidden" name="companyId" value="${company.companyId}"/>
+			<input type="button" value="해지하기" onClick="submitForm()">
+		</form>
+		</td>
         </c:if>
         <c:if test="${company.accept eq 2}">
 		<td>목록에서 삭제하기</td>

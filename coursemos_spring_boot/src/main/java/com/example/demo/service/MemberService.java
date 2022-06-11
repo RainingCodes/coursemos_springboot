@@ -17,11 +17,12 @@ import com.example.demo.repository.MemberRepository;
 @Service
 @Transactional 
 public class MemberService {
-	@Autowired 
+
 	private JpaMemberDao memberDao;
 	
 	@Autowired
 	private MemberRepository memberRepository;
+	
 	
 	public void insertMember(Member member) {
 		memberRepository.save(member);
@@ -36,8 +37,10 @@ public class MemberService {
 		}	
 	}
 	
-	public Member fidnMemberByNickName2(String nickName) {
+	public Member findMemberByNickName2(String nickName) {
 		List<Member> member = (List<Member>) memberRepository.findMemberByNickName(nickName);
+		if(member.size() == 0)
+			return null;
 		return member.get(0);
 	}
 }

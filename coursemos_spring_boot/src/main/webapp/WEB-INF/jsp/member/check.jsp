@@ -30,7 +30,6 @@ function closePopup(){
 	} else {
 		window.opener.document.getElementById("nickName").value = document.getElementById("nickName").value;
 		window.opener.document.getElementById("check").value = 't';
-		alert(window.opener.document.getElementById("check").value);
 		window.close();
 	}
 		
