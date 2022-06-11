@@ -3,10 +3,12 @@ package com.example.demo.controller;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -60,8 +62,16 @@ public class CouponController {
 	}
 	
 	@RequestMapping(value = "/company/list/coupon/register", method = RequestMethod.POST)
-	public ModelAndView courseReportRegister(@ModelAttribute("Coupon") Coupon coupon) {
-		//쿠폰 발급 날짜(period) validation 두기
+	public ModelAndView courseReportRegister(@Valid @ModelAttribute("Coupon") Coupon coupon, BindingResult result) {
+
+		if (result.hasErrors()) {
+			ModelAndView mav = new ModelAndView("coupon/addCoupon");
+			mav.addObject(coupon);
+			
+			Company company = companyService.getCompanyByCompanyId(coupon.getCompanyId());
+			mav.addObject("companyName", company.getCompanyName());
+			return mav;
+		}
 		
 		ModelAndView mav = new ModelAndView("redirect:/company/list/coupon");
 		coupon.setState(0);
