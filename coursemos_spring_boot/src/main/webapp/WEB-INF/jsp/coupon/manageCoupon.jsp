@@ -8,6 +8,21 @@
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
 <title>제휴 관리</title>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<script>
+
+function submitForm() {
+	var answer = confirm("정말로 중단하시겠습니까? 되돌릴 수 없습니다.");
+	
+	if(answer) {
+		alert('발급이 중단되었습니다.')
+		form.submit();
+	} else {
+	}
+}
+
+
+
+</script>
 </head>
 <body>
 <div class="container">
@@ -38,10 +53,11 @@
 		<td>${coupon.day}일</td>
 		<td>${coupon.limit}개</td>
 		<td>
-        	<a href='<c:url value="/company/list/coupon/stop">
-          	<c:param name="couponId" value="${coupon.couponId}"/></c:url>'>
-          	<b>중단하기</b></a> <!-- 진짜 중단하시겠습니까 자바스크립트 띄우기(버튼으로 변경) -->
-     	</td>
+		<form name="form" method="post" action="<c:url value='/company/list/coupon/stop' />">
+			<input type="hidden" name="couponId" value="${coupon.couponId}"/>
+			<input type="button" value="중단하기" onClick="submitForm()">
+		</form>
+		</td>
 		<td>
         	<a href='<c:url value="/company/list/coupon/detail">
           	<c:param name="couponId" value="${coupon.couponId}"/></c:url>'>
