@@ -1,7 +1,13 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
-<%@ include file="../header/IncludeTop.jsp"  %>
+<c:if test="${sessionMember.check2 != false}"> <!-- if와 동일 -->
+		<jsp:forward page="/" /> 
+</c:if> <!-- if 종료 -->
+<c:if test="${sessionMember.check2 ==false }">
+		<%@ include file="../header/IncludeTop.jsp"  %>
+</c:if> <!-- if 종료 -->
 <!DOCTYPE html>
 <html>
 <head>

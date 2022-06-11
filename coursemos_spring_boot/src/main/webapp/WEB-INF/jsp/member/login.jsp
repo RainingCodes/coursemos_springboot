@@ -1,6 +1,12 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<%@ include file="../header/IncludeTop.jsp"  %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<c:if test="${sessionMember.check2 != false}"> <!-- if와 동일 -->
+		<jsp:forward page="/" /> 
+</c:if> <!-- if 종료 -->
+<c:if test="${sessionMember.check2 ==false }">
+		<%@ include file="../header/IncludeTop.jsp"  %>
+</c:if> <!-- if 종료 -->
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800;900&display=swap');
 * {
@@ -70,6 +76,7 @@ function kakaoLogin() {
 		},
 	}
 </script>
+
 <div class="container">
         <div class="body d-md-flex align-items-center justify-content-between">
             <div class="box-2 d-flex flex-column h-100">
