@@ -16,7 +16,6 @@ import com.example.demo.domain.Member;
 import com.example.demo.domain.SessionMember;
 import com.example.demo.service.MemberService;
 import com.example.demo.validator.LoginValidator;
-import com.example.demo.validator.MemberValidator;
 
 
 
@@ -35,13 +34,14 @@ public class LoginMemberController {
 	
 	@ModelAttribute("sessionMember")
 	public SessionMember formBacking(HttpServletRequest request) {
-		SessionMember sessionMember = new SessionMember(); // MemberInfo 객체 생성
+		SessionMember sessionMember = new SessionMember();	 // MemberInfo 객체 생성
 		return sessionMember; // session에 “member” 이름으로 저장됨
 	}
 	
 	@RequestMapping(method=RequestMethod.POST)
 	public String login(@Valid @ModelAttribute SessionMember sessionMember,
 			BindingResult result, SessionStatus status) {
+				
 				Member member = memberService.findMemberByNickName2(sessionMember.getNickName());
 				if(sessionMember.getNickName() != null && sessionMember.getPassword() != null) {
 					if(member == null)
