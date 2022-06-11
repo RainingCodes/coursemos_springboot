@@ -64,20 +64,32 @@ public class CompanyController {
 	}
 	
 	@RequestMapping("/company/list/detail")
-	public ModelAndView companyDetail(@RequestParam("companyId") String companyId) {	
+	public ModelAndView companyDetail(@RequestParam("companyId") int companyId) {	
 		ModelAndView mav = new ModelAndView("company/detailCompany");
 		
 		//companyId로 회사 상세정보 받아와서 넣고 넘기기
-		mav.addObject("company", "test");
+		Company company = companyService.getCompanyByCompanyId(companyId);  // 세션 완성되면 설정하기
+		mav.addObject("nickname", "test");
+		mav.addObject("company", company);
 		return mav;
 	}
 	
 	@RequestMapping("/company/list/detail/stop")
-	public String companyStopConnect(@RequestParam("companyId") String companyId) {	
+	public String companyStopConnect(@RequestParam("companyId") int companyId) {	
+		Company company = companyService.getCompanyByCompanyId(companyId);
+		company.setAccept(3);
+		companyService.updateCompany(company);
 		
-		//db 연동해서 값 바꾸고 리턴
+		return "redirect:/company/list";
+	}
+	
+	@RequestMapping("/company/list/detail/delete")
+	public String companydeleteConnect(@RequestParam("companyId") int companyId) {
 		
-		return "/company/list/detail";
+		Company company = companyService.getCompanyByCompanyId(companyId);
+		companyService.deleteCompany(company);
+		
+		return "redirect:/company/list";
 	}
 	
 	

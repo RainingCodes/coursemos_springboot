@@ -47,6 +47,11 @@ public class JpaCompanyDao implements CompanyDao {
 		em.merge(company);
 	}
 
+	@Override
+	public void deleteCompany(Company company) throws DataAccessException {
+		em.remove(company);
+	}
+
 
 
 }

@@ -44,4 +44,10 @@ public class CompanyServiceImpl implements CompanyService {
 		companyDao.insertCompany(company);
 	}
 
+	@Override
+	public void deleteCompany(Company company) {
+		companyDao.deleteCompany(company);
+		
+	}
+
 }

@@ -9,4 +9,5 @@ public interface CompanyService {
 	Company getCompanyByCompanyId(int companyId);
 	void updateCompany(Company company);
 	void insertCompany(Company company);
+	void deleteCompany(Company company);
 }
