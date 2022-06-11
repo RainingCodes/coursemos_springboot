@@ -33,7 +33,7 @@
 		<td>제휴 등록일</td>
 		<td><b>${company.registerDate}</b></td>
 	</tr>
-	<c:if test="${company.accept eq 3}">
+	<c:if test="${company.accept ne 3}">
 	<tr>
 		<c:if test="${company.accept eq 1}">
 		<td>제휴 해지하기</td>
