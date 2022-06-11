@@ -1,7 +1,13 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
-<%@ include file="../header/IncludeTop.jsp"  %>
+<c:if test="${sessionMember.check2 != false}"> <!-- if와 동일 -->
+		<jsp:forward page="/" /> 
+</c:if> <!-- if 종료 -->
+<c:if test="${sessionMember.check2 ==false }">
+		<%@ include file="../header/IncludeTop.jsp"  %>
+</c:if> <!-- if 종료 -->
 <!DOCTYPE html>
 <html>
 <head>
@@ -51,10 +57,6 @@
 .space {
 	height : 80px;
 }
-#login a{
-	text-decoration:none;
-	color: white;
-}
 label {
 	font-size : 20px;
 }
@@ -66,6 +68,10 @@ input {
 	}
 	.spaces2 {
 		height : 30px;
+	}
+	.error {
+		color:red;
+		font-size:12px;
 	}
 </style>
 </head>
@@ -84,18 +90,33 @@ input {
                     			<td><form:input path="nickName" /></td>
                     		</tr>
                     		<tr>
+								<td class="spaces">&nbsp;</td>
+								<td class="errors" colspan=2><form:errors path="nickName" cssClass="error"/></td>
+							</tr>
+                    		<tr>
                     			<td colspan=3 class="spaces2">&nbsp;</td>
                     		</tr>
                     		<tr>
                     			<td><form:label path="password">비밀번호</form:label></td>
                     			<td class="spaces1">&nbsp;</td>
-                    			<td><form:input path="password" /></td>
+                    			<td><form:password path="password" /></td>
+                    		</tr>
+                    		<tr>
+								<td class="spaces">&nbsp;</td>
+								<td class="errors" colspan=2><form:errors path="password" cssClass="error"/></td>
+							</tr>
+                    		<tr>
+                    			<td class="spaces2" colspan="3">&nbsp;</td>
+                    		</td>	
+                    		<tr>
+                    			<td colspan="5"><div class="loginBtn btn-primary btn-sm" id="login"><button class="btn-primary">로그인</button></div></td>
+                    		</tr>
+                    		<tr>
+                    			<td colspan="3"><div class="space">&nbsp;</div></td>
                     		</tr>
                     	</form:form>
                     </table>
-                    	<div class="spaces2">&nbsp;</div>	
-                    	<div class="loginBtn btn-primary btn-sm" id="login"><a href="/login2">로그인</a></div>
-                    	<div class="space">&nbsp;</div>
+                    	
                 </div>
             </div>
         </div>

@@ -7,6 +7,14 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.SequenceGenerator;
+import javax.validation.constraints.Digits;
+import javax.validation.constraints.Min;
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Pattern;
+import javax.validation.constraints.Positive;
+
+import org.springframework.format.annotation.DateTimeFormat;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -26,9 +34,20 @@ public class Coupon {
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "COUPON_SEQ_GENERATOR")
 	private int couponId;
 	private int companyId;
-	private String contents;
+	
+	@NotEmpty
+	private String couponContents;
+	
+	@NotNull
+	@DateTimeFormat(pattern="yyyy-MM-dd")
 	private Date period;
-	private int limit;
-	private int day;
+	
+	@NotNull
+	@Min(value=0)
+	private Integer limit;
+	
+	@NotNull
+	@Min(value=0)
+	private Integer day;
 	private int state;	
 }

@@ -52,6 +52,4 @@ public class JpaCompanyDao implements CompanyDao {
 		em.remove(company);
 	}
 
-
-
 }

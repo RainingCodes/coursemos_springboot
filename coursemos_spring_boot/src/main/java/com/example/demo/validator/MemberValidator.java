@@ -1,19 +1,22 @@
 package com.example.demo.validator;
 
 
+
 import org.springframework.validation.Errors;
 import org.springframework.validation.Validator;
 
 import com.example.demo.domain.Member;
 
-public class MemberValidator implements Validator{
 
+public class MemberValidator implements Validator{
+	
+	
 	@Override
 	public boolean supports(Class<?> clazz) {
 		// TODO Auto-generated method stub
 		return Member.class.isAssignableFrom(clazz);
 	}
-
+	
 	@Override
 	public void validate(Object target, Errors errors) {
 		// TODO Auto-generated method stub
@@ -24,6 +27,8 @@ public class MemberValidator implements Validator{
 			errors.rejectValue("password", "required");
 		else if(!member.getPassword().matches("^[A-Za-z0-9]{6,12}$"))
 			errors.rejectValue("password", "pattern");
+		if(!member.getPassword().equals(member.getRepw()))
+			errors.rejectValue("repw", "wrong");
 		if(member.getGenderCode() == null)
 			errors.rejectValue("genderCode", "required");
 		

@@ -30,8 +30,9 @@ public class JpaCourseDao implements CourseDao{
 	}
 
 	@Override
-	public void insertCourse(Course course) throws DataAccessException {
+	public Course insertCourse(Course course) throws DataAccessException {
 		em.persist(course);
+		return course;
 	}
 
 	@Override

@@ -8,39 +8,54 @@
 <meta name="description" content="" />
 <meta name="author" content="" />
 <title>코스 작성</title>
+<style>
+	.error {
+		color:red;
+	}
+</style>
 <!-- Favicon-->
 <link rel="icon" type="image/x-icon" href="../assets/favicon.ico" />
 <!-- Core theme CSS (includes Bootstrap)-->
 <link href="../css/styles.css" rel="stylesheet" />
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor" crossorigin="anonymous">
 </head>
-<script src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
+<script src="https://code.jquery.com/jquery-latest.min.js"></script>
+<script>
+	/* $( document ).ready( function() {
+		$("#writtenDate").html(new Date().toISOString().substring(0, 10));
+	}); */
+	
+	
+	
+	function onClickBtn()  {
+	  let name = document.getElementById('keyword').value;
+	  ps.keywordSearch(name, placesSearchCB);
+	}
+	
+	var cnt = 1; 
+	$(document).ready(function () {
+		  $(document).on("click", "input[name='add']", function () {
+			  if(cnt > 3)
+				  alert("최대 입력 값을 초과했습니다.");
+			  else {
+				  cnt++;	  
+				  $("#description").before('<hr style="width: 95%"><b>'+cnt+'번째 장소</b>'+ '<br><p><input class="form-control" type="text" placeholder="장소" name="placeName'+cnt+'" style="width: 95%" required><br><input class="form-control" type="text" placeholder="상세 주소(지번)" name="address' + cnt +'" style="width: 95%" required><input class="form-control" type="text" placeholder="상세 주소(도로명, 없을 경우 지번주소만 표시됩니다.)" name="road_address' + cnt + '" style="width: 95%"><br></p>');
+				  //$("#place").val(cnt);
+				  }			  
+		  });
+		});
+	
+	
+</script>
+
 <body>
-
-<form:form modelAttribute="course" method="post">
-
-<form:label path="courseName">코스 이름</form:label>
-<form:input path="courseName"/>
-<form:errors path="courseName"/>
-
-<form:label path="courseContents">내용</form:label>
-<form:input path="courseContents"/>
-<form:errors path="courseContents"/>
-<input type="submit" value="등록"/>
-
-</form:form>
-
-
-<%-- 
 <!-- Responsive navbar-->
 	<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
 		<div class="container">
 			<div>
 				<ul class="navbar-nav ms-auto mb-2 mb-lg-0">
-					<li class="nav-item"><a class="nav-link active" href="#!">코스
-							등록</a></li>
-					<li class="nav-item"><a class="nav-link active" href="#!">제휴
-							등록</a></li>
+					<li class="nav-item"><a class="nav-link active" href="#!">코스 등록</a></li>
+					<li class="nav-item"><a class="nav-link active" href="#!">제휴 등록</a></li>
 				</ul>
 			</div>
 			<div align="center">
@@ -71,7 +86,7 @@
 	<!-- Page content-->
 	<div class="container mt-5">
 		<div class="row" style="margin-left: 25%;">
-			<form:form modelAttribute="course" name="form" method="POST">
+			<form:form modelAttribute="course" name="form" method="POST" action="view/1">
 				<div class="col-lg-8">
 					<!-- Post content-->
 					<article>
@@ -84,32 +99,43 @@
 								<div class="input-group">
 									<form:input path="courseName" class="form-control" name="inputTitle" type="text"
 										placeholder="코스 이름을 입력하세요"/>
-									<form:errors path="courseName"/>
+									<form:errors path="courseName" cssClass="error"/>
 								</div>
 							</div>
 						</header>
+						
+						
+						<form:input path="memberId" type="hidden" id="memberId" value="1"/> <!-- memberId값 임의로 1 설정 -->
+						<form:input path="likes" type="hidden" id="likes" value="0"/> <!-- likes값 임의로 0 설정 -->
+						<form:input path="placeId1" type="hidden" id="likes" value="1"/>
+						<form:input path="placeId2" type="hidden" id="likes" value="2"/>
+						<form:input path="placeId3" type="hidden" id="likes" value="3"/>
+						
+						
+						
+						<form:input path="writtenDate" type="hidden" id="writtenDate"/>						
+						<script>
+							var date = new Date().toISOString().substring(0, 10);
+							document.getElementById("writtenDate").value=date;
+						</script>					
 						<div class="upload"></div>
 						<h5>코스의 분위기를 선택하세요</h5>
 						<div class="selectTaste"
 							style="display: inline-block; width: 300px; line-height: 45px;">
-							<input type="checkbox" name="category" value="활동적인">활동적인
-							<input type="checkbox" name="category" value="잔잔한">잔잔한
-							<input type="checkbox" name="category" value="힐링">힐링
-							<input type="checkbox" name="category" value="자연적인">자연적인<br>
-							<input type="checkbox" name="category" value="체험적">체험적
-							<input type="checkbox" name="category" value="즐거운">즐거운
-							<input type="checkbox" name="category" value="복고풍">복고풍
+							<form:radiobutton path="taste" name="category" value="활동적인"/>활동적인
+							<form:radiobutton path="taste" name="category" value="잔잔한"/>잔잔한
+							<form:radiobutton path="taste" name="category" value="힐링"/>힐링
+							<form:radiobutton path="taste" name="category" value="자연적인"/>자연적인<br>
+							<form:radiobutton path="taste" name="category" value="체험적"/>체험적
+							<form:radiobutton path="taste" name="category" value="즐거운"/>즐거운
+							<form:radiobutton path="taste" name="category" value="복고풍"/>복고풍
 						</div>
+						<form:errors path="taste" cssClass="error"/>
 						<br><br>						
 						<!-- 지도 -->
 						<h5>코스 경로에 추가할 장소를 입력하세요.</h5>
 						<input class="form-control" id='keyword' style="float:left; width:75%;" onchange='onClickBtn()' placeholder="장소 검색">
-						<script>
-						function onClickBtn()  {
-						  let name = document.getElementById('keyword').value;
-						  ps.keywordSearch(name, placesSearchCB);
-						}
-						</script>
+						
 						<div style="float: right; margin-right: 60px;">
 							<input type="button" onclick="onClickBtn();"
 								style="border: none; border-radius: 5px; text-align: center; margin-left:10px; width: 80px; height: 34px;"
@@ -218,21 +244,7 @@
 						<!-- 코스 추가 -->
 						<h5>최대 3군데의 장소를 추가할 수 있습니다 <input type="button" name="add" value="+" id="add_btn" style="border: none; border-radius: 5px; text-align: center; margin-left: 30%; height: 30px;"></h5>
 						<input type="hidden" id="place" name="place">
-						<script language="JavaScript">
-						var cnt = 1; 
-						$(document).ready(function () {
-							  $(document).on("click", "input[name='add']", function () {
-								  if(cnt >= 3)
-									  alert("최대 입력 값을 초과했습니다.");
-								  else {
-									  cnt++;	  
-									  $("#description").before('<hr style="width: 95%"><b>'+cnt+'번째 장소</b>'+ '<br><p><input class="form-control" type="text" placeholder="장소" name="placeName'+cnt+'" style="width: 95%" required><br><input class="form-control" type="text" placeholder="상세 주소(지번)" name="address' + cnt +'" style="width: 95%" required><input class="form-control" type="text" placeholder="상세 주소(도로명, 없을 경우 지번주소만 표시됩니다.)" name="road_address' + cnt + '" style="width: 95%"><br></p>');
-									  //$("#place").val(cnt);
-									  }			  
-							  });
-							});
-						
-						</script>
+
 						<br>
 						<b>1번째 장소</b>
 						<input class="form-control" type="text" placeholder="장소" id='placeName1' name="placeName1" style="width: 95%" required><br> 
@@ -240,8 +252,8 @@
 						<input class="form-control" type="text" placeholder="상세 주소(도로명, 없을 경우 생략)" name="road_address1" id='road_address1' style="width: 95%"><br> 					
                         <!-- Post content-->
                         <h5 id="description">코스에 대한 설명을 입력하세요</h5>
-                        <input class="form-control" name="contents" type="text" style="height:300px">
-                        <form:errors path="courseContents"/>
+                        <form:input path="courseContents" class="form-control" name="contents" type="text" style="height:300px"/>
+                        <form:errors path="courseContents" cssClass="error"/>
                         <br>
                         <button type="submit" style="width:100%; height:40px; border:none; border-radius:5px; text-align: center;">등록하기</button>
                     </article>
@@ -276,41 +288,8 @@
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
 <!-- Core theme JS-->
         <script src="js/scripts.js"></script>
-		<script>
-	    /* new Vue({
-	    	el: '.selectTaste',
-	    	data : {
-	    		taste: ['활동적인', '잔잔한', '힐링', '자연적인', '공식적인', '체험적', '즐거운', '복고풍']
-	    	}
-	    }) */
-	   
-	    	export default {
- 			data() {
-   				return {
-     				inputTitle: null,
-     				courseInfo: '',
-     				checked: []
-   				};
- 			},
- 			computed: {
-     			titleValid(){
-        			return /^[A-Za-zㄱ-ㅎ]+$/.test(this.inputTitle)
-			    }
-			 }
-			}
-	    </script>
 	<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.5/dist/umd/popper.min.js" integrity="sha384-Xe+8cL9oJa6tN/veChSP7q+mnSPaj5Bcu9mPX5F5xIGE0DVittaqT5lorf0EI7Vk" crossorigin="anonymous"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/js/bootstrap.min.js" integrity="sha384-kjU+l4N0Yf4ZOJErLsIcvOU2qSb74wXpOhqTvwVx3OElZRweTnQ6d31fXEoRD1Jy" crossorigin="anonymous"></script>
-
-
-
- --%>
-
-
-
-
-
-
 
 
 

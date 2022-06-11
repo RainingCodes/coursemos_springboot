@@ -2,15 +2,19 @@ package com.example.demo.controller;
 
 
 import org.springframework.stereotype.Controller;
-
-
+import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
-
+import org.springframework.web.bind.annotation.SessionAttributes;
+import org.springframework.web.bind.support.SessionStatus;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.example.demo.domain.SessionMember;
+
 @Controller
+@SessionAttributes("sessionMember")
 public class IndexController {
 	@RequestMapping("/")
 	public ModelAndView index() {
@@ -22,6 +26,17 @@ public class IndexController {
 	public ModelAndView login() {
 		ModelAndView mav = new ModelAndView("member/login"); 
 		return mav;
+	}
+	@RequestMapping("/member/logout")
+	public String logout(@ModelAttribute SessionMember sessionMember,
+			BindingResult result, SessionStatus status) {
+		sessionMember.setNickName(null);
+		sessionMember.setPassword(null);
+		sessionMember.setPoints(0);
+		sessionMember.setTasteCode(null);
+		sessionMember.setCheck1(false);
+		sessionMember.setCheck2(false);
+		return "index";
 	}
 	
 	@RequestMapping(method=RequestMethod.GET)
@@ -47,3 +62,5 @@ public class IndexController {
 	
 
 }
+
+

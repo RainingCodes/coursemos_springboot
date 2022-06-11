@@ -20,5 +20,7 @@ public class CourseValidator implements Validator{
 			errors.rejectValue("courseName", "required");
 		if (course.getCourseContents() == null || course.getCourseContents().trim().isEmpty())
 			errors.rejectValue("courseContents", "required");
+		if(course.getTaste() == null || course.getTaste().trim().isEmpty())
+			errors.rejectValue("taste", "required");
 	}
 }
