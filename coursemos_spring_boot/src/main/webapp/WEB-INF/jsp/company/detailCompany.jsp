@@ -29,6 +29,10 @@ function submitForm() {
 <h4>${nickname}님의 ${company.companyName}에 관한 정보입니다.</h4>
 <table class="table">
 	<tr>
+		<td>사업자등록번호</td>
+		<td>${company.companyId}</td>
+	</tr>
+	<tr>
 		<td>제휴 여부</td>
 		<td>
 		<b>
