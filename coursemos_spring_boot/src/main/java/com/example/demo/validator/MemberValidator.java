@@ -7,6 +7,7 @@ import org.springframework.validation.Validator;
 
 import com.example.demo.domain.Member;
 
+
 public class MemberValidator implements Validator{
 	
 	
@@ -15,7 +16,7 @@ public class MemberValidator implements Validator{
 		// TODO Auto-generated method stub
 		return Member.class.isAssignableFrom(clazz);
 	}
-
+	
 	@Override
 	public void validate(Object target, Errors errors) {
 		// TODO Auto-generated method stub
