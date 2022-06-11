@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.example.demo.domain.Course;
+import com.example.demo.domain.Place;
 import com.example.demo.domain.TasteCategory;
 import com.example.demo.service.SearchService;
 import com.example.demo.service.TasteService;
@@ -86,6 +87,8 @@ public class SearchPlaceController {
 		//mav.addObject("cList", cList);
 		double x = 37.577552;
 		double y = 126.976869;
+		//double x = place.getX();
+		//double y = place.getY();
 		mav.addObject("x", x);
 		mav.addObject("y", y);
 		String station = "시청역";
