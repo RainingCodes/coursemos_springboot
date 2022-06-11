@@ -17,7 +17,7 @@
 	String roadAddress3 = request.getParameter("road_address3") == null ? "": request.getParameter("road_address3");
 	String roadAddressList[] = {roadAddress1, roadAddress2, roadAddress3};
 	
-	String[] category = request.getParameterValues("category");
+	String category = request.getParameter("category");
 	
 	String contents = request.getParameter("contents");
 %>    
@@ -90,11 +90,7 @@
 					<div class="upload"></div>
 					<h5 style="font-weight:bold;">코스의 분위기</h5>
 					<!-- <div>활동적인, 즐거운</div> -->
-					<div>
-						<% for (int i = 0; i < category.length; i++){%>
-							<div><%=category[i] %></div>
-						<% }%>
-					</div>
+					<div><%=category %></div>
 					<br>
 					<br>
 					<h5 style="font-weight:bold;">코스 경로 살펴보기</h5>
@@ -282,8 +278,9 @@
 					<img style="width:10%; height:10%;'" src="../../img/scrap.png"/>
 					<!-- <button type="submit" style="width:20%; height:60px; border:none; border-radius:5px; text-align: center; background-color:#0d6efd; color: white;">스크랩</button> -->
 					<!-- 추후 비활성화/활성화 조건 적용하기 -->
-					<button type="submit" style="width:20%; height:60px; border:none; border-radius:5px; text-align: center; background-color:#ced4da;">쿠폰 발급</button>
-					<button type="submit" style="width:20%; height:60px; border:none; border-radius:5px; text-align: center; background-color:#ced4da;">삭제</button>
+					<button type="submit" style="width:15%; height:60px; border:none; border-radius:5px; text-align: center; background-color:#ced4da;">쿠폰 발급</button>
+					<button type="submit" style="width:15%; height:60px; border:none; border-radius:5px; text-align: center; background-color:#ced4da;">신고</button>
+					<button type="submit" style="width:15%; height:60px; border:none; border-radius:5px; text-align: center; background-color:#ced4da;">삭제</button>
 					</div>
 				<br>
 				<br>
