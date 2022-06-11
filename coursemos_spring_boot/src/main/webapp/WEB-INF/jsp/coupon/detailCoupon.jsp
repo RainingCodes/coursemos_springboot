@@ -27,18 +27,18 @@
 	<c:forEach var="mcValue" items="${mcList}">
 	<tr>
 		<td>${mcValue.nickname}</td>
-		<fmt:formatDate value="${mcValue.memberCoupon.expriationDate}" pattern="yyyy-MM-dd" var="expriation"/>  <%-- 마감날짜 --%>
-		<td>${expriation}</td>
+		<fmt:formatDate value="${mcValue.memberCoupon.expirationDate}" pattern="yyyy-MM-dd" var="expiration"/>  <%-- 마감날짜 --%>
+		<td>${expiration}</td>
 		
 		<td>
 		<c:if test="${mcValue.memberCoupon.used eq 'F' }">
-			<c:if test="${expriation < nowDate}">
+			<c:if test="${expiration > nowDate}">
 				<a href='<c:url value="/company/list/coupon/detail/use">
 		    	<c:param name="memberCouponId" value="${mcValue.memberCoupon.memberCouponId}"/></c:url>'>
 		    	<b>사용하기</b></a>
 			</c:if>
 				
-			<c:if test="${expriation > nowDate}"> 
+			<c:if test="${expiration < nowDate}"> 
 				기간 만료
 			</c:if>
 		</c:if>
