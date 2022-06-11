@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 
 <html>
 <head>
@@ -9,9 +10,13 @@
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 </head>
 <body>
+<!-- 날짜 설정 -->
+<jsp:useBean id="now" class="java.util.Date" />
+<fmt:formatDate value="${now}" pattern="yyyy-MM-dd" var="nowDate" />             <%-- 오늘날짜 --%>
+
 <div class="container">
 <center><h1>쿠폰 관리</h1></center>
-<h4>'${coupon.content}' 쿠폰 발급 리스트</h4>
+<h4>'${coupon.couponContents}' 쿠폰 발급 리스트</h4>
 <table class="table">
 	<tr>
 		<th>유저 닉네임</th>
@@ -22,19 +27,24 @@
 	<c:forEach var="mcValue" items="${mcList}">
 	<tr>
 		<td>${mcValue.nickname}</td>
-		<td>${mcValue.memberCoupon.expriationDate}</td>
+		<fmt:formatDate value="${mcValue.memberCoupon.expriationDate}" pattern="yyyy-MM-dd" var="expriation"/>  <%-- 마감날짜 --%>
+		<td>${expriation}</td>
 		
 		<td>
-		<c:if test="${mcValue.use == 0}">
-			<a href='<c:url value="/company/list/coupon/detail/use">
-          	<c:param name="memberCouponId" value="${mcValue.memberCoupon.memberCouponId}"/></c:url>'>
-          	<b>사용하기</b></a>			
+		<c:if test="${mcValue.memberCoupon.used eq 'F' }">
+			<c:if test="${expriation < nowDate}">
+				<a href='<c:url value="/company/list/coupon/detail/use">
+		    	<c:param name="memberCouponId" value="${mcValue.memberCoupon.memberCouponId}"/></c:url>'>
+		    	<b>사용하기</b></a>
+			</c:if>
+				
+			<c:if test="${expriation > nowDate}"> 
+				기간 만료
+			</c:if>
 		</c:if>
-		<c:if test="${mcValue.use == 1}">
-			사용 완료
-		</c:if>
-		<c:if test="${mcValue.use == 2}"> 
-			기간 만료
+		
+		<c:if test="${mcValue.memberCoupon.used eq 'T'}">
+				사용 완료
 		</c:if>
      	</td>
     </tr>
