@@ -48,6 +48,9 @@ public class Member  implements Serializable {
   @Column(nullable=false) @Setter @Getter
   private String password;
   
+  @Transient @Getter @Setter
+  private String repw;
+  
   @Column(nullable=false) @Getter @Setter
   private Character type;
   
