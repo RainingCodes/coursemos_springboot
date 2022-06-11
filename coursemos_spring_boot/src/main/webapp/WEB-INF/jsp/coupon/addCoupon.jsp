@@ -13,20 +13,20 @@
 <table class="table">
 	<form:form modelAttribute="Coupon">
 	<tr>
-		<td class="text-center"><form:label path="contents">쿠폰 내용</form:label></td>
-		<td><form:input path="contents" /><br></td>
+		<td class="text-center"><form:label path="couponContents">쿠폰 내용</form:label></td>
+		<td><form:input path="couponContents" /><br></td>
 	</tr>
 	<tr>
 		<td class="text-center"><form:label path="period">쿠폰 발급 기간</form:label></td>
-		<td><form:input path="period" /><br></td>
+		<td><form:input path="period" />까지<br></td>
 	</tr>
 	<tr>
 		<td class="text-center"><form:label path="day">발급 후 이용기간</form:label></td>
-		<td><form:input path="day" /><br></td>
+		<td><form:input path="day" />일<br></td>
 	</tr>
 	<tr>
 		<td class="text-center"><form:label path="limit">발급 갯수 제한</form:label></td>
-		<td><form:input path="limit" /><br></td>
+		<td><form:input path="limit" />개까지 발급<br></td>
 	</tr>
 	<tr>
 		<td colspan="2" class="text-center"><input type="submit" value="접수하기" /></td>
