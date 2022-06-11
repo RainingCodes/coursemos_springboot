@@ -80,19 +80,15 @@
 				<article style="margin-left:25%;">
 					<!-- Post header-->
 					<header class="mb-4">
-						<h1 style="text-align: center;">코스 상세페이지</h1>
+						<h2 style="font-weight:bold;text-align:center;" id="courseTitle">『 ${course.courseName} 』</h2>
 					</header>
-					<div style="margin-left:400px;">작성자: ${course.memberId}, 작성일: ${course.writtenDate }</div>
 					<div>
-					<p></p>
 					<!-- Post title-->
-					<h4 style="font-weight:bold;" id="courseTitle">${course.courseName }</h4><br>
-					<!-- <input id="courseTitle" type="text" value="제목"> -->
-					<div class="upload"></div>
+					<div style="margin-left:400px;">작성자: ${course.memberId}, 작성일: ${course.writtenDate }</div>
+					<br>
 					<h5 style="font-weight:bold;">코스의 분위기</h5>
 					<!-- <div>활동적인, 즐거운</div> -->
 					<div>${course.taste }</div>
-					<br>
 					<br>					
 					<h5 style="font-weight:bold;">코스 경로 살펴보기</h5>
 					<br>
