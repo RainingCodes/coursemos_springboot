@@ -1,15 +1,13 @@
 package com.example.demo.controller;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -17,18 +15,24 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.example.demo.domain.Company;
 import com.example.demo.domain.Coupon;
-import com.example.demo.domain.Report;
+import com.example.demo.service.CompanyService;
+import com.example.demo.service.CouponService;
 
 @Controller
 public class CouponController {
+	@Autowired
+	private CompanyService companyService;
+	@Autowired
+	private CouponService couponService;
 	
 	@RequestMapping("/company/list/coupon")
-	public ModelAndView couponList(@RequestParam("companyId") String companyId) {	
+	public ModelAndView couponList(@RequestParam("companyId") int companyId) {	
 		ModelAndView mav = new ModelAndView("coupon/manageCoupon");
 		
-		Company company = new Company(); // 회사 이름 받아오기
-		List<Coupon> coupons = new ArrayList<Coupon>(); // 쿠폰 정보들 받아오기
-		//companyId로 회사 상세정보 받아와서 넣고 넘기기
+		Company company = companyService.getCompanyByCompanyId(companyId); // 회사 받아오기
+		List<Coupon> coupons = couponService.getCouponByCompanyId(companyId);// 쿠폰 정보들 받아오기
+
+		mav.addObject("company", company);
 		mav.addObject("couponList", coupons);
 		return mav;
 	}
@@ -44,31 +48,40 @@ public class CouponController {
 	}
 	
 	@RequestMapping(value = "/company/list/coupon/register", method = RequestMethod.GET)
-	public String couponRegister(@ModelAttribute("Coupon") Coupon coupon, @RequestParam("companyId") String companyId, ModelMap model) throws Exception {
-		coupon.setCompanyId(Integer.parseInt(companyId));
+	public String couponRegister(@ModelAttribute("Coupon") Coupon coupon, @RequestParam("companyId") int companyId, ModelMap model) throws Exception {
+		coupon.setCompanyId(companyId);
+		Company company = companyService.getCompanyByCompanyId(companyId); // 회사 받아오기
 		
 		//서비스로 게시글 제목, 글쓴이 가져오는 것 나중에 구현해서 모델에 연결해서 리턴
 		//쿠폰 발급기한 나중에 정규식 제한두긴
-		model.addAttribute("companyName", "나중에 구현");		
+		model.addAttribute("companyName", company.getCompanyName());		
 		
-		return "report/courseReport";
+		return "coupon/addCoupon";
 	}
 	
 	@RequestMapping(value = "/company/list/coupon/register", method = RequestMethod.POST)
-	public String courseReportRegister(@ModelAttribute("Coupon") Coupon coupon) {
+	public ModelAndView courseReportRegister(@ModelAttribute("Coupon") Coupon coupon) {
+		//쿠폰 발급 날짜(period) validation 두기
 		
-		//db에 쿠폰연결하고 쿠폰리스트로 리턴
+		ModelAndView mav = new ModelAndView("redirect:/company/list/coupon");
+		coupon.setState(0);
+		couponService.insertCoupon(coupon);
 		
-		return "/company/list/coupon";
+		mav.addObject("companyId", coupon.getCompanyId());
+		
+		return mav;
 	}
 
 	@RequestMapping("/company/list/coupon/stop")
-	public String stopProvideCoupon(@RequestParam("couponId") String couponId) {	
-		ModelAndView mav = new ModelAndView("coupon/manageCoupon");
+	public ModelAndView stopProvideCoupon(@RequestParam("couponId") int couponId) {
+		ModelAndView mav = new ModelAndView("redirect:/company/list/coupon");
+				
+		Coupon coupon = couponService.getCouponByCouponId(couponId);
+		mav.addObject("companyId", coupon.getCompanyId());
+		coupon.setState(2);
+		couponService.updateCoupon(coupon);
 		
-		//db에서 지우고 쿠폰리스트로 리턴
-		
-		return "/company/list/coupon";
+		return mav;
 	}
 	
 }

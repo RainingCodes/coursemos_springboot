@@ -8,6 +8,8 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.SequenceGenerator;
 
+import org.springframework.format.annotation.DateTimeFormat;
+
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -26,7 +28,8 @@ public class Coupon {
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "COUPON_SEQ_GENERATOR")
 	private int couponId;
 	private int companyId;
-	private String contents;
+	private String couponContents;
+	@DateTimeFormat(pattern="yyyy-MM-dd")
 	private Date period;
 	private int limit;
 	private int day;
