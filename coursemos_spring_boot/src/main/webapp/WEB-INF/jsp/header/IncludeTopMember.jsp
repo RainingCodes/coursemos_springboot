@@ -46,6 +46,9 @@
 		
 		margin : 10px;
 	}
+	.message {
+		font-size : 20px;
+	}
 </style>
 <script>
 $(document).ready(function(){
@@ -74,8 +77,8 @@ $(document).ready(function(){
 	        <a href="/"><img alt="로고" src="../img/logo.png" width="200"></a>
 	    </td>
 	    <td class="right" v-model="user">
-	      <a href="/mypage">${sessionMember.nickName} </a>님 안녕하세요. 
-	      <a href="/member/points" id="points"> ${sessionMember.points} Points</a>
+	      <span class="message"><a href="/mypage">${sessionMember.nickName} </a>님 안녕하세요. </span>
+	      <span class="message"><a href="/member/points" id="points"> ${sessionMember.points} Points</a></span>
 	      	<span id="tooltip" class="tooltip-text">
 			      <table class="table table-striped">
 			      	<tbody>
@@ -88,7 +91,10 @@ $(document).ready(function(){
 		      		</tbody>
 			    </table>
 			</span>
-	      </a>
+				
+				<button type="button" class="btn btn-outline-primary" onclick="location.href='/member/logout'">로그아웃</button>
+
+
 	      
 	  </tr>
 	</table>

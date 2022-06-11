@@ -112,4 +112,3 @@ public class RegisterMemberController {
 		private String label;
 	}
 }
-

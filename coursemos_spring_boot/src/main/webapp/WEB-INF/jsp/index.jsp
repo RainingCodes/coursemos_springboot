@@ -10,12 +10,12 @@
 </head>
 <body>
 
-	<c:if test="${sessionMember.nickName != null}"> <!-- if와 동일 -->
+	<c:if test="${sessionMember.check2 != false}"> <!-- if와 동일 -->
 		<%@ include file="header/IncludeTopMember.jsp"  %>
 	</c:if> <!-- if 종료 -->
-	<c:if test="${sessionMember.nickName==null }">
-		<%@ include file="header/IncludeTop.jsp"  %>
-	</c:if>
+	<c:if test="${sessionMember.check2 ==false }">
+			<%@ include file="header/IncludeTop.jsp"  %>
+	</c:if> <!-- if 종료 -->
 
 	
 
