@@ -54,6 +54,8 @@ public class LoginMemberController {
 					else {
 						sessionMember.setCheck1(true);
 						sessionMember.setCheck2(true);
+						sessionMember.setGenderCode(member.getGenderCode());
+						sessionMember.setBirth(member.getBirth());
 						sessionMember.setPoints(member.getPoints());
 						sessionMember.setTasteCode(member.getTasteCode());
 					}
