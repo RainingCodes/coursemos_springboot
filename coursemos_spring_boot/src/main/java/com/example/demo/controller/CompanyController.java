@@ -1,5 +1,6 @@
 package com.example.demo.controller;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -22,6 +23,7 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import lombok.ToString;
 
 
 @Controller
@@ -33,6 +35,25 @@ public class CompanyController {
 	public class CompanyAndPlace {
 		Company company;
 		Place place;
+	}
+	
+	@Getter @Setter @AllArgsConstructor @ToString
+	public class Taste {
+		private String code;
+		private String label;
+	}
+	
+	@ModelAttribute("tasteCodes") // return 객체에 이름을 부여하고 view에 전달
+	protected List<Taste> referenceData() throws Exception {
+		List<Taste> tasteCodes = new ArrayList<>();
+		tasteCodes.add(new Taste("act", "활동적인　"));
+		tasteCodes.add(new Taste("hea", "힐링되는　"));
+		tasteCodes.add(new Taste("nat", "자연적인　"));
+		tasteCodes.add(new Taste("exp", "체험적인　"));
+		tasteCodes.add(new Taste("ent", "즐거운　"));
+		tasteCodes.add(new Taste("ret", "복고풍　"));
+		tasteCodes.add(new Taste("cal", "잔잔한　"));
+		return tasteCodes;	
 	}
 	
 	@ModelAttribute("RegisterForm")

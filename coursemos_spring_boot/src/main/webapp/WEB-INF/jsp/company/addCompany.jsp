@@ -22,7 +22,7 @@
 	<form:form modelAttribute="RegisterForm">
 	<tr>
 		<td class="text-center"><form:label path="place.placeName">가게명</form:label></td>
-		<td><form:input path="company.companyName" /><br></td>
+		<td><form:input path="place.placeName" /><br></td>
 	</tr>
 	<tr>
 		<td class="text-center"><form:label path="company.companyId">사업자등록번호</form:label></td>
@@ -33,10 +33,13 @@
 		<td><form:input path="company.phone" /><br></td>
 	</tr>
 	<tr>
-		<td class="text-center"><form:label path="company.address">주소</form:label></td>
-		<td><form:input path="company.address" /><br></td>
+		<td class="text-center"><form:label path="place.taste">장소 분위기 선택하기</form:label></td>
+		<td><form:radiobuttons path="place.taste" items="${tasteCodes}" itemLabel="label" itemValue="code" /></td>
 	</tr>
-	
+	<tr>
+		<td class="text-center"><b>주소</b></td>
+		<td><input id="address"  size="50" readonly placeholder="주소 찾기 시 자동 추가됩니다"/><br></td>
+	</tr>
 	<tr>
 		<td colspan="2" class="text-center"><input type="submit" value="접수하기" /></td>
 	</tr>
@@ -65,7 +68,6 @@
 	
 	<input type="button" onClick="alertF()" value="코스찾기">
 </form>
-<input type="input" id="address" value=""/>
 
 <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=c17b5563968f2fffd356919521833ce2&libraries=services"></script>
 <script>
@@ -95,6 +97,10 @@ var placeName = "";
 var clickSubwayButton = false;
 
 function alertF() {
+	alert(document.getElementById("company.address").value);
+	alert(document.getElementById("place.x").value);
+	alert(document.getElementById("place.y").value);
+	alert(document.getElementById("place.subway").value);
 	alert(document.result.x.value);
 	alert(document.result.y.value);
 	alert(document.result.subwayName.value);
@@ -104,7 +110,7 @@ function alertF() {
 document.getElementById("javascript_btn1").addEventListener("click", javascript_onclikc);
 function javascript_onclikc(){
 	if (clickSubwayButton == false) {
-		document.getElementById("company.address").value = road_address_name;
+		document.getElementById("address").value = road_address_name;
 		alert(x+", "+y);
 		document.result.x.value = x;
 		document.result.y.value = y;
@@ -147,6 +153,11 @@ function placesSearchCategoryCB (data, status, pagination) { //지하철 검색
         subwayName = data[0].place_name
         subWayX = data[0].y;
         subWayY = data[0].x;
+        
+        //데이터 삽입
+        document.getElementById("place.x").value = subWayX
+        document.getElementById("place.y").value = subWayY
+        document.getElementById("place.subway").value = subwayName
         document.result.x.value = subWayX;
 		document.result.y.value = subWayY;
 		document.result.subwayName.value = subwayName;
