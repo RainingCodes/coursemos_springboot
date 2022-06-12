@@ -1,5 +1,6 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%
 	String inputTitle = request.getParameter("inputTitle");
 	String placeName1 = request.getParameter("placeName1");
@@ -271,24 +272,38 @@
 					  }
 					  				  
 					</script>
-
-					<img class="image" style="width:10%; height:10%;" src="../../img/like1.png" />
+					
+					<c:if test="${not empty nickName}"> <!-- 로그인 후 뜨는지 확인 -->
+						<img class="image" style="width:10%; height:10%;" src="../../img/like1.png" />	
+						<img class="scrapImage" style="width:9%; height:9%;" src="../../img/scrap1.png"/>
+						<button type="submit" style="width:15%; height:60px; border:none; border-radius:5px; text-align: center; background-color:#ced4da;">쿠폰 발급</button>
+						<button type="submit" style="width:15%; height:60px; border:none; border-radius:5px; text-align: center; background-color:#ced4da;">신고</button>		
+					
+					</c:if>
 					<script>
-					  var img = document.querySelector(".image");
-					  img.addEventListener("click", invertImg);
+					  var heartImg = document.querySelector(".image");
+					  heartImg.addEventListener("click", invertImg);
 					  function invertImg(){
-						  if (img.getAttribute("src") == "../../img/like1.png")
-							  img.setAttribute("src", "../../img/like2.png");
+						  if (heartImg.getAttribute("src") == "../../img/like1.png")
+							  heartImg.setAttribute("src", "../../img/like2.png");
 						  else
-							  img.setAttribute("src", "../../img/like1.png")
+							  heartImg.setAttribute("src", "../../img/like1.png");
 					  }
+					  
+					  var scrapImg = document.querySelector(".scrapImage");
+					  scrapImg.addEventListener("click", invertScrapImg);
+					  function invertScrapImg(){
+						  if(scrapImg.getAttribute("src") == "../../img/scrap1.png")
+							  scrapImg.setAttribute("src", "../../img/scrap2.png");
+						  else
+							  scrapImg.setAttribute("src", "../../img/scrap1.png");
+					  }
+					  
 					</script>
-					<img style="width:9%; height:9%;" src="../../img/scrap.png"/>
 					<!-- <button type="submit" style="width:20%; height:60px; border:none; border-radius:5px; text-align: center; background-color:#0d6efd; color: white;">스크랩</button> -->
-					<!-- 추후 비활성화/활성화 조건 적용하기 -->
-					<button type="submit" style="width:15%; height:60px; border:none; border-radius:5px; text-align: center; background-color:#ced4da;">쿠폰 발급</button>
-					<button type="submit" style="width:15%; height:60px; border:none; border-radius:5px; text-align: center; background-color:#ced4da;">신고</button>
-					<button type="submit" style="width:15%; height:60px; border:none; border-radius:5px; text-align: center; background-color:#ced4da;">삭제</button>
+					<c:if test="${memberId eq course.memberId}"> <!-- 로그인 후 뜨는지 확인 -->
+						<button type="submit" style="width:15%; height:60px; border:none; border-radius:5px; text-align: center; background-color:#ced4da;">삭제</button>
+					</c:if>	
 					</div>
 				<br>
 				<br>
