@@ -79,9 +79,11 @@
 		        	<input id="plus" type="button" value="+" onclick="add_Place()"/>
 		        
 					<button type="submit">검색하기</button>
+				</form>
+				<form action="<c:url value="/course/detailedSearch"/>" method="POST">
 					<c:forEach var="cate" items="${tList}">
-		    	    	<button type="button" class="btn btn-primary">${cate.name}</button>
-		    	    </c:forEach>
+						<button type="submit" class="btn btn-primary" name="taste" value="${cate.name}">${cate.name}</button>
+					</c:forEach>
 				</form>
 			
 				<button id="javascript_btn1" type="button">역찾기</button>
@@ -101,7 +103,7 @@
               <div class="accordion accordion-flush" id="accordionFlushExample">
                <div class="accordion-item"> 
                   <h2 class="accordion-header" id="${cate.courseId}"> 
-                    <button class="accordion-button collapsed" type="button" onclick="javascript:displayCourse('37.577552,126.976869','37.551245,126.988216','37.522470,126.939713'); makeUrl('${cate.placeId1}', '${cate.placeId2}', '${cate.placeId3}');" data-bs-toggle="collapse" data-bs-target="#flush-collapseOne_${cate.courseId}" aria-expanded="false" aria-controls="flush-collapseOne_${cate.courseId}">
+                    <button class="accordion-button collapsed" type="button" onclick="javascript:makeUrl('${cate.placeId1}', '${cate.placeId2}', '${cate.placeId3}');" data-bs-toggle="collapse" data-bs-target="#flush-collapseOne_${cate.courseId}" aria-expanded="false" aria-controls="flush-collapseOne_${cate.courseId}">
                         ${cate.courseId}
                       <i class="bi bi-heart-fill"></i>${cate.courseContents}
                     </button>
@@ -223,8 +225,6 @@
             	existTwoSearchForm = false;
             }	
             
-            //const url = 'https://api.odcloud.kr/api/15097002/v1/uddi:fb5d5e53-c0e6-446e-967c-94aea2dd4a2d?page=1&perPage=10&serviceKey=JII1QyQevHCT6KwLF5oLNwVmQrzSuKpTCt4pQSECQZFZtQ7Mg7k8uk38UCRIkewT1FpfCH%2Fy%2BKQ1eyVQRK4ZFw%3D%3D';
-            //const url = 'http://openapi.seoul.go.kr:8088/6243537573636e7338366274636b76/xml/culturalSpaceInfo/30/30';
             let url = "";
             var xhr = "";
             var num = "";
@@ -253,20 +253,26 @@
             }
            
 			function makeMarker(xml) {
+				removeMarker();
+				var x = [];
+				var y = [];
+				var c = [];
+				var data = [];
             	var xmlData = xhr.responseXML;
             	for (var i = 0; i < xmlData.getElementsByTagName("row").length; i++) {
-            		var x = xmlData.getElementsByTagName("row")[i].getElementsByTagName("X_COORD")[0].firstChild.nodeValue;
-            		var y = xmlData.getElementsByTagName("row")[i].getElementsByTagName("Y_COORD")[0].firstChild.nodeValue;
-     				var c = xmlData.getElementsByTagName("row")[i].getElementsByTagName("FAC_NAME")[0].firstChild.nodeValue;
+            		x[i] = xmlData.getElementsByTagName("row")[i].getElementsByTagName("X_COORD")[0].firstChild.nodeValue;
+            		y[i] = xmlData.getElementsByTagName("row")[i].getElementsByTagName("Y_COORD")[0].firstChild.nodeValue;
+     				c[i] = xmlData.getElementsByTagName("row")[i].getElementsByTagName("FAC_NAME")[0].firstChild.nodeValue;
+     				data[i] = x[i] + "," + y[i];
             	
      				markers[i] = new kakao.maps.Marker({
                         map: map, // 마커를 표시할 지도
-                        position: new kakao.maps.LatLng(x, y) // 마커의 위치
+                        position: new kakao.maps.LatLng(x[i], y[i]) // 마커의 위치
                     });
 
                     // 마커에 표시할 인포윈도우를 생성합니다 
                    infos[i] = new kakao.maps.InfoWindow({
-        					content: c // 인포윈도우에 표시할 내용
+        					content: c[i] // 인포윈도우에 표시할 내용
                   
                     });
                     
@@ -277,11 +283,7 @@
                     kakao.maps.event.addListener(markers[i], 'mouseout', makeOutListener(infos[i]));
             	}
             	
-                //var x = xmlData.getElementsByTagName("X_COORD")[0].firstChild.nodeValue;
-				//var y = xmlData.getElementsByTagName("Y_COORD")[0].firstChild.nodeValue;
-				//var c = xmlData.getElementsByTagName("FAC_NAME")[0].firstChild.nodeValue;
-            	
-            
+            	displayCourse(data[0], data[1], data[2]);
             }
 	
             // 인포윈도우를 표시하는 클로저를 만드는 함수입니다 
@@ -297,7 +299,6 @@
                     infowindow.close();
                 };
             }
-
             
             var mapContainer = document.getElementById('map'), // 지도를 표시할 div 
                mapOption = {
@@ -331,9 +332,6 @@
             		clickSubwayButton = true;
             	}
             }
-            
-           
-        
 
             // 키워드로 장소를 검색합니다
             function searchPlaces() {
@@ -387,6 +385,7 @@
                     map.setBounds(bounds);
                 }
             }
+            var polyline;
 
             function displayCourse(data0, data1, data2) {
             	// 선을 구성하는 좌표 배열입니다. 이 좌표들을 이어서 선을 표시합니다
@@ -394,14 +393,19 @@
             	var d1 = data1.split(',');
             	var d2 = data2.split(',');
             	
+            	if (polyline != null) {
+            		polyline.setMap(null);
+            	}
+            	
             	var linePath = [
             	    new kakao.maps.LatLng(parseFloat(d0[0]), parseFloat(d0[1])),
             	    new kakao.maps.LatLng(parseFloat(d1[0]), parseFloat(d1[1])),
             	    new kakao.maps.LatLng(parseFloat(d2[0]), parseFloat(d2[1])) 
             	];
 
+            
             	// 지도에 표시할 선을 생성합니다
-            	var polyline = new kakao.maps.Polyline({
+            	polyline = new kakao.maps.Polyline({
             	    path: linePath, // 선을 구성하는 좌표배열 입니다
             	    strokeWeight: 5, // 선의 두께 입니다
             	    strokeColor: '#FF0000', // 선의 색깔입니다
@@ -409,6 +413,7 @@
             	    strokeStyle: 'solid' // 선의 스타일입니다
             	});
 
+            	
             	// 지도에 선을 표시합니다 
             	polyline.setMap(map);  
             }
@@ -433,7 +438,6 @@
                 
             function removeMarker() {
                 for ( var i = 0; i < markers.length; i++ ) {
-
                     kakao.maps.event.removeListener(markers[i], 'click');
                     markers[i].setMap(null);
                 }   

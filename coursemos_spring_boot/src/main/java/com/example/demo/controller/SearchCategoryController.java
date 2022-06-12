@@ -2,12 +2,22 @@ package com.example.demo.controller;
 
 import java.util.List;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.data.web.SpringDataWebProperties.Pageable;
 import org.springframework.data.web.PageableDefault;
+import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.SessionAttributes;
+import org.springframework.web.bind.support.SessionStatus;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.example.demo.domain.Course;
@@ -31,23 +41,18 @@ public class SearchCategoryController {
 	}
 	
 	@PostMapping
-	public ModelAndView submit() {
+	public ModelAndView submit(HttpServletRequest request,
+			@RequestParam(value="taste", required=false) String taste) throws Exception {
+			System.out.println(taste);
+			ModelAndView mav = new ModelAndView(SEARCH_VIEW); // view 이름: "hello"  
+			List<Course> cList = searchService.getCourseListByTaste(taste);
+	//		List<Course> cList = searchService.getCourseListByTaste(taste.getName());
+			mav.addObject("cList", cList);
+			List<TasteCategory> tList = tasteService.getCategory();
+			mav.addObject("tList", tList);
+			
+		   return mav;   
 		
-		ModelAndView mav = new ModelAndView(SEARCH_VIEW); // view 이름: "hello"    
-		//List<Course> cList = searchService.getCourseList();
-		//mav.addObject("cList", cList);
-		double x = 37.577552;
-		double y = 126.976869;
-		mav.addObject("x", x);
-		mav.addObject("y", y);
-		String station = "시청역";
-		mav.addObject("station", station);
-		List<Course> cList = searchService.getCourseList(x, y, station);
-		//Page<Course> cList = 
-		mav.addObject("cList", cList);
-		//List<String> tList = tasteService.getCategoryList();
-		//mav.addObject("tList", tList);
-		
-	   return mav;   
 	}
+
 }

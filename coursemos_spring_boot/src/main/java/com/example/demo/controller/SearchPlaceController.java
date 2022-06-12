@@ -67,11 +67,6 @@ public class SearchPlaceController {
 		return course;
 	}   
 	
-//	@RequestMapping(method=RequestMethod.GET)
-//	public @ResponseBody String form() {
-//		return SEARCH_VIEW;
-//	}
-	
 	@GetMapping
 	public ModelAndView searchPlaceForm() throws Exception {
 		List<TasteCategory> tList = tasteService.getCategory();

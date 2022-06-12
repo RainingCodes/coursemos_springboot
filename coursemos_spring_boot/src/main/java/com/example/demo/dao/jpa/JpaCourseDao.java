@@ -48,8 +48,10 @@ public class JpaCourseDao implements CourseDao{
 
 	@Override
 	public List<Course> getCourseListByTaste(String taste) throws DataAccessException {
-		// TODO Auto-generated method stub
-		return null;
+			TypedQuery<Course> query = em.createQuery(
+	                "select c from Course c WHERE c.taste = ?1", Course.class);
+			query.setParameter(1, taste);
+	        return query.getResultList();
 	}
 
 	@Override
