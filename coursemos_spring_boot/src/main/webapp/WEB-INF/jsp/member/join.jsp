@@ -104,7 +104,7 @@ function showPopup(){
 							</tr>
 							<tr>
 								<td class="labels"><form:label path="nickName">회원 닉네임</form:label></td>
-								<td class="datas"><form:input path="nickName" /><td>
+								<td class="datas"><form:input path="nickName" /></td>
 								<td width="100"><button  class="btn-primary" type="button" onclick="showPopup();">중복확인</button></td>
 							</tr>
 							<tr>
@@ -151,7 +151,7 @@ function showPopup(){
 								<td class="smallSpace" colspan=2></td>
 							</tr>
 							<tr>
-								<td colspan=4><button type="button" class="btn-primary" id="register">회원가입</button></td>
+								<td colspan=3><button type="button" class="btn-primary" id="register">회원가입</button></td>
 							</tr>
 						</form:form>
 					</table>
