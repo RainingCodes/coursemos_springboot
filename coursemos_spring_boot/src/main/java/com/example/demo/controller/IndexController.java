@@ -1,6 +1,8 @@
 package com.example.demo.controller;
 
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -22,6 +24,11 @@ public class IndexController {
 		return mav;
 	}
 	
+	@ModelAttribute("sessionMember")
+	public SessionMember formBacking(HttpServletRequest request) {
+		SessionMember sessionMember = new SessionMember();	 // MemberInfo 객체 생성
+		return sessionMember; // session에 “member” 이름으로 저장됨
+	}
 	@RequestMapping("/login")
 	public ModelAndView login() {
 		ModelAndView mav = new ModelAndView("member/login"); 
@@ -32,6 +39,7 @@ public class IndexController {
 			BindingResult result, SessionStatus status) {
 		sessionMember.setNickName(null);
 		sessionMember.setPassword(null);
+		sessionMember.setGenderCode(null);
 		sessionMember.setPoints(0);
 		sessionMember.setTasteCode(null);
 		sessionMember.setCheck1(false);
@@ -50,8 +58,8 @@ public class IndexController {
 		return mav;
 	}
 	@RequestMapping("/mypage")
-	public ModelAndView mypage(@RequestParam("memberId") String memberId) {
-		ModelAndView mav = new ModelAndView("mypage");
+	public ModelAndView mypage() {
+		ModelAndView mav = new ModelAndView("member/mypage");
 		return mav;
 	}
 	@RequestMapping("/points")

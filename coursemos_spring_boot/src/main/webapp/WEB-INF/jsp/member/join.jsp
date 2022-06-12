@@ -104,12 +104,12 @@ function showPopup(){
 							</tr>
 							<tr>
 								<td class="labels"><form:label path="nickName">회원 닉네임</form:label></td>
-								<td class="datas"><form:input path="nickName" /><td>
+								<td class="datas"><form:input path="nickName" /></td>
 								<td width="100"><button  class="btn-primary" type="button" onclick="showPopup();">중복확인</button></td>
 							</tr>
 							<tr>
 								<td class="spaces">&nbsp;</td>
-								<td class="errors" colspan=2><form:errors path="nickName" cssClass="error" /></td>
+								<td class="errors"><form:errors path="nickName" cssClass="error" /></td>
 							</tr>
 							<tr>
 								<td class="labels"><form:label path="password">비밀번호</form:label></td>
@@ -117,7 +117,7 @@ function showPopup(){
 							</tr>
 							<tr>
 								<td class="spaces">&nbsp;</td>
-								<td class="errors" colspan=2><form:errors path="password" cssClass="error"/></td>
+								<td class="errors" ><form:errors path="password" cssClass="error"/></td>
 							</tr>
 							<tr>
 								<td class="labels"><form:label path="repw">비밀번호 확인</form:label></td>
@@ -125,7 +125,7 @@ function showPopup(){
 							</tr>
 							<tr>
 								<td class="spaces">&nbsp;</td>
-								<td class="errors" colspan=2><form:errors path="repw" cssClass="error"/></td>
+								<td class="errors" ><form:errors path="repw" cssClass="error"/></td>
 							</tr>
 							<tr>
 								<td class="labels"><form:label path="genderCode">성별</form:label></td>
@@ -133,7 +133,7 @@ function showPopup(){
 							</tr>
 							<tr>
 								<td class="spaces">&nbsp;</td>
-								<td class="errors" colspan=2><form:errors path="genderCode" cssClass="error"/></td>
+								<td class="errors" ><form:errors path="genderCode" cssClass="error"/></td>
 							</tr>
 							<tr>
 								<td class="labels"><form:label path="birth">가입일</form:label></td>
@@ -151,7 +151,7 @@ function showPopup(){
 								<td class="smallSpace" colspan=2></td>
 							</tr>
 							<tr>
-								<td colspan=4><button type="button" class="btn-primary" id="register">회원가입</button></td>
+								<td colspan=3><button type="button" class="btn-primary" id="register">회원가입</button></td>
 							</tr>
 						</form:form>
 					</table>

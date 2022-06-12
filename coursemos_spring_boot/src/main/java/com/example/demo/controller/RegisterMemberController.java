@@ -92,8 +92,8 @@ public class RegisterMemberController {
 	@ModelAttribute("tasteCodes") // return 객체에 이름을 부여하고 view에 전달
 	protected List<Taste> referenceData2() throws Exception {
 		List<Taste> tasteCodes = new ArrayList<>();
-		tasteCodes.add(new Taste("act", "활동적"));
-		tasteCodes.add(new Taste("hea", "힐링"));
+		tasteCodes.add(new Taste("act", "활동적인"));
+		tasteCodes.add(new Taste("hea", "힐링되는"));
 		tasteCodes.add(new Taste("nat", "자연적인"));
 		tasteCodes.add(new Taste("exp", "체험적인"));
 		tasteCodes.add(new Taste("ent", "즐거운"));
