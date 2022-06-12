@@ -15,7 +15,13 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.example.demo.domain.Company;
+import com.example.demo.domain.Place;
 import com.example.demo.service.CompanyService;
+
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 
 @Controller
@@ -23,13 +29,19 @@ public class CompanyController {
 	@Autowired
 	private CompanyService companyService;
 	
-	@ModelAttribute("Company")
-	public Company formBacking(HttpServletRequest request) {
+	@Getter @Setter @AllArgsConstructor @NoArgsConstructor
+	public class CompanyAndPlace {
+		Company company;
+		Place place;
+	}
+	
+	@ModelAttribute("RegisterForm")
+	public CompanyAndPlace formBacking(HttpServletRequest request) {
 		if (request.getMethod().equalsIgnoreCase("GET")) {
-			Company company = new Company();
-			return company;
+			CompanyAndPlace RegisterForm = new CompanyAndPlace();
+			return RegisterForm;
 		}
-		else return new Company();
+		else return new CompanyAndPlace();
 	}
 	
 	@RequestMapping(value = "/company/register", method = RequestMethod.GET)
@@ -38,17 +50,19 @@ public class CompanyController {
 	}
 	
 	@RequestMapping(value = "/company/register", method = RequestMethod.POST)
-	public String companyRegister(@ModelAttribute("Company") Company company, Model model) {
+	public String companyRegister(@ModelAttribute("RegisterForm") CompanyAndPlace RegisterForm, Model model) {
 		
 		//사업자등록번호는 무조건 10자리임(이거 나중에 세팅)
 		//전화번호도 세팅
 		
 		long miliseconds = System.currentTimeMillis();
 	    Date current = new Date(miliseconds);
-	    company.setRegisterDate(current);
-	    company.setAccept(0);
-	    company.setMemberId(7); // 세션 완성되면 설정하기
-	    companyService.insertCompany(company);
+	    
+	    RegisterForm.company.setRegisterDate(current);
+	    RegisterForm.company.setAccept(0);
+	    RegisterForm.company.setMemberId(7); // 세션 완성되면 설정하기
+	    
+	    //companyService.insertCompany(company);
 		
 		return "redirect:/company/list";
 	}
