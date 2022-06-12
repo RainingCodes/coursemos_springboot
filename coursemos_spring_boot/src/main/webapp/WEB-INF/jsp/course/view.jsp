@@ -269,9 +269,20 @@
 					        ],
 					    })
 					  }
+					  				  
 					</script>
 
-					<img style="width:10%; height:10%;" src="../../img/like.png" />
+					<img class="image" style="width:10%; height:10%;" src="../../img/like1.png" />
+					<script>
+					  var img = document.querySelector(".image");
+					  img.addEventListener("click", invertImg);
+					  function invertImg(){
+						  if (img.getAttribute("src") == "../../img/like1.png")
+							  img.setAttribute("src", "../../img/like2.png");
+						  else
+							  img.setAttribute("src", "../../img/like1.png")
+					  }
+					</script>
 					<img style="width:9%; height:9%;" src="../../img/scrap.png"/>
 					<!-- <button type="submit" style="width:20%; height:60px; border:none; border-radius:5px; text-align: center; background-color:#0d6efd; color: white;">스크랩</button> -->
 					<!-- 추후 비활성화/활성화 조건 적용하기 -->
