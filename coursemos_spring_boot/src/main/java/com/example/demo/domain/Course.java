@@ -40,7 +40,7 @@ public class Course implements Serializable {
 	@Column(nullable=false)
 	private String courseContents;
 	
-	@Column
+	@Column(nullable=false)
 	private Integer memberId;
 	
 	@Column(nullable=false)
@@ -50,9 +50,9 @@ public class Course implements Serializable {
 	private Integer likes;
 	
 	@Column(nullable=false)
-	private Date writtenDate;
+	private String writtenDate;
 	
-	@Column
+	@Column(nullable=false)
 	private Integer placeId1;
 	
 	@Column

@@ -17,8 +17,8 @@
 	String roadAddress3 = request.getParameter("road_address3") == null ? "": request.getParameter("road_address3");
 	String roadAddressList[] = {roadAddress1, roadAddress2, roadAddress3};
 	
+	String writtenDate = request.getParameter("writtenDate");
 	String category = request.getParameter("category");
-	
 	String contents = request.getParameter("contents");
 %>    
 <!DOCTYPE html>
@@ -80,19 +80,16 @@
 				<article style="margin-left:25%;">
 					<!-- Post header-->
 					<header class="mb-4">
-						<h1 style="text-align: center;">코스 상세페이지</h1>
+						<h2 style="font-weight:bold;text-align:center;" id="courseTitle">『 ${course.courseName} 』</h2>
 					</header>
 					<div>
-					<p></p>
 					<!-- Post title-->
-					<h4 style="font-weight:bold;" id="courseTitle"><%=inputTitle %></h4><br>
-					<!-- <input id="courseTitle" type="text" value="제목"> -->
-					<div class="upload"></div>
+					<div style="margin-left:400px;">작성자: ${course.memberId}, 작성일: ${course.writtenDate }</div>
+					<br>
 					<h5 style="font-weight:bold;">코스의 분위기</h5>
 					<!-- <div>활동적인, 즐거운</div> -->
-					<div><%=category %></div>
-					<br>
-					<br>
+					<div>${course.taste }</div>
+					<br>					
 					<h5 style="font-weight:bold;">코스 경로 살펴보기</h5>
 					<br>
 					<table>
@@ -224,7 +221,7 @@
 					<h5 style="font-weight:bold;">코스에 대한 설명</h5>
 					<table class="form-control" style="height:200px; border-radius: 5px;">
 						<tr>
-							<td><%=contents%></td>
+							<td>${course.courseContents }</td>
 						</tr>
 					</table>
 					<br>
@@ -275,7 +272,7 @@
 					</script>
 
 					<img style="width:10%; height:10%;" src="../../img/like.png" />
-					<img style="width:10%; height:10%;'" src="../../img/scrap.png"/>
+					<img style="width:9%; height:9%;" src="../../img/scrap.png"/>
 					<!-- <button type="submit" style="width:20%; height:60px; border:none; border-radius:5px; text-align: center; background-color:#0d6efd; color: white;">스크랩</button> -->
 					<!-- 추후 비활성화/활성화 조건 적용하기 -->
 					<button type="submit" style="width:15%; height:60px; border:none; border-radius:5px; text-align: center; background-color:#ced4da;">쿠폰 발급</button>

@@ -19,8 +19,14 @@
 <link href="../css/styles.css" rel="stylesheet" />
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor" crossorigin="anonymous">
 </head>
-<script src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
+<script src="https://code.jquery.com/jquery-latest.min.js"></script>
 <script>
+	/* $( document ).ready( function() {
+		$("#writtenDate").html(new Date().toISOString().substring(0, 10));
+	}); */
+	
+	
+	
 	function onClickBtn()  {
 	  let name = document.getElementById('keyword').value;
 	  ps.keywordSearch(name, placesSearchCB);
@@ -38,6 +44,7 @@
 				  }			  
 		  });
 		});
+	
 	
 </script>
 
@@ -96,6 +103,21 @@
 								</div>
 							</div>
 						</header>
+						
+						
+						<form:input path="memberId" type="hidden" id="memberId" value="1"/> <!-- memberId값 임의로 1 설정 -->
+						<form:input path="likes" type="hidden" id="likes" value="0"/> <!-- likes값 임의로 0 설정 -->
+						<form:input path="placeId1" type="hidden" id="likes" value="1"/>
+						<form:input path="placeId2" type="hidden" id="likes" value="2"/>
+						<form:input path="placeId3" type="hidden" id="likes" value="3"/>
+						
+						
+						
+						<form:input path="writtenDate" type="hidden" id="writtenDate"/>						
+						<script>
+							var date = new Date().toISOString().substring(0, 10);
+							document.getElementById("writtenDate").value=date;
+						</script>					
 						<div class="upload"></div>
 						<h5>코스의 분위기를 선택하세요</h5>
 						<div class="selectTaste"
