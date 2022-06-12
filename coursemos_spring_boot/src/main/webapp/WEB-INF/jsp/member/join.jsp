@@ -109,7 +109,7 @@ function showPopup(){
 							</tr>
 							<tr>
 								<td class="spaces">&nbsp;</td>
-								<td class="errors" colspan=2><form:errors path="nickName" cssClass="error" /></td>
+								<td class="errors"><form:errors path="nickName" cssClass="error" /></td>
 							</tr>
 							<tr>
 								<td class="labels"><form:label path="password">비밀번호</form:label></td>
@@ -117,7 +117,7 @@ function showPopup(){
 							</tr>
 							<tr>
 								<td class="spaces">&nbsp;</td>
-								<td class="errors" colspan=2><form:errors path="password" cssClass="error"/></td>
+								<td class="errors" ><form:errors path="password" cssClass="error"/></td>
 							</tr>
 							<tr>
 								<td class="labels"><form:label path="repw">비밀번호 확인</form:label></td>
@@ -125,7 +125,7 @@ function showPopup(){
 							</tr>
 							<tr>
 								<td class="spaces">&nbsp;</td>
-								<td class="errors" colspan=2><form:errors path="repw" cssClass="error"/></td>
+								<td class="errors" ><form:errors path="repw" cssClass="error"/></td>
 							</tr>
 							<tr>
 								<td class="labels"><form:label path="genderCode">성별</form:label></td>
@@ -133,7 +133,7 @@ function showPopup(){
 							</tr>
 							<tr>
 								<td class="spaces">&nbsp;</td>
-								<td class="errors" colspan=2><form:errors path="genderCode" cssClass="error"/></td>
+								<td class="errors" ><form:errors path="genderCode" cssClass="error"/></td>
 							</tr>
 							<tr>
 								<td class="labels"><form:label path="birth">가입일</form:label></td>
