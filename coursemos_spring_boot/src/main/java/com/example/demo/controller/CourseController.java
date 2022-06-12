@@ -48,7 +48,7 @@ public class CourseController {
 		
 		System.out.println(course.toString());
 		
-		//courseService.insertCourse(course);
+		courseService.insertCourse(course);
 //		
 //		SessionCourse sessionCourse = new SessionCourse(course.getCourseId(), course.getCourseName(), course.getCourseContents(), course.getMemberId(), course.getTaste(), course.getLikes(), course.getWrittenDate(), course.getPlaceId1(), course.getPlaceId2(), course.getPlaceId3());
 //		status.setComplete();

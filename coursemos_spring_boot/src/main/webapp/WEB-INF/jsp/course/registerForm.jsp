@@ -104,14 +104,13 @@
 							</div>
 						</header>
 						
-						
-						<form:input path="memberId" type="hidden" id="memberId" value="1"/> <!-- memberId값 임의로 1 설정 -->
 						<form:input path="likes" type="hidden" id="likes" value="0"/> <!-- likes값 임의로 0 설정 -->
-						<form:input path="placeId1" type="hidden" id="likes" value="1"/>
-						<form:input path="placeId2" type="hidden" id="likes" value="2"/>
-						<form:input path="placeId3" type="hidden" id="likes" value="3"/>
+						<%-- <form:input path="memberId" type="hidden" id="memberId" value="1"/> <!-- memberId값 임의로 1 설정 -->
+						<form:input path="placeId1" type="hidden" id="likes" value="800"/>
+						<form:input path="placeId2" type="hidden" id="likes" value="801"/>
+						<form:input path="placeId3" type="hidden" id="likes" value="802"/>
 						
-						
+ --%>						
 						
 						<form:input path="writtenDate" type="hidden" id="writtenDate"/>						
 						<script>
@@ -122,13 +121,13 @@
 						<h5>코스의 분위기를 선택하세요</h5>
 						<div class="selectTaste"
 							style="display: inline-block; width: 300px; line-height: 45px;">
-							<form:radiobutton path="taste" name="category" value="활동적인"/>활동적인
-							<form:radiobutton path="taste" name="category" value="잔잔한"/>잔잔한
-							<form:radiobutton path="taste" name="category" value="힐링"/>힐링
-							<form:radiobutton path="taste" name="category" value="자연적인"/>자연적인<br>
-							<form:radiobutton path="taste" name="category" value="체험적"/>체험적
-							<form:radiobutton path="taste" name="category" value="즐거운"/>즐거운
-							<form:radiobutton path="taste" name="category" value="복고풍"/>복고풍
+							<form:radiobutton path="taste" name="category" value="act"/>활동적인
+							<form:radiobutton path="taste" name="category" value="cal"/>잔잔한
+							<form:radiobutton path="taste" name="category" value="hea"/>힐링
+							<form:radiobutton path="taste" name="category" value="nat"/>자연적인<br>
+							<form:radiobutton path="taste" name="category" value="exp"/>체험적
+							<form:radiobutton path="taste" name="category" value="ent"/>즐거운
+							<form:radiobutton path="taste" name="category" value="ret"/>복고풍
 						</div>
 						<form:errors path="taste" cssClass="error"/>
 						<br><br>						

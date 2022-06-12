@@ -85,7 +85,7 @@
 					</header>
 					<div>
 					<!-- Post title-->
-					<div style="margin-left:400px;">작성자: ${course.memberId}, 작성일: ${course.writtenDate }</div>
+					<div style="margin-left:500px;">작성일: ${course.writtenDate }</div>
 					<br>
 					<h5 style="font-weight:bold;">코스의 분위기</h5>
 					<!-- <div>활동적인, 즐거운</div> -->

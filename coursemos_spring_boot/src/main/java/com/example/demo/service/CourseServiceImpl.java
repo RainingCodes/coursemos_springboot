@@ -9,7 +9,7 @@ import org.springframework.stereotype.Service;
 import com.example.demo.dao.CourseDao;
 import com.example.demo.domain.Course;
 
-@Service("courseServiceImpl")
+@Service("CourseServiceImpl")
 @Transactional
 public class CourseServiceImpl implements CourseService{
 
