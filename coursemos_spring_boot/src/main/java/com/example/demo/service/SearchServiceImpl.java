@@ -6,7 +6,10 @@ import javax.transaction.Transactional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.beans.support.PagedListHolder;
+import org.springframework.boot.autoconfigure.data.web.SpringDataWebProperties.Pageable;
 import org.springframework.dao.DataAccessException;
+import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Service;
 
 import com.example.demo.dao.CourseDao;
@@ -71,16 +74,16 @@ public class SearchServiceImpl implements SearchService {
 
 
 		@Override
-		public List<Course> getCourseList(double x, double y, String station) throws DataAccessException {
+		public List<Course> getCourseList(String station) throws DataAccessException {
 			// TODO Auto-generated method stub
-			return courseDao.getCourseList(x, y, station);
+			return courseDao.getCourseList(station);
 		}
 
 
-
-	
-		
-	
-	
+		@Transactional
+		public Page<Course> getCoursePageList(Pageable pageable) throws DataAccessException {
+			// TODO Auto-generated method stub
+			return null;
+		}
 
 }

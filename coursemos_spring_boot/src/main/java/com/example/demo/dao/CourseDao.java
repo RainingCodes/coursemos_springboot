@@ -2,6 +2,7 @@ package com.example.demo.dao;
 
 import java.util.List;
 
+import org.springframework.beans.support.PagedListHolder;
 import org.springframework.dao.DataAccessException;
 
 import com.example.demo.domain.Course;
@@ -32,7 +33,7 @@ public interface CourseDao {
 
 	List<Course> getCourseListByTime(String place1, String place2) throws DataAccessException;	
 	
-	List<Course> getCourseList(double x, double y, String station) throws DataAccessException;	
+	List<Course> getCourseList(String station) throws DataAccessException;	
 	
 	
 	

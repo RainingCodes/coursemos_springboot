@@ -99,7 +99,7 @@ public class JpaCourseDao implements CourseDao{
 	}
 
 	@Override
-	public List<Course> getCourseList(double x, double y, String station) throws DataAccessException {
+	public List<Course> getCourseList(String station) throws DataAccessException {
 		TypedQuery<Course> query = em.createQuery(
                 "select c from Course c", Course.class);
         return query.getResultList();

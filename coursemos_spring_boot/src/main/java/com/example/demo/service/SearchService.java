@@ -14,7 +14,10 @@ import java.util.Map;
 import javax.sql.DataSource;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.support.PagedListHolder;
+import org.springframework.boot.autoconfigure.data.web.SpringDataWebProperties.Pageable;
 import org.springframework.dao.DataAccessException;
+import org.springframework.data.domain.Page;
 import org.springframework.jdbc.datasource.DataSourceUtils;
 import org.springframework.jdbc.support.JdbcUtils;
 import org.springframework.jdbc.support.SQLExceptionTranslator;
@@ -30,7 +33,6 @@ public interface SearchService {
 	
 	
 	void insertCourse(Course course) throws DataAccessException;
-
 	List<Course> searchCourseListByPlace(String place) throws DataAccessException;
 
 	List<Course> getCourseListByTaste(String taste) throws DataAccessException;
@@ -49,7 +51,9 @@ public interface SearchService {
 
 	List<Course> getCourseListByTime(String place1, String place2) throws DataAccessException;
 
-	List<Course> getCourseList(double x, double y, String station) throws DataAccessException;
+	List<Course> getCourseList(String station) throws DataAccessException;
+	
+	Page<Course> getCoursePageList(Pageable pageable) throws DataAccessException;
 
 
 	
