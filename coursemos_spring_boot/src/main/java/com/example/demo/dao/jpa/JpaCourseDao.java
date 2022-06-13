@@ -22,17 +22,14 @@ public class JpaCourseDao implements CourseDao{
 	
 	@Override
 	public Course getCourseByCourseId(String courseId) throws DataAccessException {
-		
 		Query query = em.createQuery("SELECT c FROM Course c WHERE c.courseId = ?1");
-		query.setParameter("courseId", courseId);
-		
+		query.setParameter(1, courseId);
 		return (Course)query.getSingleResult();
 	}
 
 	@Override
-	public Course insertCourse(Course course) throws DataAccessException {
+	public void insertCourse(Course course) throws DataAccessException {
 		em.persist(course);
-		return course;
 	}
 
 	@Override

@@ -11,7 +11,7 @@ public interface CourseDao {
 
 	Course getCourseByCourseId(String courseId) throws DataAccessException;
 	
-	Course insertCourse(Course course) throws DataAccessException;
+	void insertCourse(Course course) throws DataAccessException;
 
 	void deleteCourse(Course course) throws DataAccessException;
 	

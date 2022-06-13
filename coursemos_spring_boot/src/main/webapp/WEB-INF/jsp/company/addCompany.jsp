@@ -19,26 +19,33 @@
 <center><h1>사업자 등록</h1></center>
 <div class="container">
 <table class="table">    
-	<form:form modelAttribute="Company">
+	<form:form modelAttribute="RegisterForm">
 	<tr>
-		<td class="text-center"><form:label path="companyName">가게명</form:label></td>
-		<td><form:input path="companyName" /><br></td>
+		<td class="text-center"><form:label path="place.placeName">가게명</form:label></td>
+		<td><form:input path="place.placeName" /><br></td>
 	</tr>
 	<tr>
-		<td class="text-center"><form:label path="companyId">사업자등록번호</form:label></td>
-		<td><form:input path="companyId" /><br></td>
+		<td class="text-center"><form:label path="company.companyId">사업자등록번호</form:label></td>
+		<td><form:input path="company.companyId" /><br></td>
 	</tr>
 	<tr>
-		<td class="text-center"><form:label path="phone">전화번호</form:label></td>
-		<td><form:input path="phone" /><br></td>
+		<td class="text-center"><form:label path="company.phone">전화번호</form:label></td>
+		<td><form:input path="company.phone" /><br></td>
 	</tr>
 	<tr>
-		<td class="text-center"><form:label path="address">주소</form:label></td>
-		<td><form:input path="address" /><br></td>
+		<td class="text-center"><form:label path="place.taste">장소 분위기 선택하기</form:label></td>
+		<td><form:radiobuttons path="place.taste" items="${tasteCodes}" itemLabel="label" itemValue="code" /></td>
+	</tr>
+	<tr>
+		<td class="text-center"><b>주소</b></td>
+		<td><input id="address"  size="50" readonly placeholder="주소 찾기 시 자동 추가됩니다"/><br></td>
 	</tr>
 	<tr>
 		<td colspan="2" class="text-center"><input type="submit" value="접수하기" /></td>
 	</tr>
+	<form:hidden path="place.x" />
+	<form:hidden path="place.y" />
+	<form:hidden path="place.subway" />
 	</form:form>
 </table>
 </div>
@@ -51,15 +58,16 @@
         
 <div id="map"></div>
 
-<button id="javascript_btn1" type="button">역 찾기</button>
+<button id="javascript_btn1" type="button">주소 찾기</button>
 
 <form name="result" method="post" action="<c:url value='/company/register' />">
 	<input type="hidden" name="x" value=0>
 	<input type="hidden" name="y" value=0>
 	<input type="hidden" name="subwayName" value=0>
+	<input type="hidden" name="placeName" value=0>
+	
 	<input type="button" onClick="alertF()" value="코스찾기">
 </form>
-
 
 <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=c17b5563968f2fffd356919521833ce2&libraries=services"></script>
 <script>
@@ -85,19 +93,24 @@ var subWayX = 0;
 var subWayY = 0;
 var subWayName = "";
 var road_address_name = "";
+var placeName = "";
 var clickSubwayButton = false;
 
 function alertF() {
+	alert(document.getElementById("company.address").value);
+	alert(document.getElementById("place.x").value);
+	alert(document.getElementById("place.y").value);
+	alert(document.getElementById("place.subway").value);
 	alert(document.result.x.value);
 	alert(document.result.y.value);
 	alert(document.result.subwayName.value);
-	alert(road_address_name);
+	alert(document.result.placeName.value);
 }
 
 document.getElementById("javascript_btn1").addEventListener("click", javascript_onclikc);
 function javascript_onclikc(){
 	if (clickSubwayButton == false) {
-		
+		document.getElementById("address").value = road_address_name;
 		alert(x+", "+y);
 		document.result.x.value = x;
 		document.result.y.value = y;
@@ -140,6 +153,11 @@ function placesSearchCategoryCB (data, status, pagination) { //지하철 검색
         subwayName = data[0].place_name
         subWayX = data[0].y;
         subWayY = data[0].x;
+        
+        //데이터 삽입
+        document.getElementById("place.x").value = subWayX
+        document.getElementById("place.y").value = subWayY
+        document.getElementById("place.subway").value = subwayName
         document.result.x.value = subWayX;
 		document.result.y.value = subWayY;
 		document.result.subwayName.value = subwayName;
@@ -155,7 +173,10 @@ function placesSearchCB (data, status, pagination) { //장소검색
 
         y = parseFloat(data[0].y);
         x = parseFloat(data[0].x);
-        road_address_name = data[0].road_address_name+" "+data[0].place_name;
+        placeName = data[0].place_name
+        document.result.placeName.value = placeName;
+        road_address_name = data[0].road_address_name+" "+placeName;
+        
         
         var moveLatLon = new kakao.maps.LatLng(data[0].y, data[0].x);
         map.panTo(moveLatLon);
