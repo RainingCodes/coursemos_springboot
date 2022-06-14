@@ -20,6 +20,7 @@ import com.example.demo.domain.Company;
 import com.example.demo.domain.Coupon;
 import com.example.demo.service.CompanyService;
 import com.example.demo.service.CouponService;
+import com.example.demo.validator.CouponValidator;
 
 @Controller
 public class CouponController {
@@ -76,7 +77,8 @@ public class CouponController {
 	
 	@RequestMapping(value = "/company/list/coupon/register", method = RequestMethod.POST)
 	public ModelAndView courseReportRegister(@Valid @ModelAttribute("Coupon") Coupon coupon, BindingResult result) {
-
+		
+		new CouponValidator().validate(coupon, result);
 		if (result.hasErrors()) {
 			ModelAndView mav = new ModelAndView("coupon/addCoupon");
 			mav.addObject(coupon);

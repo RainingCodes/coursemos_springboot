@@ -14,6 +14,19 @@
 	}
   </style>
 </head>
+<script>
+
+function submitForm() {
+	document.getElementById("address").value
+	
+	if (clickSubwayButton == false) {
+		alert('주소 불러오기를 이용하여야 합니다.');
+	} else {
+		alert('제휴가 등록되었습니다.')
+		RegisterForm.submit();
+	}
+}
+</script>
 <body>
 <div class="container">
 <h4><b>${companyName}</b>의 쿠폰 등록입니다.</h4>
