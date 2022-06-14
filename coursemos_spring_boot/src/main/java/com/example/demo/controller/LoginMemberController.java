@@ -1,8 +1,7 @@
 package com.example.demo.controller;
 
-import java.util.List;
 
-import javax.servlet.http.HttpServletRequest;
+import java.util.List;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -37,11 +36,6 @@ public class LoginMemberController {
 		return "member/login2";
 	}
 	
-	@ModelAttribute("sessionMember")
-	public SessionMember formBacking(HttpServletRequest request) {
-		SessionMember sessionMember = new SessionMember();	 // MemberInfo 객체 생성
-		return sessionMember; // session에 “member” 이름으로 저장됨
-	}
 	
 	@RequestMapping(method=RequestMethod.POST)
 	public String login(@Valid @ModelAttribute SessionMember sessionMember,
