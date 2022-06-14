@@ -51,33 +51,21 @@ public class SearchPlaceController {
 		this.tasteService = tasteService;
 	}
 	
-//	
-//	@ModelAttribute("tasteCate")
-//	public TasteCategory[] referencePerformerTypes() {
-//		return TasteCategory.values();
-//	}
-	/*
-	@ModelAttribute("tasteCate")
-	protected List<TasteCategory> tasteList() throws Exception {
-		List<TasteCategory> tList = new ArrayList<TasteCategory>();
-		tList.add(new TasteCategory("active"));
-		tList.add(new TasteCategory("calm"));
-		tList.add(new TasteCategory("healing"));
-		tList.add(new TasteCategory("nature"));
-		tList.add(new TasteCategory("official"));
-		tList.add(new TasteCategory("experience"));
-		tList.add(new TasteCategory("entertain"));
-		tList.add(new TasteCategory("retro"));
-		return tList;
-	}*/
-	
-	@RequestMapping("/course/search.do")
+	@RequestMapping("/course/search/main")
 	public String handleRequest(
-			//@RequestParam("station") String station,
 			ModelMap model
 			) throws Exception {
 		List<TasteCategory> tList = tasteService.getCategory();
-		String station = "seoul";
+		model.put("tList", tList);
+		return SEARCH_VIEW;
+	}
+	@RequestMapping("/course/search.do")
+	public String handleRequest(
+			@RequestParam("station") String station,
+			ModelMap model
+			) throws Exception {
+		List<TasteCategory> tList = tasteService.getCategory();
+		//String station = "seoul";
 		PagedListHolder<Course> cList = new PagedListHolder<Course>(this.searchService.getCourseList(station));
 		cList.setPageSize(4);
 		model.put("tList", tList);
@@ -101,7 +89,25 @@ public class SearchPlaceController {
 	
 	
 	
+	/*
+	@ModelAttribute("tasteCate")
+	public TasteCategory[] referencePerformerTypes() {
+		return TasteCategory.values();
+	}
 	
+	@ModelAttribute("tasteCate")
+	protected List<TasteCategory> tasteList() throws Exception {
+		List<TasteCategory> tList = new ArrayList<TasteCategory>();
+		tList.add(new TasteCategory("active"));
+		tList.add(new TasteCategory("calm"));
+		tList.add(new TasteCategory("healing"));
+		tList.add(new TasteCategory("nature"));
+		tList.add(new TasteCategory("official"));
+		tList.add(new TasteCategory("experience"));
+		tList.add(new TasteCategory("entertain"));
+		tList.add(new TasteCategory("retro"));
+		return tList;
+	}*/
 	/*
 	@GetMapping
 	public ModelAndView searchPlaceForm() throws Exception {

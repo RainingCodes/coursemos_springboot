@@ -11,6 +11,7 @@ import org.springframework.boot.autoconfigure.data.web.SpringDataWebProperties.P
 import org.springframework.data.web.PageableDefault;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -30,13 +31,14 @@ import com.example.demo.domain.TasteCategory;
 import com.example.demo.service.SearchService;
 import com.example.demo.service.TasteService;
 @Controller
+@SessionAttributes({"tList", "cList"})
 public class SearchCategoryController {
 	private static final String SEARCH_DETAIL_VIEW = "detailSearch";
-	private SearchService searchSercive;
+	private SearchService searchService;
 
 	@Autowired
-	public void setSerachService(SearchService searchSercive) {
-		this.searchSercive = searchSercive;
+	public void setSerachService(SearchService searchService) {
+		this.searchService = searchService;
 	}
 	
 	@Autowired
@@ -44,6 +46,35 @@ public class SearchCategoryController {
 	public void setTasteService(TasteService tasteService) {
 		this.tasteService = tasteService;
 	}
+	
+	@RequestMapping("/course/detailedSearch.do")
+	public String handleRequest(
+			@RequestParam("taste") String taste,
+			ModelMap model
+			) throws Exception {
+		List<TasteCategory> tList = tasteService.getCategory();
+		//String taste = "ent";
+		PagedListHolder<Course> cList = new PagedListHolder<Course>(this.searchService.getCourseListByTaste(taste));
+		cList.setPageSize(4);
+		model.put("tList", tList);
+		model.put("cList", cList);
+		return SEARCH_DETAIL_VIEW;
+	}
+
+	@RequestMapping("/course/detailedSearch2.do")
+	public String handleRequest2(
+			@RequestParam("page") String page,
+			@ModelAttribute("tList") List<TasteCategory> tList,
+			@ModelAttribute("cList") PagedListHolder<Course> cList,
+			BindingResult result) throws Exception {
+		if (tList == null || cList == null) {
+			throw new IllegalStateException("Cannot find pre-loaded category and product list");
+		}
+		if ("next".equals(page)) { cList.nextPage(); }
+		else if ("previous".equals(page)) { cList.previousPage(); }
+		return SEARCH_DETAIL_VIEW;
+	}
+	
 	/*
 	@PostMapping
 	public ModelAndView submit(HttpServletRequest request,
@@ -61,7 +92,7 @@ public class SearchCategoryController {
 		   return mav;   
 		
 	}*/
-	
+	/*
 	@RequestMapping("/course/detailedSearch")
 	public String viewCart(
 			HttpServletRequest request,
@@ -72,7 +103,7 @@ public class SearchCategoryController {
 		if ("next".equals(page)) { courseList.nextPage(); }
 		else if ("previous".equals(page)) { courseList.previousPage(); }
 		return SEARCH_DETAIL_VIEW;
-	}
+	}*/
 	
 	
 

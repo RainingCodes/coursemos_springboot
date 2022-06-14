@@ -1,10 +1,12 @@
 package com.example.demo.domain;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.SequenceGenerator;
+import javax.persistence.Table;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -18,11 +20,12 @@ import lombok.ToString;
 		  sequenceName = "PLACE_SEQ", // 매핑할 데이터베이스 시퀀스 이름 
 		  initialValue = 1,
 		  allocationSize = 1)
-@Getter @Setter @ToString @AllArgsConstructor @NoArgsConstructor 
+@Getter @Setter @ToString @AllArgsConstructor @NoArgsConstructor @Table(name="PLACE")
 public class Place {
 	@Id
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "PLACE_SEQ_GENERATOR")
-	int placeId;
+	@Column(name="placeId")
+	Integer placeId;
 	String taste;
 	String placeName;
 	double x;

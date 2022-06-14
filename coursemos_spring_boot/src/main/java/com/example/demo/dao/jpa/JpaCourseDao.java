@@ -97,8 +97,9 @@ public class JpaCourseDao implements CourseDao{
 
 	@Override
 	public List<Course> getCourseList(String station) throws DataAccessException {
-		TypedQuery<Course> query = em.createQuery(
-                "select c from Course c", Course.class);
+		Query query = em.createQuery(
+                "SELECT c FROM Course c, Place p WHERE c.placeId1 = p.placeId AND p.subway = ?1");
+				query.setParameter(1, station);
         return query.getResultList();
 	}
 	
