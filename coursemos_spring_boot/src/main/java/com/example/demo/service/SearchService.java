@@ -29,7 +29,7 @@ import com.example.demo.domain.Course;
 import com.example.demo.domain.TasteCategory;
 
 public interface SearchService {
-	Course getCourseByCourseId(String courseId) throws DataAccessException;
+	Course getCourseByCourseId(int courseId) throws DataAccessException;
 	
 	
 	void insertCourse(Course course) throws DataAccessException;
