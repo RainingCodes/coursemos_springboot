@@ -1,5 +1,6 @@
 package com.example.demo.controller;
 
+import java.util.Date;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -33,6 +34,18 @@ public class CouponController {
 		
 		Company company = companyService.getCompanyByCompanyId(companyId); // 회사 받아오기
 		List<Coupon> coupons = couponService.getCouponByCompanyId(companyId);// 쿠폰 정보들 받아오기
+		
+		long miliseconds = System.currentTimeMillis();
+	    Date current = new Date(miliseconds);	   
+		
+		for (int i = 0; i < coupons.size(); i++) {
+			Coupon tmp = coupons.get(i);
+			Date couponDate = tmp.getPeriod();
+			if (couponDate.before(current) && tmp.getState() == 0) {
+				tmp.setState(1);
+				couponService.updateCoupon(tmp);
+			}
+		}
 
 		mav.addObject("company", company);
 		mav.addObject("couponList", coupons);
