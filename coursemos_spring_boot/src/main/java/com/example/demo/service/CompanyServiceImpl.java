@@ -28,6 +28,12 @@ public class CompanyServiceImpl implements CompanyService {
 	public List<Company> getCompanyByMemberId(int memberId) {
 		return companyDao.getCompanyByMemberId(memberId);
 	}
+	
+
+	@Override
+	public Company getCompanyByPlaceId(int placeId) {
+		return companyDao.getCompanyByPlaceId(placeId);
+	}
 
 	@Override
 	public Company getCompanyByCompanyId(Long companyId) {
@@ -49,5 +55,6 @@ public class CompanyServiceImpl implements CompanyService {
 		companyDao.deleteCompany(company);
 		
 	}
+
 
 }
