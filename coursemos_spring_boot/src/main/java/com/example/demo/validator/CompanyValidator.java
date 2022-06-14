@@ -24,7 +24,14 @@ public class CompanyValidator implements Validator{
 			}
 		} catch(NullPointerException e) {
 			errors.rejectValue("companyId", "required");
-		}		
+		} finally {
+			if (company.getPlace().getTaste() == null) {
+				errors.rejectValue("place.taste", "required");
+			}
+			if (company.getPlace().getPlaceName() == null || company.getPlace().getPlaceName().equals("") ) {
+				errors.rejectValue("place.placeName", "required");
+			}
+		}
 		
 	}
 
