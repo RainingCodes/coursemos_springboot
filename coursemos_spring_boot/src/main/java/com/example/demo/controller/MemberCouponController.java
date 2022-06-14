@@ -1,6 +1,10 @@
 package com.example.demo.controller;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -69,12 +73,35 @@ public class MemberCouponController {
 		return mav;
 	}
 	
+	//코스에서 다운받기
+	@RequestMapping("/course/view/coupon/get")
+	public String getMemberCoupon(@RequestParam("CouponId") int couponId) {
+		Coupon coupon = couponService.getCouponByCouponId(couponId);
+
+		long miliseconds = System.currentTimeMillis();
+	    Date current = new Date(miliseconds);
+	    
+        Calendar cal = Calendar.getInstance();
+        cal.setTime(current);
+		cal.add(Calendar.DATE, coupon.getDay());
+		
+		MemberCoupon memberCoupon = new MemberCoupon();
+		memberCoupon.setCouponId(couponId);
+		memberCoupon.setMemberCouponId(1); // 세션 되면 변경하기
+		memberCoupon.setUsed("F");
+		memberCoupon.setExpirationDate(cal.getTime());
+		
+		memberCouponService.insertMemberCoupon(memberCoupon);
+		
+		return "redirect:/user/coupon";
+	}
+	
 	//유저 리스트에서 보이는 내 쿠폰 목록
 	@RequestMapping("/user/coupon")
-	public ModelAndView MymemberCouponList(@RequestParam("memberId") int memberId) {	
+	public ModelAndView MymemberCouponList() {	
 		ModelAndView mav = new ModelAndView("생기면 주소 넣기");
 		
-		List<MemberCoupon> memberCouponList = memberCouponService.getUserCouponByMemberId(memberId);
+		List<MemberCoupon> memberCouponList = memberCouponService.getUserCouponByMemberId(1);
 			
 		mav.addObject("memberCouponList", memberCouponList);
 		return mav;
