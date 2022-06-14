@@ -13,6 +13,7 @@ public class SessionMember implements Serializable {
 	private Long id;
 	private String nickName;
 	private String password;
+	private String repw;
 	private Integer genderCode;
 	private Date birth;
 	private int points;
