@@ -5,6 +5,7 @@ import java.util.Date;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -19,7 +20,6 @@ import org.springframework.web.servlet.ModelAndView;
 import com.example.demo.domain.Company;
 import com.example.demo.service.CompanyService;
 import com.example.demo.validator.CompanyValidator;
-import com.example.demo.validator.CouponValidator;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -66,7 +66,7 @@ public class CompanyController {
 	}
 	
 	@RequestMapping(value = "/company/register", method = RequestMethod.POST)
-	public String companyRegister(@ModelAttribute("Company") Company company, Model model, BindingResult result) {
+	public String companyRegister(@Valid @ModelAttribute("Company") Company company, BindingResult result) {
 		new CompanyValidator().validate(company, result);
 		if (result.hasErrors()) {
 			return "company/addCompany";

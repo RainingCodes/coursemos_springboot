@@ -36,7 +36,7 @@
 	</tr>
 	<tr>
 		<td class="text-center"><form:label path="companyId">사업자등록번호</form:label></td>
-		<td><form:input path="companyId" /> <form:errors path="companyId" cssClass="error"/><br></td>
+		<td><form:input path="companyId" placeholder="0000000000"/> <form:errors path="companyId" cssClass="error"/><br></td>
 	</tr>
 	<tr>
 		<td class="text-center"><form:label path="place.placeName">가게명</form:label></td>

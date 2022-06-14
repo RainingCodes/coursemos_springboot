@@ -27,7 +27,9 @@ public class Place {
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "PLACE_SEQ_GENERATOR")
 	@Column(name="placeId")
 	Integer placeId;
+	@NotNull
 	String taste;
+	@NotNull
 	String placeName;
 	double x;
 	double y;
