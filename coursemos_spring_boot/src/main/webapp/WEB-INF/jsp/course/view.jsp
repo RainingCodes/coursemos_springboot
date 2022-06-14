@@ -21,6 +21,8 @@
 	String writtenDate = request.getParameter("writtenDate");
 	String category = request.getParameter("category");
 	String contents = request.getParameter("contents");
+	
+
 %>    
 <!DOCTYPE html>
 <html>
@@ -89,9 +91,7 @@
 					<br>
 					<h5 style="font-weight:bold;">코스의 분위기</h5>
 					<!-- <div>활동적인, 즐거운</div> -->
-					<div>${course.taste }
-
-					</div>
+					<div>${course.taste }</div>
 					<br>					
 					<h5 style="font-weight:bold;">코스 경로 살펴보기</h5>
 					<br>
@@ -274,13 +274,12 @@
 					  				  
 					</script>
 					
-					<c:if test="${not empty nickName}"> <!-- 로그인 후 뜨는지 확인 -->
+					<%-- <c:if test="${not empty nickname}"> <!-- 로그인 후 뜨는지 확인 --> --%>
 						<img class="image" style="width:10%; height:10%;" src="../../img/like1.png" />	
 						<img class="scrapImage" style="width:9%; height:9%;" src="../../img/scrap1.png"/>
-						<button type="submit" style="width:15%; height:60px; border:none; border-radius:5px; text-align: center; background-color:#ced4da;">쿠폰 발급</button>
-						<button type="submit" style="width:15%; height:60px; border:none; border-radius:5px; text-align: center; background-color:#ced4da;">신고</button>		
-					
-					</c:if>
+						<button type="button" onclick="location.href='../view/coupon/get'" style="width:15%; height:60px; border:none; border-radius:5px; text-align: center; background-color:#ced4da;">쿠폰 발급</button>
+						<button type="button" style="width:15%; height:60px; border:none; border-radius:5px; text-align: center; background-color:#ced4da;">신고</button>			
+					<%-- </c:if> --%>
 					<script>
 					  var heartImg = document.querySelector(".image");
 					  heartImg.addEventListener("click", invertImg);
