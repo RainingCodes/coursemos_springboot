@@ -10,6 +10,7 @@ import lombok.ToString;
 
 @AllArgsConstructor @Getter @Setter @ToString
 public class SessionMember implements Serializable {
+	private Long id;
 	private String nickName;
 	private String password;
 	private Integer genderCode;

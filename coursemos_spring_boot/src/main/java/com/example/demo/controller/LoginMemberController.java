@@ -61,6 +61,7 @@ public class LoginMemberController {
 					}
 				}
 				new LoginValidator().validate(sessionMember, result);
+				sessionMember.setId(member.getId());
 				if (result.hasErrors()) {
 					return "member/login2";
 				}
