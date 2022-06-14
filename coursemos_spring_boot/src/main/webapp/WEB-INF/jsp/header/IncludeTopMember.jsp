@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8" %>
  <%@ page import="com.example.demo.domain.SessionMember" %>
+ <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -70,21 +71,29 @@ $(document).ready(function(){
 	<table class="top">
 	  <tr>	
 	  	<td class="left">
-	  		<button class="btn btn-outline-primary" @click="register_course">코스 등록</button>
-	  		<button class="btn btn-outline-primary" @click="register_company">제휴 등록</button>
+	  		<button class="btn btn-outline-primary" id="register_course" onclick="location.href='/review/register/1'">코스 등록</button>
+	  		<button class="btn btn-outline-primary" id="register_company" onclick="location.href='/company/register'">제휴 등록</button>
 	  	</td>
 	    <td class="logo">
 	        <a href="/"><img alt="로고" src="../img/logo.png" width="200"></a>
 	    </td>
-	    <td class="right" v-model="user">
+	    <td class="right">
 	      <span class="message"><a href="/mypage">${sessionMember.nickName} </a>님 안녕하세요. </span>
 	      <span class="message"><a href="/member/points" id="points"> ${sessionMember.points} Points</a></span>
 	      	<span id="tooltip" class="tooltip-text">
 			      <table class="table table-striped">
 			      	<tbody>
-		        		<tr v-for="line in infos">
-		          			<td v-for="info in line"><span v-html="info"></td>
-		        		</tr>
+			      		<c:set var="listSize" value="${sessionMember.getPointList().size()}" />
+		        		<c:forEach var="points" items="${sessionMember.getPointList()}" varStatus="status">
+							 <c:if test="${status.index >= listSize - 4 }">
+							<tr>
+								<td>
+									<c:out value="${points.getPointsDate()}" /></td>
+								<td><c:out value="${points.getTypeString()}" /></td>
+								<td><c:out value="${points.getTypeString2()}" /></td>
+							</tr>
+							</c:if>
+						</c:forEach>
 		        		<tr>
 		        			<td colspan="3"><a href="/member/points">더보기</a>&nbsp;&nbsp;&nbsp;&nbsp;<input type="button" onclick="$('#tooltip').css('display','none');" value="닫기" style="font-size:15px;"></td>
 		        		</tr>
