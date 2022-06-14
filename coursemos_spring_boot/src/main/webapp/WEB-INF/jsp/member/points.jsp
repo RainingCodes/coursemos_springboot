@@ -20,13 +20,27 @@
 	<h3 style="text-align:center">${sessionMember.nickName}님의 포인트 내역</h3>
 	<div style="display: flex; justify-content : center;" >
 		<table class="table table-striped" style="width:50%; ">
-			<tbody>
+			<thead>
 				<tr>
 					<td>날짜</td>
 					<td>내역</td>
 					<td>포인트 변동</td>
 				</tr>
 				
+			</thead>
+			<tbody>
+				<c:forEach var="points" items="${sessionMember.getPointList()}" varStatus="status">
+					<tr>
+						<td>
+							<c:out value="${points.getPointsDate()}" /></td>
+						<td><c:out value="${points.getTypeString()}" /></td>
+						<td><c:out value="${points.getTypeString2()}" /></td>
+					</tr>
+				</c:forEach>
+				<tr>
+					<td>현재 포인트</td>
+					<td colspan="2">${sessionMember.getPoints() }</td>
+				</tr>
 			</tbody>	
 		</table>
 	</div>
