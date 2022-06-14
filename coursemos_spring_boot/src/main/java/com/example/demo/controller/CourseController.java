@@ -102,10 +102,19 @@ public class CourseController {
 			mav.addObject("place2", place2);
 			System.out.println(place2.getPlaceName());
 		}
+		else { // place2가 null일 경우 빈 place 객체 넘겨줌
+			mav.addObject("place2", new Place());
+			System.out.println("place2 is null");
+		}
+		
 		if (viewCourse.getPlace3()!=null) {
 			Place place3 = placeService.getPlaceByPlaceId(viewCourse.getPlace3().getPlaceId());
 			mav.addObject("place3", place3);
 			System.out.println(place3.getPlaceName());
+		}
+		else { // place2가 null일 경우 빈 place 객체 넘겨줌
+			mav.addObject("place3", new Place());
+			System.out.println("place3 is null");
 		}
 		
 		
@@ -113,25 +122,25 @@ public class CourseController {
 		System.out.println(viewCourse.toString() + "\n");
 		System.out.println("=============================");
 		
-		
-		//MemberCouponButton
-		ArrayList<MemberCouponButton> mcb = new ArrayList<MemberCouponButton>();
-						
-		Place[] arr = {course.getPlace1(), course.getPlace2(), course.getPlace3()};
-		for (Place p : arr) {
-			if (p != null) {
-				int id = p.getPlaceId();
-				Company com = companyService.getCompanyByPlaceId(id);
-								
-				if (com != null) {
-					List<Coupon> cou = couponService.getCouponByCompanyId(com.getCompanyId());
-					for (Coupon c : cou) {
-						mcb.add(new MemberCouponButton(com.getPlace().getPlaceName(), c));
-					}
-				}			
-			}
-		}		
-		mav.addObject("couponList", mcb);
+//		
+//		//MemberCouponButton
+//		ArrayList<MemberCouponButton> mcb = new ArrayList<MemberCouponButton>();
+//						
+//		Place[] arr = {course.getPlace1(), course.getPlace2(), course.getPlace3()};
+//		for (Place p : arr) {
+//			if (p != null) {
+//				int id = p.getPlaceId();
+//				Company com = companyService.getCompanyByPlaceId(id);
+//								
+//				if (com != null) {
+//					List<Coupon> cou = couponService.getCouponByCompanyId(com.getCompanyId());
+//					for (Coupon c : cou) {
+//						mcb.add(new MemberCouponButton(com.getPlace().getPlaceName(), c));
+//					}
+//				}			
+//			}
+//		}		
+//		mav.addObject("couponList", mcb);
 		
 		return mav;
 	}
