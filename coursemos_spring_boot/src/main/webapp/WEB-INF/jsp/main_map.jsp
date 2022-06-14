@@ -29,7 +29,7 @@
 
 <button id="javascript_btn1" type="button">역 찾기</button>
 
-<form name="result" method="post" action="<c:url value='/course/search'/>">
+<form name="result" method="post" action="<c:url value='/course/search/main'/>">
 	<input type="hidden" name="x" value=0>
 	<input type="hidden" name="y" value=0>
 	<input type="submit" value="코스찾기">
