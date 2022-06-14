@@ -1,5 +1,12 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<c:if test="${sessionMember.check2 != false}"> <!-- if와 동일 -->
+		<%@ include file="../header/IncludeTopMember.jsp"  %>
+</c:if> <!-- if 종료 -->
+<c:if test="${sessionMember.check2 ==false }">
+		<jsp:forward page="/" /> 
+</c:if> <!-- if 종료 -->
 <!DOCTYPE html>
 <html>
 <head>
@@ -8,9 +15,9 @@
 
 </head>
 <body>
-<%@ include file="header/IncludeTopMockUser.jsp"  %>
+
 <div class="container">
-	<h3 style="text-align:center">{{user.nickname}}님의 포인트 내역</h3>
+	<h3 style="text-align:center">${sessionMember.nickName}님의 포인트 내역</h3>
 	<div style="display: flex; justify-content : center;" >
 		<table class="table table-striped" style="width:50%; ">
 			<tbody>
@@ -19,83 +26,12 @@
 					<td>내역</td>
 					<td>포인트 변동</td>
 				</tr>
-				<tr v-for="line in infos">
-					<td v-for="info in line"><span v-html="info"></td>
-				</tr>
-				<tr>
-					<td colspan="3">total : {{user.points}}</td>
-				</tr>
+				
 			</tbody>	
 		</table>
 	</div>
 </div>
 <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
 <script>
-	new Vue({
-    	el: '.container',
-        data : {
-        	user : {
-            	nickname : "김솜솜",
-            	points: 150
-            },
-            infos : 
-            	[ {
-            		date : '2021-12-21',
-            		details : '코스 작성',
-            		points : '+20'
-            	},
-            	{
-            		date : '2022-01-14',
-            		details : '후기 작성',
-            		points : '+20'
-            	},
-            	{
-            		date : '2022-01-15',
-            		details : '코스 작성',
-            		points : '+20'
-            	},
-            	{
-            		date : '2022-01-18',
-            		details : '후기 작성',
-            		points : '+20'
-            	},
-            	{
-            		date : '2022-02-04',
-            		details : '후기 작성',
-            		points : '+20'
-            	},
-            	{
-            		date : '2022-02-08',
-            		details : '후기 열람',
-            		points : '-5'
-            	},
-            	{
-            		date : '2022-02-12',
-            		details : '후기 열람',
-            		points : '-5'
-            	},
-            	{
-            		date : '2022-02-28',
-            		details : '후기 작성',
-            		points : '+20'
-            	},
-            	{
-            		date : '2022-03-01',
-            		details : '후기 작성',
-            		points : '+20'
-            	},
-            	{
-            		date : '2022-03-08',
-            		details : '후기 작성',
-            		points : '+20'
-            	},
-            	{
-            		date : '2022-02-04',
-            		details : '후기 작성',
-            		points : '+20'
-            	}
-            	]
-        }
-	});
 </script>
 </html>
