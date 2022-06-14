@@ -13,6 +13,7 @@ import javax.persistence.InheritanceType;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
@@ -57,8 +58,14 @@ public class Course {
 	@DateTimeFormat(pattern="yyyy-MM-dd")
 	private Date writtenDate;
 
-	private Integer placeId1;
-	private Integer placeId2;
-	private Integer placeId3;
+	@ManyToOne(targetEntity = Place.class)
+    @JoinColumn(name = "placeId1")
+	private Place placeId1;
+	@ManyToOne(targetEntity = Place.class)
+    @JoinColumn(name = "placeId2")
+	private Place placeId2;
+	@ManyToOne(targetEntity = Place.class)
+    @JoinColumn(name = "placeId3")
+	private Place placeId3;
 	
 }

@@ -45,10 +45,10 @@
     }
     #page {
     	position:absolute;
-        top:600px;
+        top:250px;
         left:200px;
         width:300px;
-        height:250px;
+        height:70px;
     }
 </style>
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.7.1/font/bootstrap-icons.css">
@@ -108,7 +108,7 @@
               <div class="accordion accordion-flush" id="accordionFlushExample">
                <div class="accordion-item"> 
                   <h2 class="accordion-header" id="${cate.courseId}"> 
-                    <button class="accordion-button collapsed" type="button" onclick="javascript:makeUrl('${cate.placeId1}', '${cate.placeId2}', '${cate.placeId3}');" data-bs-toggle="collapse" data-bs-target="#flush-collapseOne_${cate.courseId}" aria-expanded="false" aria-controls="flush-collapseOne_${cate.courseId}">
+                    <button class="accordion-button collapsed" type="button" onclick="javascript:displayCourse('${cate.placeId1.x}' + ',' + '${cate.placeId1.y}', '${cate.placeId2.x}' + ',' + '${cate.placeId2.y}', '${cate.placeId3.x}' + ',' + '${cate.placeId3.y}');" data-bs-toggle="collapse" data-bs-target="#flush-collapseOne_${cate.courseId}" aria-expanded="false" aria-controls="flush-collapseOne_${cate.courseId}">
                         ${cate.courseId}
                       <i class="bi bi-heart-fill"></i>${cate.courseContents}
                     </button>
@@ -117,22 +117,19 @@
                     <div class="accordion-body">
                       <button class="list-group-item d-flex justify-content-between align-items-start" data-bs-toggle="modal" data-bs-target="#exampleModal_${cate.courseId}_0" style="background-color:antiquewhite">
                         <div class="mx-sm-5 me-auto">
-                          <div class="fw-bold">Subheading</div>
-                          Cras justo odio
+                          <div class="fw-bold">${cate.placeId1.placeName}</div>
                         </div>
                         <i class="bi bi-heart-fill"></i>14
                       </button>
                       <button class="list-group-item d-flex justify-content-between align-items-start" data-bs-toggle="modal" data-bs-target="#exampleModal_${cate.courseId}_1" style="background-color:antiquewhite">
                         <div class="mx-sm-5 me-auto">
-                          <div class="fw-bold">Subheading</div>
-                          Cras justo odio
+                          <div class="fw-bold">${cate.placeId2.placeName}</div>
                         </div>
                         <i class="bi bi-heart-fill"></i>14
                       </button>
                       <button class="list-group-item d-flex justify-content-between align-items-start" data-bs-toggle="modal" data-bs-target="#exampleModal_${cate.courseId}_2" style="background-color:antiquewhite">
                         <div class="mx-sm-5 me-auto">
-                          <div class="fw-bold">Subheading</div>
-                          Cras justo odio
+                          <div class="fw-bold">${cate.placeId3.placeName}</div>
                         </div>
                         <i class="bi bi-heart-fill"></i>14
                       </button>
@@ -149,8 +146,10 @@
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                   </div>
                   <div class="modal-body">
-                    ${cate.placeId1} | 
-                   
+					위도 : ${cate.placeId1.x}
+					경도 : ${cate.placeId1.y}
+					근처 대중교통 : ${cate.placeId1.subway}
+					취향 : ${cate.placeId1.taste}
                   </div>
                   <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
@@ -167,8 +166,10 @@
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                   </div>
                   <div class="modal-body">
-                     ${cate.placeId2} |
-                   
+					위도 : ${cate.placeId2.x}
+					경도 : ${cate.placeId2.y}
+					근처 대중교통 : ${cate.placeId2.subway}
+					취향 : ${cate.placeId2.taste}
                   </div>
                   <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
@@ -185,7 +186,10 @@
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                   </div>
                   <div class="modal-body">
-                     ${cate.placeId3}
+                  	위도 : ${cate.placeId3.x}
+					경도 : ${cate.placeId3.y}
+					근처 대중교통 : ${cate.placeId3.subway}
+					취향 : ${cate.placeId3.taste}
                   </div>
                   <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
