@@ -86,7 +86,8 @@
 					</header>
 					<div>
 					<!-- Post title-->
-					<div style="margin-left:500px;">작성일: ${course.writtenDate }</div>
+					<div style="margin-left:500px;">작성일: <fmt:formatDate value="${course.writtenDate}" pattern="yyyy-MM-dd"/></div>
+					
 					<br>
 					<h5 style="font-weight:bold;">코스의 분위기</h5>
 					<!-- <div>활동적인, 즐거운</div> -->
@@ -95,38 +96,80 @@
 					<h5 style="font-weight:bold;">코스 경로 살펴보기</h5>
 					<br>
 					<table>
-						<tr>
-							<th><div>${place1.placeName }</div></th>
-						</tr>
-						<tr>
-							<td><div id="resultAddress1"></div></td>
-						</tr>
-						<tr>
-							<td><br></td>
-						</tr>
-						<c:if test="${place2.placeName != null}">
-							<tr>
-								<th><div>${place2.placeName }</div></th>
-							</tr>
-							<tr>
-								<td><div id="resultAddress2"></div></td>
-							</tr>
-							<tr>
-							<td><br></td>
-							</tr>
-						</c:if>
-						<c:if test="${place3.placeName != null}">
-							<tr>
-								<th><div>${place3.placeName }</div></th>
-							</tr>
-							<tr>
-								<td><div id="resultAddress3"></div></td>
-							</tr>
-							<tr>
-							<td><br></td>
-							</tr>
-						</c:if>
+						<c:choose>
+							<c:when test="${place1.placeName != null}">
+								<tr>
+								<th><div>${place1.placeName }</div></th>
+								</tr>
+								<tr>
+									<td><div id="resultAddress1"></div></td>
+								</tr>
+								<tr>
+									<td><br></td>
+								</tr>
+							</c:when>
+							<c:otherwise>
+								<tr>
+								<th><div><%= placeName1 %></div></th>
+								</tr>
+								<tr>
+									<td><div id="resultAddress1"></div></td>
+								</tr>
+								<tr>
+									<td><br></td>
+								</tr>
+							</c:otherwise>
+						</c:choose>
 						
+						<c:choose>
+							<c:when test="${place2.placeName != null}">
+								<tr>
+								<th><div>${place2.placeName }</div></th>
+								</tr>
+								<tr>
+									<td><div id="resultAddress2"></div></td>
+								</tr>
+								<tr>
+									<td><br></td>
+								</tr>
+							</c:when>
+							<c:otherwise>
+								<tr>
+								<th><div><%= placeName2 %></div></th>
+								</tr>
+								<tr>
+									<td><div id="resultAddress2"></div></td>
+								</tr>
+								<tr>
+									<td><br></td>
+								</tr>
+							</c:otherwise>
+						</c:choose>
+						
+						<c:choose>
+							<c:when test="${place3.placeName != null}">
+								<tr>
+								<th><div>${place3.placeName }</div></th>
+								</tr>
+								<tr>
+									<td><div id="resultAddress3"></div></td>
+								</tr>
+								<tr>
+									<td><br></td>
+								</tr>
+							</c:when>
+							<c:otherwise>
+								<tr>
+								<th><div><%= placeName3 %></div></th>
+								</tr>
+								<tr>
+									<td><div id="resultAddress3"></div></td>
+								</tr>
+								<tr>
+									<td><br></td>
+								</tr>
+							</c:otherwise>
+						</c:choose>		
 					</table>
 					
 					<!-- 지도 -->
@@ -193,15 +236,13 @@
 								document.getElementById("resultAddress2").innerText = result[0].address.address_name;								
 								bounds.extend(coords2);
 								map.setBounds(bounds);
-							}
-							
-							
-						}
+							}							
+						};
 						geocoder.coord2Address(coords2.getLng(), coords2.getLat(), callback2);
 					}
 					
 					if (${place3 != null}){
-						var coords3 = new kakao.maps.LatLng(${place3.x}, ${place3.y});
+						var coords3 = new kakao.maps.LatLng(${place3.x}, ${place3.y});						
 						linePath[2] = coords3;
 						var callback3 = function(result, status){
 							if (status == kakao.maps.services.Status.OK){
@@ -209,10 +250,9 @@
 								bounds.extend(coords3);
 								map.setBounds(bounds);
 							}
-						}
+						};
 						geocoder.coord2Address(coords3.getLng(), coords3.getLat(), callback3);
 					}
-					
 					
 					
 					for (var i = 0, len = linePath.length; i < len; i++){
@@ -263,15 +303,22 @@
 					    return markerImage;
 					}		
 					
+					for (var i = linePath.length-1; i >= 0 ; i--){
+						if (linePath[i]=='(0, 0)'){
+							linePath.pop(); // 빈 좌표는 없애줌
+						}					
+					}
+					
 					var polyline = new kakao.maps.Polyline({
 						path: linePath,
 						strokeWeight: 5,
-						strokeColor: '#FF0000',
+						strokeColor: 'blue',
 						strokeOpacity: 0.7,
 						strokeStyle: 'solid'
 					});
 					
 					polyline.setMap(map);
+					
 					</script>
 					<br><br>
 					<!-- Post content-->
