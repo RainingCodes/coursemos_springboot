@@ -24,6 +24,8 @@ public class SessionMember implements Serializable {
 		
 	}
 	public String getTaste() {
+		if(tasteCode == null)
+			return null;
 		switch(this.tasteCode) {
 		case "act" :
 			return "활동적";
