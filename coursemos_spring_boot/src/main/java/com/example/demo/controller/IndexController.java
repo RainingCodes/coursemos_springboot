@@ -62,9 +62,14 @@ public class IndexController {
 		ModelAndView mav = new ModelAndView("member/mypage");
 		return mav;
 	}
-	@RequestMapping("/points")
+	@RequestMapping("/mycourse")
+	public ModelAndView mycourse() {
+		ModelAndView mav = new ModelAndView("member/mypage");
+		return mav;
+	}
+	@RequestMapping("/member/points")
 	public ModelAndView points() {
-		ModelAndView mav = new ModelAndView("points");
+		ModelAndView mav = new ModelAndView("member/points");
 		return mav;
 	}
 	
