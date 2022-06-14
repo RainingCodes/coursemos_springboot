@@ -53,4 +53,9 @@ public class MemberService {
 		// TODO Auto-generated method stub
 		memberRepository.save(member);
 	}
+
+	public void delete(Member member) {
+		// TODO Auto-generated method stub
+		memberRepository.delete(member);
+	}
 }
