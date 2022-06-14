@@ -77,11 +77,15 @@ public class RegisterMemberController {
 		if (result.hasErrors()) {
 			return "member/join";
 		}
+
 		memberService.insertMember(member);
+
 		Points points = new Points();
 		points.setMemberId(member.getId());
 		points.setPointsDate(member.getBirth());
 		pointsService.insertPoints(points);
+		member.insertPoints(points);
+		
 		status.setComplete(); // session 종료 (“member” 객체 참조가 삭제됨)
 		return "member/login"; // “member” 객체가 view에 전달됨 (request를 통해) 
 	}
