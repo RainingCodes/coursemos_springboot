@@ -41,4 +41,31 @@ public class Points implements Serializable{
 		this.points = 20;
 		this.type = 0;
 	}
+	public String getTypeString() {
+		switch(this.type) {
+			case 0 :
+				return "가입 포인트";
+			case 1 :
+				return "코스 작성";
+			case 2:
+				return "리뷰 작성";
+			case 3:
+				return "리뷰 열람";
+			default :
+				return null;
+		}
+	}public String getTypeString2() {
+		switch(this.type) {
+		case 0 :
+			return "+20";
+		case 1 :
+			return "+20";
+		case 2:
+			return "+20";
+		case 3:
+			return "-5";
+		default :
+			return null;
+	}
+}
 }
