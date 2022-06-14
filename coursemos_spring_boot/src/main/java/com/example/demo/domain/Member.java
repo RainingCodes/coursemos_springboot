@@ -2,14 +2,23 @@ package com.example.demo.domain;
 
 import java.io.Serializable;
 import java.sql.Date;
+import java.util.ArrayList;
+import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Transient;
+import javax.persistence.ForeignKey;
 
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
+import javax.persistence.PrimaryKeyJoinColumn;
+import javax.persistence.SecondaryTable;
 import javax.persistence.SequenceGenerator;
 
 import lombok.Getter;
@@ -36,7 +45,7 @@ import lombok.ToString;
 //public class Member extends BaseEntity implements Serializable {
 public class Member  implements Serializable {
   /* Private Fields */
-	
+		
   @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "MEMBER_SEQ_GENERATOR")
   @Id @Column(name="memberId") @Getter
   private Long id;
@@ -63,6 +72,12 @@ public class Member  implements Serializable {
   
   @Column(name="taste") @Getter @Setter
   private String tasteCode;
+  
+
+  @OneToMany
+  @JoinColumn(name="memberId")
+  @Getter @Setter
+  private List<Points> pointList;
   
   @Column(nullable=false) @Getter @Setter
   private int points;

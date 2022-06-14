@@ -82,10 +82,21 @@ function showPopup(){
 	var popupY= (window.screen.height / 2) - (height / 2);
 	let nickName = document.getElementById("nickName").value; 
 	sessionStorage.setItem("nickName", nickName);
-	openWin = window.open("/member/update/check","팝업 테스트","height=" + height  + ", width=" + width  + ", left="+ popupX + ", top="+ popupY / 2);
+	openWin = window.open("/member/update/check","정보 수정","height=" + height  + ", width=" + width  + ", left="+ popupX + ", top="+ popupY / 2);
      
 }
+function showPopup2(){
+	var width = 600;
+	var height = 30;
 
+	var popupX = (window.screen.width / 2) - (width / 2);
+
+	var popupY= (window.screen.height / 2) - (height / 2);
+	let nickName = document.getElementById("nickName").value; 
+	sessionStorage.setItem("nickName", nickName);
+	openWin = window.open("/member/update/password","비밀번호 변경","height=" + 200  + ", width=" + width  + ", left="+ popupX + ", top="+ popupY / 2);
+     
+}
 </script>
 </head>
 <body>
@@ -104,6 +115,10 @@ function showPopup(){
 							<tr>
 								<td class="spaces">&nbsp;</td>
 								<td class="errors" colspan=2><form:errors path="nickName" cssClass="error" /></td>
+							</tr>
+							<tr>
+								<td class="labels"><form:label path="password">비밀번호</form:label></td>
+								<td class="datas"><button type="button" class="btn-primary" onclick="showPopup2();">변경하기</button><td>
 							</tr>
 							<tr>
 								<td class="labels"><form:label path="genderCode">성별</form:label></td>

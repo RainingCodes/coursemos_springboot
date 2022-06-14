@@ -13,13 +13,18 @@
         height: 400px;
         border: 1px #a8a8a8 solid;
     }
+  	.error {
+		color:red;
+		font-size:15px;
+		font-weight:bold;
+	}
 </style>
 </head>
 <body>
 <center><h1>사업자 등록</h1></center>
 <div class="container">
 <table class="table">    
-	<form:form modelAttribute="RegisterForm">
+	<form:form modelAttribute="Company">
 	<tr>
 		<td class="text-center"><b>지도에서<br>위치찾기</b></td>
 		<td>
@@ -31,29 +36,26 @@
 	</tr>
 	<tr>
 		<td class="text-center"><form:label path="companyId">사업자등록번호</form:label></td>
-		<td><form:input path="companyId" /><br></td>
+		<td><form:input path="companyId" placeholder="0000000000"/> <form:errors path="companyId" cssClass="error"/><br></td>
 	</tr>
 	<tr>
 		<td class="text-center"><form:label path="place.placeName">가게명</form:label></td>
-		<td><form:input path="place.placeName" size="35" placeholder="주소 찾기 시 자동 추가됩니다"/><br></td>
+		<td><form:input path="place.placeName" size="35" placeholder="주소 찾기 시 자동 추가됩니다"/> <form:errors path="place.placeName" cssClass="error"/><br></td>
 	</tr>
 	<tr>
 		<td class="text-center"><form:label path="phone">전화번호</form:label></td>
-		<td><form:input path="phone"  size="35" placeholder="주소 찾기 시 값이 존재하면 자동 추가됩니다"/><br></td>
+		<td><form:input path="phone"  size="35" placeholder="주소 찾기 시 값이 존재하면 자동 추가됩니다"/> <form:errors path="phone" cssClass="error"/><br></td>
 	</tr>
 	<tr>
 		<td class="text-center"><form:label path="address">주소</form:label></td>
-		<td><form:input path="address"  size="50" placeholder="주소 찾기 시 자동 추가됩니다"/><br></td>
+		<td><form:input path="address"  size="50" placeholder="주소 찾기 시 자동 추가됩니다"/> <form:errors path="address" cssClass="error"/><br></td>
 	</tr>
 	<tr>
 		<td class="text-center"><form:label path="place.taste">장소 분위기 선택하기</form:label></td>
-		<td><form:radiobuttons path="place.taste" items="${tasteCodes}" itemLabel="label" itemValue="code" /></td>
+		<td><form:radiobuttons path="place.taste" items="${tasteCodes}" itemLabel="label" itemValue="code" /> <form:errors path="place.taste" cssClass="error"/></td>
 	</tr>
 	<tr>
-		<td colspan="2" class="text-center">
-			<input type="submit" value="접수하기" onClick="submitForm()" />
-		</td>
-		
+		<td colspan="2" class="text-center"><input type="submit" value="접수하기" /></td>
 	</tr>
 	<form:hidden path="place.x" />
 	<form:hidden path="place.y" />
@@ -69,16 +71,6 @@
 
 <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=c17b5563968f2fffd356919521833ce2&libraries=services"></script>
 <script>
-
-function submitForm() {
-	if (clickSubwayButton == false) {
-		alert('주소 불러오기를 이용하여야 합니다.');
-	} else {
-		alert('제휴가 등록되었습니다.')
-		RegisterForm.submit();
-	}
-}
-
 // 마커를 클릭하면 장소명을 표출할 인포윈도우 입니다
 var infowindow = new kakao.maps.InfoWindow({zIndex:1});
 
@@ -180,6 +172,7 @@ function placesSearchCB (data, status, pagination) { //장소검색
         placeName = data[0].place_name;
         road_address_name = data[0].road_address_name;
         phone = data[0].phone;
+        
                
         var moveLatLon = new kakao.maps.LatLng(data[0].y, data[0].x);
         map.panTo(moveLatLon);

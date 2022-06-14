@@ -20,10 +20,13 @@ function submitForm() {
 	}
 }
 
-
 </script>
 </head>
 <body>
+<!-- 날짜 설정 -->
+<jsp:useBean id="now" class="java.util.Date" />
+<fmt:formatDate value="${now}" pattern="yyyy-MM-dd" var="nowDate" />       <%-- 오늘날짜 --%>
+
 <div class="container">
 <center><h1>쿠폰 관리</h1></center>
 <h4><b>${company.place.placeName}</b>의 쿠폰 사용 관리 페이지입니다.</h4>
@@ -44,8 +47,10 @@ function submitForm() {
 	</tr>
 	
 	<c:forEach var="coupon" items="${couponList}">
-	<c:if test="${coupon.state == 0}">
+	
+	
 	<fmt:formatDate var="formatDt" value="${coupon.period}" pattern="yyyy-MM-dd"/>
+	<c:if test="${coupon.state == 0 && formatDt >= nowDate}">
 	<tr>
 		<td>${coupon.couponContents}</td>
 		<td>${formatDt}</td>
@@ -77,8 +82,8 @@ function submitForm() {
 	</tr>
 	
 	<c:forEach var="coupon" items="${couponList}">
-	<c:if test="${coupon.state != 0}">
 	<fmt:formatDate var="formatDt" value="${coupon.period}" pattern="yyyy-MM-dd"/>
+	<c:if test="${coupon.state != 0 || formatDt < nowDate}">
 	<tr>
 		<td>${coupon.couponContents}</td>
 		<td>${formatDt}</td>

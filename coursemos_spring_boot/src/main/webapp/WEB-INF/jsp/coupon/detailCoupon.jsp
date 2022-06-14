@@ -12,7 +12,7 @@
 <body>
 <!-- 날짜 설정 -->
 <jsp:useBean id="now" class="java.util.Date" />
-<fmt:formatDate value="${now}" pattern="yyyy-MM-dd" var="nowDate" />             <%-- 오늘날짜 --%>
+<fmt:formatDate value="${now}" pattern="yyyy-MM-dd" var="nowDate" />        <%-- 오늘날짜 --%>
 
 <div class="container">
 <center><h1>쿠폰 관리</h1></center>

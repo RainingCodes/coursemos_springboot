@@ -21,10 +21,8 @@ public class JpaCourseDao implements CourseDao{
 	private EntityManager em;
 	
 	@Override
-	public Course getCourseByCourseId(String courseId) throws DataAccessException {
-		Query query = em.createQuery("SELECT c FROM Course c WHERE c.courseId = ?1");
-		query.setParameter(1, courseId);
-		return (Course)query.getSingleResult();
+	public Course getCourseByCourseId(int courseId) throws DataAccessException {
+		return em.find(Course.class, courseId);
 	}
 
 	@Override

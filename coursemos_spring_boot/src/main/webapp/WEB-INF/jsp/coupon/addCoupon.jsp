@@ -25,7 +25,7 @@
 	</tr>
 	<tr>
 		<td class="text-center"><form:label path="period">쿠폰 발급 기간</form:label></td>
-		<td><form:input path="period" />까지 <form:errors path="period" cssClass="error"/></td>
+		<td><form:input path="period" placeholder="2000-01-01" />까지 <form:errors path="period" cssClass="error"/></td>
 	</tr>
 	<tr>
 		<td class="text-center"><form:label path="day">발급 후 이용기간</form:label></td>

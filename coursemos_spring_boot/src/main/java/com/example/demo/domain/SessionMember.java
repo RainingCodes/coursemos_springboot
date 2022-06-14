@@ -13,6 +13,7 @@ public class SessionMember implements Serializable {
 	private Long id;
 	private String nickName;
 	private String password;
+	private String repw;
 	private Integer genderCode;
 	private Date birth;
 	private int points;
@@ -23,6 +24,8 @@ public class SessionMember implements Serializable {
 		
 	}
 	public String getTaste() {
+		if(tasteCode == null)
+			return null;
 		switch(this.tasteCode) {
 		case "act" :
 			return "활동적";

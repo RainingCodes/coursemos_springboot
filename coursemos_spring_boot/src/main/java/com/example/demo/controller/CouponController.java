@@ -1,5 +1,6 @@
 package com.example.demo.controller;
 
+import java.util.Date;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -19,6 +20,7 @@ import com.example.demo.domain.Company;
 import com.example.demo.domain.Coupon;
 import com.example.demo.service.CompanyService;
 import com.example.demo.service.CouponService;
+import com.example.demo.validator.CouponValidator;
 
 @Controller
 public class CouponController {
@@ -28,11 +30,23 @@ public class CouponController {
 	private CouponService couponService;
 	
 	@RequestMapping("/company/list/coupon")
-	public ModelAndView couponList(@RequestParam("companyId") int companyId) {	
+	public ModelAndView couponList(@RequestParam("companyId") Long companyId) {	
 		ModelAndView mav = new ModelAndView("coupon/manageCoupon");
 		
 		Company company = companyService.getCompanyByCompanyId(companyId); // 회사 받아오기
 		List<Coupon> coupons = couponService.getCouponByCompanyId(companyId);// 쿠폰 정보들 받아오기
+		
+		long miliseconds = System.currentTimeMillis();
+	    Date current = new Date(miliseconds);	   
+		
+		for (int i = 0; i < coupons.size(); i++) {
+			Coupon tmp = coupons.get(i);
+			Date couponDate = tmp.getPeriod();
+			if (couponDate.before(current) && tmp.getState() == 0) {
+				tmp.setState(1);
+				couponService.updateCoupon(tmp);
+			}
+		}
 
 		mav.addObject("company", company);
 		mav.addObject("couponList", coupons);
@@ -44,13 +58,14 @@ public class CouponController {
 		if (request.getMethod().equalsIgnoreCase("GET")) {
 			Coupon coupon = new Coupon();
 		    //나중에 연결
+			coupon.setPeriod(null);
 			return coupon;
 		}
 		else return new Coupon();
 	}
 	
 	@RequestMapping(value = "/company/list/coupon/register", method = RequestMethod.GET)
-	public String couponRegister(@ModelAttribute("Coupon") Coupon coupon, @RequestParam("companyId") int companyId, ModelMap model) throws Exception {
+	public String couponRegister(@ModelAttribute("Coupon") Coupon coupon, @RequestParam("companyId") Long companyId, ModelMap model) throws Exception {
 		coupon.setCompanyId(companyId);
 		Company company = companyService.getCompanyByCompanyId(companyId); // 회사 받아오기
 		
@@ -63,7 +78,8 @@ public class CouponController {
 	
 	@RequestMapping(value = "/company/list/coupon/register", method = RequestMethod.POST)
 	public ModelAndView courseReportRegister(@Valid @ModelAttribute("Coupon") Coupon coupon, BindingResult result) {
-
+		
+		new CouponValidator().validate(coupon, result);
 		if (result.hasErrors()) {
 			ModelAndView mav = new ModelAndView("coupon/addCoupon");
 			mav.addObject(coupon);

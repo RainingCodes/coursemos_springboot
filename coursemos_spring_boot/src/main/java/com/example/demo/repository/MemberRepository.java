@@ -11,5 +11,8 @@ public interface MemberRepository extends CrudRepository<Member, String> {
 	
 	
 	List<Member> findMemberByNickName(String nickName);
+
+	Member findMemberById(Long id);
+
 	
 }

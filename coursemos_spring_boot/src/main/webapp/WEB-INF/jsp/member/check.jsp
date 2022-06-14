@@ -19,9 +19,15 @@ $( document ).ready( function() {
 		check = false;
 	}
 	if(c == 'f') {
-		$("#message").html("사용이 가능한 닉네임입니다.");
-		$("#message").css({ "color" : "blue"});
-		check = true;
+		if(document.getElementById("nickName").value != '') {
+			$("#message").html("사용이 가능한 닉네임입니다.");
+			$("#message").css({ "color" : "blue"});
+			check = true;
+		} else {
+			$("#message").html("빈 닉네임은 불가합니다.");
+			$("#message").css({ "color" : "red"});
+			check = false;
+		}
 	}
 });
 function closePopup(){

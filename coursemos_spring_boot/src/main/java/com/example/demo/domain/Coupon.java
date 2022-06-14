@@ -7,12 +7,9 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.SequenceGenerator;
-import javax.validation.constraints.Digits;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Pattern;
-import javax.validation.constraints.Positive;
 
 import org.springframework.format.annotation.DateTimeFormat;
 
@@ -33,12 +30,11 @@ public class Coupon {
 	@Id
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "COUPON_SEQ_GENERATOR")
 	private int couponId;
-	private int companyId;
+	private Long companyId;
 	
 	@NotEmpty
 	private String couponContents;
 	
-	@NotNull
 	@DateTimeFormat(pattern="yyyy-MM-dd")
 	private Date period;
 	

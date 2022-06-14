@@ -70,18 +70,23 @@
 	</c:forEach>
 </table>
 
-<h3>제휴 거부</h3>
+<h3>제휴 신청 및 거부</h3>
 <table class="table">
 	<tr>
 		<th>등록한 가게</th>
+		<th>상태</th>
 		<th>상세 관리</th>
 	</tr>
 	
 	<c:forEach var="company" items="${companyList}">
-	<c:if test="${company.accept eq 2}">
+	<c:if test="${company.accept eq 2 || company.accept eq 0}">
 	<tr>
 		<td>
 			${company.place.placeName}
+		</td>
+		<td>
+			<c:if test="${company.accept eq 2}">거부</c:if>
+			<c:if test="${company.accept eq 0}">신청 중</c:if>
 		</td>
 		<td>
         	<a href='<c:url value="/company/list/detail">

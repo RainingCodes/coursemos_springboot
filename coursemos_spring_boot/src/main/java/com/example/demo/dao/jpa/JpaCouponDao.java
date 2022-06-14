@@ -18,7 +18,7 @@ public class JpaCouponDao implements CouponDao {
     private EntityManager em;
 
 	@Override
-	public List<Coupon> getCouponByCompanyId(int companyId) throws DataAccessException {
+	public List<Coupon> getCouponByCompanyId(Long companyId) throws DataAccessException {
 		TypedQuery<Coupon> query = em.createQuery(
                 "select c from Coupon c " + "where c.companyId = ?1", Coupon.class);
 		query.setParameter(1, companyId);

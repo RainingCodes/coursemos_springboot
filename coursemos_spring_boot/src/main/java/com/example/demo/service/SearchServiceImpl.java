@@ -28,7 +28,7 @@ public class SearchServiceImpl implements SearchService {
 		@Autowired 
 		@Qualifier("jpaTasteCategoryDao")
 		TasteCategoryDao tasteCategoryDao;
-		public Course getCourseByCourseId(String courseId) throws DataAccessException {
+		public Course getCourseByCourseId(int courseId) throws DataAccessException {
 			return courseDao.getCourseByCourseId(courseId);
 		}
 	

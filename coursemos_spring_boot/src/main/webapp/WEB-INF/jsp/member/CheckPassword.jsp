@@ -47,7 +47,7 @@ function checkPw(){
 <body>
 	<form method="post" id="check">
 		<br>
-		<div><input type="password" id="passwordCheck" name="passwordCheck"></div>
+		<div>비밀번호 : <input type="password" id="passwordCheck" name="passwordCheck"></div>
 		<br>
 		<div><button type="button" class="btn-primary" onclick="checkPw();">확인</button>&nbsp;&nbsp;&nbsp;&nbsp;<button type="button" class="btn-primary" onclick="closePopup();">창닫기</button></div>
 		<br>

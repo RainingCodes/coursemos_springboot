@@ -43,4 +43,19 @@ public class MemberService {
 			return null;
 		return member.get(0);
 	}
+	
+	public Member findMemberById(Long id ) {
+		Member member = memberRepository.findMemberById(id);
+		return member;
+	}
+
+	public void save(Member member) {
+		// TODO Auto-generated method stub
+		memberRepository.save(member);
+	}
+
+	public void delete(Member member) {
+		// TODO Auto-generated method stub
+		memberRepository.delete(member);
+	}
 }
