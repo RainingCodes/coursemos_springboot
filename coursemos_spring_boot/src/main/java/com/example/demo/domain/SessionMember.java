@@ -2,6 +2,7 @@ package com.example.demo.domain;
 
 import java.io.Serializable;
 import java.sql.Date;
+import java.util.List;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -20,6 +21,7 @@ public class SessionMember implements Serializable {
 	private String tasteCode;
 	private boolean check1;
 	private boolean check2;
+	private List<Points> pointList;
 	public SessionMember() {
 		
 	}
