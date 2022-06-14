@@ -73,6 +73,26 @@ public class CourseController {
 			System.out.println("Validation Error !!!");
 			return "course/registerForm";
 		}
+		
+		Place place1 = new Place();
+		place1.setPlaceId(500);
+		place1.setTaste("act");
+		place1.setPlaceName("example PlaceName");
+		place1.setX(32.5);
+		place1.setY(127.2);
+	
+		
+			
+		
+		course.setMemberId(1); // memberId 임의 설정
+		
+		
+		
+		
+		
+		
+		
+		
 		courseService.insertCourse(course);
 		
 		
@@ -87,51 +107,77 @@ public class CourseController {
 	}
 	
 	@RequestMapping(value="/view/{courseId}", method=RequestMethod.GET)
-	public ModelAndView viewDetail(@ModelAttribute Course course) {
+	public ModelAndView viewDetail(@ModelAttribute Course course, HttpServletRequest request) {
 		ModelAndView mav = new ModelAndView("course/view");
 		
 		Course viewCourse = courseService.getCourseByCourseId(course.getCourseId());
 		mav.addObject("course", viewCourse);
 		
-		Place place1 = placeService.getPlaceByPlaceId(viewCourse.getPlace1().getPlaceId());
-		mav.addObject("place1", place1);
-		System.out.println(place1.getPlaceName());
-		
-		if (viewCourse.getPlace2()!=null) {
-			Place place2 = placeService.getPlaceByPlaceId(viewCourse.getPlace2().getPlaceId());
-			mav.addObject("place2", place2);
-			System.out.println(place2.getPlaceName());
+		if (viewCourse.getMemberId() == null) { // DB에 default로 속해져있는 코스(api)이면
+			Place place1 = placeService.getPlaceByPlaceId(viewCourse.getPlace1().getPlaceId());
+			mav.addObject("place1", place1);
+			System.out.println(place1.getPlaceName());
+			
+			if (viewCourse.getPlace2()!=null) {
+				Place place2 = placeService.getPlaceByPlaceId(viewCourse.getPlace2().getPlaceId());
+				mav.addObject("place2", place2);
+				System.out.println(place2.getPlaceName());
+			}
+			else { // place2가 null일 경우 빈 place 객체 넘겨줌
+				mav.addObject("place2", new Place());
+				System.out.println("place2 is null");
+			}
+			
+			if (viewCourse.getPlace3()!=null) {
+				Place place3 = placeService.getPlaceByPlaceId(viewCourse.getPlace3().getPlaceId());
+				mav.addObject("place3", place3);
+				System.out.println(place3.getPlaceName());
+			}
+			else { // place2가 null일 경우 빈 place 객체 넘겨줌
+				mav.addObject("place3", new Place());
+				System.out.println("place3 is null");
+			}	
 		}
-		if (viewCourse.getPlace3()!=null) {
-			Place place3 = placeService.getPlaceByPlaceId(viewCourse.getPlace3().getPlaceId());
-			mav.addObject("place3", place3);
-			System.out.println(place3.getPlaceName());
+		else {
+//			Place place1 = new Place();
+//			place1.setPlaceId(500);
+//			place1.setTaste("act");
+//			place1.setPlaceName("example PlaceName");
+//			place1.setX(32.5);
+//			place1.setY(127.2);
+//			
+//			//placeService.insertPlace(place1);
+//			mav.addObject("place1", place1);
+//			
+			
+//			String placeName1 = request.getParameter("placeName1");
+//			System.out.println("\n\n\nplaceName은!!!!!!" + placeName1 + "\n\n\n");
+			System.out.println(mav.toString());
 		}
-		
 		
 		System.out.println("=========view Detail=========");
 		System.out.println(viewCourse.toString() + "\n");
 		System.out.println("=============================");
 		
-		
-		//MemberCouponButton
-		ArrayList<MemberCouponButton> mcb = new ArrayList<MemberCouponButton>();
-						
-		Place[] arr = {course.getPlace1(), course.getPlace2(), course.getPlace3()};
-		for (Place p : arr) {
-			if (p != null) {
-				int id = p.getPlaceId();
-				Company com = companyService.getCompanyByPlaceId(id);
-								
-				if (com != null) {
-					List<Coupon> cou = couponService.getCouponByCompanyId(com.getCompanyId());
-					for (Coupon c : cou) {
-						mcb.add(new MemberCouponButton(com.getPlace().getPlaceName(), c));
-					}
-				}			
-			}
-		}		
-		mav.addObject("couponList", mcb);
+//		
+//		//MemberCouponButton
+//		ArrayList<MemberCouponButton> mcb = new ArrayList<MemberCouponButton>();
+//						
+//		Place[] arr = {course.getPlace1(), course.getPlace2(), course.getPlace3()};
+//		for (Place p : arr) {
+//			if (p != null) {
+//				int id = p.getPlaceId();
+//				Company com = companyService.getCompanyByPlaceId(id);
+//								
+//				if (com != null) {
+//					List<Coupon> cou = couponService.getCouponByCompanyId(com.getCompanyId());
+//					for (Coupon c : cou) {
+//						mcb.add(new MemberCouponButton(com.getPlace().getPlaceName(), c));
+//					}
+//				}			
+//			}
+//		}		
+//		mav.addObject("couponList", mcb);
 		
 		return mav;
 	}
@@ -155,7 +201,7 @@ public class CourseController {
 //	private CourseService courseService;
 //	
 
-//	
+	
 //	ModelAndView mav;
 //	
 //	@RequestMapping("registerForm")

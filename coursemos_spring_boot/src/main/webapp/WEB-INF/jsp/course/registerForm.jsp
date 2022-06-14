@@ -102,15 +102,7 @@
 									<form:errors path="courseName" cssClass="error"/>
 								</div>
 							</div>
-						</header>
-						
-						<%-- <form:input path="memberId" type="hidden" id="memberId" value="1"/> <!-- memberId값 임의로 1 설정 -->
-						<form:input path="placeId1" type="hidden" id="likes" value="800"/>
-						<form:input path="placeId2" type="hidden" id="likes" value="801"/>
-						<form:input path="placeId3" type="hidden" id="likes" value="802"/>
-						
- --%>						
-						
+						</header>						
 						<form:input path="writtenDate" type="hidden" id="writtenDate"/>						
 						<script>
 							var date = new Date().toISOString().substring(0, 10);

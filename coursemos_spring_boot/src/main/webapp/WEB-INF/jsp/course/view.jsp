@@ -86,7 +86,8 @@
 					</header>
 					<div>
 					<!-- Post title-->
-					<div style="margin-left:500px;">작성일: ${course.writtenDate }</div>
+					<div style="margin-left:500px;">작성일: <fmt:formatDate value="${course.writtenDate}" pattern="yyyy-MM-dd"/></div>
+					
 					<br>
 					<h5 style="font-weight:bold;">코스의 분위기</h5>
 					<!-- <div>활동적인, 즐거운</div> -->
@@ -95,41 +96,84 @@
 					<h5 style="font-weight:bold;">코스 경로 살펴보기</h5>
 					<br>
 					<table>
-						<tr>
-							<th><div">${place1.placeName }</div></th>
-						</tr>
-						<tr>
-							<td><div id="resultAddress1"></div></td>
-						</tr>
-						<tr>
-							<td><br></td>
-						</tr>
-						<tr>
-							<th><div">${place2.placeName }</div></th>
-						</tr>
-						<tr>
-							<td><div id="resultAddress2"></div></td>
-						</tr>
-						<tr>
-							<td><br></td>
-						</tr>
-						<tr>
-							<th><div">${place3.placeName }</div></th>
-						</tr>
-						<tr>
-							<td><div id="resultAddress3"></div></td>
-						</tr>
-						<tr>
-							<td><br></td>
-						</tr>
+						<c:choose>
+							<c:when test="${place1.placeName != null}">
+								<tr>
+								<th><div>${place1.placeName }</div></th>
+								</tr>
+								<tr>
+									<td><div id="resultAddress1"></div></td>
+								</tr>
+								<tr>
+									<td><br></td>
+								</tr>
+							</c:when>
+							<c:otherwise>
+								<tr>
+								<th><div><%= placeName1 %></div></th>
+								</tr>
+								<tr>
+									<td><div id="resultAddress1"></div></td>
+								</tr>
+								<tr>
+									<td><br></td>
+								</tr>
+							</c:otherwise>
+						</c:choose>
+						
+						<c:choose>
+							<c:when test="${place2.placeName != null}">
+								<tr>
+								<th><div>${place2.placeName }</div></th>
+								</tr>
+								<tr>
+									<td><div id="resultAddress2"></div></td>
+								</tr>
+								<tr>
+									<td><br></td>
+								</tr>
+							</c:when>
+							<c:otherwise>
+								<tr>
+								<th><div><%= placeName2 %></div></th>
+								</tr>
+								<tr>
+									<td><div id="resultAddress2"></div></td>
+								</tr>
+								<tr>
+									<td><br></td>
+								</tr>
+							</c:otherwise>
+						</c:choose>
+						
+						<c:choose>
+							<c:when test="${place3.placeName != null}">
+								<tr>
+								<th><div>${place3.placeName }</div></th>
+								</tr>
+								<tr>
+									<td><div id="resultAddress3"></div></td>
+								</tr>
+								<tr>
+									<td><br></td>
+								</tr>
+							</c:when>
+							<c:otherwise>
+								<tr>
+								<th><div><%= placeName3 %></div></th>
+								</tr>
+								<tr>
+									<td><div id="resultAddress3"></div></td>
+								</tr>
+								<tr>
+									<td><br></td>
+								</tr>
+							</c:otherwise>
+						</c:choose>		
 					</table>
 					
-					<div id="coordXY1" style="display:none;"></div>
-					<div id="coordXY2"></div>
-					<div id="coordXY3"></div>
-					
 					<!-- 지도 -->
-					<h5 style="font-weight:bold;">코스 경로 미리보기<input type="button" value="경로 확인" id="pathButton" style="border: none; border-radius: 5px; text-align: center; margin-left: 55%;" onClick="viewPath();"></h5>
+					<h5 style="font-weight:bold;">코스 경로 미리보기</h5>
 					<!-- 지도를 표시할 div 입니다 -->
 					<div id="map" style="width:100%;height:350px;"></div>
 					
@@ -149,42 +193,131 @@
 				    SPRITE_HEIGHT = 146, // 스프라이트 이미지 높이
 				    SPRITE_GAP = 10; // 스프라이트 이미지에서 마커간 간격
 
+				    var markerSize = new kakao.maps.Size(MARKER_WIDTH, MARKER_HEIGHT), // 기본, 클릭 마커의 크기
+				    markerOffset = new kakao.maps.Point(OFFSET_X, OFFSET_Y), // 기본, 클릭 마커의 기준좌표
+				    overMarkerSize = new kakao.maps.Size(OVER_MARKER_WIDTH, OVER_MARKER_HEIGHT), // 오버 마커의 크기
+				    overMarkerOffset = new kakao.maps.Point(OVER_OFFSET_X, OVER_OFFSET_Y), // 오버 마커의 기준 좌표
+				    spriteImageSize = new kakao.maps.Size(SPRITE_WIDTH, SPRITE_HEIGHT); // 스프라이트 이미지의 크기
+
+				    
 					var mapContainer = document.getElementById('map'), // 지도를 표시할 div
 					    mapOption = { 
-					        center: new kakao.maps.LatLng(37.566826, 126.9786567), // 지도의 중심좌표
+					        center: new kakao.maps.LatLng(${place1.x}, ${place1.y}), // 지도의 중심좌표
 					        level: 6 // 지도의 확대 레벨
-					};
+						};
 					
 					// 주소-좌표 변환 객체를 생성합니다
 					var geocoder = new kakao.maps.services.Geocoder();
 				    
 					// 지도를 표시할 div와  지도 옵션으로  지도를 생성합니다
 					var map = new kakao.maps.Map(mapContainer, mapOption);     
+
+					var linePath = new Array();
+					
+					var bounds = new kakao.maps.LatLngBounds();
 					
 					var coords1 = new kakao.maps.LatLng(${place1.x}, ${place1.y});
+					linePath[0] = coords1;
 					var callback = function(result, status){
-						if (status == kakao.maps.services.Status.OK)
+						if (status == kakao.maps.services.Status.OK){
 							document.getElementById("resultAddress1").innerText = result[0].address.address_name;
-					}
-					geocoder.coord2Address(coords1.getLng(), coords1.getLat(), callback);
-					
-
-					var coords2 = new kakao.maps.LatLng(${place2.x}, ${place2.y});
-					if (coords2){
-						var callback2 = function(result, status){
-							if (status == kakao.maps.services.Status.OK)
-								document.getElementById("resultAddress2").innerText = result[0].address.address_name;
+							bounds.extend(coords1);
+							map.setBounds(bounds);
 						}
 					}
-					geocoder.coord2Address(coords2.getLng(), coords2.getLat(), callback2);
+					geocoder.coord2Address(coords1.getLng(), coords1.getLat(), callback);
+										
 					
-
-					var coords3 = new kakao.maps.LatLng(${place3.x}, ${place3.y});
-					var callback3 = function(result, status){
-						if (status == kakao.maps.services.Status.OK)
-							document.getElementById("resultAddress3").innerText = result[0].address.address_name;
+					if (${place2 != null}){
+						var coords2 = new kakao.maps.LatLng(${place2.x}, ${place2.y});
+						linePath[1] = coords2;
+						var callback2 = function(result, status){
+							if (status == kakao.maps.services.Status.OK){
+								document.getElementById("resultAddress2").innerText = result[0].address.address_name;								
+								bounds.extend(coords2);
+								map.setBounds(bounds);
+							}							
+						};
+						geocoder.coord2Address(coords2.getLng(), coords2.getLat(), callback2);
 					}
-					geocoder.coord2Address(coords3.getLng(), coords3.getLat(), callback3);
+					
+					if (${place3 != null}){
+						var coords3 = new kakao.maps.LatLng(${place3.x}, ${place3.y});						
+						linePath[2] = coords3;
+						var callback3 = function(result, status){
+							if (status == kakao.maps.services.Status.OK){
+								document.getElementById("resultAddress3").innerText = result[0].address.address_name;							
+								bounds.extend(coords3);
+								map.setBounds(bounds);
+							}
+						};
+						geocoder.coord2Address(coords3.getLng(), coords3.getLat(), callback3);
+					}
+					
+					
+					for (var i = 0, len = linePath.length; i < len; i++){
+						var gapX = (MARKER_WIDTH + SPRITE_GAP), // 스프라이트 이미지에서 마커로 사용할 이미지 X좌표 간격 값
+				        originY = (MARKER_HEIGHT + SPRITE_GAP) * i, // 스프라이트 이미지에서 기본, 클릭 마커로 사용할 Y좌표 값
+				        overOriginY = (OVER_MARKER_HEIGHT + SPRITE_GAP) * i, // 스프라이트 이미지에서 오버 마커로 사용할 Y좌표 값
+				        normalOrigin = new kakao.maps.Point(0, originY), // 스프라이트 이미지에서 기본 마커로 사용할 영역의 좌상단 좌표
+				        clickOrigin = new kakao.maps.Point(gapX, originY), // 스프라이트 이미지에서 마우스오버 마커로 사용할 영역의 좌상단 좌표
+				        overOrigin = new kakao.maps.Point(gapX * 2, overOriginY); // 스프라이트 이미지에서 클릭 마커로 사용할 영역의 좌상단 좌표
+				        
+					    // 마커를 생성하고 지도위에 표시합니다
+					    addMarker(linePath[i], normalOrigin, overOrigin, clickOrigin);
+
+					}
+					
+					// 마커를 생성하고 지도 위에 표시하고, 마커에 mouseover, mouseout, click 이벤트를 등록하는 함수입니다
+					function addMarker(position, normalOrigin, overOrigin, clickOrigin) {
+
+					    // 기본 마커이미지, 오버 마커이미지, 클릭 마커이미지를 생성합니다
+					    var normalImage = createMarkerImage(markerSize, markerOffset, normalOrigin),
+					        overImage = createMarkerImage(overMarkerSize, overMarkerOffset, overOrigin),
+					        clickImage = createMarkerImage(markerSize, markerOffset, clickOrigin);
+					    
+					    // 마커를 생성하고 이미지는 기본 마커 이미지를 사용합니다
+					    var marker = new kakao.maps.Marker({
+					        map: map,
+					        position: position,
+					        image: normalImage
+					    });
+
+					    // 마커 객체에 마커아이디와 마커의 기본 이미지를 추가합니다
+					    marker.normalImage = normalImage;
+					}
+					
+					
+					// MakrerImage 객체를 생성하여 반환하는 함수입니다
+					function createMarkerImage(markerSize, offset, spriteOrigin) {
+					    var markerImage = new kakao.maps.MarkerImage(
+					        SPRITE_MARKER_URL, // 스프라이트 마커 이미지 URL
+					        markerSize, // 마커의 크기
+					        {
+					            offset: offset, // 마커 이미지에서의 기준 좌표
+					            spriteOrigin: spriteOrigin, // 스트라이프 이미지 중 사용할 영역의 좌상단 좌표
+					            spriteSize: spriteImageSize // 스프라이트 이미지의 크기
+					        }
+					    );
+					    
+					    return markerImage;
+					}		
+					
+					for (var i = linePath.length-1; i >= 0 ; i--){
+						if (linePath[i]=='(0, 0)'){
+							linePath.pop(); // 빈 좌표는 없애줌
+						}					
+					}
+					
+					var polyline = new kakao.maps.Polyline({
+						path: linePath,
+						strokeWeight: 5,
+						strokeColor: 'blue',
+						strokeOpacity: 0.7,
+						strokeStyle: 'solid'
+					});
+					
+					polyline.setMap(map);
 					
 					</script>
 					<br><br>
