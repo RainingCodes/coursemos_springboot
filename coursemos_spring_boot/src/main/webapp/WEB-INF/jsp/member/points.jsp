@@ -30,12 +30,12 @@
 			</thead>
 			<tbody>
 				<c:forEach var="points" items="${sessionMember.getPointList()}" varStatus="status">
-					<tr>
-						<td>
-							<c:out value="${points.getPointsDate()}" /></td>
-						<td><c:out value="${points.getTypeString()}" /></td>
-						<td><c:out value="${points.getTypeString2()}" /></td>
-					</tr>
+						<tr>
+							<td>
+								<c:out value="${points.getPointsDate()}" /></td>
+							<td><c:out value="${points.getTypeString()}" /></td>
+							<td><c:out value="${points.getTypeString2()}" /></td>
+						</tr>
 				</c:forEach>
 				<tr>
 					<td>현재 포인트</td>
