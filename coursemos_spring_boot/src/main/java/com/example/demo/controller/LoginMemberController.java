@@ -49,9 +49,7 @@ public class LoginMemberController {
 					else if(!member.getPassword().equals(sessionMember.getPassword())) {
 						sessionMember.setCheck1(true);
 						sessionMember.setCheck2(false);
-					}
-						
-					else {
+					} else {
 						sessionMember.setCheck1(true);
 						sessionMember.setCheck2(true);
 						sessionMember.setGenderCode(member.getGenderCode());
@@ -61,10 +59,11 @@ public class LoginMemberController {
 					}
 				}
 				new LoginValidator().validate(sessionMember, result);
-				sessionMember.setId(member.getId());
+				
 				if (result.hasErrors()) {
 					return "member/login2";
 				}
+				sessionMember.setId(member.getId());
 				return "index"; // “member” 객체가 view에 전달됨 (request를 통해) 
 			}
 	
