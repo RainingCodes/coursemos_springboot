@@ -62,12 +62,12 @@ public class Course {
 
 	@OneToOne(cascade=CascadeType.PERSIST)
     @JoinColumn(name = "placeId1")
-	private Place placeId1;
+	private Place place1;
 	@OneToOne(cascade=CascadeType.PERSIST)
     @JoinColumn(name = "placeId2")
-	private Place placeId2;
+	private Place place2;
 	@OneToOne(cascade=CascadeType.PERSIST)
     @JoinColumn(name = "placeId3")
-	private Place placeId3;
+	private Place place3;
 	
 }
