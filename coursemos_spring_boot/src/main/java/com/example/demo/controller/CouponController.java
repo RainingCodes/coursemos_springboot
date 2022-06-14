@@ -30,7 +30,7 @@ public class CouponController {
 	private CouponService couponService;
 	
 	@RequestMapping("/company/list/coupon")
-	public ModelAndView couponList(@RequestParam("companyId") int companyId) {	
+	public ModelAndView couponList(@RequestParam("companyId") Long companyId) {	
 		ModelAndView mav = new ModelAndView("coupon/manageCoupon");
 		
 		Company company = companyService.getCompanyByCompanyId(companyId); // 회사 받아오기
@@ -58,13 +58,14 @@ public class CouponController {
 		if (request.getMethod().equalsIgnoreCase("GET")) {
 			Coupon coupon = new Coupon();
 		    //나중에 연결
+			coupon.setPeriod(null);
 			return coupon;
 		}
 		else return new Coupon();
 	}
 	
 	@RequestMapping(value = "/company/list/coupon/register", method = RequestMethod.GET)
-	public String couponRegister(@ModelAttribute("Coupon") Coupon coupon, @RequestParam("companyId") int companyId, ModelMap model) throws Exception {
+	public String couponRegister(@ModelAttribute("Coupon") Coupon coupon, @RequestParam("companyId") Long companyId, ModelMap model) throws Exception {
 		coupon.setCompanyId(companyId);
 		Company company = companyService.getCompanyByCompanyId(companyId); // 회사 받아오기
 		

@@ -74,7 +74,7 @@ public class AdminController {
 	}
 	
 	@RequestMapping("/admin/company/process")
-	public String companyProcess(@RequestParam("companyId") int companyId,
+	public String companyProcess(@RequestParam("companyId") Long companyId,
 			@RequestParam("accept") int accept) {
 		
 		Company company = companyService.getCompanyByCompanyId(companyId);

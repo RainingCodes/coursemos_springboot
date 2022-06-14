@@ -9,6 +9,7 @@ import javax.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -17,6 +18,8 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.example.demo.domain.Company;
 import com.example.demo.service.CompanyService;
+import com.example.demo.validator.CompanyValidator;
+import com.example.demo.validator.CouponValidator;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -48,11 +51,11 @@ public class CompanyController {
 		return tasteCodes;	
 	}
 	
-	@ModelAttribute("RegisterForm")
+	@ModelAttribute("Company")
 	public Company formBacking(HttpServletRequest request) {
 		if (request.getMethod().equalsIgnoreCase("GET")) {
-			Company RegisterForm = new Company();
-			return RegisterForm;
+			Company company = new Company();
+			return company;
 		}
 		else return new Company();
 	}
@@ -63,15 +66,19 @@ public class CompanyController {
 	}
 	
 	@RequestMapping(value = "/company/register", method = RequestMethod.POST)
-	public String companyRegister(@ModelAttribute("RegisterForm") Company RegisterForm, Model model) {
+	public String companyRegister(@ModelAttribute("Company") Company company, Model model, BindingResult result) {
+		new CompanyValidator().validate(company, result);
+		if (result.hasErrors()) {
+			return "company/addCompany";
+		}
 		
 		long miliseconds = System.currentTimeMillis();
-	    Date current = new Date(miliseconds);	    
-	    RegisterForm.setRegisterDate(current);
-	    RegisterForm.setAccept(0);
-	    RegisterForm.setMemberId(1); // 세션 완성되면 설정하기
+	    Date current = new Date(miliseconds);
+	    company.setRegisterDate(current);
+	    company.setAccept(0);
+	    company.setMemberId(1); // 세션 완성되면 설정하기
 	    
-	    companyService.insertCompany(RegisterForm);
+	    companyService.insertCompany(company);
 		
 		return "redirect:/company/list";
 	}
@@ -87,7 +94,7 @@ public class CompanyController {
 	}
 	
 	@RequestMapping("/company/list/detail")
-	public ModelAndView companyDetail(@RequestParam("companyId") int companyId) {	
+	public ModelAndView companyDetail(@RequestParam("companyId") Long companyId) {	
 		ModelAndView mav = new ModelAndView("company/detailCompany");
 		
 		//companyId로 회사 상세정보 받아와서 넣고 넘기기
@@ -98,7 +105,7 @@ public class CompanyController {
 	}
 	
 	@RequestMapping("/company/list/detail/stop")
-	public String companyStopConnect(@RequestParam("companyId") int companyId) {	
+	public String companyStopConnect(@RequestParam("companyId") Long companyId) {	
 		Company company = companyService.getCompanyByCompanyId(companyId);
 		company.setAccept(3);
 		companyService.updateCompany(company);
@@ -107,7 +114,7 @@ public class CompanyController {
 	}
 	
 	@RequestMapping("/company/list/detail/delete")
-	public String companydeleteConnect(@RequestParam("companyId") int companyId) {
+	public String companydeleteConnect(@RequestParam("companyId") Long companyId) {
 		
 		Company company = companyService.getCompanyByCompanyId(companyId);
 		companyService.deleteCompany(company);

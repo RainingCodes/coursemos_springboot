@@ -22,9 +22,16 @@ public class CouponValidator implements Validator{
 		
 		long miliseconds = System.currentTimeMillis();
 	    Date current = new Date(miliseconds);
-		if (coupon.getPeriod().before(current)) {
-			errors.rejectValue("period", "future");
-		}
+	    
+		
+		Date couponDate = coupon.getPeriod();
+		try{
+			if (couponDate.before(current)) {
+				errors.rejectValue("period", "future");
+			}
+		} catch(NullPointerException e) {
+			errors.rejectValue("period", "required");
+		}	
 	}
 
 }

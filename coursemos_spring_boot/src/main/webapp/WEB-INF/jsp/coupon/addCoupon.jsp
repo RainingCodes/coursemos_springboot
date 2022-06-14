@@ -14,19 +14,6 @@
 	}
   </style>
 </head>
-<script>
-
-function submitForm() {
-	document.getElementById("address").value
-	
-	if (clickSubwayButton == false) {
-		alert('주소 불러오기를 이용하여야 합니다.');
-	} else {
-		alert('제휴가 등록되었습니다.')
-		RegisterForm.submit();
-	}
-}
-</script>
 <body>
 <div class="container">
 <h4><b>${companyName}</b>의 쿠폰 등록입니다.</h4>
@@ -38,7 +25,7 @@ function submitForm() {
 	</tr>
 	<tr>
 		<td class="text-center"><form:label path="period">쿠폰 발급 기간</form:label></td>
-		<td><form:input path="period" />까지 <form:errors path="period" cssClass="error"/></td>
+		<td><form:input path="period" placeholder="2000-01-01" />까지 <form:errors path="period" cssClass="error"/></td>
 	</tr>
 	<tr>
 		<td class="text-center"><form:label path="day">발급 후 이용기간</form:label></td>
