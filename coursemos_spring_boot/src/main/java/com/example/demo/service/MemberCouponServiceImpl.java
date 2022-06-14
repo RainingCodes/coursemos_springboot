@@ -20,18 +20,18 @@ public class MemberCouponServiceImpl implements MemberCouponService {
 	private MemberCouponDao memberCouponDao;
 
 	@Override
-	public List<MemberCoupon> getUserCouponByMemberId(int memberId) {
-		return memberCouponDao.getUserCouponByMemberId(memberId);
+	public List<MemberCoupon> getMemberCouponByMemberId(int memberId) {
+		return memberCouponDao.getMemberCouponByMemberId(memberId);
 	}
 
 	@Override
-	public List<MemberCoupon> getUserCouponByCouponId(int couponId) {
-		return memberCouponDao.getUserCouponByCouponId(couponId);
+	public List<MemberCoupon> getMemberCouponByCouponId(int couponId) {
+		return memberCouponDao.getMemberCouponByCouponId(couponId);
 	}
 
 	@Override
-	public MemberCoupon getUserCouponByMemberCouponId(int memberCouponId) {
-		return memberCouponDao.getUserCouponByMemberCouponId(memberCouponId);
+	public MemberCoupon getMemberCouponByMemberCouponId(int memberCouponId) {
+		return memberCouponDao.getMemberCouponByMemberCouponId(memberCouponId);
 	}
 
 	@Override

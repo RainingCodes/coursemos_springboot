@@ -24,9 +24,9 @@
 		<th>만료일</th>
 	</tr>
 	
-	<c:forEach var="mcValue" items="${mcv}">
+	<c:forEach var="mcValue" items="${memberCouponList}">
 	<fmt:formatDate value="${mcValue.memberCoupon.expirationDate}" pattern="yyyy-MM-dd HH:mm:ss" var="expiration"/>  <%-- 마감날짜 --%>
-	<c:if test="${mcValue.memberCoupon.accept eq 'F' && expiration > nowDate}">
+	<c:if test="${mcValue.memberCoupon.used eq 'F' && expiration > nowDate}">
 	<tr>
 		<td>${mcValue.placeName}</td>
 		<td>${mcValue.couponContent}</td>
@@ -43,9 +43,9 @@
 		<th>분류</th>
 	</tr>
 	
-	<c:forEach var="mcValue" items="${mcv}">
+	<c:forEach var="mcValue" items="${memberCouponList}">
 	<fmt:formatDate value="${mcValue.memberCoupon.expirationDate}" pattern="yyyy-MM-dd" var="expiration"/>  <%-- 마감날짜 --%>
-	<c:if test="${mcValue.memberCoupon.accept eq 'T' || expiration < nowDate}">
+	<c:if test="${mcValue.memberCoupon.used eq 'T' || expiration < nowDate}">
 	<tr>
 		<td>${mcValue.placeName}</td>
 		<td>${mcValue.couponContent}</td>

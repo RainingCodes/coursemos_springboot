@@ -7,9 +7,9 @@ import com.example.demo.domain.MemberCoupon;
 
 public interface MemberCouponDao {
 	
-	List<MemberCoupon> getUserCouponByMemberId(int memberId) throws DataAccessException;
-	List<MemberCoupon> getUserCouponByCouponId(int couponId) throws DataAccessException;
-	MemberCoupon getUserCouponByMemberCouponId(int memberCouponId) throws DataAccessException;
+	List<MemberCoupon> getMemberCouponByMemberId(int memberId) throws DataAccessException;
+	List<MemberCoupon> getMemberCouponByCouponId(int couponId) throws DataAccessException;
+	MemberCoupon getMemberCouponByMemberCouponId(int memberCouponId) throws DataAccessException;
 	void updateMemberCoupon(MemberCoupon userCoupon) throws DataAccessException;
 	void insertMemberCoupon(MemberCoupon userCoupon) throws DataAccessException;
 }

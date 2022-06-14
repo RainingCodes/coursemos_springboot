@@ -18,7 +18,7 @@ public class JpaMemberCouponDao implements MemberCouponDao {
     private EntityManager em;
 
 	@Override
-	public List<MemberCoupon> getUserCouponByMemberId(int memberId) throws DataAccessException {
+	public List<MemberCoupon> getMemberCouponByMemberId(int memberId) throws DataAccessException {
 		TypedQuery<MemberCoupon> query = em.createQuery(
                 "select c from MemberCoupon c " + "where c.memberId = ?1", MemberCoupon.class);
 		query.setParameter(1, memberId);
@@ -26,7 +26,7 @@ public class JpaMemberCouponDao implements MemberCouponDao {
 	}
 
 	@Override
-	public List<MemberCoupon> getUserCouponByCouponId(int couponId) throws DataAccessException {
+	public List<MemberCoupon> getMemberCouponByCouponId(int couponId) throws DataAccessException {
 		TypedQuery<MemberCoupon> query = em.createQuery(
                 "select c from MemberCoupon c " + "where c.couponId = ?1", MemberCoupon.class);
 		query.setParameter(1, couponId);
@@ -34,7 +34,7 @@ public class JpaMemberCouponDao implements MemberCouponDao {
 	}
 
 	@Override
-	public MemberCoupon getUserCouponByMemberCouponId(int MemberCouponId) throws DataAccessException {
+	public MemberCoupon getMemberCouponByMemberCouponId(int MemberCouponId) throws DataAccessException {
 		return em.find(MemberCoupon.class, MemberCouponId);
 	}
 

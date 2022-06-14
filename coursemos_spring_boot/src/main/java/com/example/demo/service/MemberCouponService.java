@@ -7,9 +7,9 @@ import org.springframework.dao.DataAccessException;
 import com.example.demo.domain.MemberCoupon;
 
 public interface MemberCouponService {
-	List<MemberCoupon> getUserCouponByMemberId(int memberId);
-	List<MemberCoupon> getUserCouponByCouponId(int couponId);
-	MemberCoupon getUserCouponByMemberCouponId(int memberCouponId);
+	List<MemberCoupon> getMemberCouponByMemberId(int memberId);
+	List<MemberCoupon> getMemberCouponByCouponId(int couponId);
+	MemberCoupon getMemberCouponByMemberCouponId(int memberCouponId);
 	void updateMemberCoupon(MemberCoupon userCoupon);
 	void insertMemberCoupon(MemberCoupon userCoupon);
 }

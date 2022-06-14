@@ -1,7 +1,5 @@
 package com.example.demo.controller;
 
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
@@ -13,7 +11,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
-import com.example.demo.domain.Company;
 import com.example.demo.domain.Coupon;
 import com.example.demo.domain.MemberCoupon;
 import com.example.demo.service.CompanyService;
@@ -49,7 +46,7 @@ public class MemberCouponController {
 		ModelAndView mav = new ModelAndView("coupon/detailCoupon");
 		
 		List<MemberCouponValue> mcList = new ArrayList<MemberCouponValue>();
-		List<MemberCoupon> memberCoupon =  memberCouponService.getUserCouponByCouponId(couponId);
+		List<MemberCoupon> memberCoupon =  memberCouponService.getMemberCouponByCouponId(couponId);
 		
 		for (MemberCoupon m : memberCoupon) {
 			//m을 사용해서 나중에 jpa를 이용해 memberid를 키로 해서 닉네임을 받아온다.
@@ -69,7 +66,7 @@ public class MemberCouponController {
 	public ModelAndView useMemberCoupon(@RequestParam("memberCouponId") int memberCouponId) {
 		ModelAndView mav = new ModelAndView("redirect:/company/list/coupon/detail");
 		// db 처리 후 원래 페이지로
-		MemberCoupon memberCoupon = memberCouponService.getUserCouponByMemberCouponId(memberCouponId);
+		MemberCoupon memberCoupon = memberCouponService.getMemberCouponByMemberCouponId(memberCouponId);
 		memberCoupon.setUsed("T");
 		memberCouponService.updateMemberCoupon(memberCoupon);
 		
@@ -80,7 +77,7 @@ public class MemberCouponController {
 	
 	//코스에서 다운받기
 	@RequestMapping("/course/view/coupon/get")
-	public String getMemberCoupon(@RequestParam("CouponId") int couponId) {
+	public String getMemberCoupon(@RequestParam("couponId") int couponId) {
 		Coupon coupon = couponService.getCouponByCouponId(couponId);
 
 		long miliseconds = System.currentTimeMillis();
@@ -92,13 +89,13 @@ public class MemberCouponController {
 		
 		MemberCoupon memberCoupon = new MemberCoupon();
 		memberCoupon.setCouponId(couponId);
-		memberCoupon.setMemberCouponId(1); // 세션 되면 변경하기
+		memberCoupon.setMemberId(1); // 세션 되면 변경하기
 		memberCoupon.setUsed("F");
 		memberCoupon.setExpirationDate(cal.getTime());
 		
 		memberCouponService.insertMemberCoupon(memberCoupon);
 		
-		return "redirect:/member/coupon";
+		return "redirect:/member/coupon/list";
 	}
 	
 	@Getter @Setter @AllArgsConstructor @ToString
@@ -115,7 +112,7 @@ public class MemberCouponController {
 		
 		ArrayList<MemberCouponView> mcv = new ArrayList<MemberCouponView>();
 		
-		List<MemberCoupon> memberCouponList = memberCouponService.getUserCouponByMemberId(1);
+		List<MemberCoupon> memberCouponList = memberCouponService.getMemberCouponByMemberId(1);
 		
 		for (MemberCoupon m : memberCouponList) {
 			Coupon c = couponService.getCouponByCouponId(m.getCouponId());

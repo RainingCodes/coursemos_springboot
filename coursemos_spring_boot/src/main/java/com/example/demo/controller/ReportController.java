@@ -82,11 +82,11 @@ public class ReportController {
 		courseReport.setMemberId(7); // 세션 완성되면 설정하기
 		reportService.insertReport(courseReport);
 		
-		return "redirect:"; //코스 상세 jsp 나오면 다시 돌아가도록 설정
+		return "redirect:/view/"+courseId;
 	}
 	
 	@RequestMapping(value = "/report/review/{reviewId}", method = RequestMethod.GET)
-	public String reviewReportForm(@PathVariable String reviewId, Model model) {
+	public String reviewReportForm(@PathVariable int reviewId, Model model) {
 		model.addAttribute("reviewId", reviewId);
 		//서비스로 게시글 제목, 글쓴이 가져오는 것 나중에 구현해서 모델에 연결해서 리턴
 		model.addAttribute("reportTitle", "test");
@@ -96,11 +96,23 @@ public class ReportController {
 	}
 	
 	@RequestMapping(value = "/report/review/{reviewId}", method = RequestMethod.POST)
-	public String reviewReportRegister(@PathVariable String reviewId,
-			@ModelAttribute("Report") Report courseReport) {
+	public String reviewReportRegister(@PathVariable int reviewId,
+			@ModelAttribute("Report") Report reviewReport, BindingResult result) {
 		
-		//서비스 구현해서 report값 return하고 원래 review게시글로 이동
+		new ReportValidator().validate(reviewReport, result);
+		if (result.hasErrors()) {
+			return "report/courseReport";
+		}
+
+		reviewReport.setCourseId(null);
+		reviewReport.setReviewId(reviewId);
+		long miliseconds = System.currentTimeMillis();
+	    Date current = new Date(miliseconds);
+	    reviewReport.setWrittenDate(current);
+	    reviewReport.setState("F");
+	    reviewReport.setMemberId(7); // 세션 완성되면 설정하기
+		reportService.insertReport(reviewReport);
 		
-		return "redirect:"; //코스 상세 jsp 나오면 다시 돌아가도록 설정
+		return "redirect:/view/"+reviewId;
 	}
 }
