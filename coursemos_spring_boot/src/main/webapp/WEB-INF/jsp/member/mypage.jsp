@@ -2,12 +2,14 @@
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ page import="com.example.demo.domain.SessionMember" %>
 <c:if test="${sessionMember.check2 != false}"> <!-- if와 동일 -->
 		<%@ include file="../header/IncludeTopMember.jsp"  %>
 </c:if> <!-- if 종료 -->
 <c:if test="${sessionMember.check2 ==false }">
 		<jsp:forward page="/" /> 
 </c:if> <!-- if 종료 -->
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -37,6 +39,13 @@ $( document ).ready( function() {
 		var popupY= (window.screen.height / 2) - (height / 2);
 		openWin = window.open("/member/update/check0","비밀번호 확인","height=" + 170  + ", width=" + width  + ", left="+ popupX + ", top="+ popupY / 2);
 	});
+	$('#withdrawal').click( function(){
+		var result = confirm("그 동안 코스모스를 이용한 정보가 다 지워집니다.\n정말 탈퇴하시겠습니까?");
+		if(result) {
+			location.href="/member/withdrawal";
+		} 
+		
+	});
   } );
 
 </script>
@@ -61,7 +70,17 @@ $( document ).ready( function() {
 					</tr>
 					<tr>
 						<th class="labels">선호하는 코스 분위기</th>
-						<td class="datas">${sessionMember.getTaste()}</td>
+						<td class="datas">
+						<%
+							String taste = ((SessionMember)session.getAttribute("sessionMember")).getTaste();
+						%>
+						<c:if test="${taste != null}" >
+							<c:out value="${taste }"></c:out>
+						</c:if>
+						<c:if test="${taste == null}" >
+							없음
+						</c:if>
+						</td>
 					</tr>
 					<tr>
 						<th class="labels">현재 포인트</th>
