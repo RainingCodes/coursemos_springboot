@@ -6,7 +6,7 @@ import org.springframework.dao.DataAccessException;
 import com.example.demo.domain.Coupon;
 
 public interface CouponDao {
-	List<Coupon> getCouponByCompanyId(int companyId) throws DataAccessException;
+	List<Coupon> getCouponByCompanyId(Long companyId) throws DataAccessException;
 	Coupon getCouponByCouponId(int couponId) throws DataAccessException;
 	void deleteCoupon(Coupon coupon) throws DataAccessException;
 	void updateCoupon(Coupon coupon) throws DataAccessException;

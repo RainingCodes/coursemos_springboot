@@ -6,7 +6,7 @@ import com.example.demo.domain.Company;
 public interface CompanyService {
 	List<Company> getAllCompany();
 	List<Company> getCompanyByMemberId(int memberId);
-	Company getCompanyByCompanyId(int companyId);
+	Company getCompanyByCompanyId(Long companyId);
 	void updateCompany(Company company);
 	void insertCompany(Company company);
 	void deleteCompany(Company company);

@@ -30,12 +30,11 @@ public class Coupon {
 	@Id
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "COUPON_SEQ_GENERATOR")
 	private int couponId;
-	private int companyId;
+	private Long companyId;
 	
 	@NotEmpty
 	private String couponContents;
 	
-	@NotNull
 	@DateTimeFormat(pattern="yyyy-MM-dd")
 	private Date period;
 	

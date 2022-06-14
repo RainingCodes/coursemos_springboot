@@ -30,7 +30,7 @@ public class CompanyServiceImpl implements CompanyService {
 	}
 
 	@Override
-	public Company getCompanyByCompanyId(int companyId) {
+	public Company getCompanyByCompanyId(Long companyId) {
 		return companyDao.getCompanyByCompanyId(companyId);
 	}
 

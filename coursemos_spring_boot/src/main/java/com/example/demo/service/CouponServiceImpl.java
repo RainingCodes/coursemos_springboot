@@ -20,7 +20,7 @@ public class CouponServiceImpl implements CouponService{
 	private CouponDao couponDao ;
 	
 	@Override
-	public List<Coupon> getCouponByCompanyId(int companyId) {
+	public List<Coupon> getCouponByCompanyId(Long companyId) {
 		return couponDao.getCouponByCompanyId(companyId);
 	}
 
