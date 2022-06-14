@@ -86,7 +86,7 @@
 	<!-- Page content-->
 	<div class="container mt-5">
 		<div class="row" style="margin-left: 25%;">
-			<form:form modelAttribute="course" name="form" method="POST" action="view/1">
+			<form:form modelAttribute="course" name="form" action="view" method="POST">
 				<div class="col-lg-8">
 					<!-- Post content-->
 					<article>
@@ -104,7 +104,6 @@
 							</div>
 						</header>
 						
-						<form:input path="likes" type="hidden" id="likes" value="0"/> <!-- likes값 임의로 0 설정 -->
 						<%-- <form:input path="memberId" type="hidden" id="memberId" value="1"/> <!-- memberId값 임의로 1 설정 -->
 						<form:input path="placeId1" type="hidden" id="likes" value="800"/>
 						<form:input path="placeId2" type="hidden" id="likes" value="801"/>
