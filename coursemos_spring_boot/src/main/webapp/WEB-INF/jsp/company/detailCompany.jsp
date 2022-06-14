@@ -45,6 +45,9 @@ function submitForm() {
 		<c:if test="${company.accept eq 3}">
     	제휴 종료
 		</c:if>
+		<c:if test="${company.accept eq 0}">
+    	제휴 신청
+		</c:if>
 		</b>
 		</td>
 	</tr>
@@ -68,6 +71,12 @@ function submitForm() {
 		<td><a href='<c:url value="/company/list/detail/delete">
           	<c:param name="companyId" value="${company.companyId}"/></c:url>'>
           	<b>삭제하기</b></a></td>
+        </c:if>
+        <c:if test="${company.accept eq 0}">
+		<td>제휴 신청 취소하기</td>
+		<td><a href='<c:url value="/company/list/detail/delete">
+          	<c:param name="companyId" value="${company.companyId}"/></c:url>'>
+          	<b>취소하기</b></a></td>
         </c:if>
 	</tr>
 	</c:if>
