@@ -73,18 +73,17 @@ public class Member  implements Serializable {
   @Column(name="taste") @Getter @Setter
   private String tasteCode;
   
-
-  @OneToMany
+  @Transient
+  @OneToMany(targetEntity=Points.class)
   @JoinColumn(name="memberId")
   @Getter @Setter
-  private List<Points> pointList;
+  private List<Points> pointList = new ArrayList<Points>();
   
   @Column(nullable=false) @Getter @Setter
   private int points;
   
-  //@Transient
-  //@Embedded @Getter @Setter
-  //private MyData myData;
+  @Transient @Getter @Setter
+  private MyData myData;
   
 
   /* JavaBeans Properties */
@@ -101,6 +100,11 @@ public class Member  implements Serializable {
 	  this.points = 20;
 	  //this.myData = new MyData();
   }
+  
+  public void insertPoints(Points p) {
+	  pointList.add(p);
+  }
+  
 //public Member(String nickName, int gender, String birth, String userName, String taste, Role role) {
 //		super();
 //		this.nickName = nickName;
