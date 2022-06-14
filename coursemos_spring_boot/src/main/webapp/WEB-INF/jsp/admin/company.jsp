@@ -31,7 +31,7 @@
 			${list.companyId}
 		</td>
 		<td>
-			${list.companyName}
+			${list.place.placeName}
 		</td>
 		<td>
 			${list.memberId}
@@ -77,7 +77,7 @@
 			${list.companyId}
 		</td>
 		<td>
-			${list.companyName}
+			${list.place.placeName}
 		</td>
 		<td>
 			${list.memberId}

@@ -16,12 +16,10 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.example.demo.domain.Company;
-import com.example.demo.domain.Place;
 import com.example.demo.service.CompanyService;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
-import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
 
@@ -30,12 +28,6 @@ import lombok.ToString;
 public class CompanyController {
 	@Autowired
 	private CompanyService companyService;
-	
-	@Getter @Setter @AllArgsConstructor @NoArgsConstructor
-	public class CompanyAndPlace {
-		Company company;
-		Place place;
-	}
 	
 	@Getter @Setter @AllArgsConstructor @ToString
 	public class Taste {
@@ -57,12 +49,12 @@ public class CompanyController {
 	}
 	
 	@ModelAttribute("RegisterForm")
-	public CompanyAndPlace formBacking(HttpServletRequest request) {
+	public Company formBacking(HttpServletRequest request) {
 		if (request.getMethod().equalsIgnoreCase("GET")) {
-			CompanyAndPlace RegisterForm = new CompanyAndPlace();
+			Company RegisterForm = new Company();
 			return RegisterForm;
 		}
-		else return new CompanyAndPlace();
+		else return new Company();
 	}
 	
 	@RequestMapping(value = "/company/register", method = RequestMethod.GET)
@@ -71,19 +63,15 @@ public class CompanyController {
 	}
 	
 	@RequestMapping(value = "/company/register", method = RequestMethod.POST)
-	public String companyRegister(@ModelAttribute("RegisterForm") CompanyAndPlace RegisterForm, Model model) {
-		
-		//사업자등록번호는 무조건 10자리임(이거 나중에 세팅)
-		//전화번호도 세팅
+	public String companyRegister(@ModelAttribute("RegisterForm") Company RegisterForm, Model model) {
 		
 		long miliseconds = System.currentTimeMillis();
-	    Date current = new Date(miliseconds);
+	    Date current = new Date(miliseconds);	    
+	    RegisterForm.setRegisterDate(current);
+	    RegisterForm.setAccept(0);
+	    RegisterForm.setMemberId(1); // 세션 완성되면 설정하기
 	    
-	    RegisterForm.company.setRegisterDate(current);
-	    RegisterForm.company.setAccept(0);
-	    RegisterForm.company.setMemberId(7); // 세션 완성되면 설정하기
-	    
-	    //companyService.insertCompany(company);
+	    companyService.insertCompany(RegisterForm);
 		
 		return "redirect:/company/list";
 	}
@@ -92,7 +80,7 @@ public class CompanyController {
 	public ModelAndView companyList() {
 		ModelAndView mav = new ModelAndView("company/manageCompany");
 		
-		List<Company> list = companyService.getCompanyByMemberId(7); // 세션 완성되면 설정하기
+		List<Company> list = companyService.getCompanyByMemberId(1); // 세션 완성되면 설정하기
 		mav.addObject("companyList", list);
 		
 		return mav;

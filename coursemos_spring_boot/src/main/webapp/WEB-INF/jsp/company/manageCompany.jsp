@@ -24,7 +24,7 @@
 	<c:if test="${company.accept eq 1}">
 	<tr>
 		<td>
-			${company.companyName}
+			${company.place.placeName}
 		</td>
 		<td>
         	<a href='<c:url value="/company/list/coupon">
@@ -53,7 +53,7 @@
 	<c:if test="${company.accept eq 3}">
 	<tr>
 		<td>
-			${company.companyName}
+			${company.place.placeName}
 		</td>
 		<td>
         	<a href='<c:url value="/company/list/coupon">
@@ -81,7 +81,7 @@
 	<c:if test="${company.accept eq 2}">
 	<tr>
 		<td>
-			${company.companyName}
+			${company.place.placeName}
 		</td>
 		<td>
         	<a href='<c:url value="/company/list/detail">

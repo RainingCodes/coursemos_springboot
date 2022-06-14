@@ -21,13 +21,12 @@ function submitForm() {
 }
 
 
-
 </script>
 </head>
 <body>
 <div class="container">
 <center><h1>쿠폰 관리</h1></center>
-<h4><b>${company.companyName}</b>의 쿠폰 사용 관리 페이지입니다.</h4>
+<h4><b>${company.place.placeName}</b>의 쿠폰 사용 관리 페이지입니다.</h4>
 
 <span style="display: inline-block; width: 95%; text-align: right;"><a href='<c:url value="/company/list/coupon/register">
           	<c:param name="companyId" value="${company.companyId}"/></c:url>'>

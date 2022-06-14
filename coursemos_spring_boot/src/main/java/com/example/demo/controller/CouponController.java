@@ -56,7 +56,7 @@ public class CouponController {
 		
 		//서비스로 게시글 제목, 글쓴이 가져오는 것 나중에 구현해서 모델에 연결해서 리턴
 		//쿠폰 발급기한 나중에 정규식 제한두긴
-		model.addAttribute("companyName", company.getCompanyName());		
+		model.addAttribute("companyName", company.getPlace().getPlaceName());		
 		
 		return "coupon/addCoupon";
 	}
@@ -69,7 +69,7 @@ public class CouponController {
 			mav.addObject(coupon);
 			
 			Company company = companyService.getCompanyByCompanyId(coupon.getCompanyId());
-			mav.addObject("companyName", company.getCompanyName());
+			mav.addObject("companyName", company.getPlace().getPlaceName());
 			return mav;
 		}
 		
