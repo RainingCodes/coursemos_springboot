@@ -3,6 +3,7 @@ package com.example.demo.domain;
 import java.util.Date;
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -14,6 +15,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
@@ -58,13 +60,13 @@ public class Course {
 	@DateTimeFormat(pattern="yyyy-MM-dd")
 	private Date writtenDate;
 
-	@ManyToOne(targetEntity = Place.class)
+	@OneToOne(cascade=CascadeType.PERSIST)
     @JoinColumn(name = "placeId1")
 	private Place placeId1;
-	@ManyToOne(targetEntity = Place.class)
+	@OneToOne(cascade=CascadeType.PERSIST)
     @JoinColumn(name = "placeId2")
 	private Place placeId2;
-	@ManyToOne(targetEntity = Place.class)
+	@OneToOne(cascade=CascadeType.PERSIST)
     @JoinColumn(name = "placeId3")
 	private Place placeId3;
 	
