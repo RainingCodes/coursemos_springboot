@@ -21,6 +21,7 @@
 	String writtenDate = request.getParameter("writtenDate");
 	String category = request.getParameter("category");
 	String contents = request.getParameter("contents");
+	
 
 %>    
 <!DOCTYPE html>
@@ -99,29 +100,27 @@
 							<th><div">${place1.placeName }</div></th>
 						</tr>
 						<tr>
-							<td><div id="resultAddress1"></div></td>
+							<td><div>가까운 역: ${place1.subway }</div></td>
 						</tr>
 						<tr>
 							<td><br></td>
 						</tr>
+					<%-- <%
+					for (int i = 0; placeNameList[i] != ""; i++){ %>
 						<tr>
-							<th><div">${place2.placeName }</div></th>
+							<th><div id="exPlace<%=i+1%>"><%=placeNameList[i] %></div></th>
 						</tr>
 						<tr>
-							<td><div id="resultAddress2"></div></td>
+							<td><div id="exAddress<%=i+1%>">지번 주소: <%=addressList[i]%></div></td>
 						</tr>
 						<tr>
-							<td><br></td>
-						</tr>
-						<tr>
-							<th><div">${place3.placeName }</div></th>
-						</tr>
-						<tr>
-							<td><div id="resultAddress3"></div></td>
+							<td><div id="exRoadAddress<%=i+1%>">도로명 주소: <%=roadAddressList[i]%></div></td>
 						</tr>
 						<tr>
 							<td><br></td>
 						</tr>
+					<%	
+					} %> --%>
 					</table>
 					
 					<div id="coordXY1" style="display:none;"></div>
@@ -136,7 +135,7 @@
 					<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=c17b5563968f2fffd356919521833ce2&libraries=services"></script>
 					<script>
 					
-					var MARKER_WIDTH = 33, // 기본, 클릭 마커의 너비
+ 					var MARKER_WIDTH = 33, // 기본, 클릭 마커의 너비
 				    MARKER_HEIGHT = 36, // 기본, 클릭 마커의 높이
 				    OFFSET_X = 12, // 기본, 클릭 마커의 기준 X좌표
 				    OFFSET_Y = MARKER_HEIGHT, // 기본, 클릭 마커의 기준 Y좌표
@@ -148,7 +147,13 @@
 				    SPRITE_WIDTH = 126, // 스프라이트 이미지 너비
 				    SPRITE_HEIGHT = 146, // 스프라이트 이미지 높이
 				    SPRITE_GAP = 10; // 스프라이트 이미지에서 마커간 간격
-
+				    
+				    var markerSize = new kakao.maps.Size(MARKER_WIDTH, MARKER_HEIGHT), // 기본, 클릭 마커의 크기
+				    markerOffset = new kakao.maps.Point(OFFSET_X, OFFSET_Y), // 기본, 클릭 마커의 기준좌표
+				    overMarkerSize = new kakao.maps.Size(OVER_MARKER_WIDTH, OVER_MARKER_HEIGHT), // 오버 마커의 크기
+				    overMarkerOffset = new kakao.maps.Point(OVER_OFFSET_X, OVER_OFFSET_Y), // 오버 마커의 기준 좌표
+				    spriteImageSize = new kakao.maps.Size(SPRITE_WIDTH, SPRITE_HEIGHT); // 스프라이트 이미지의 크기
+					
 					var mapContainer = document.getElementById('map'), // 지도를 표시할 div
 					    mapOption = { 
 					        center: new kakao.maps.LatLng(37.566826, 126.9786567), // 지도의 중심좌표
@@ -161,33 +166,69 @@
 					// 지도를 표시할 div와  지도 옵션으로  지도를 생성합니다
 					var map = new kakao.maps.Map(mapContainer, mapOption);     
 					
-					var coords1 = new kakao.maps.LatLng(${place1.x}, ${place1.y});
-					var callback = function(result, status){
-						if (status == kakao.maps.services.Status.OK)
-							document.getElementById("resultAddress1").innerText = result[0].address.address_name;
-					}
-					geocoder.coord2Address(coords1.getLng(), coords1.getLat(), callback);
+					var roadAddressText1 = '<%=roadAddress1%>';
+					var roadAddressText2 = '<%=roadAddress2%>';
+					var roadAddressText3 = '<%=roadAddress3%>';
 					
-
-					var coords2 = new kakao.maps.LatLng(${place2.x}, ${place2.y});
-					if (coords2){
-						var callback2 = function(result, status){
-							if (status == kakao.maps.services.Status.OK)
-								document.getElementById("resultAddress2").innerText = result[0].address.address_name;
+					var coordXY1 = document.getElementById("coordXY1");
+					var coordXY2 = document.getElementById("coordXY2");
+					var coordXY3 = document.getElementById("coordXY3");
+					
+					coordXY1.innerHtTML = "<input type='hidden'>";
+					var callback = function(result, status) {
+					    if (status === kakao.maps.services.Status.OK) {	
+					    	var coords = new kakao.maps.LatLng(result[0].y, result[0].x);
+					        
+						     // 결과값으로 받은 위치를 마커로 표시합니다
+						        var marker = new kakao.maps.Marker({
+						            map: map,
+						            position: coords
+						        });
+						     
+		
+						        // 지도의 중심을 결과값으로 받은 위치로 이동시킵니다
+						        map.setCenter(coords);
+						        coordXY1.innerHTML += result[0].y + ", " + result[0].x + "|";
+					    }
+					};
+	
+					geocoder.addressSearch(roadAddressText1, callback);
+					geocoder.addressSearch(roadAddressText2, callback);
+					geocoder.addressSearch(roadAddressText3, callback);
+					
+					function viewPath(){
+						var splitedCoords = coordXY1.innerText.split("|");
+						
+						var linePath = new Array();
+						
+						for (var i = 0; i < splitedCoords.length; i++) {
+							
+							var CoordsPair = splitedCoords[i].split(",")
+							var y = parseFloat(CoordsPair[0]);
+							var x = parseFloat(CoordsPair[1]);
+															
+							if (y && x){
+							linePath[i] = new kakao.maps.LatLng(y, x);								
+							}
 						}
+						
+						//alert(linePath);
+						var polyline = new kakao.maps.Polyline({
+							path: linePath,
+							strokeWeight: 5,
+							strokeColor: '#FF0000',
+							strokeOpacity: 0.7,
+							strokeStyle: 'solid'
+						});
+						
+						polyline.setMap(map);
+						
 					}
-					geocoder.coord2Address(coords2.getLng(), coords2.getLat(), callback2);
-					
 
-					var coords3 = new kakao.maps.LatLng(${place3.x}, ${place3.y});
-					var callback3 = function(result, status){
-						if (status == kakao.maps.services.Status.OK)
-							document.getElementById("resultAddress3").innerText = result[0].address.address_name;
-					}
-					geocoder.coord2Address(coords3.getLng(), coords3.getLat(), callback3);
-					
+
 					</script>
 					<br><br>
+		
 					<!-- Post content-->
 					<h5 style="font-weight:bold;">코스에 대한 설명</h5>
 					<table class="form-control" style="height:200px; border-radius: 5px;">

@@ -15,7 +15,9 @@ import org.springframework.web.bind.support.SessionStatus;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.example.demo.domain.Course;
+import com.example.demo.domain.Place;
 import com.example.demo.service.CourseService;
+import com.example.demo.service.PlaceService;
 import com.example.demo.validator.CourseValidator;
 
 @Controller
@@ -25,6 +27,8 @@ public class CourseController {
 	
 	@Autowired
 	private CourseService courseService;
+	@Autowired
+	private PlaceService placeService;
 	
 	@ModelAttribute("course")
 	public Course formBacking(HttpServletRequest request) {
@@ -34,7 +38,7 @@ public class CourseController {
 	
 	@RequestMapping(value="/registerForm", method=RequestMethod.GET)
 	public void init() {
-
+		
 	}
 	
 	@RequestMapping(value="/view", method=RequestMethod.POST)
@@ -46,8 +50,15 @@ public class CourseController {
 			return "course/registerForm";
 		}
 		courseService.insertCourse(course);
+		
+		
+		
+		System.out.println("=========inserted course=========");
+		System.out.println(course.toString());
+		System.out.println("=============================");
 		//System.out.println(courseService.getCourseByCourseId(course.getCourseId()));
-		System.out.println("submit complete!!!");	
+		System.out.println("submit complete!!!");
+		
 		return "course/view";
 	}
 	
@@ -58,12 +69,27 @@ public class CourseController {
 		Course viewCourse = courseService.getCourseByCourseId(course.getCourseId());
 		mav.addObject("course", viewCourse);
 		
+		Place place1 = placeService.getPlaceByPlaceId(viewCourse.getPlaceId1().getPlaceId());
+		mav.addObject("place1", place1);
+		System.out.println(place1.getPlaceName());
+		
+		if (viewCourse.getPlaceId2()!=null) {
+			Place place2 = placeService.getPlaceByPlaceId(viewCourse.getPlaceId2().getPlaceId());
+			mav.addObject("place2", place2);
+			System.out.println(place2.getPlaceName());
+		}
+		if (viewCourse.getPlaceId3()!=null) {
+			Place place3 = placeService.getPlaceByPlaceId(viewCourse.getPlaceId3().getPlaceId());
+			mav.addObject("place3", place3);
+			System.out.println(place3.getPlaceName());
+		}
+		
+		
 		System.out.println("=========view Detail=========");
 		System.out.println(viewCourse.toString() + "\n");
 		System.out.println("=============================");
 		
 		return mav;
-
 	}
 	
 //	//추후 수정
