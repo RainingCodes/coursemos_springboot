@@ -21,8 +21,9 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 
 import com.example.demo.domain.Member;
-
+import com.example.demo.domain.Points;
 import com.example.demo.service.MemberService;
+import com.example.demo.service.PointsService;
 import com.example.demo.validator.MemberValidator;
 
 import lombok.AllArgsConstructor;
@@ -37,6 +38,8 @@ import lombok.ToString;
 public class RegisterMemberController {
 	@Autowired
 	private MemberService memberService;
+	@Autowired
+	private PointsService pointsService;
 	
 	@ModelAttribute("member")
 	public Member formBacking(HttpServletRequest request) {
@@ -75,6 +78,10 @@ public class RegisterMemberController {
 			return "member/join";
 		}
 		memberService.insertMember(member);
+		Points points = new Points();
+		points.setMemberId(member.getId());
+		points.setPointsDate(member.getBirth());
+		pointsService.insertPoints(points);
 		status.setComplete(); // session 종료 (“member” 객체 참조가 삭제됨)
 		return "member/login"; // “member” 객체가 view에 전달됨 (request를 통해) 
 	}
