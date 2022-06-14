@@ -69,17 +69,17 @@ public class CourseController {
 		Course viewCourse = courseService.getCourseByCourseId(course.getCourseId());
 		mav.addObject("course", viewCourse);
 		
-		Place place1 = placeService.getPlaceByPlaceId(viewCourse.getPlaceId1().getPlaceId());
+		Place place1 = placeService.getPlaceByPlaceId(viewCourse.getPlace1().getPlaceId());
 		mav.addObject("place1", place1);
 		System.out.println(place1.getPlaceName());
 		
-		if (viewCourse.getPlaceId2()!=null) {
-			Place place2 = placeService.getPlaceByPlaceId(viewCourse.getPlaceId2().getPlaceId());
+		if (viewCourse.getPlace2()!=null) {
+			Place place2 = placeService.getPlaceByPlaceId(viewCourse.getPlace2().getPlaceId());
 			mav.addObject("place2", place2);
 			System.out.println(place2.getPlaceName());
 		}
-		if (viewCourse.getPlaceId3()!=null) {
-			Place place3 = placeService.getPlaceByPlaceId(viewCourse.getPlaceId3().getPlaceId());
+		if (viewCourse.getPlace3()!=null) {
+			Place place3 = placeService.getPlaceByPlaceId(viewCourse.getPlace3().getPlaceId());
 			mav.addObject("place3", place3);
 			System.out.println(place3.getPlaceName());
 		}
