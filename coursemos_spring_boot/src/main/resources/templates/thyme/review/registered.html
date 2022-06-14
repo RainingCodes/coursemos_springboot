@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"> 
+<head>
+<meta charset="UTF-8">
+<title>리뷰 작성 완료</title>
+<header th:replace="~{thyme/header/header :: #header}"></header>
+</head>
+<style>
+div {
+    	text-align : center;
+    }
+    table {
+    	margin:auto; 
+    }
+    
+</style>
+<body>
+	<div><h3><span th:text="${session.courseName}"></span> 리뷰</h3>
+		<table>
+			<tr>
+				<td>작성자 : </td>
+				<td th:text="${session.review.nickName}"></td>
+			</tr>
+			<tr>
+				<td>작성 날짜 : </td>
+				<td th:text="${session.review.writtenDate}"> </td>
+			</tr>
+			<tr>
+				<td>리뷰 내용 : </td>
+				<td th:text="${session.review.reviewContents}"></td>
+			</tr>
+			<tr>
+				<td>사진 </td>
+				<td><img th:src="@{${session.review.photos}}"/></td>
+			</tr>
+			<tr>
+			</tr>
+		</table>
+</div>
+	
+</body>
+</html>
