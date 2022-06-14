@@ -96,7 +96,7 @@
 					<br>
 					<table>
 						<tr>
-							<th><div">${place1.placeName }</div></th>
+							<th><div>${place1.placeName }</div></th>
 						</tr>
 						<tr>
 							<td><div id="resultAddress1"></div></td>
@@ -104,32 +104,33 @@
 						<tr>
 							<td><br></td>
 						</tr>
-						<tr>
-							<th><div">${place2.placeName }</div></th>
-						</tr>
-						<tr>
-							<td><div id="resultAddress2"></div></td>
-						</tr>
-						<tr>
+						<c:if test="${place2.placeName != null}">
+							<tr>
+								<th><div>${place2.placeName }</div></th>
+							</tr>
+							<tr>
+								<td><div id="resultAddress2"></div></td>
+							</tr>
+							<tr>
 							<td><br></td>
-						</tr>
-						<tr>
-							<th><div">${place3.placeName }</div></th>
-						</tr>
-						<tr>
-							<td><div id="resultAddress3"></div></td>
-						</tr>
-						<tr>
+							</tr>
+						</c:if>
+						<c:if test="${place3.placeName != null}">
+							<tr>
+								<th><div>${place3.placeName }</div></th>
+							</tr>
+							<tr>
+								<td><div id="resultAddress3"></div></td>
+							</tr>
+							<tr>
 							<td><br></td>
-						</tr>
+							</tr>
+						</c:if>
+						
 					</table>
 					
-					<div id="coordXY1" style="display:none;"></div>
-					<div id="coordXY2"></div>
-					<div id="coordXY3"></div>
-					
 					<!-- 지도 -->
-					<h5 style="font-weight:bold;">코스 경로 미리보기<input type="button" value="경로 확인" id="pathButton" style="border: none; border-radius: 5px; text-align: center; margin-left: 55%;" onClick="viewPath();"></h5>
+					<h5 style="font-weight:bold;">코스 경로 미리보기</h5>
 					<!-- 지도를 표시할 div 입니다 -->
 					<div id="map" style="width:100%;height:350px;"></div>
 					
@@ -149,10 +150,17 @@
 				    SPRITE_HEIGHT = 146, // 스프라이트 이미지 높이
 				    SPRITE_GAP = 10; // 스프라이트 이미지에서 마커간 간격
 
+				    var markerSize = new kakao.maps.Size(MARKER_WIDTH, MARKER_HEIGHT), // 기본, 클릭 마커의 크기
+				    markerOffset = new kakao.maps.Point(OFFSET_X, OFFSET_Y), // 기본, 클릭 마커의 기준좌표
+				    overMarkerSize = new kakao.maps.Size(OVER_MARKER_WIDTH, OVER_MARKER_HEIGHT), // 오버 마커의 크기
+				    overMarkerOffset = new kakao.maps.Point(OVER_OFFSET_X, OVER_OFFSET_Y), // 오버 마커의 기준 좌표
+				    spriteImageSize = new kakao.maps.Size(SPRITE_WIDTH, SPRITE_HEIGHT); // 스프라이트 이미지의 크기
+
+				    
 					var mapContainer = document.getElementById('map'), // 지도를 표시할 div
 					    mapOption = { 
-					        center: new kakao.maps.LatLng(37.566826, 126.9786567), // 지도의 중심좌표
-					        level: 6 // 지도의 확대 레벨
+					        center: new kakao.maps.LatLng(${place1.x}, ${place1.y}), // 지도의 중심좌표
+					        level: 5 // 지도의 확대 레벨
 					};
 					
 					// 주소-좌표 변환 객체를 생성합니다
@@ -160,31 +168,82 @@
 				    
 					// 지도를 표시할 div와  지도 옵션으로  지도를 생성합니다
 					var map = new kakao.maps.Map(mapContainer, mapOption);     
+
+					var linePath = new Array();
 					
 					var coords1 = new kakao.maps.LatLng(${place1.x}, ${place1.y});
+					linePath[0] = coords1;
 					var callback = function(result, status){
-						if (status == kakao.maps.services.Status.OK)
+						if (status == kakao.maps.services.Status.OK){
 							document.getElementById("resultAddress1").innerText = result[0].address.address_name;
-					}
-					geocoder.coord2Address(coords1.getLng(), coords1.getLat(), callback);
-					
-
-					var coords2 = new kakao.maps.LatLng(${place2.x}, ${place2.y});
-					if (coords2){
-						var callback2 = function(result, status){
-							if (status == kakao.maps.services.Status.OK)
-								document.getElementById("resultAddress2").innerText = result[0].address.address_name;
+							var marker = new kakao.maps.Marker({
+					            map: map,
+					            position: coords1
+					        });
 						}
 					}
-					geocoder.coord2Address(coords2.getLng(), coords2.getLat(), callback2);
+					geocoder.coord2Address(coords1.getLng(), coords1.getLat(), callback);
+										
 					
-
-					var coords3 = new kakao.maps.LatLng(${place3.x}, ${place3.y});
-					var callback3 = function(result, status){
-						if (status == kakao.maps.services.Status.OK)
-							document.getElementById("resultAddress3").innerText = result[0].address.address_name;
+					if (${place2 != null}){
+						var coords2 = new kakao.maps.LatLng(${place2.x}, ${place2.y});
+						linePath[1] = coords2;
+						var callback2 = function(result, status){
+							if (status == kakao.maps.services.Status.OK){
+								document.getElementById("resultAddress2").innerText = result[0].address.address_name;								
+								var marker = new kakao.maps.Marker({
+						            map: map,
+						            position: coords2
+						        });
+							}
+						}
+						geocoder.coord2Address(coords2.getLng(), coords2.getLat(), callback2);
 					}
-					geocoder.coord2Address(coords3.getLng(), coords3.getLat(), callback3);
+					
+					if (${place3 != null}){
+						var coords3 = new kakao.maps.LatLng(${place3.x}, ${place3.y});
+						linePath[2] = coords3;
+						var callback3 = function(result, status){
+							if (status == kakao.maps.services.Status.OK){
+								document.getElementById("resultAddress3").innerText = result[0].address.address_name;
+								var marker = new kakao.maps.Marker({
+						            map: map,
+						            position: coords3
+						        });								
+							}
+						}
+						geocoder.coord2Address(coords3.getLng(), coords3.getLat(), callback3);
+					}
+					
+					var polyline = new kakao.maps.Polyline({
+						path: linePath,
+						strokeWeight: 5,
+						strokeColor: '#FF0000',
+						strokeOpacity: 0.7,
+						strokeStyle: 'solid'
+					});
+					
+					polyline.setMap(map);
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
 					
 					</script>
 					<br><br>
