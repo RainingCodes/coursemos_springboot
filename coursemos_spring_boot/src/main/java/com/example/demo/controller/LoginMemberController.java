@@ -1,5 +1,7 @@
 package com.example.demo.controller;
 
+import java.util.List;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 
@@ -13,8 +15,10 @@ import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.bind.support.SessionStatus;
 
 import com.example.demo.domain.Member;
+import com.example.demo.domain.Points;
 import com.example.demo.domain.SessionMember;
 import com.example.demo.service.MemberService;
+import com.example.demo.service.PointsService;
 import com.example.demo.validator.LoginValidator;
 
 
@@ -25,7 +29,8 @@ import com.example.demo.validator.LoginValidator;
 public class LoginMemberController {
 	@Autowired
 	private MemberService memberService;
-	
+	@Autowired
+	private PointsService pointsService;
 	
 	@RequestMapping(method=RequestMethod.GET)
 	public String form() {
@@ -43,6 +48,7 @@ public class LoginMemberController {
 			BindingResult result, SessionStatus status) {
 				
 				Member member = memberService.findMemberByNickName2(sessionMember.getNickName());
+				
 				if(sessionMember.getNickName() != null && sessionMember.getPassword() != null) {
 					if(member == null)
 						sessionMember.setCheck1(false);
@@ -54,8 +60,10 @@ public class LoginMemberController {
 						sessionMember.setCheck2(true);
 						sessionMember.setGenderCode(member.getGenderCode());
 						sessionMember.setBirth(member.getBirth());
+						List<Points> points = pointsService.findAllByMemberId(member.getId());
 						sessionMember.setPoints(member.getPoints());
 						sessionMember.setTasteCode(member.getTasteCode());
+						sessionMember.setPointList(points);
 					}
 				}
 				new LoginValidator().validate(sessionMember, result);
