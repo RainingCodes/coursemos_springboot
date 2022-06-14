@@ -31,6 +31,11 @@ public class JpaCompanyDao implements CompanyDao {
 		query.setParameter(1, memberId);
         return query.getResultList();
 	}
+	
+	@Override
+	public Company getCompanyByPlaceId(int placeId) throws DataAccessException {
+		return em.find(Company.class, placeId);
+	}
 
 	@Override
 	public Company getCompanyByCompanyId(Long companyId) throws DataAccessException {
