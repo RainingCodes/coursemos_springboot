@@ -89,7 +89,9 @@
 					<br>
 					<h5 style="font-weight:bold;">코스의 분위기</h5>
 					<!-- <div>활동적인, 즐거운</div> -->
-					<div>${course.taste }</div>
+					<div>${course.taste }
+
+					</div>
 					<br>					
 					<h5 style="font-weight:bold;">코스 경로 살펴보기</h5>
 					<br>
@@ -247,7 +249,6 @@
 					  // SDK 초기화 여부를 판단합니다.
 					  console.log(Kakao.isInitialized());
 				
-					
 					  function kakaoShare() {
 					    Kakao.Link.sendDefault({
 					        objectType: 'feed',
@@ -255,16 +256,16 @@
 					          title: '당신에게 맞는 코스를 찾아보세요!',
 					          imageUrl: '',
 					          link: {
-					            mobileWebUrl: 'http://localhost:8080/course/view/1',
-					            webUrl: 'http://localhost:8080/course/view/1',
+					            mobileWebUrl: 'http://localhost:8080',
+					            webUrl: 'http://localhost:8080',
 					          },
 					        },
 					        buttons: [
 					          {
 					            title: '자세히보기',
 					            link: {
-					              mobileWebUrl: 'http://localhost:8080/course/view/1',
-					              webUrl: 'http://localhost:8080/course/view/1',
+					              mobileWebUrl: 'http://localhost:8080/course/view/${course.courseId}',
+					              webUrl: 'http://localhost:8080/course/view/${course.courseId}',
 					            },
 					          },
 					        ],
@@ -302,7 +303,7 @@
 					</script>
 					<!-- <button type="submit" style="width:20%; height:60px; border:none; border-radius:5px; text-align: center; background-color:#0d6efd; color: white;">스크랩</button> -->
 					<c:if test="${memberId eq course.memberId}"> <!-- 로그인 후 뜨는지 확인 -->
-						<button type="submit" style="width:15%; height:60px; border:none; border-radius:5px; text-align: center; background-color:#ced4da;">삭제</button>
+						<button type="submit" formaction="list" style="width:15%; height:60px; border:none; border-radius:5px; text-align: center; background-color:#ced4da;">삭제</button>
 					</c:if>	
 					</div>
 				<br>
