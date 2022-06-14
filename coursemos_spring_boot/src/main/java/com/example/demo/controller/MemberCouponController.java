@@ -13,8 +13,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.example.demo.domain.Company;
 import com.example.demo.domain.Coupon;
 import com.example.demo.domain.MemberCoupon;
+import com.example.demo.service.CompanyService;
 import com.example.demo.service.CouponService;
 import com.example.demo.service.MemberCouponService;
 
@@ -22,6 +24,7 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import lombok.ToString;
 
 @Controller
 public class MemberCouponController {
@@ -37,6 +40,8 @@ public class MemberCouponController {
 	private MemberCouponService memberCouponService;
 	@Autowired
 	private CouponService couponService;
+	@Autowired
+	private CompanyService companyService;
 	
 	//리스트
 	@RequestMapping("/company/list/coupon/detail")
@@ -93,17 +98,35 @@ public class MemberCouponController {
 		
 		memberCouponService.insertMemberCoupon(memberCoupon);
 		
-		return "redirect:/user/coupon";
+		return "redirect:/member/coupon";
+	}
+	
+	@Getter @Setter @AllArgsConstructor @ToString
+	public class MemberCouponView {
+		private String placeName;
+		private String couponContent;
+		private MemberCoupon memberCoupon;
 	}
 	
 	//유저 리스트에서 보이는 내 쿠폰 목록
-	@RequestMapping("/user/coupon")
+	@RequestMapping("/member/coupon/list")
 	public ModelAndView MymemberCouponList() {	
-		ModelAndView mav = new ModelAndView("생기면 주소 넣기");
+		ModelAndView mav = new ModelAndView("member/couponList");
+		
+		ArrayList<MemberCouponView> mcv = new ArrayList<MemberCouponView>();
 		
 		List<MemberCoupon> memberCouponList = memberCouponService.getUserCouponByMemberId(1);
+		
+		for (MemberCoupon m : memberCouponList) {
+			Coupon c = couponService.getCouponByCouponId(m.getCouponId());
+			Long companyId = c.getCompanyId();
+			String couponContent = c.getCouponContents();
+			String placeName = companyService.getCompanyByCompanyId(companyId).getPlace().getPlaceName();
 			
-		mav.addObject("memberCouponList", memberCouponList);
+			mcv.add(new MemberCouponView(placeName, couponContent, m));
+		}
+		
+		mav.addObject("memberCouponList", mcv);
 		return mav;
 	}
 }
