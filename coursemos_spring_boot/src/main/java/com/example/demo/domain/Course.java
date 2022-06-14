@@ -30,13 +30,13 @@ import lombok.ToString;
 @SequenceGenerator(
 		name="COURSE_SEQ_GENERATOR",
 		sequenceName="COURSE_SEQ",
-		initialValue=400, //샘플데이터 때문에 추후 수정필요해보임
+		initialValue=348, //샘플데이터 때문에 추후 수정필요해보임
 		allocationSize = 1	
 		)
 @Table(name="Course")
 public class Course {
 
-	@Id @Column(name="courseId")
+	@Id @Column
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "COURSE_SEQ_GENERATOR")
 	private int courseId;
 	
@@ -51,7 +51,7 @@ public class Course {
 	private String taste;
 	
 	@Column(nullable=false)
-	private Integer likes;
+	private Integer likes = 0;
 	
 	@Column(nullable=false)
 	@DateTimeFormat(pattern="yyyy-MM-dd")
