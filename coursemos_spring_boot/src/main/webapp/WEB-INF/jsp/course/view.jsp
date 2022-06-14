@@ -160,8 +160,8 @@
 					var mapContainer = document.getElementById('map'), // 지도를 표시할 div
 					    mapOption = { 
 					        center: new kakao.maps.LatLng(${place1.x}, ${place1.y}), // 지도의 중심좌표
-					        level: 5 // 지도의 확대 레벨
-					};
+					        level: 6 // 지도의 확대 레벨
+						};
 					
 					// 주소-좌표 변환 객체를 생성합니다
 					var geocoder = new kakao.maps.services.Geocoder();
@@ -171,15 +171,15 @@
 
 					var linePath = new Array();
 					
+					var bounds = new kakao.maps.LatLngBounds();
+					
 					var coords1 = new kakao.maps.LatLng(${place1.x}, ${place1.y});
 					linePath[0] = coords1;
 					var callback = function(result, status){
 						if (status == kakao.maps.services.Status.OK){
 							document.getElementById("resultAddress1").innerText = result[0].address.address_name;
-							var marker = new kakao.maps.Marker({
-					            map: map,
-					            position: coords1
-					        });
+							bounds.extend(coords1);
+							map.setBounds(bounds);
 						}
 					}
 					geocoder.coord2Address(coords1.getLng(), coords1.getLat(), callback);
@@ -191,11 +191,11 @@
 						var callback2 = function(result, status){
 							if (status == kakao.maps.services.Status.OK){
 								document.getElementById("resultAddress2").innerText = result[0].address.address_name;								
-								var marker = new kakao.maps.Marker({
-						            map: map,
-						            position: coords2
-						        });
+								bounds.extend(coords2);
+								map.setBounds(bounds);
 							}
+							
+							
 						}
 						geocoder.coord2Address(coords2.getLng(), coords2.getLat(), callback2);
 					}
@@ -205,15 +205,63 @@
 						linePath[2] = coords3;
 						var callback3 = function(result, status){
 							if (status == kakao.maps.services.Status.OK){
-								document.getElementById("resultAddress3").innerText = result[0].address.address_name;
-								var marker = new kakao.maps.Marker({
-						            map: map,
-						            position: coords3
-						        });								
+								document.getElementById("resultAddress3").innerText = result[0].address.address_name;							
+								bounds.extend(coords3);
+								map.setBounds(bounds);
 							}
 						}
 						geocoder.coord2Address(coords3.getLng(), coords3.getLat(), callback3);
 					}
+					
+					
+					
+					for (var i = 0, len = linePath.length; i < len; i++){
+						var gapX = (MARKER_WIDTH + SPRITE_GAP), // 스프라이트 이미지에서 마커로 사용할 이미지 X좌표 간격 값
+				        originY = (MARKER_HEIGHT + SPRITE_GAP) * i, // 스프라이트 이미지에서 기본, 클릭 마커로 사용할 Y좌표 값
+				        overOriginY = (OVER_MARKER_HEIGHT + SPRITE_GAP) * i, // 스프라이트 이미지에서 오버 마커로 사용할 Y좌표 값
+				        normalOrigin = new kakao.maps.Point(0, originY), // 스프라이트 이미지에서 기본 마커로 사용할 영역의 좌상단 좌표
+				        clickOrigin = new kakao.maps.Point(gapX, originY), // 스프라이트 이미지에서 마우스오버 마커로 사용할 영역의 좌상단 좌표
+				        overOrigin = new kakao.maps.Point(gapX * 2, overOriginY); // 스프라이트 이미지에서 클릭 마커로 사용할 영역의 좌상단 좌표
+				        
+					    // 마커를 생성하고 지도위에 표시합니다
+					    addMarker(linePath[i], normalOrigin, overOrigin, clickOrigin);
+
+					}
+					
+					// 마커를 생성하고 지도 위에 표시하고, 마커에 mouseover, mouseout, click 이벤트를 등록하는 함수입니다
+					function addMarker(position, normalOrigin, overOrigin, clickOrigin) {
+
+					    // 기본 마커이미지, 오버 마커이미지, 클릭 마커이미지를 생성합니다
+					    var normalImage = createMarkerImage(markerSize, markerOffset, normalOrigin),
+					        overImage = createMarkerImage(overMarkerSize, overMarkerOffset, overOrigin),
+					        clickImage = createMarkerImage(markerSize, markerOffset, clickOrigin);
+					    
+					    // 마커를 생성하고 이미지는 기본 마커 이미지를 사용합니다
+					    var marker = new kakao.maps.Marker({
+					        map: map,
+					        position: position,
+					        image: normalImage
+					    });
+
+					    // 마커 객체에 마커아이디와 마커의 기본 이미지를 추가합니다
+					    marker.normalImage = normalImage;
+					}
+					
+					
+					// MakrerImage 객체를 생성하여 반환하는 함수입니다
+					function createMarkerImage(markerSize, offset, spriteOrigin) {
+					    var markerImage = new kakao.maps.MarkerImage(
+					        SPRITE_MARKER_URL, // 스프라이트 마커 이미지 URL
+					        markerSize, // 마커의 크기
+					        {
+					            offset: offset, // 마커 이미지에서의 기준 좌표
+					            spriteOrigin: spriteOrigin, // 스트라이프 이미지 중 사용할 영역의 좌상단 좌표
+					            spriteSize: spriteImageSize // 스프라이트 이미지의 크기
+					        }
+					    );
+					    
+					    return markerImage;
+					}		
 					
 					var polyline = new kakao.maps.Polyline({
 						path: linePath,
@@ -224,27 +272,6 @@
 					});
 					
 					polyline.setMap(map);
-					
-					
-					
-					
-					
-					
-					
-					
-					
-					
-					
-					
-					
-					
-					
-					
-					
-					
-					
-					
-					
 					</script>
 					<br><br>
 					<!-- Post content-->
