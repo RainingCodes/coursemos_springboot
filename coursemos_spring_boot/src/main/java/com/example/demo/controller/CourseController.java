@@ -12,8 +12,11 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.support.SessionStatus;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -99,7 +102,7 @@ public class CourseController {
 		
 		System.out.println("=========inserted course=========");
 		System.out.println(course.toString());
-		System.out.println("=============================");
+		System.out.println("=================================");
 		//System.out.println(courseService.getCourseByCourseId(course.getCourseId()));
 		System.out.println("submit complete!!!");
 		
@@ -196,11 +199,36 @@ public class CourseController {
 		System.out.println(course.getCourseId() + " : delete complete!!!");
 	}
 
-//	
+	@RequestMapping(value="/{courseId}/update")
+	public ModelAndView updateCourse(@ModelAttribute Course course/* @RequestParam int courseId */) {
+		Course course1 = courseService.getCourseByCourseId(course.getCourseId());
+		ModelAndView mav = new ModelAndView("course/registerForm");
+		mav.addObject(course1);		
+		return mav;
+	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+// restful 적용(미완성)
+//	//@RequestMapping(value="/update", method=RequestMethod.POST)
+//	@PostMapping
+//	@ResponseBody
+//	public String updateCourse(@RequestBody String body) {
+//		System.out.println("Request body" + body);
+//		return body;
+//	}
+
+	
 //	@Autowired
 //	private CourseService courseService;
-//	
-
 	
 //	ModelAndView mav;
 //	

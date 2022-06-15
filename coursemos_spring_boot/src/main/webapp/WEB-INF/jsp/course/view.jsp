@@ -96,80 +96,61 @@
 					<h5 style="font-weight:bold;">코스 경로 살펴보기</h5>
 					<br>
 					<table>
-						<c:choose>
-							<c:when test="${place1.placeName != null}">
-								<tr>
+					
+					
+					<c:if test="${place1.placeName == null}">
+						<%
+						for (int i = 0; placeNameList[i] != ""; i++){ %>
+							<tr>
+								<th><div id="exPlace<%=i+1%>"><%=placeNameList[i] %></div></th>
+							</tr>
+							<tr>
+								<td><div id="exAddress<%=i+1%>">지번 주소: <%=addressList[i]%></div></td>
+							</tr>
+							<tr>
+								<td><div id="exRoadAddress<%=i+1%>">도로명 주소: <%=roadAddressList[i]%></div></td>
+							</tr>
+							<tr>
+								<td><br></td>
+							</tr>
+						<%	
+						} %>
+					</c:if>
+					
+					
+						<c:if test="${place1.placeName != null}">
+							<tr>
 								<th><div>${place1.placeName }</div></th>
-								</tr>
-								<tr>
-									<td><div id="resultAddress1"></div></td>
-								</tr>
-								<tr>
-									<td><br></td>
-								</tr>
-							</c:when>
-							<c:otherwise>
-								<tr>
-								<th><div><%= placeName1 %></div></th>
-								</tr>
-								<tr>
-									<td><div id="resultAddress1"></div></td>
-								</tr>
-								<tr>
-									<td><br></td>
-								</tr>
-							</c:otherwise>
-						</c:choose>
-						
-						<c:choose>
-							<c:when test="${place2.placeName != null}">
-								<tr>
+							</tr>
+							<tr>
+								<td><div id="resultAddress1"></div></td>
+							</tr>
+							<tr>
+							<td><br></td>
+							</tr>
+						</c:if>
+						<c:if test="${place2.placeName != null}">
+							<tr>
 								<th><div>${place2.placeName }</div></th>
-								</tr>
-								<tr>
-									<td><div id="resultAddress2"></div></td>
-								</tr>
-								<tr>
-									<td><br></td>
-								</tr>
-							</c:when>
-							<c:otherwise>
-								<tr>
-								<th><div><%= placeName2 %></div></th>
-								</tr>
-								<tr>
-									<td><div id="resultAddress2"></div></td>
-								</tr>
-								<tr>
-									<td><br></td>
-								</tr>
-							</c:otherwise>
-						</c:choose>
-						
-						<c:choose>
-							<c:when test="${place3.placeName != null}">
-								<tr>
+							</tr>
+							<tr>
+								<td><div id="resultAddress2"></div></td>
+							</tr>
+							<tr>
+							<td><br></td>
+							</tr>
+						</c:if>
+						<c:if test="${place3.placeName != null}">
+							<tr>
 								<th><div>${place3.placeName }</div></th>
-								</tr>
-								<tr>
-									<td><div id="resultAddress3"></div></td>
-								</tr>
-								<tr>
-									<td><br></td>
-								</tr>
-							</c:when>
-							<c:otherwise>
-								<tr>
-								<th><div><%= placeName3 %></div></th>
-								</tr>
-								<tr>
-									<td><div id="resultAddress3"></div></td>
-								</tr>
-								<tr>
-									<td><br></td>
-								</tr>
-							</c:otherwise>
-						</c:choose>		
+							</tr>
+							<tr>
+								<td><div id="resultAddress3"></div></td>
+							</tr>
+							<tr>
+							<td><br></td>
+							</tr>
+						</c:if>	
 					</table>
 					
 					<!-- 지도 -->
@@ -403,7 +384,9 @@
 					</script>
 					<!-- <button type="submit" style="width:20%; height:60px; border:none; border-radius:5px; text-align: center; background-color:#0d6efd; color: white;">스크랩</button> -->
 					<c:if test="${memberId eq course.memberId}"> <!-- 로그인 후 뜨는지 확인 -->
+						<button type="submit" formaction="../${course.courseId}/update" style="width:15%; height:60px; border:none; border-radius:5px; text-align: center; background-color:#ced4da;">수정</button>
 						<button type="submit" formaction="list" style="width:15%; height:60px; border:none; border-radius:5px; text-align: center; background-color:#ced4da;">삭제</button>
+						
 					</c:if>	
 					</div>
 				<br>
