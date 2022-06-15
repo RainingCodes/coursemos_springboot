@@ -76,25 +76,9 @@ public class CourseController {
 			System.out.println("Validation Error !!!");
 			return "course/registerForm";
 		}
-		
-		Place place1 = new Place();
-		place1.setPlaceId(500);
-		place1.setTaste("act");
-		place1.setPlaceName("example PlaceName");
-		place1.setX(32.5);
-		place1.setY(127.2);
-	
-		
-			
+				
 		
 		course.setMemberId(1); // memberId 임의 설정
-		
-		
-		
-		
-		
-		
-		
 		
 		courseService.insertCourse(course);
 		
@@ -199,11 +183,24 @@ public class CourseController {
 		System.out.println(course.getCourseId() + " : delete complete!!!");
 	}
 
-	@RequestMapping(value="/{courseId}/update")
-	public ModelAndView updateCourse(@ModelAttribute Course course/* @RequestParam int courseId */) {
-		Course course1 = courseService.getCourseByCourseId(course.getCourseId());
-		ModelAndView mav = new ModelAndView("course/registerForm");
-		mav.addObject(course1);		
+	@RequestMapping(value="/{courseId}/update", method=RequestMethod.POST)
+	public ModelAndView updateCourse(@ModelAttribute Course course, HttpServletRequest request) {
+		Course updateCourse = courseService.getCourseByCourseId(course.getCourseId());
+		ModelAndView mav = new ModelAndView("course/updateForm");
+		mav.addObject("updateCourse", updateCourse);	
+		
+		Place place1 = placeService.getPlaceByPlaceId(updateCourse.getPlace1().getPlaceId());
+		mav.addObject("place1", place1);
+		System.out.println(place1);
+		
+		Place place2 = placeService.getPlaceByPlaceId(updateCourse.getPlace2().getPlaceId());
+		mav.addObject("place2", place2);
+		System.out.println(place2);
+		
+		Place place3 = placeService.getPlaceByPlaceId(updateCourse.getPlace3().getPlaceId());
+		mav.addObject("place3", place3);
+		System.out.println(place3);
+	
 		return mav;
 	}
 	
