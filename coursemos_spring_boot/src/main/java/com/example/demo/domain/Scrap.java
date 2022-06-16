@@ -1,6 +1,8 @@
 package com.example.demo.domain;
 
 import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.IdClass;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -8,8 +10,9 @@ import lombok.Setter;
 import lombok.ToString;
 
 @Entity
-@Getter @Setter  @AllArgsConstructor @ToString
+@IdClass(ScrapPK.class)
+@Getter @Setter @AllArgsConstructor @ToString
 public class Scrap {
-	Long memberId;
-	Long courseId;
+	@Id Long memberId;
+	@Id Long courseId;
 }

@@ -6,8 +6,7 @@ import com.example.demo.domain.Scrap;
 public interface ScrapService {
 	List<Scrap> getAllScrap();
 	List<Scrap> getScrapByMemberId(Long memberId);
-	List<Scrap> getScrapByMemberIdAndCourseId(Long memberId, Long courseId);
-	int existScrap(Long memberId, Long courseId);
+	Scrap getScrapByPrimaryKey(Long memberId, Long courseId);
 	void insertScrap(Scrap scrap);
 	void deleteScrap(Scrap scrap);
 }

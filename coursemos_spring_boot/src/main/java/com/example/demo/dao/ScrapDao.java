@@ -8,7 +8,7 @@ import com.example.demo.domain.Scrap;
 public interface ScrapDao {
 	List<Scrap> getAllScrap() throws DataAccessException;
 	List<Scrap> getScrapByMemberId(Long memberId) throws DataAccessException;
-	List<Scrap> getScrapByMemberIdAndCourseId(Long memberId, Long courseId) throws DataAccessException;
+	Scrap getScrapByPrimaryKey(Long memberId, Long courseId) throws DataAccessException;
 	void insertScrap(Scrap scrap) throws DataAccessException;
 	void deleteScrap(Scrap scrap) throws DataAccessException;
 }

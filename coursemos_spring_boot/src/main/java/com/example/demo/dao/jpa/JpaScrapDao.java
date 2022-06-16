@@ -11,6 +11,7 @@ import org.springframework.stereotype.Repository;
 
 import com.example.demo.dao.ScrapDao;
 import com.example.demo.domain.Scrap;
+import com.example.demo.domain.ScrapPK;
 
 @Repository
 public class JpaScrapDao implements ScrapDao {
@@ -31,15 +32,12 @@ public class JpaScrapDao implements ScrapDao {
 		query.setParameter(1, memberId);
         return query.getResultList();
 	}
-
+	
 	@Override
-	public List<Scrap> getScrapByMemberIdAndCourseId(Long memberId, Long courseId) throws DataAccessException {
-		TypedQuery<Scrap> query = em.createQuery(
-                "select s from Scrap s " + "where s.memberId = ?1 And s.courseId = ?2", Scrap.class);
-		query.setParameter(1, memberId);
-		query.setParameter(2, courseId);
-        return query.getResultList();
-	}
+	public Scrap getScrapByPrimaryKey(Long memberId, Long courseId) throws DataAccessException {
+		ScrapPK pk = new ScrapPK(memberId, courseId);
+		return em.find(Scrap.class, pk);
+	}	
 
 	@Override
 	public void insertScrap(Scrap scrap) throws DataAccessException {
@@ -50,5 +48,7 @@ public class JpaScrapDao implements ScrapDao {
 	public void deleteScrap(Scrap scrap) throws DataAccessException {
 		em.remove(scrap);
 	}
+
+	
 
 }
