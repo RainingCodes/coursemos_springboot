@@ -15,10 +15,11 @@
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 </head>
 <body>
+<%@ include file="./mypage_menu.jsp"  %>
 <!-- 날짜 설정 -->
 <jsp:useBean id="now" class="java.util.Date" />
 <fmt:formatDate value="${now}" pattern="yyyy-MM-dd" var="nowDate" />        <%-- 오늘날짜 --%>
-<%@ include file="./mypage_menu.jsp"  %>
+
 <div class="container">
 <center><h1>쿠폰 관리</h1></center>
 <h4>사용 가능 쿠폰 리스트</h4>
