@@ -78,9 +78,7 @@ public class ReviewController implements ApplicationContextAware{
 	@RequestMapping(value = "/review/register/{courseId}", method = RequestMethod.POST)
 	public String form(HttpSession session, @ModelAttribute SessionMember sessionMember, @Valid Review review, BindingResult result, @PathVariable("courseId") String id,
 			Model model) {
-		System.out.println(review);
 		if(result.hasErrors()) {
-			
 			return "thyme/review/register"; // 검증 오류 발생 시 입력 form으로 이동
 		}
 		MultipartFile photo = review.getPhoto();
