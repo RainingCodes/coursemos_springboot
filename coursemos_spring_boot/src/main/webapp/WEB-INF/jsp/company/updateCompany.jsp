@@ -5,7 +5,7 @@
 <html>
 <head>
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
-<title>제휴 등록</title>
+<title>제휴 수정</title>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 <style>
     #map {
@@ -21,7 +21,7 @@
 </style>
 </head>
 <body>
-<center><h1>제휴 등록</h1></center>
+<center><h1>제휴 수정</h1></center>
 <div class="container">
 <table class="table">    
 	<form:form modelAttribute="Company">

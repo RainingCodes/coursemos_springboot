@@ -93,6 +93,7 @@
           	<c:param name="companyId" value="${company.companyId}"/></c:url>'>
           	<b>이동하기</b></a>
      	</td>
+     	
     </tr>
     </c:if>
 	</c:forEach>
