@@ -101,12 +101,12 @@ public class CourseController {
 		mav.addObject("course", viewCourse);
 		
 		if (viewCourse.getMemberId() == null) { // DB에 default로 속해져있는 코스(api)이면
-			Place place1 = placeService.getPlaceByPlaceId(viewCourse.getPlace1().getPlaceId());
+			Place place1 = placeService.getPlaceByPlaceId(viewCourse.getPlaceId1().getPlaceId());
 			mav.addObject("place1", place1);
 			System.out.println(place1.getPlaceName());
 			
-			if (viewCourse.getPlace2()!=null) {
-				Place place2 = placeService.getPlaceByPlaceId(viewCourse.getPlace2().getPlaceId());
+			if (viewCourse.getPlaceId2()!=null) {
+				Place place2 = placeService.getPlaceByPlaceId(viewCourse.getPlaceId2().getPlaceId());
 				mav.addObject("place2", place2);
 				System.out.println(place2.getPlaceName());
 			}
@@ -115,8 +115,8 @@ public class CourseController {
 				System.out.println("place2 is null");
 			}
 			
-			if (viewCourse.getPlace3()!=null) {
-				Place place3 = placeService.getPlaceByPlaceId(viewCourse.getPlace3().getPlaceId());
+			if (viewCourse.getPlaceId3()!=null) {
+				Place place3 = placeService.getPlaceByPlaceId(viewCourse.getPlaceId3().getPlaceId());
 				mav.addObject("place3", place3);
 				System.out.println(place3.getPlaceName());
 			}
@@ -208,13 +208,13 @@ public class CourseController {
 		ModelAndView mav = new ModelAndView("course/updateForm");
 		mav.addObject("updateCourse", updateCourse);
 		
-		Place place1 = placeService.getPlaceByPlaceId(updateCourse.getPlace1().getPlaceId());
+		Place place1 = placeService.getPlaceByPlaceId(updateCourse.getPlaceId1().getPlaceId());
 		mav.addObject("place1", place1);
 		
-		Place place2 = placeService.getPlaceByPlaceId(updateCourse.getPlace2().getPlaceId());
+		Place place2 = placeService.getPlaceByPlaceId(updateCourse.getPlaceId2().getPlaceId());
 		mav.addObject("place2", place2);
 		
-		Place place3 = placeService.getPlaceByPlaceId(updateCourse.getPlace3().getPlaceId());
+		Place place3 = placeService.getPlaceByPlaceId(updateCourse.getPlaceId3().getPlaceId());
 		mav.addObject("place3", place3);
 	
 		return mav;

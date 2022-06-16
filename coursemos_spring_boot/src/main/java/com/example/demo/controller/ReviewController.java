@@ -8,6 +8,7 @@ import java.sql.Date;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+import javax.validation.Valid;
 
 import org.springframework.beans.BeansException;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,14 +17,17 @@ import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationContextAware;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.FieldError;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.context.WebApplicationContext;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.servlet.ModelAndView;
 
 import com.example.demo.domain.Member;
 import com.example.demo.domain.Points;
@@ -60,65 +64,53 @@ public class ReviewController implements ApplicationContextAware{
 	}
 	
 	
+	
+
 	@RequestMapping(value = "/review/register/{courseId}", method = RequestMethod.GET)
-	public String form(HttpSession session, @ModelAttribute SessionMember sessionMember, @PathVariable("courseId") Long id) {
+	public ModelAndView form(HttpSession session, @ModelAttribute SessionMember sessionMember, @PathVariable("courseId") String id) {
+		ModelAndView mv = new ModelAndView("thyme/review/register");
 		Review review = new Review();
-		review.setCourseId(id);
 		review.setMemberId(sessionMember.getId());
-		session.setAttribute("review", review);
-		session.setAttribute("nickName", sessionMember.getNickName());
-		session.setAttribute("points", sessionMember.getPoints());
-		ArrayList<Points> pointList = new ArrayList<>();
-		List<Points> pList = sessionMember.getPointList();
-		int size = sessionMember.getPointList().size();
-		int count = 0;
-		for(int i = size - 1; i >= 0; i--) {
-			pointList.add(pList.get(i));
-			count++;
-			if(count == 3) {
-				break;
-			}
-		}
-		session.setAttribute("pointList", pointList);
-		session.setAttribute("size",sessionMember.getPointList().size() - 4);
-		
-		return "thyme/review/register";
+		review.setNickName(sessionMember.getNickName());
+		mv.addObject("review", review);
+		return mv;
 	}
 	@RequestMapping(value = "/review/register/{courseId}", method = RequestMethod.POST)
-	public String form(@RequestParam(value = "reviewContents") String reviewContents,@RequestParam(value = "counter") String counter, HttpSession session, @ModelAttribute SessionMember sessionMember, @ModelAttribute Review review, @PathVariable("courseId") Long id,
+	public String form(HttpSession session, @ModelAttribute SessionMember sessionMember, @Valid Review review, BindingResult result, @PathVariable("courseId") String id,
 			Model model) {
-		System.out.println(review);
-		Long memberId = sessionMember.getId();
+		if(result.hasErrors()) {
+			return "thyme/review/register"; // 검증 오류 발생 시 입력 form으로 이동
+		}
 		MultipartFile photo = review.getPhoto();
-		if(photo != null) {
-			System.out.println(photo);
-			String filename = uploadFile(memberId, photo);
-			session.setAttribute("filename", null);
-			
+		String filename = uploadFile(review.getMemberId(), photo);
+		if(filename == null) {
+			review.setPhotos(null);
+		} else {
 			model.addAttribute("fileUrl", this.uploadDirLocal + filename);
 			review.setPhotos(this.uploadDirLocal + filename);
-		} else {
-			review.setPhotos(null);
 		}
 		java.util.Date date = new java.util.Date();
 		long timeInMilliSeconds = date.getTime();
 		review.setWrittenDate(new Date(timeInMilliSeconds)); 
-		review.setNickName(sessionMember.getNickName());
 		reviewService.insertReview(review);
-		System.out.println(review);
+
 		session.setAttribute("review", review);
-		session.setAttribute("nickName", sessionMember.getNickName());
+		
 		Points points = new Points();
 		points.setMemberId(sessionMember.getId());
 		points.setPointsDate(review.getWrittenDate());
 		points.setType(2);
-		sessionMember.setPoints(sessionMember.getPoints() + 20);
+		
 		Member member= memberService.findMemberById(sessionMember.getId());
-		pointsService.insertPoints(points);
-		List<Points> pointList = pointsService.findAllByMemberId(sessionMember.getId());
-		sessionMember.setPointList(pointList);
 		member.insertPoints(points);
 		member.setPoints(member.getPoints() + 20);
+		pointsService.insertPoints(points);
+		List<Points> pointList = pointsService.findAllByMemberId(sessionMember.getId());
+		
+		sessionMember.setPoints(sessionMember.getPoints() + 20);
+		sessionMember.setPointList(pointList);
+		System.out.println(sessionMember);
+		
 		memberService.save(member);
 		return "forward:/review/registered/" + Long.toString(review.getReviewId());
 	}
@@ -137,6 +129,8 @@ public class ReviewController implements ApplicationContextAware{
 		System.out.println(folder.mkdir());
 		String filename = UUID.randomUUID().toString() 
 						+ "_" + photo.getOriginalFilename();
+		if(photo.getOriginalFilename().length() == 0)
+			return null;
 		System.out.println(memberId + "가 업로드 한 파일: "	+ filename);
 		File file = new File(folder + File.separator + filename);
 		try {

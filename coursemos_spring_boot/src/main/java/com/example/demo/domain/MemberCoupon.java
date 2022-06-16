@@ -30,6 +30,6 @@ public class MemberCoupon {
 	private String used;
 	@DateTimeFormat(pattern="yyyy-MM-dd")
 	private Date expirationDate;
-	private int memberId;
+	private Long memberId;
 	private int couponId;	
 }

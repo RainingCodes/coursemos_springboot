@@ -60,14 +60,24 @@ public class Course {
 	@DateTimeFormat(pattern="yyyy-MM-dd")
 	private Date writtenDate;
 
-	@OneToOne(cascade=CascadeType.PERSIST)
+	@OneToOne(cascade=CascadeType.ALL)
     @JoinColumn(name = "placeId1")
-	private Place place1;
-	@OneToOne(cascade=CascadeType.PERSIST)
+	private Place placeId1;
+	@OneToOne(cascade=CascadeType.ALL)
     @JoinColumn(name = "placeId2")
-	private Place place2;
-	@OneToOne(cascade=CascadeType.PERSIST)
+	private Place placeId2;
+	@OneToOne(cascade=CascadeType.ALL)
     @JoinColumn(name = "placeId3")
-	private Place place3;
+	private Place placeId3;
+	
+//	@ManyToOne(targetEntity = Place.class, cascade=CascadeType.PERSIST)
+//    @JoinColumn(name = "placeId1")
+//	private Place placeId1;
+//	@ManyToOne(targetEntity = Place.class, cascade=CascadeType.PERSIST)
+//    @JoinColumn(name = "placeId2")
+//	private Place placeId2;
+//	@ManyToOne(targetEntity = Place.class, cascade=CascadeType.PERSIST)
+//    @JoinColumn(name = "placeId3")
+//	private Place placeId3;
 	
 }

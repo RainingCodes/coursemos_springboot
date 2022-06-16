@@ -7,12 +7,15 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.example.demo.domain.Coupon;
 import com.example.demo.domain.MemberCoupon;
+import com.example.demo.domain.SessionMember;
 import com.example.demo.service.CompanyService;
 import com.example.demo.service.CouponService;
 import com.example.demo.service.MemberCouponService;
@@ -24,6 +27,7 @@ import lombok.Setter;
 import lombok.ToString;
 
 @Controller
+@SessionAttributes("sessionMember")
 public class MemberCouponController {
 	
 	@Getter @Setter @AllArgsConstructor @NoArgsConstructor
@@ -77,7 +81,7 @@ public class MemberCouponController {
 	
 	//코스에서 다운받기
 	@RequestMapping("/course/view/coupon/get")
-	public String getMemberCoupon(@RequestParam("couponId") int couponId) {
+	public String getMemberCoupon(@ModelAttribute SessionMember sessionMember, @RequestParam("couponId") int couponId) {
 		Coupon coupon = couponService.getCouponByCouponId(couponId);
 
 		long miliseconds = System.currentTimeMillis();
@@ -89,7 +93,7 @@ public class MemberCouponController {
 		
 		MemberCoupon memberCoupon = new MemberCoupon();
 		memberCoupon.setCouponId(couponId);
-		memberCoupon.setMemberId(1); // 세션 되면 변경하기
+		memberCoupon.setMemberId(sessionMember.getId()); // 세션 되면 변경하기
 		memberCoupon.setUsed("F");
 		memberCoupon.setExpirationDate(cal.getTime());
 		
@@ -107,12 +111,12 @@ public class MemberCouponController {
 	
 	//유저 리스트에서 보이는 내 쿠폰 목록
 	@RequestMapping("/member/coupon/list")
-	public ModelAndView MymemberCouponList() {	
+	public ModelAndView MymemberCouponList(@ModelAttribute SessionMember sessionMember) {	
 		ModelAndView mav = new ModelAndView("member/couponList");
 		
 		ArrayList<MemberCouponView> mcv = new ArrayList<MemberCouponView>();
 		
-		List<MemberCoupon> memberCouponList = memberCouponService.getMemberCouponByMemberId(1);
+		List<MemberCoupon> memberCouponList = memberCouponService.getMemberCouponByMemberId(sessionMember.getId());
 		
 		for (MemberCoupon m : memberCouponList) {
 			Coupon c = couponService.getCouponByCouponId(m.getCouponId());

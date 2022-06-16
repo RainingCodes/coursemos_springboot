@@ -25,7 +25,7 @@ public class JpaCompanyDao implements CompanyDao {
 	}
 	
 	@Override
-	public List<Company> getCompanyByMemberId(int memberId) throws DataAccessException {
+	public List<Company> getCompanyByMemberId(Long memberId) throws DataAccessException {
 		TypedQuery<Company> query = em.createQuery(
                 "select c from Company c " + "where c.memberId = ?1", Company.class);
 		query.setParameter(1, memberId);

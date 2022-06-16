@@ -15,10 +15,12 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.SessionAttributes;
 
 import com.example.demo.controller.CompanyController.Taste;
 import com.example.demo.domain.Company;
 import com.example.demo.service.CompanyService;
+import com.example.demo.service.PlaceService;
 import com.example.demo.validator.CompanyValidator;
 
 import lombok.AllArgsConstructor;
@@ -27,9 +29,12 @@ import lombok.Setter;
 import lombok.ToString;
 
 @Controller
+@SessionAttributes("sessionMember")
 public class UpdateCompanyController {
 	@Autowired
 	private CompanyService companyService;
+	@Autowired
+	private PlaceService placeService;
 	
 	@Getter @Setter @AllArgsConstructor @ToString
 	public class Taste {
@@ -74,10 +79,10 @@ public class UpdateCompanyController {
 		long miliseconds = System.currentTimeMillis();
 	    Date current = new Date(miliseconds);
 	    company.setRegisterDate(current);
-	    //company.setAccept(0);
-	    //company.setMemberId(1); // 세션 완성되면 설정하기
+	    company.setAccept(0);
+	    company.setMemberId((long) 1); // 세션 완성되면 설정하기
 	    
-	    companyService.updateCompany(company);
+	    companyService.updateCompany(company); 
 		
 		return "redirect:/company/list";
 	}

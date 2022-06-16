@@ -21,7 +21,8 @@ import lombok.ToString;
 		  sequenceName = "PLACE_SEQ", // 매핑할 데이터베이스 시퀀스 이름 
 		  initialValue = 1,
 		  allocationSize = 1)
-@Getter @Setter @ToString @AllArgsConstructor @NoArgsConstructor @Table(name="PLACE")
+@Getter @Setter @ToString @AllArgsConstructor @NoArgsConstructor
+@Table(name="PLACE")
 public class Place {
 	@Id
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "PLACE_SEQ_GENERATOR")

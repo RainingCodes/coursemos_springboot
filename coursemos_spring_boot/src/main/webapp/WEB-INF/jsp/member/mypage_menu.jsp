@@ -15,9 +15,9 @@
                     <a class="list-group-item list-group-item-action list-group-item-light p-3" href="/mypage">내 정보</a>
                     <a class="list-group-item list-group-item-action list-group-item-light p-3" href="/mycourse">만든 코스 목록</a>
                     <a class="list-group-item list-group-item-action list-group-item-light p-3" href="/scrap">스크랩한 코스 목록</a>
-                    <a class="list-group-item list-group-item-action list-group-item-light p-3" href="/company">제휴 관리</a>
+                    <a class="list-group-item list-group-item-action list-group-item-light p-3" href="/company/list">제휴 관리</a>
                     <a class="list-group-item list-group-item-action list-group-item-light p-3" href="/review">작성한 후기 목록</a>
-                    <a class="list-group-item list-group-item-action list-group-item-light p-3" href="/user/coupon">다운받은 할인권 목록</a>
+                    <a class="list-group-item list-group-item-action list-group-item-light p-3" href="/member/coupon/list">다운받은 할인권 목록</a>
                     <a class="list-group-item list-group-item-action list-group-item-light p-3" href="/user/report">신고함</a>
                 </div>
             </div>

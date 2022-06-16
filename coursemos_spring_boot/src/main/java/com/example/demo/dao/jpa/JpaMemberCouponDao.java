@@ -18,7 +18,7 @@ public class JpaMemberCouponDao implements MemberCouponDao {
     private EntityManager em;
 
 	@Override
-	public List<MemberCoupon> getMemberCouponByMemberId(int memberId) throws DataAccessException {
+	public List<MemberCoupon> getMemberCouponByMemberId(Long memberId) throws DataAccessException {
 		TypedQuery<MemberCoupon> query = em.createQuery(
                 "select c from MemberCoupon c " + "where c.memberId = ?1", MemberCoupon.class);
 		query.setParameter(1, memberId);

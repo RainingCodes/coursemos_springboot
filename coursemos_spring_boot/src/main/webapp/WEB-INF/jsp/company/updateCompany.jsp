@@ -2,6 +2,12 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
+<c:if test="${sessionMember.check2 != false}"> <!-- if와 동일 -->
+	<%@ include file="../header/IncludeTopMember.jsp"  %>
+</c:if> <!-- if 종료 -->
+<c:if test="${sessionMember.check2 ==false }">
+	<%@ include file="../header/IncludeTop.jsp"  %>
+</c:if> <!-- if 종료 -->
 <html>
 <head>
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
@@ -60,6 +66,7 @@
 	<form:hidden path="place.x" />
 	<form:hidden path="place.y" />
 	<form:hidden path="place.subway" />
+	<form:hidden path="place.placeId" />
 	</form:form>
 </table>
 </div>

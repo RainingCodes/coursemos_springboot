@@ -71,7 +71,7 @@ $(document).ready(function(){
 	<table class="top">
 	  <tr>	
 	  	<td class="left">
-	  		<button class="btn btn-outline-primary" id="register_course" onclick="location.href='/review/register/1'">코스 등록</button>
+	  		<button class="btn btn-outline-primary" id="register_course" onclick="location.href='/course/registerForm'">코스 등록</button>
 	  		<button class="btn btn-outline-primary" id="register_company" onclick="location.href='/company/register'">제휴 등록</button>
 	  	</td>
 	    <td class="logo">
