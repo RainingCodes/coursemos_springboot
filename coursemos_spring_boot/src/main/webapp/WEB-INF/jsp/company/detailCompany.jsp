@@ -79,6 +79,16 @@ function submitForm() {
           	<b>취소하기</b></a></td>
         </c:if>
 	</tr>
+	<c:if test="${company.accept eq 0}">
+	<tr>
+		<td>제휴 내용 수정하기</td>
+     	<td>
+     		<a href='<c:url value="/company/update">
+          	<c:param name="id" value="${company.companyId}"/></c:url>'>
+          	<b>수정하기</b></a>
+     	</td>
+	</tr>
+	</c:if>
 	</c:if>
 </table>
 </div>
