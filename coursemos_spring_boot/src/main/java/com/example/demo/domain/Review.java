@@ -11,6 +11,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Transient;
+import javax.validation.constraints.NotEmpty;
 
 import org.springframework.web.multipart.MultipartFile;
 
@@ -31,7 +32,7 @@ public class Review implements Serializable {
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "REVIEW_SEQ_GENERATOR")
 	@Id @Column @Getter
 	private Long reviewId;
-	@Column(nullable=false) @Setter @Getter
+	@Column(nullable=false) @Setter @Getter @NotEmpty(message="리뷰 내용은 빌 수 없습니다.")
 	private String reviewContents;
 	@Transient
 	private MultipartFile photo;

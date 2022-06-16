@@ -25,7 +25,7 @@ public class CompanyServiceImpl implements CompanyService {
 	}
 
 	@Override
-	public List<Company> getCompanyByMemberId(int memberId) {
+	public List<Company> getCompanyByMemberId(Long memberId) {
 		return companyDao.getCompanyByMemberId(memberId);
 	}
 	

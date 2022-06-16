@@ -9,6 +9,7 @@
 <script>
 $( document ).ready( function() {
 	$("#writtenDate").html(new Date().toISOString().substring(0, 10));
+	$("#writtenDate").val(new Date().toISOString().substring(0, 10));
 	$("#writtenDate").css("font-weight", "bold");
 	$('#reviewContents').keyup(function (e){
 	      var content = $(this).val();       
@@ -40,25 +41,31 @@ function register(){
     table {
     	margin:auto; 
     }
-    
+    .err {
+    	color : red;
+    }
 </style>
 </head>
 <body>
 
 <div><h3>리뷰 작성하기</h3>
-	<form th:action="@{/review/register}" th:object="${session.review}" method="post" enctype="multipart/form-data" id="review">
+	<form th:action="@{/review/register}" th:object="${review}" method="post" enctype="multipart/form-data" id="review">
 		<table>
 			<tr>
 				<td>작성자 : </td>
-				<td th:text="${session.nickName}"></td>
-			</tr>
+				<td th:text="*{nickName}"></td>
+			</tr>	
 			<tr>
 				<td>작성 날짜 : </td>
-				<td id="writtenDate" name="writtenDate"> </td>
+				<td > <span id="writtenDate" name="writtenDate"></span></td>
 			</tr>
 			<tr>
 				<td>리뷰 내용 : </td>
-				<td><textarea id="reviewContents" name="reviewContents"></textarea></td>
+				<td><textarea th:field="*{reviewContents}" id="reviewContents" name="reviewContents"></textarea></td>
+			</tr>
+			<tr>
+				<td colspan="2"><span class="err" th:errors="*{reviewContents}"> </span></td> 
+				
 			</tr>
 			<tr>
 				<td>남은글자수 : </td>
@@ -66,7 +73,7 @@ function register(){
 			</tr>
 			<tr>
 				<td>사진 업로드 : </td>
-				<td><input type="file" name="photo"></td>
+				<td><input type="file" name="photo" ></td>
 			</tr>
 			<tr>
 				<td colspan="2"><button type="button" class="btn-primary" onclick="register();"/>등록하기</button></td>

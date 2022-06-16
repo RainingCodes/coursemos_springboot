@@ -15,9 +15,11 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.example.demo.domain.Company;
+import com.example.demo.domain.SessionMember;
 import com.example.demo.service.CompanyService;
 import com.example.demo.validator.CompanyValidator;
 
@@ -28,6 +30,7 @@ import lombok.ToString;
 
 
 @Controller
+@SessionAttributes("sessionMember")
 public class CompanyController {
 	@Autowired
 	private CompanyService companyService;
@@ -66,7 +69,7 @@ public class CompanyController {
 	}
 	
 	@RequestMapping(value = "/company/register", method = RequestMethod.POST)
-	public String companyRegister(@Valid @ModelAttribute("Company") Company company, BindingResult result) {
+	public String companyRegister(@Valid @ModelAttribute("Company") Company company, @ModelAttribute SessionMember sessionMember, BindingResult result) {
 		new CompanyValidator().validate(company, result);
 		if (result.hasErrors()) {
 			return "company/addCompany";
@@ -76,7 +79,7 @@ public class CompanyController {
 	    Date current = new Date(miliseconds);
 	    company.setRegisterDate(current);
 	    company.setAccept(0);
-	    company.setMemberId(1); // 세션 완성되면 설정하기
+	    company.setMemberId(sessionMember.getId()); // 세션 완성되면 설정하기
 	    
 	    companyService.insertCompany(company);
 		
@@ -84,10 +87,10 @@ public class CompanyController {
 	}
 	
 	@RequestMapping("/company/list")
-	public ModelAndView companyList() {
+	public ModelAndView companyList(@ModelAttribute SessionMember sessionMember) {
 		ModelAndView mav = new ModelAndView("company/manageCompany");
 		
-		List<Company> list = companyService.getCompanyByMemberId(1); // 세션 완성되면 설정하기
+		List<Company> list = companyService.getCompanyByMemberId(sessionMember.getId()); // 세션 완성되면 설정하기
 		mav.addObject("companyList", list);
 		
 		return mav;
