@@ -110,28 +110,26 @@
                   <h2 class="accordion-header" id="${cate.courseId}"> 
                     <button class="accordion-button collapsed" type="button"  onclick="javascript:displayCourse('${cate.placeId1.x}' + ',' + '${cate.placeId1.y}', '${cate.placeId2.x}' + ',' + '${cate.placeId2.y}', '${cate.placeId3.x}' + ',' + '${cate.placeId3.y}');"data-bs-toggle="collapse" data-bs-target="#flush-collapseOne_${cate.courseId}" aria-expanded="false" aria-controls="flush-collapseOne_${cate.courseId}">
                         ${cate.courseId}
-                      <i class="bi bi-heart-fill"></i>${cate.courseContents}
+                        | ${cate.courseContents}
+                        <i class="bi bi-heart-fill"></i> ${cate.likes}
                     </button>
                   </h2>
                   <div id="flush-collapseOne_${cate.courseId}" class="accordion-collapse collapse" aria-labelledby="${cate.courseId}" data-bs-parent="#accordionFlushExample">
                     <div class="accordion-body">
-                      <button class="list-group-item d-flex justify-content-between align-items-start" data-bs-toggle="modal" data-bs-target="#exampleModal_${cate.courseId}_0" style="background-color:antiquewhite">
+                      <button class="list-group-item d-flex justify-content-between align-items-start" onclick="javascript:setCenter('${cate.placeId1.x}','${cate.placeId1.y}')" data-bs-toggle="modal" data-bs-target="#exampleModal_${cate.courseId}_0" style="background-color:antiquewhite">
                         <div class="mx-sm-5 me-auto">
                           <div class="fw-bold">${cate.placeId1.placeName}</div>
                         </div>
-                        <i class="bi bi-heart-fill"></i>14
                       </button>
-                      <button class="list-group-item d-flex justify-content-between align-items-start" data-bs-toggle="modal" data-bs-target="#exampleModal_${cate.courseId}_1" style="background-color:antiquewhite">
+                      <button class="list-group-item d-flex justify-content-between align-items-start" onclick="javascript:setCenter('${cate.placeId2.x}','${cate.placeId2.y}')" data-bs-toggle="modal" data-bs-target="#exampleModal_${cate.courseId}_1" style="background-color:antiquewhite">
                         <div class="mx-sm-5 me-auto">
                           <div class="fw-bold">${cate.placeId2.placeName}</div>
                         </div>
-                        <i class="bi bi-heart-fill"></i>14
                       </button>
-                      <button class="list-group-item d-flex justify-content-between align-items-start" data-bs-toggle="modal" data-bs-target="#exampleModal_${cate.courseId}_2" style="background-color:antiquewhite">
+                      <button class="list-group-item d-flex justify-content-between align-items-start" onclick="javascript:setCenter('${cate.placeId3.x}','${cate.placeId3.y}')" data-bs-toggle="modal" data-bs-target="#exampleModal_${cate.courseId}_2" style="background-color:antiquewhite">
                         <div class="mx-sm-5 me-auto">
                           <div class="fw-bold">${cate.placeId3.placeName}</div>
                         </div>
-                        <i class="bi bi-heart-fill"></i>14
                       </button>
                     </div>
                   </div>
@@ -414,22 +412,31 @@
             }
             var polyline;
 
+            
             function displayCourse(data0, data1, data2) {
             	// 선을 구성하는 좌표 배열입니다. 이 좌표들을 이어서 선을 표시합니다
-            	var d0 = data0.split(',');
-            	var d1 = data1.split(',');
-            	var d2 = data2.split(',');
+            	var latlng0; var latlng1; var latlng2;
+            	var linePath = []
+            	if (data0.length != 1) {
+            		var d0 = data0.split(',');
+            		latlng0 = new kakao.maps.LatLng(parseFloat(d0[0]), parseFloat(d0[1]));
+            		linePath[0] = latlng0;
+            	}
+            	if (data1.length != 1) {
+            		var d1 = data1.split(',');
+            		latlng1 = new kakao.maps.LatLng(parseFloat(d1[0]), parseFloat(d1[1]));
+            		linePath[1] = latlng1;
+            	}
+            	if (data2.length != 1) {
+            		var d2 = data2.split(',');
+            		latlng2 = new kakao.maps.LatLng(parseFloat(d2[0]), parseFloat(d2[1]));
+            		linePath[2] = latlng2;
+            	}
+
             	
             	if (polyline != null) {
             		polyline.setMap(null);
             	}
-            	
-            	var linePath = [
-            	    new kakao.maps.LatLng(parseFloat(d0[0]), parseFloat(d0[1])),
-            	    new kakao.maps.LatLng(parseFloat(d1[0]), parseFloat(d1[1])),
-            	    new kakao.maps.LatLng(parseFloat(d2[0]), parseFloat(d2[1])) 
-            	];
-
             
             	// 지도에 표시할 선을 생성합니다
             	polyline = new kakao.maps.Polyline({
