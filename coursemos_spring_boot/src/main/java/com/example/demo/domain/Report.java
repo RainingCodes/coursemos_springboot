@@ -16,7 +16,7 @@ public class Report {
 	@Id
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "REPORT_SEQ_GENERATOR")
 	private int reportId;
-	private int memberId;
+	private Long memberId;
 	
 	
 	@Column(name="category")
