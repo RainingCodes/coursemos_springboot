@@ -194,6 +194,23 @@
 								geocoder.coord2Address(coord.getLng(), coord.getLat(), callback);
 							}
 							
+							function getAddrToInput(lat, lng, num){
+								let geocoder = new kakao.maps.services.Geocoder();
+								
+								let coord = new kakao.maps.LatLng(lat, lng);
+								let callback = function(result, status){
+									if (status == kakao.maps.services.Status.OK){
+										document.getElementById('address'+num).value = result[0].address.address_name;
+										document.getElementById('road_address'+num).value = result[0].road_address.address_name;
+									}
+								};
+								geocoder.coord2Address(coord.getLng(), coord.getLat(), callback);
+							}
+
+							getAddrToInput(${updateCourse.place1.x}, ${updateCourse.place1.y}, 1);
+							getAddrToInput(${updateCourse.place2.x}, ${updateCourse.place2.y}, 2);
+							getAddrToInput(${updateCourse.place2.x}, ${updateCourse.place3.y}, 3);	
+							
 							function copy_to_clipboard(a) {    
 								  var copyText = document.getElementById(a);
 								  copyText.select();
@@ -218,7 +235,8 @@
 						<b>1번째 장소</b>
 						<input class="form-control" type="text" placeholder="장소" id='placeName1' name="placeName1" style="width: 95%" value="${updateCourse.place1.placeName}"required> 
 						<input class="form-control" type="text" placeholder="상세 주소(지번)" id='address1' name="address1" onchange="onChangeAddress()" style="width: 95%" required>
-						<input class="form-control" type="text" placeholder="상세 주소(도로명, 없을 경우 생략)" name="road_address1" id='road_address1' style="width: 95%"><br> 					
+						<input class="form-control" type="text" placeholder="상세 주소(도로명, 없을 경우 생략)" name="road_address1" id='road_address1' style="width: 95%"><br> 											
+						
 						<b>2번째 장소</b>
 						<input class="form-control" type="text" placeholder="장소" id='placeName2' name="placeName2" style="width: 95%" value="${updateCourse.place2.placeName}"required> 
 						<input class="form-control" type="text" placeholder="상세 주소(지번)" id='address2' name="address2" onchange="onChangeAddress()" style="width: 95%" required>
