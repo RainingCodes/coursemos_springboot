@@ -20,7 +20,7 @@ public class MemberCouponServiceImpl implements MemberCouponService {
 	private MemberCouponDao memberCouponDao;
 
 	@Override
-	public List<MemberCoupon> getMemberCouponByMemberId(int memberId) {
+	public List<MemberCoupon> getMemberCouponByMemberId(Long memberId) {
 		return memberCouponDao.getMemberCouponByMemberId(memberId);
 	}
 
