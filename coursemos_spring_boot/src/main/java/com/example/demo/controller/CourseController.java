@@ -20,6 +20,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.support.SessionStatus;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.example.demo.controller.RegisterMemberController.Taste;
 import com.example.demo.domain.Company;
 import com.example.demo.domain.Coupon;
 import com.example.demo.domain.Course;
@@ -81,7 +82,6 @@ public class CourseController {
 		course.setMemberId(1); // memberId 임의 설정
 		
 		courseService.insertCourse(course);
-		
 		
 		
 		System.out.println("=========inserted course=========");
@@ -177,6 +177,25 @@ public class CourseController {
 //		return "course/view";
 //	}
 	
+	@Getter @Setter @AllArgsConstructor @ToString
+	public class Taste {
+		private String code;
+		private String label;
+	}
+	
+	@ModelAttribute("tasteCodes") // return 객체에 이름을 부여하고 view에 전달
+	protected List<Taste> referenceData2() throws Exception {
+		List<Taste> tasteCodes = new ArrayList<>();
+		tasteCodes.add(new Taste("act", "활동적인"));
+		tasteCodes.add(new Taste("hea", "힐링되는"));
+		tasteCodes.add(new Taste("nat", "자연적인"));
+		tasteCodes.add(new Taste("exp", "체험적인"));
+		tasteCodes.add(new Taste("ent", "즐거운"));
+		tasteCodes.add(new Taste("ret", "복고풍"));
+		tasteCodes.add(new Taste("cal", "잔잔한"));
+		return tasteCodes;	
+	}
+	
 	@RequestMapping(value="/list", method=RequestMethod.POST)
 	public void deleteCourse(@ModelAttribute Course course, BindingResult result, SessionStatus status, HttpServletRequest request) {
 		courseService.deleteCourse(course);
@@ -187,32 +206,30 @@ public class CourseController {
 	public ModelAndView updateCourse(@ModelAttribute Course course, HttpServletRequest request) {
 		Course updateCourse = courseService.getCourseByCourseId(course.getCourseId());
 		ModelAndView mav = new ModelAndView("course/updateForm");
-		mav.addObject("updateCourse", updateCourse);	
+		mav.addObject("updateCourse", updateCourse);
 		
 		Place place1 = placeService.getPlaceByPlaceId(updateCourse.getPlace1().getPlaceId());
 		mav.addObject("place1", place1);
-		System.out.println(place1);
 		
 		Place place2 = placeService.getPlaceByPlaceId(updateCourse.getPlace2().getPlaceId());
 		mav.addObject("place2", place2);
-		System.out.println(place2);
 		
 		Place place3 = placeService.getPlaceByPlaceId(updateCourse.getPlace3().getPlaceId());
 		mav.addObject("place3", place3);
-		System.out.println(place3);
 	
 		return mav;
 	}
 	
+	@RequestMapping(value="/view/{courseId}", method=RequestMethod.POST)
+	public ModelAndView updateSubmit(@ModelAttribute Course course, HttpServletRequest request) {
+		ModelAndView mav = new ModelAndView("redirect:/course/view/"+course.getCourseId());
+		courseService.updateCourse(course);
+		
+		return mav;
+	}
 	
 	
-	
-	
-	
-	
-	
-	
-	
+		
 	
 // restful 적용(미완성)
 //	//@RequestMapping(value="/update", method=RequestMethod.POST)
@@ -221,45 +238,6 @@ public class CourseController {
 //	public String updateCourse(@RequestBody String body) {
 //		System.out.println("Request body" + body);
 //		return body;
-//	}
-
-	
-//	@Autowired
-//	private CourseService courseService;
-	
-//	ModelAndView mav;
-//	
-//	@RequestMapping("registerForm")
-//	public ModelAndView writeCourse() {
-//		mav = new ModelAndView("/course/registerForm");
-//		return mav;
-//	}
-//	
-//	@RequestMapping(method=RequestMethod.POST)
-//	public String submit(@ModelAttribute Course course, BindingResult result, SessionStatus status, HttpServletRequest request) {
-//		new CourseValidator().validate(course, result);
-//		
-//		if (result.hasErrors()) {
-//			return "course/registerForm";
-//		}
-//		
-//		courseService.insertCourse(course);
-//		SessionCourse sessionCourse = new SessionCourse(course.getCourseId(), course.getCourseName(), course.getCourseContents(), course.getMemberId(), course.getTaste(), course.getLikes(), course.getWrittenDate(), course.getPlaceId1(), course.getPlaceId2(), course.getPlaceId3());
-//		status.setComplete();
-//		HttpSession session = request.getSession();
-//		session.setAttribute("courseSession", sessionCourse);
-//		return "view/1";
-//	}
-//
-//
-//	@RequestMapping("view/{courseId}")
-//	public ModelAndView viewCourse() {
-//		//courseId로 코스 상세정보 불러와서 화면에 출력
-//		
-//			
-//		
-//		mav = new ModelAndView("/course/view");
-//		return mav;
 //	}
 	
 }
