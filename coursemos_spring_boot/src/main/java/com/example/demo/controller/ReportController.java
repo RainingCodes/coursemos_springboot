@@ -14,14 +14,17 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.SessionAttributes;
 
 import com.example.demo.domain.Report;
+import com.example.demo.domain.SessionMember;
 import com.example.demo.service.ReportService;
 import com.example.demo.validator.ReportValidator;
 
 import lombok.*;
 
 @Controller
+@SessionAttributes("sessionMember")
 public class ReportController {
 	@Autowired
 	private ReportService reportService;
@@ -65,7 +68,7 @@ public class ReportController {
 	}
 	
 	@RequestMapping(value = "/report/course/{courseId}", method = RequestMethod.POST)
-	public String courseReportRegister(@PathVariable int courseId,
+	public String courseReportRegister(@PathVariable int courseId, @ModelAttribute SessionMember sessionMember,
 			@ModelAttribute("Report") Report courseReport, BindingResult result) {
 		
 		new ReportValidator().validate(courseReport, result);
@@ -79,7 +82,7 @@ public class ReportController {
 	    Date current = new Date(miliseconds);
 		courseReport.setWrittenDate(current);
 		courseReport.setState("F");
-		courseReport.setMemberId(7); // 세션 완성되면 설정하기
+		courseReport.setMemberId(sessionMember.getId()); // 세션 완성되면 설정하기
 		reportService.insertReport(courseReport);
 		
 		return "redirect:/view/"+courseId;
@@ -96,7 +99,7 @@ public class ReportController {
 	}
 	
 	@RequestMapping(value = "/report/review/{reviewId}", method = RequestMethod.POST)
-	public String reviewReportRegister(@PathVariable int reviewId,
+	public String reviewReportRegister(@PathVariable int reviewId, @ModelAttribute SessionMember sessionMember,
 			@ModelAttribute("Report") Report reviewReport, BindingResult result) {
 		
 		new ReportValidator().validate(reviewReport, result);
@@ -110,7 +113,7 @@ public class ReportController {
 	    Date current = new Date(miliseconds);
 	    reviewReport.setWrittenDate(current);
 	    reviewReport.setState("F");
-	    reviewReport.setMemberId(7); // 세션 완성되면 설정하기
+	    reviewReport.setMemberId(sessionMember.getId()); // 세션 완성되면 설정하기
 		reportService.insertReport(reviewReport);
 		
 		return "redirect:/view/"+reviewId;
