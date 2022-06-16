@@ -8,13 +8,16 @@ import org.springframework.data.repository.CrudRepository;
 
 import com.example.demo.domain.Course;
 
-public interface courseRepository extends CrudRepository<Course, Integer> {
+public interface CourseRepository extends CrudRepository<Course, Integer> {
+	
 	
 	
 	static Page<Course> findAll(Pageable pageable) {
 		// TODO Auto-generated method stub
 		return null;
 	}
+
+	List<Course> findCourseListByMemberId(Long memberId);
 	
 }
 

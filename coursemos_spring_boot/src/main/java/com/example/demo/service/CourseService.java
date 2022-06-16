@@ -1,5 +1,7 @@
 package com.example.demo.service;
 
+import java.util.List;
+
 import com.example.demo.domain.Course;
 
 public interface CourseService {
@@ -7,4 +9,5 @@ public interface CourseService {
 	void deleteCourse(Course course);
 	void updateCourse(Course course);
 	Course getCourseByCourseId(int courseId);
+	List<Course> getCourseListByMemberId(Long memberId);
 }
