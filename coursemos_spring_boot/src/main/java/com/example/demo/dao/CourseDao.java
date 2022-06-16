@@ -15,6 +15,8 @@ public interface CourseDao {
 
 	void deleteCourse(Course course) throws DataAccessException;
 	
+	void updateCourse(Course course);
+	
 	List<Course> searchCourseListByPlace(String place) throws DataAccessException;
 
 	List<Course> getCourseListByTaste(String taste) throws DataAccessException;
@@ -36,8 +38,6 @@ public interface CourseDao {
 	List<Course> getCourseList(String station) throws DataAccessException;	
 	
 	List<Course> getCourseListByTaste(String subway, String taste) throws DataAccessException;
-	
-	
 	
 	
 	

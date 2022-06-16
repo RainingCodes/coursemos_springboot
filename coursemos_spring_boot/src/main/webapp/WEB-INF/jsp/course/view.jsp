@@ -91,16 +91,26 @@
 					<br>
 					<h5 style="font-weight:bold;">코스의 분위기</h5>
 					<!-- <div>활동적인, 즐거운</div> -->
-					<div>${course.taste }</div>
+					<div>
+					<c:choose>
+						<c:when test="${course.taste eq 'act'}">활동적인</c:when>
+						<c:when test="${course.taste eq 'hea'}">힐링되는</c:when>
+						<c:when test="${course.taste eq 'nat'}">자연적인</c:when>
+						<c:when test="${course.taste eq 'exp'}">체험적인</c:when>
+						<c:when test="${course.taste eq 'ent'}">즐거운</c:when>
+						<c:when test="${course.taste eq 'ret'}">복고풍</c:when>
+						<c:when test="${course.taste eq 'cal'}">잔잔한</c:when>
+					</c:choose>
+					</div>
 					<br>
 					<h5 style="font-weight:bold;">코스 경로 살펴보기</h5>
 					<br>
 					<table>
 					
 					
-					<c:if test="${place1.placeName == null}">
+<%--  					<c:if test="${place1.placeName == null}">
 						<%
-						for (int i = 0; placeNameList[i] != ""; i++){ %>
+						for (int i = 0; i < 3; i++){ %>
 							<tr>
 								<th><div id="exPlace<%=i+1%>"><%=placeNameList[i] %></div></th>
 							</tr>
@@ -115,7 +125,7 @@
 							</tr>
 						<%	
 						} %>
-					</c:if>
+					</c:if> --%>
 					
 					
 						<c:if test="${place1.placeName != null}">
