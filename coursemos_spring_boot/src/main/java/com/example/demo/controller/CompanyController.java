@@ -69,7 +69,7 @@ public class CompanyController {
 	}
 	
 	@RequestMapping(value = "/company/register", method = RequestMethod.POST)
-	public String companyRegister(@Valid @ModelAttribute("Company") Company company, @ModelAttribute SessionMember sessionMember, BindingResult result) {
+	public String companyRegister(@ModelAttribute SessionMember sessionMember, @Valid @ModelAttribute("Company") Company company, BindingResult result) {
 		new CompanyValidator().validate(company, result);
 		if (result.hasErrors()) {
 			return "company/addCompany";
