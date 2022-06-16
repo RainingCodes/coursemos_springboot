@@ -16,7 +16,7 @@
 <body>
 <div class="container">
 <center><h1>제휴 관리</h1></center>
-
+<%@ include file="./mypage_menu.jsp"  %>
 <h3>제휴 중</h3>
 <table class="table">
 	<tr>
