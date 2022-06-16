@@ -88,27 +88,27 @@
 					<button type="submit">검색하기</button>
 				</form>
 				<c:forEach var="cate" items="${tList}">
-					<button class="btn btn-primary" name="taste" onclick="location.href ='/course/detailedSearch.do?taste=${cate.name}'">${cate.name}</button>
+					<button class="btn btn-primary" name="taste" onclick="location.href ='/course/detailedSearch.do?taste=${cate.name}&subway=${subway}'">${cate.name}</button>
 				</c:forEach>	
 				
 				<button id="javascript_btn1" type="button">역찾기</button>
 			
 				<form name="result" method="post" action="<c:url value='/course/search'/>">
-					<input type="hidden" name="x" value=0>
+	<!-- 				<input type="hidden" name="x" value=0>
 					<input type="hidden" name="y" value=0>
-					<input type="submit" value="코스찾기">
+					<input type="submit" value="코스찾기"> -->
 				</form> 
 	   		</div> 
 	        
 			<div id="map"></div>        
 			<div id="searchResult"></div>
 			
-            <div id="courseList">
+             <div id="courseList">
             <c:forEach var="cate" items="${cList.pageList}">
               <div class="accordion accordion-flush" id="accordionFlushExample">
                <div class="accordion-item"> 
                   <h2 class="accordion-header" id="${cate.courseId}"> 
-                    <button class="accordion-button collapsed" type="button" onclick="javascript:displayCourse('${cate.placeId1.x}' + ',' + '${cate.placeId1.y}', '${cate.placeId2.x}' + ',' + '${cate.placeId2.y}', '${cate.placeId3.x}' + ',' + '${cate.placeId3.y}');" data-bs-toggle="collapse" data-bs-target="#flush-collapseOne_${cate.courseId}" aria-expanded="false" aria-controls="flush-collapseOne_${cate.courseId}">
+                    <button class="accordion-button collapsed" type="button"  onclick="javascript:displayCourse('${cate.placeId1.x}' + ',' + '${cate.placeId1.y}', '${cate.placeId2.x}' + ',' + '${cate.placeId2.y}', '${cate.placeId3.x}' + ',' + '${cate.placeId3.y}');"data-bs-toggle="collapse" data-bs-target="#flush-collapseOne_${cate.courseId}" aria-expanded="false" aria-controls="flush-collapseOne_${cate.courseId}">
                         ${cate.courseId}
                       <i class="bi bi-heart-fill"></i>${cate.courseContents}
                     </button>
@@ -186,7 +186,7 @@
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                   </div>
                   <div class="modal-body">
-                  	위도 : ${cate.placeId3.x}
+					위도 : ${cate.placeId3.x}
 					경도 : ${cate.placeId3.y}
 					근처 대중교통 : ${cate.placeId3.subway}
 					취향 : ${cate.placeId3.taste}

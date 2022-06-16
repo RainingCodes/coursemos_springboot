@@ -35,6 +35,7 @@ public interface CourseDao {
 	
 	List<Course> getCourseList(String station) throws DataAccessException;	
 	
+	List<Course> getCourseListByTaste(String subway, String taste) throws DataAccessException;
 	
 	
 	
