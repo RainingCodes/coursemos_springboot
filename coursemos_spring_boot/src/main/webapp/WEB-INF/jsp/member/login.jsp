@@ -81,13 +81,15 @@ function kakaoLogin() {
         <div class="body d-md-flex align-items-center justify-content-between">
             <div class="box-2 d-flex flex-column h-100">
                 <div class="mt-5">
-                    <p class="mb-1 h-1">소셜 로그인</p>
-                    	<div class="loginBtn"><a href="javascript:kakaoLogin()"><img alt="카카오 로그인" src="../img/kakao_login.png" width=200 height=50></a></div>
+                    <p class="mb-1 h-1">로그인</p>
+                    	<!--  <div class="loginBtn"><a href="javascript:kakaoLogin()"><img alt="카카오 로그인" src="../img/kakao_login.png" width=200 height=50></a></div>
                     	<div class="loginBtn"><a href="/"><img alt="네이버 로그인" src="../img/naver_login.png" width=200 height=50></a></div>
                     	<div class="loginBtn"><a href="/"><img alt="구글 로그인" src="../img/google_login.png" width=200 height=50></a></div>
-                    	<div class="loginBtn"><a href="/mock">임시로그인</a></div>
-                    	<div class="loginBtn btn-dark btn-sm" id="login2"><a href="/login2">다른 방법으로 로그인</a></div>
-                    	<div class="loginBtn btn-secondary btn-sm" id="join"><a href="/join">회원가입</a></div>
+                    	<div class="loginBtn"><a href="/mock">임시로그인</a></div> -->
+                    	<div class="loginBtn btn-primary btn-sm" id="login2" onclick="location.href='/login2'">로그인</a></div>
+                    	<div class="loginBtn btn-secondary btn-sm" id="join" onclick="location.href='/join'">회원가입</a></div>
+                    	<br>
+                    	<div class="loginBtn btn"><a href="/search/pw">비밀번호를 까먹으셨나요?</a></div>
                     	<div class="space">&nbsp;</div>
                 </div>
             </div>
