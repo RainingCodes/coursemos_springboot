@@ -66,7 +66,7 @@
 	<!-- Page content-->
 	<div class="container mt-5">
 		<div class="row" style="margin-left: 25%;">
-			<form:form modelAttribute="course" name="form" action="view" method="POST">
+			<form:form modelAttribute="course" name="form" action="../view/${updateCourse.courseId}" method="POST">
 				<div class="col-lg-8">
 					<!-- Post content-->
 					<article>
@@ -77,7 +77,7 @@
 							<!-- Post title-->
 							<div class="card-body">
 								<div class="input-group">
-									<input class="form-control" name="inputTitle" type="text"
+									<input class="form-control" name="courseName" type="text"
 										value="${updateCourse.courseName}" required>
 								</div>
 							</div>
@@ -236,13 +236,13 @@
 						<input class="form-control" type="text" placeholder="장소" id='placeName1' name="placeName1" style="width: 95%" value="${updateCourse.place1.placeName}"required> 
 						<input class="form-control" type="text" placeholder="상세 주소(지번)" id='address1' name="address1" onchange="onChangeAddress()" style="width: 95%" required>
 						<input class="form-control" type="text" placeholder="상세 주소(도로명, 없을 경우 생략)" name="road_address1" id='road_address1' style="width: 95%"><br> 											
-						
 						<b>2번째 장소</b>
 						<input class="form-control" type="text" placeholder="장소" id='placeName2' name="placeName2" style="width: 95%" value="${updateCourse.place2.placeName}"required> 
 						<input class="form-control" type="text" placeholder="상세 주소(지번)" id='address2' name="address2" onchange="onChangeAddress()" style="width: 95%" required>
 						<input class="form-control" type="text" placeholder="상세 주소(도로명, 없을 경우 생략)" name="road_address2" id='road_address2' style="width: 95%"><br> 					
+						
 						<b>3번째 장소</b>
-						<input class="form-control" type="text" placeholder="장소" id='placeName3' name="placeName1" style="width: 95%" value="${updateCourse.place3.placeName}"required> 
+						<input class="form-control" type="text" placeholder="장소" id='placeName3' name="placeName3" style="width: 95%" value="${updateCourse.place3.placeName}"required> 
 						<input class="form-control" type="text" placeholder="상세 주소(지번)" id='address3' name="address3" onchange="onChangeAddress()" style="width: 95%" required>
 						<input class="form-control" type="text" placeholder="상세 주소(도로명, 없을 경우 생략)" name="road_address3" id='road_address3' style="width: 95%"><br> 					
 

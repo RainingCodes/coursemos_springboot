@@ -31,6 +31,11 @@ public class JpaCourseDao implements CourseDao{
 	}
 
 	@Override
+	public void updateCourse(Course course) {
+		em.merge(course);
+		
+	}
+	@Override
 	public void deleteCourse(Course course) throws DataAccessException {
 		em.remove(em.merge(course));
 	}
@@ -109,5 +114,6 @@ public class JpaCourseDao implements CourseDao{
 				query.setParameter(2, taste);
         return query.getResultList();
 	}
+
 	
 }
