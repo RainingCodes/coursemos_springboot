@@ -34,7 +34,7 @@ public class JpaScrapDao implements ScrapDao {
 	}
 	
 	@Override
-	public Scrap getScrapByPrimaryKey(Long memberId, Long courseId) throws DataAccessException {
+	public Scrap getScrapByPrimaryKey(Long memberId, int courseId) throws DataAccessException {
 		ScrapPK pk = new ScrapPK(memberId, courseId);
 		return em.find(Scrap.class, pk);
 	}	

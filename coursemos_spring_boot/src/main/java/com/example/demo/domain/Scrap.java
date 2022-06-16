@@ -14,5 +14,5 @@ import lombok.ToString;
 @Getter @Setter @AllArgsConstructor @ToString
 public class Scrap {
 	@Id Long memberId;
-	@Id Long courseId;
+	@Id int courseId;
 }

@@ -11,5 +11,5 @@ import lombok.ToString;
 @Getter @Setter @AllArgsConstructor @ToString
 public class ScrapPK implements Serializable {
 	Long memberId;
-	Long courseId;
+	int courseId;
 }
