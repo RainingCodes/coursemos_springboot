@@ -82,9 +82,6 @@ public class Member  implements Serializable {
   @Column(nullable=false) @Getter @Setter
   private int points;
   
-  @Transient @Getter @Setter
-  private MyData myData;
-  
 
   /* JavaBeans Properties */
 
@@ -104,16 +101,6 @@ public class Member  implements Serializable {
   public void insertPoints(Points p) {
 	  pointList.add(p);
   }
-  
-//public Member(String nickName, int gender, String birth, String userName, String taste, Role role) {
-//		super();
-//		this.nickName = nickName;
-//		this.gender = gender;
-//		this.birth = birth;
-//		this.userName = userName;
-//		this.taste = taste;
-//		this.role = role;
-//	}
 
 	
 }
