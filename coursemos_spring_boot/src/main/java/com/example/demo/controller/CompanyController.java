@@ -102,7 +102,6 @@ public class CompanyController {
 		
 		//companyId로 회사 상세정보 받아와서 넣고 넘기기
 		Company company = companyService.getCompanyByCompanyId(companyId);  // 세션 완성되면 설정하기
-		mav.addObject("nickname", "test");
 		mav.addObject("company", company);
 		return mav;
 	}
