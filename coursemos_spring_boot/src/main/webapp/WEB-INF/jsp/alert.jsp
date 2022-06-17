@@ -10,7 +10,12 @@
 		var message = "${msg}";
 		var url = "${url}";
 		alert(message);
+		
+		if (url != "closePage") {
 		document.location.href = url;
+		} else {
+			window.close();
+		}
 	</script>
 </body>
 </html>
