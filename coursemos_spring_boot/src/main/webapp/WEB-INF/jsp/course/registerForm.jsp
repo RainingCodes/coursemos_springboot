@@ -131,6 +131,7 @@
 							
 							// 장소 검색 객체를 생성합니다
 							var ps = new kakao.maps.services.Places();
+							var places1 = new kakao.maps.services.Places();
 							
 							function onClickBtn()  {
 								  let name = document.getElementById('keyword').value;
@@ -149,18 +150,22 @@
 							            displayMarker(data[i]);    
 							            bounds.extend(new kakao.maps.LatLng(data[i].y, data[i].x));
 							        }
+							        
 							
 							        // 검색된 장소 위치를 기준으로 지도 범위를 재설정합니다
 							        map.setBounds(bounds);
 							        
 							    } 
 							}
+
 							
 							function onChangeAddress(){
 								let address1 = document.getElementById('address1').value;
 								ps.keywordSearch(address1, placesSearchCB1);
+								
 
 								if(document.getElementById('address2')){
+									alert("?");
 									let address2 = document.getElementById('address2').value;
 									ps.keywordSearch(address2, placesSearchCB2);
 								}
@@ -170,13 +175,32 @@
 									ps.keywordSearch(address3, placesSearchCB3);
 								}
 	
+							}        
+					        
+					        function placesSearchCBSubway (data, status, pagination) {
+							    if (status === kakao.maps.services.Status.OK) {
+									//alert(data[0].place_name);		
+									document.getElementById('subway1').value = data[0].place_name;
+									
+									if (document.getElementById('subway2')){
+										document.getElementById('subway2').value = data[0].place_name;									
+									}
+									if (document.getElementById('subway3')){
+										document.getElementById('subway3').value = data[0].place_name;									
+									}
+							    } 
 							}
 							
+			
 							// submit할 address 입력 시 호출되는 콜백함수 입니다
 							function placesSearchCB1 (data, status, pagination) {
 							    if (status === kakao.maps.services.Status.OK) {
 							        document.getElementById('place1CoordX').value = data[0].y;
 							        document.getElementById('place1CoordY').value = data[0].x;
+							        
+							        places1.categorySearch('SW8', placesSearchCBSubway, { //첫번째 장소 기준으로 역 찾기
+										location: new kakao.maps.LatLng(data[0].y, data[0].x)
+									});
 							        
 							    } 
 							}
@@ -194,6 +218,7 @@
 							        
 							    } 
 							}
+							
 							
 							 // 지도에 마커를 표시하는 함수입니다
 							function displayMarker(place) {
@@ -260,6 +285,7 @@
 						<input class="form-control" type="text" placeholder="상세 주소(도로명, 없을 경우 생략)" name="road_address1" id='road_address1' style="width: 95%"><br> 									
                         <input type="hidden" id="place1CoordX" name="place1.x">
 						<input type="hidden" id="place1CoordY" name="place1.y">
+						<input type="hidden" id="subway1" name="place1.subway">
 						
 						<script>
 						
@@ -272,17 +298,17 @@
 									  cnt++;
 									  if(cnt == 2){
 										  $("#description").before('<hr style="width: 95%"><b>2번째 장소</b>'+ '<br><p><input class="form-control" type="text" placeholder="장소" name="place2.placeName" style="width: 95%" required><br><input class="form-control" type="text" placeholder="상세 주소(지번)" id="address2" onchange="onChangeAddress()" style="width: 95%" required><input class="form-control" type="text" placeholder="상세 주소(도로명, 없을 경우 지번주소만 표시됩니다.)" name="road_address" style="width: 95%"><br></p>');
-										  $("#description").before('<input type="hidden" name="place2.taste" id="place2Taste"/>');
+										  $("#description").before('<input type="hidden" id="place2Taste" name="place2.taste" />');
 										  $("#description").before('<input type="hidden" id="place2CoordX" name="place2.x">');
 										  $("#description").before('<input type="hidden" id="place2CoordY" name="place2.y"> ');
-										  $("#description").before('<input type="hidden" name="place2.subway" value=""/> ');
+										  $("#description").before('<input type="hidden" id="subway2" name="place2.subway">');
 									  }
 									  if (cnt ==3){
 										  $("#description").before('<hr style="width: 95%"><b>3번째 장소</b>'+ '<br><p><input class="form-control" type="text" placeholder="장소" name="place3.placeName" style="width: 95%" required><br><input class="form-control" type="text" placeholder="상세 주소(지번)" id="address3" onchange="onChangeAddress()" style="width: 95%" required><input class="form-control" type="text" placeholder="상세 주소(도로명, 없을 경우 지번주소만 표시됩니다.)" name="road_address" style="width: 95%"><br></p>');
-										  $("#description").before('<input type="hidden" name="place3.taste" id="place3Taste"/> ');
+										  $("#description").before('<input type="hidden" id="place3Taste" name="place3.taste" /> ');
 										  $("#description").before('<input type="hidden" id="place3CoordX" name="place3.x">');
 										  $("#description").before('<input type="hidden" id="place3CoordY" name="place3.y"> ');
-										  $("#description").before('<input type="hidden" name="place3.subway" value=""/> ');
+										  $("#description").before('<input type="hidden" id="subway3" name="place3.subway"/> ');
 									  }
 									}
 								});
