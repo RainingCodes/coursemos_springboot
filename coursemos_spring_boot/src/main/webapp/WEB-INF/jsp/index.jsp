@@ -16,11 +16,6 @@
 	<c:if test="${sessionMember.check2 ==false }">
 			<%@ include file="header/IncludeTop.jsp"  %>
 	</c:if> <!-- if 종료 -->
-
-	
-
-
-
-<%@ include file="main_map.jsp" %>
+<%@ include file="search.jsp" %>
 </body>
 </html>
