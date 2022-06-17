@@ -76,7 +76,7 @@ public class ReviewController implements ApplicationContextAware{
 		ModelAndView mv = new ModelAndView("thyme/review/register");
 		Review review = new Review();
 		review.setMemberId(sessionMember.getId());
-		review.setNickName(sessionMember.getNickName());
+		mv.addObject("sessionMember", sessionMember);
 		mv.addObject("review", review);
 		return mv;
 	}
@@ -117,6 +117,8 @@ public class ReviewController implements ApplicationContextAware{
 		System.out.println(sessionMember);
 		
 		memberService.save(member);
+		
+		session.setAttribute("sessionMember", sessionMember);
 		return "redirect:/review/registered/" + Long.toString(review.getReviewId());
 	}
 	
@@ -124,6 +126,8 @@ public class ReviewController implements ApplicationContextAware{
 	public String viewDetail(@ModelAttribute SessionMember sessionMember, HttpSession session, @PathVariable("reviewId") Long id,
 			Model model) {
 		Review review = reviewService.findReviewById(id);
+		Member member = memberService.findMemberById(review.getMemberId());
+		
 		//String courseName = courseService.findCourseNameByCourseId(id); course 완성되면 추가
 		//review.setCourseName(courseName);
 		boolean isWriter = review.getMemberId() == sessionMember.getId();
@@ -132,6 +136,8 @@ public class ReviewController implements ApplicationContextAware{
 			//reviewLike 조회
 			like = reviewLikeService.findReviewLikeByReviewIdMemberId(review.getReviewId(), sessionMember.getId());
 		}
+		session.setAttribute("sessionMember", sessionMember);
+		session.setAttribute("writer", member.getNickName());
 		session.setAttribute("review", review);
 		session.setAttribute("isWriter", isWriter);
 		session.setAttribute("like", like);
@@ -170,12 +176,13 @@ public class ReviewController implements ApplicationContextAware{
 		return reviews;
 	}
 	
-	@GetMapping(value = "/member/review/list")
-	@ResponseBody
-	public List<Review> myReviewList(@ModelAttribute SessionMember sessionMember, HttpServletResponse response) throws IOException{
+	@GetMapping(value = "/review/list")
+	public ModelAndView myReviewList(@ModelAttribute SessionMember sessionMember, HttpServletResponse response) throws IOException{
 		List<Review> reviews = reviewService.findReviewByMemberId(sessionMember.getId());
+		ModelAndView mv = new ModelAndView("member/reviewList");
 		if (reviews == null) 
 			response.sendError(HttpServletResponse.SC_NOT_FOUND);
-		return reviews;
+		mv.addObject("reviews", reviews);
+		return mv;
 	}
 }
