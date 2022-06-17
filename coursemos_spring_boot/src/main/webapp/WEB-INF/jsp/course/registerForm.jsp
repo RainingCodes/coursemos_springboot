@@ -38,11 +38,23 @@
 			  if(cnt > 3)
 				  alert("최대 입력 값을 초과했습니다.");
 			  else {
-				  cnt++;	  
-				  $("#description").before('<hr style="width: 95%"><b>'+cnt+'번째 장소</b>'+ '<br><p><input class="form-control" type="text" placeholder="장소" name="placeName'+cnt+'" style="width: 95%" required><br><input class="form-control" type="text" placeholder="상세 주소(지번)" name="address' + cnt +'" style="width: 95%" required><input class="form-control" type="text" placeholder="상세 주소(도로명, 없을 경우 지번주소만 표시됩니다.)" name="road_address' + cnt + '" style="width: 95%"><br></p>');
-				  //$("#place").val(cnt);
-				  }			  
-		  });
+				  cnt++;
+				  if(cnt == 2){
+					  $("#description").before('<hr style="width: 95%"><b>2번째 장소</b>'+ '<br><p><input class="form-control" type="text" placeholder="장소" name="place2.placeName" style="width: 95%" required><br><input class="form-control" type="text" placeholder="상세 주소(지번)" name="address" style="width: 95%" required><input class="form-control" type="text" placeholder="상세 주소(도로명, 없을 경우 지번주소만 표시됩니다.)" name="road_address" style="width: 95%"><br></p>');
+					  $("#description").before('<input type="hidden" name="place2.taste" value="'${course.taste}'"/>');
+					  $("#description").before('<input type="hidden" name="place2.x" value="0.0"/> ');
+					  $("#description").before('<input type="hidden" name="place2.y" value="0.0"/> ');
+					  $("#description").before('<input type="hidden" name="place2.subway" value=""/> ');
+				  }
+				  if (cnt ==3){
+					  $("#description").before('<hr style="width: 95%"><b>3번째 장소</b>'+ '<br><p><input class="form-control" type="text" placeholder="장소" name="place3.placeName" style="width: 95%" required><br><input class="form-control" type="text" placeholder="상세 주소(지번)" name="address" style="width: 95%" required><input class="form-control" type="text" placeholder="상세 주소(도로명, 없을 경우 지번주소만 표시됩니다.)" name="road_address" style="width: 95%"><br></p>');
+					  $("#description").before('<input type="hidden" name="place3.taste" value="'${course.taste}'"/> ');
+					  $("#description").before('<input type="hidden" name="place3.x" value="0.0"/> ');
+					  $("#description").before('<input type="hidden" name="place3.y" value="0.0"/> ');
+					  $("#description").before('<input type="hidden" name="place3.subway" value=""/> ');
+				  }
+				}
+			});
 		});
 	
 	
@@ -112,13 +124,13 @@
 						<h5>코스의 분위기를 선택하세요</h5>
 						<div class="selectTaste"
 							style="display: inline-block; width: 300px; line-height: 45px;">
-							<form:radiobutton path="taste" name="category" value="act"/>활동적인
-							<form:radiobutton path="taste" name="category" value="cal"/>잔잔한
-							<form:radiobutton path="taste" name="category" value="hea"/>힐링
-							<form:radiobutton path="taste" name="category" value="nat"/>자연적인<br>
-							<form:radiobutton path="taste" name="category" value="exp"/>체험적
-							<form:radiobutton path="taste" name="category" value="ent"/>즐거운
-							<form:radiobutton path="taste" name="category" value="ret"/>복고풍
+							<form:radiobutton path="taste" name="taste" value="act"/>활동적인
+							<form:radiobutton path="taste" name="taste" value="cal"/>잔잔한
+							<form:radiobutton path="taste" name="taste" value="hea"/>힐링
+							<form:radiobutton path="taste" name="taste" value="nat"/>자연적인<br>
+							<form:radiobutton path="taste" name="taste" value="exp"/>체험적
+							<form:radiobutton path="taste" name="taste" value="ent"/>즐거운
+							<form:radiobutton path="taste" name="taste" value="ret"/>복고풍
 						</div>
 						<form:errors path="taste" cssClass="error"/>
 						<br><br>						
@@ -136,6 +148,9 @@
 							style="width: 600px; height: 300px; margin-top: 10px;"></div>
 						<script type="text/javascript"
 							src="//dapi.kakao.com/v2/maps/sdk.js?appkey=c17b5563968f2fffd356919521833ce2&libraries=services"></script>
+						
+						
+						
 						<script>
 							// 마커를 클릭하면 장소명을 표출할 인포윈도우 입니다
 							var infowindow = new kakao.maps.InfoWindow({zIndex:1});
@@ -215,14 +230,18 @@
 								geocoder.coord2Address(coord.getLng(), coord.getLat(), callback);
 							}
 							
-							function copy_to_clipboard(a) {    
-								  var copyText = document.getElementById(a);
-								  copyText.select();
-								  copyText.setSelectionRange(0, 99999);
-								  document.execCommand("Copy");
-								  alert('복사되었습니다.');
+							function copy_to_clipboard(a) {    
+								  var copyText = document.getElementById(a);
+								  copyText.select();
+								  copyText.setSelectionRange(0, 99999);
+								  document.execCommand("Copy");
+								  alert('복사되었습니다.');
 							}
 							</script>
+						
+						
+						
+						
 						
 						<br><b>마커를 클릭하면 해당 장소의 이름과 주소가 표시됩니다.
 						<br>복사/붙여넣기로 간편하게 아래 폼을 완성해보세요!</b><br>
@@ -233,13 +252,14 @@
 						<br>					
 						<!-- 코스 추가 -->
 						<h5>최대 3군데의 장소를 추가할 수 있습니다 <input type="button" name="add" value="+" id="add_btn" style="border: none; border-radius: 5px; text-align: center; margin-left: 30%; height: 30px;"></h5>
-						<input type="hidden" id="place" name="place">
 
 						<br>
 						<b>1번째 장소</b>
-						<input class="form-control" type="text" placeholder="장소" id='placeName1' name="placeName1" style="width: 95%" required><br> 
+						<input class="form-control" type="text" placeholder="장소" id='placeName1' name="place1.placeName" style="width: 95%" required><br>
+						<input type="hidden" name="place1.taste" value="'${course.taste}'"/> 
 						<input class="form-control" type="text" placeholder="상세 주소(지번)" id='address1' name="address1" onchange="onChangeAddress()" style="width: 95%" required>
 						<input class="form-control" type="text" placeholder="상세 주소(도로명, 없을 경우 생략)" name="road_address1" id='road_address1' style="width: 95%"><br> 					
+                      
                         <!-- Post content-->
                         <h5 id="description">코스에 대한 설명을 입력하세요</h5>
                         <form:input path="courseContents" class="form-control" name="contents" type="text" style="height:300px"/>
