@@ -11,5 +11,6 @@ public interface ReportDao {
 	void updateReport(Report report) throws DataAccessException;
 	void insertReport(Report report) throws DataAccessException;
 	List<Report> getAllCourseReport() throws DataAccessException;
-	Report getReportById(int ReportId) throws DataAccessException;
+	Report getReportById(int reportId) throws DataAccessException;
+	List<Report> getReportByMemberId(Long memberId) throws DataAccessException;
 }

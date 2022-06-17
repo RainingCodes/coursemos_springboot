@@ -15,8 +15,11 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.SessionAttributes;
+import org.springframework.web.servlet.ModelAndView;
 
+import com.example.demo.domain.Course;
 import com.example.demo.domain.Report;
+import com.example.demo.domain.Scrap;
 import com.example.demo.domain.SessionMember;
 import com.example.demo.service.ReportService;
 import com.example.demo.validator.ReportValidator;
@@ -117,5 +120,15 @@ public class ReportController {
 		reportService.insertReport(reviewReport);
 		
 		return "redirect:/view/"+reviewId;
+	}
+	
+	@RequestMapping("/member/report/list")
+	public ModelAndView scrapList(@ModelAttribute SessionMember sessionMember) {
+		ModelAndView mav = new ModelAndView("member/reportList");
+		
+		List<Report> list = reportService.getReportByMemberId(sessionMember.getId()); // 세션 완성되면 설정하기
+		mav.addObject("list", list);
+		
+		return mav;
 	}
 }
