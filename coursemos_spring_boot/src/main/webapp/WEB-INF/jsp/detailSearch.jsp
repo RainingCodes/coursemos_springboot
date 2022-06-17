@@ -47,7 +47,7 @@
     	position:absolute;
         top:250px;
         left:200px;
-        width:300px;
+        width:200px;
         height:70px;
     }
 </style>
@@ -88,49 +88,63 @@
 					<button type="submit">검색하기</button>
 				</form>
 				<c:forEach var="cate" items="${tList}">
-					<button class="btn btn-primary" name="taste" onclick="location.href ='/course/detailedSearch.do?taste=${cate.name}&subway=${subway}'">${cate.name}</button>
+					<button class="btn btn-primary" name="taste" onclick="location.href ='/course/detailedSearch.do?taste=${cate.code}&subway=${subway}'">${cate.label}</button>
 				</c:forEach>	
 				
 				<button id="javascript_btn1" type="button">역찾기</button>
+				<div id="resultsubway"></div>
 			
 				<form name="result" method="post" action="<c:url value='/course/search'/>">
-	<!-- 				<input type="hidden" name="x" value=0>
+					<input type="hidden" name="x" value=0>
 					<input type="hidden" name="y" value=0>
-					<input type="submit" value="코스찾기"> -->
-				</form> 
+				</form>    
 	   		</div> 
 	        
 			<div id="map"></div>        
 			<div id="searchResult"></div>
 			
-             <div id="courseList">
+			<div id="page">
+				<c:if test="${!cList.firstPage}">
+					<a href='<c:url value="/course/search2.do">
+						<c:param name="page" value="previous"/></c:url>'>
+					<font color="balck"><B>&lt;&lt; Prev</B></font></a>
+				</c:if> 
+				<c:if test="${!cList.lastPage}">
+					<a href='<c:url value="/course/search2.do">
+						<c:param name="page" value="next"/></c:url>'>
+					<font color="black"><B>Next &gt;&gt;</B></font></a>
+				</c:if>
+            </div>
+              <div id="courseList">
             <c:forEach var="cate" items="${cList.pageList}">
               <div class="accordion accordion-flush" id="accordionFlushExample">
                <div class="accordion-item"> 
                   <h2 class="accordion-header" id="${cate.courseId}"> 
                     <button class="accordion-button collapsed" type="button"  onclick="javascript:displayCourse('${cate.placeId1.x}' + ',' + '${cate.placeId1.y}', '${cate.placeId2.x}' + ',' + '${cate.placeId2.y}', '${cate.placeId3.x}' + ',' + '${cate.placeId3.y}');"data-bs-toggle="collapse" data-bs-target="#flush-collapseOne_${cate.courseId}" aria-expanded="false" aria-controls="flush-collapseOne_${cate.courseId}">
-                        ${cate.courseId}
+                         ${cate.courseId}
                         | ${cate.courseContents}
                         <i class="bi bi-heart-fill"></i> ${cate.likes}
                     </button>
                   </h2>
                   <div id="flush-collapseOne_${cate.courseId}" class="accordion-collapse collapse" aria-labelledby="${cate.courseId}" data-bs-parent="#accordionFlushExample">
                     <div class="accordion-body">
-                      <button class="list-group-item d-flex justify-content-between align-items-start" onclick="javascript:setCenter('${cate.placeId1.x}','${cate.placeId1.y}')" data-bs-toggle="modal" data-bs-target="#exampleModal_${cate.courseId}_0" style="background-color:antiquewhite">
-                        <div class="mx-sm-5 me-auto">
-                          <div class="fw-bold">${cate.placeId1.placeName}</div>
-                        </div>
-                      </button>
-                      <button class="list-group-item d-flex justify-content-between align-items-start" onclick="javascript:setCenter('${cate.placeId2.x}','${cate.placeId2.y}')" data-bs-toggle="modal" data-bs-target="#exampleModal_${cate.courseId}_1" style="background-color:antiquewhite">
-                        <div class="mx-sm-5 me-auto">
-                          <div class="fw-bold">${cate.placeId2.placeName}</div>
-                        </div>
-                      </button>
-                      <button class="list-group-item d-flex justify-content-between align-items-start" onclick="javascript:setCenter('${cate.placeId3.x}','${cate.placeId3.y}')" data-bs-toggle="modal" data-bs-target="#exampleModal_${cate.courseId}_2" style="background-color:antiquewhite">
-                        <div class="mx-sm-5 me-auto">
-                          <div class="fw-bold">${cate.placeId3.placeName}</div>
-                        </div>
-                      </button>
+					<ul class="list-group col-12">
+						<li class="list-group-item list-group-item" onclick="javascript:panTo('${cate.placeId1.x}' + ',' + '${cate.placeId1.y}')" data-bs-toggle="modal" data-bs-target="#exampleModal_${cate.courseId}_0" style="background-color:antiquewhite">
+							<div class="mx-sm-5 me-auto">
+							<div class="fw-bold">${cate.placeId1.placeName}</div>
+							</div>
+						</li>
+						<li class="list-group-item list-group-item" onclick="javascript:panTo('${cate.placeId2.x}' + ',' + '${cate.placeId2.y}')" data-bs-toggle="modal" data-bs-target="#exampleModal_${cate.courseId}_1" style="background-color:antiquewhite">
+							<div class="mx-sm-5 me-auto">
+							<div class="fw-bold">${cate.placeId2.placeName}</div>
+							</div>
+						</li>
+						<li class="list-group-item list-group-item" onclick="javascript:panTo('${cate.placeId3.x}' + ',' + '${cate.placeId3.y}')" data-bs-toggle="modal" data-bs-target="#exampleModal_${cate.courseId}_2" style="background-color:antiquewhite">
+							<div class="mx-sm-5 me-auto">
+							<div class="fw-bold">${cate.placeId3.placeName}</div>
+							</div>
+						</li>
+					</ul>
                     </div>
                   </div>
                 </div>
@@ -140,7 +154,7 @@
               <div class="modal-dialog">
                 <div class="modal-content">
                   <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+                    <h5 class="modal-title" id="exampleModalLabel">${cate.placeId1.placeName}</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                   </div>
                   <div class="modal-body">
@@ -151,7 +165,6 @@
                   </div>
                   <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                    <button type="button" class="btn btn-primary">Save changes</button>
                   </div>
                 </div>
               </div>
@@ -160,7 +173,7 @@
               <div class="modal-dialog">
                 <div class="modal-content">
                   <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+                    <h5 class="modal-title" id="exampleModalLabel">${cate.placeId2.placeName}</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                   </div>
                   <div class="modal-body">
@@ -171,7 +184,6 @@
                   </div>
                   <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                    <button type="button" class="btn btn-primary">Save changes</button>
                   </div>
                 </div>
               </div>
@@ -180,7 +192,7 @@
               <div class="modal-dialog">
                 <div class="modal-content">
                   <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+                    <h5 class="modal-title" id="exampleModalLabel">${cate.placeId3.placeName}</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                   </div>
                   <div class="modal-body">
@@ -191,30 +203,14 @@
                   </div>
                   <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                    <button type="button" class="btn btn-primary">Save changes</button>
                   </div>
                 </div>
               </div>
             </div>
             </c:forEach>
             </div>  
-            <!-- <ul id="placesList"></ul>-->
-            
-            <p id="result"></p>
-            <div id="page">
-				<c:if test="${!cList.firstPage}">
-					<a href='<c:url value="/course/detailedSearch2.do">
-						<c:param name="page" value="previous"/></c:url>'>
-					<font color="balck"><B>&lt;&lt; Prev</B></font></a>
-				</c:if> 
-				<c:if test="${!cList.lastPage}">
-					<a href='<c:url value="/course/detailedSearch2.do">
-						<c:param name="page" value="next"/></c:url>'>
-					<font color="black"><B>Next &gt;&gt;</B></font></a>
-				</c:if>
-            </div>
 
-     
+        	<p id="result"></p>
 
 			<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=c17b5563968f2fffd356919521833ce2&libraries=services"></script>
 
@@ -324,7 +320,16 @@
                     infowindow.close();
                 };
             }
-            
+            function panTo(data) {
+                // 이동할 위도 경도 위치를 생성합니다 
+               
+            	var d0 = data.split(',');
+                var moveLatLon = new kakao.maps.LatLng(parseFloat(d0[0]), parseFloat(d0[1]));
+                
+                // 지도 중심을 부드럽게 이동시킵니다
+                // 만약 이동할 거리가 지도 화면보다 크면 부드러운 효과 없이 이동합니다
+                map.panTo(moveLatLon);            
+            }  
             var mapContainer = document.getElementById('map'), // 지도를 표시할 div 
                mapOption = {
                    center: new kakao.maps.LatLng(37.577552,126.976869), // 지도의 중심좌표
@@ -452,24 +457,30 @@
             	polyline.setMap(map);  
             }
             
-            // 지도에 마커를 표시하는 함수입니다
             function displayMarker(place) {
                 // 마커를 생성하고 지도에 표시합니다
-                var marker = new kakao.maps.Marker({
+                var subwayM = new kakao.maps.Marker({
                     map: map,
                     position: new kakao.maps.LatLng(place.y, place.x) 
                 });
                 
                 // 마커에 클릭이벤트를 등록합니다
-                kakao.maps.event.addListener(marker, 'click', function() {
+                kakao.maps.event.addListener(subwayM, 'click', function() {
                     // 마커를 클릭하면 장소명이 인포윈도우에 표출됩니다
                     infowindow.setContent('<div style="padding:5px;font-size:12px;">' + place.place_name + '</div>');
-                    infowindow.open(map, marker);
+                    infowindow.open(map, subwayM);
                 });
+				var subwayName = place.place_name.split(' ');
                 
-                return marker;
-            }
-                
+				var nameEl;
+				if (place.category_group_code == 'SW8') {
+                nameEl = document.getElementById('resultsubway'), 
+                itemStr = '<a href="/course/search.do?subway=' + subwayName[0] + '">' + subwayName[0] +'</a> 주변 코스 입니다.';
+                nameEl.innerHTML = itemStr;
+				}
+                return nameEl;
+               
+            }  
             function removeMarker() {
                 for ( var i = 0; i < markers.length; i++ ) {
                     kakao.maps.event.removeListener(markers[i], 'click');

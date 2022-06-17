@@ -2,9 +2,11 @@ package com.example.demo.controller;
 
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.support.PagedListHolder;
@@ -26,12 +28,18 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.example.demo.controller.CompanyController.Taste;
 import com.example.demo.domain.Course;
 import com.example.demo.domain.Place;
 import com.example.demo.domain.SessionMember;
 import com.example.demo.domain.TasteCategory;
 import com.example.demo.service.SearchService;
 import com.example.demo.service.TasteService;
+
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.Setter;
+import lombok.ToString;
 
 @Controller
 @SessionAttributes({"tList", "cList"})
@@ -50,24 +58,61 @@ public class SearchPlaceController {
 	public void setTasteService(TasteService tasteService) {
 		this.tasteService = tasteService;
 	}
+	/*
+	@ModelAttribute("tasteCate")
+	protected List<TasteCategory> tasteList() throws Exception {
+		List<TasteCategory> tList = new ArrayList<TasteCategory>();
+		tList.add(new TasteCategory("활동적인"));
+		tList.add(new TasteCategory("힐링되는"));
+		tList.add(new TasteCategory("자연적인"));
+		tList.add(new TasteCategory("체험적인"));
+		tList.add(new TasteCategory("즐거운"));
+		tList.add(new TasteCategory("복고풍"));
+		tList.add(new TasteCategory("잔잔한"));
+		return tList;
+	}*/
+	@Getter @Setter @AllArgsConstructor @ToString
+	public class Taste {
+		private String code;
+		private String label;
+	}
+	@ModelAttribute("tasteCodes") // return 객체에 이름을 부여하고 view에 전달
+	protected List<Taste> referenceData() throws Exception {
+		ArrayList<Taste> tasteCodes = new ArrayList<>();
+		tasteCodes.add(new Taste("act", "활동적인"));
+		tasteCodes.add(new Taste("hea", "힐링되는"));
+		tasteCodes.add(new Taste("nat", "자연적인"));
+		tasteCodes.add(new Taste("exp", "체험적인"));
+		tasteCodes.add(new Taste("ent", "즐거운"));
+		tasteCodes.add(new Taste("ret", "복고풍"));
+		tasteCodes.add(new Taste("cal", "잔잔한"));
+		return tasteCodes;	
+	}
 	
 	@RequestMapping("/course/search/main")
 	public String handleRequest(
-			ModelMap model
+			ModelMap model, HttpSession session
 			) throws Exception {
-		List<TasteCategory> tList = tasteService.getCategory();
+		List<Taste> tList = referenceData();
+		PagedListHolder<Course> cList = null;
 		model.put("tList", tList);
+		model.put("cList", cList);
 		return SEARCH_VIEW;
 	}
 	@RequestMapping("/course/search.do")
 	public String handleRequest(
-			@RequestParam("station") String station,
+			@RequestParam("subway") String subway,
+			@RequestParam("x") double x,
+			@RequestParam("y") double y,
 			ModelMap model
 			) throws Exception {
-		List<TasteCategory> tList = tasteService.getCategory();
+		List<Taste> tList = referenceData();
 		//String station = "seoul";
-		PagedListHolder<Course> cList = new PagedListHolder<Course>(this.searchService.getCourseList(station));
+		PagedListHolder<Course> cList = new PagedListHolder<Course>(this.searchService.getCourseList(subway));
 		cList.setPageSize(4);
+		model.put("subway", subway);
+		model.put("x", y);
+		model.put("y", x);
 		model.put("tList", tList);
 		model.put("cList", cList);
 		return SEARCH_VIEW;
