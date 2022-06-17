@@ -20,6 +20,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.example.demo.domain.Company;
 import com.example.demo.domain.Coupon;
+import com.example.demo.domain.SessionMember;
 import com.example.demo.service.CompanyService;
 import com.example.demo.service.CouponService;
 import com.example.demo.service.PlaceService;
@@ -60,15 +61,17 @@ public class CouponController {
 	}
 	
 	@RequestMapping("/course/view/coupon/{couponId}")
-	public ModelAndView courseCouponList(@PathVariable("couponId") int couponId) {	
+	public ModelAndView courseCouponList(@ModelAttribute SessionMember sessionMember, @PathVariable("couponId") int couponId) {	
 		ModelAndView mav = new ModelAndView("coupon/getCoupon");
 		
 		Coupon coupon = couponService.getCouponByCouponId(couponId);// 쿠폰 정보들 받아오기
 		Company c = companyService.getCompanyByCompanyId(coupon.getCompanyId());
 		String placeName = placeService.getPlaceByPlaceId(c.getPlace().getPlaceId()).getPlaceName();
 		
+		boolean isCEO = (sessionMember.getId().equals(c.getMemberId()));
 		mav.addObject("placeName", placeName);
 		mav.addObject("coupon", coupon);
+		mav.addObject("isCEO", isCEO);
 		return mav;
 	}
 
