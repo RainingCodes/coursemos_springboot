@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <%@ taglib uri="http://www.springframework.org/tags/form" prefix="form"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
@@ -26,14 +27,6 @@
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor" crossorigin="anonymous">
 </head>
 <script src="https://code.jquery.com/jquery-latest.min.js"></script>
-<script>
-	function onClickBtn()  {
-	  let name = document.getElementById('keyword').value;
-	  ps.keywordSearch(name, placesSearchCB);
-	}	
-	
-</script>
-
 <body>
 
 	<div class="container mt-5">
@@ -63,15 +56,18 @@
 						<h5>코스의 분위기를 선택하세요</h5>
 						<div class="selectTaste"
 							style="display: inline-block; width: 300px; line-height: 45px;">
-							<form:radiobutton path="taste" name="category" value="act"/>활동적인
-							<form:radiobutton path="taste" name="category" value="cal"/>잔잔한
-							<form:radiobutton path="taste" name="category" value="hea"/>힐링
-							<form:radiobutton path="taste" name="category" value="nat"/>자연적인<br>
-							<form:radiobutton path="taste" name="category" value="exp"/>체험적
-							<form:radiobutton path="taste" name="category" value="ent"/>즐거운
-							<form:radiobutton path="taste" name="category" value="ret"/>복고풍
+							<form:radiobutton path="taste" name="taste" id="act" value="act"/>활동적인
+							<form:radiobutton path="taste" name="taste" id="cal" value="cal"/>잔잔한
+							<form:radiobutton path="taste" name="taste" id="hea" value="hea"/>힐링
+							<form:radiobutton path="taste" name="taste" id="nat" value="nat"/>자연적인<br>
+							<form:radiobutton path="taste" name="taste" id="exp" value="exp"/>체험적
+							<form:radiobutton path="taste" name="taste" id="ent" value="ent"/>즐거운
+							<form:radiobutton path="taste" name="taste" id="ret" value="ret"/>복고풍
 						</div>
 						<form:errors path="taste" cssClass="error"/>
+						<script>
+						$("#${updateCourse.taste}").prop('checked',true);
+						</script>
 						<br><br>						
 						<!-- 지도 -->
 						<h5>코스 경로에 추가할 장소를 입력하세요.</h5>
@@ -105,9 +101,15 @@
 							
 							// 장소 검색 객체를 생성합니다
 							var ps = new kakao.maps.services.Places();
+							var places1 = new kakao.maps.services.Places();
 							
 							// 키워드로 장소를 검색합니다
 							ps.keywordSearch('', placesSearchCB); 
+							
+							function onClickBtn()  {
+								  let name = document.getElementById('keyword').value;
+								  ps.keywordSearch(name, placesSearchCB);
+								}
 							
 							// 키워드 검색 완료 시 호출되는 콜백함수 입니다
 							function placesSearchCB (data, status, pagination) {
@@ -124,6 +126,75 @@
 							
 							        // 검색된 장소 위치를 기준으로 지도 범위를 재설정합니다
 							        map.setBounds(bounds);
+							    } 
+							}
+							
+							function onChangeAddress(){
+								let address1 = document.getElementById('address1').value;
+								ps.keywordSearch(address1, placesSearchCB1);
+								
+
+								if(document.getElementById('address2')){
+									let address2 = document.getElementById('address2').value;
+									ps.keywordSearch(address2, placesSearchCB2);
+								}
+								
+								if(document.getElementById('address3')){
+									let address3 = document.getElementById('address3').value;
+									ps.keywordSearch(address3, placesSearchCB3);
+								}
+	
+							}        
+					        
+							// 역 찾기
+					        function placesSearchCBSubway1 (data, status, pagination) {
+							    if (status === kakao.maps.services.Status.OK) {	
+									document.getElementById('subway1').value = data[0].place_name;
+							    } 
+							}
+					        
+					        function placesSearchCBSubway2 (data, status, pagination) {
+							    if (status === kakao.maps.services.Status.OK) {
+										document.getElementById('subway2').value = data[0].place_name;									
+							    } 
+							}
+					        
+					        function placesSearchCBSubway3 (data, status, pagination) {
+							    if (status === kakao.maps.services.Status.OK) {
+										document.getElementById('subway3').value = data[0].place_name;									
+							    } 
+							}
+			
+							// address 입력 시 호출되는 콜백함
+							function placesSearchCB1 (data, status, pagination) {
+							    if (status === kakao.maps.services.Status.OK) {
+							        document.getElementById('place1CoordX').value = data[0].y;
+							        document.getElementById('place1CoordY').value = data[0].x;
+							        
+							        places1.categorySearch('SW8', placesSearchCBSubway1, {
+										location: new kakao.maps.LatLng(data[0].y, data[0].x)
+									});
+							        
+							    } 
+							}
+							function placesSearchCB2 (data, status, pagination) {
+							    if (status === kakao.maps.services.Status.OK) {
+							        document.getElementById('place2CoordX').value = data[0].y;
+							        document.getElementById('place2CoordY').value = data[0].x;
+							        
+							        places1.categorySearch('SW8', placesSearchCBSubway2, {
+										location: new kakao.maps.LatLng(data[0].y, data[0].x)
+									});
+							    } 
+							}
+							function placesSearchCB3 (data, status, pagination) {
+							    if (status === kakao.maps.services.Status.OK) {
+							        document.getElementById('place3CoordX').value = data[0].y;
+							        document.getElementById('place3CoordY').value = data[0].x;
+							        
+							        places1.categorySearch('SW8', placesSearchCBSubway3, {
+										location: new kakao.maps.LatLng(data[0].y, data[0].x)
+									});
 							    } 
 							}
 							
@@ -179,10 +250,6 @@
 								geocoder.coord2Address(coord.getLng(), coord.getLat(), callback);
 							}
 
-							getAddrToInput(${updateCourse.place1.x}, ${updateCourse.place1.y}, 1);
-							getAddrToInput(${updateCourse.place2.x}, ${updateCourse.place2.y}, 2);
-							getAddrToInput(${updateCourse.place2.x}, ${updateCourse.place3.y}, 3);	
-							
 							function copy_to_clipboard(a) {    
 								  var copyText = document.getElementById(a);
 								  copyText.select();
@@ -205,20 +272,62 @@
 
 						<br>
 						<b>1번째 장소</b>
-						<input class="form-control" type="text" placeholder="장소" id='placeName1' name="placeName1" style="width: 95%" value="${updateCourse.place1.placeName}"required> 
+						<input class="form-control" type="text" placeholder="장소" id='placeName1' name="place1.placeName1" style="width: 95%" value="${updateCourse.place1.placeName}"required> 
 						<input class="form-control" type="text" placeholder="상세 주소(지번)" id='address1' name="address1" onchange="onChangeAddress()" style="width: 95%" required>
 						<input class="form-control" type="text" placeholder="상세 주소(도로명, 없을 경우 생략)" name="road_address1" id='road_address1' style="width: 95%"><br> 											
+						<input type="hidden" id="place1CoordX" name="place1.x" value="${updateCourse.place1.x}">
+						<input type="hidden" id="place1CoordY" name="place1.y" value="${updateCourse.place1.y}">
 						<b>2번째 장소</b>
-						<input class="form-control" type="text" placeholder="장소" id='placeName2' name="placeName2" style="width: 95%" value="${updateCourse.place2.placeName}"required> 
+						<input class="form-control" type="text" placeholder="장소" id='placeName2' name="place2.placeName2" style="width: 95%" value="${updateCourse.place2.placeName}"required> 
 						<input class="form-control" type="text" placeholder="상세 주소(지번)" id='address2' name="address2" onchange="onChangeAddress()" style="width: 95%" required>
 						<input class="form-control" type="text" placeholder="상세 주소(도로명, 없을 경우 생략)" name="road_address2" id='road_address2' style="width: 95%"><br> 					
-						
+						<input type="hidden" id="place2CoordX" name="place2.x" value="${updateCourse.place2.x}">
+						<input type="hidden" id="place2CoordY" name="place2.y" value="${updateCourse.place2.y}">
 						<b>3번째 장소</b>
-						<input class="form-control" type="text" placeholder="장소" id='placeName3' name="placeName3" style="width: 95%" value="${updateCourse.place3.placeName}"required> 
+						<input class="form-control" type="text" placeholder="장소" id='placeName3' name="place3.placeName3" style="width: 95%" value="${updateCourse.place3.placeName}"required> 
 						<input class="form-control" type="text" placeholder="상세 주소(지번)" id='address3' name="address3" onchange="onChangeAddress()" style="width: 95%" required>
 						<input class="form-control" type="text" placeholder="상세 주소(도로명, 없을 경우 생략)" name="road_address3" id='road_address3' style="width: 95%"><br> 					
-
+						<input type="hidden" id="place3CoordX" name="place3.x" value="${updateCourse.place3.x}">
+						<input type="hidden" id="place3CoordY" name="place3.y" value="${updateCourse.place3.y}">
+						<script>
+						
+                        var coordscoords = new kakao.maps.LatLng(${updateCourse.place1.x}, ${updateCourse.place1.y});
+    					var callback1 = function(result1, status1){
+    						if (status1 == kakao.maps.services.Status.OK){
+    							document.getElementById("address1").value = result1[0].address.address_name;
+    							document.getElementById("road_address1").value = result1[0].road_address.address_name;
+    						}
+    					}
+    					geocoder.coord2Address(coordscoords.getLng(), coordscoords.getLat(), callback1);	
+						
+    					if (${updateCourse.place2 != null}){
+    						var coordscoords2 = new kakao.maps.LatLng(${updateCourse.place2.x}, ${updateCourse.place2.y});
+    						var callback2 = function(result2, status2){
+    							if (status2 == kakao.maps.services.Status.OK){
+    								document.getElementById("address2").value = result2[0].address.address_name;
+    								document.getElementById("road_address2").value = result2[0].road_address.address_name;
+    							
+    							}
+    						};
+    						geocoder.coord2Address(coordscoords2.getLng(), coordscoords2.getLat(), callback2);
+    					}
+    					
+    					
+    					if (${updateCourse.place3 != null}){
+    						var coordscoords3 = new kakao.maps.LatLng(${updateCourse.place3.x}, ${updateCourse.place3.y});						
+    						var callback3 = function(result3, status3){
+    							if (status3 == kakao.maps.services.Status.OK){
+    								document.getElementById("address3").value = result3[0].address.address_name;
+    								document.getElementById("road_address3").value = result3[0].road_address.address_name;
+    							}
+    						};
+    						geocoder.coord2Address(coordscoords3.getLng(), coordscoords3.getLat(), callback3);
+    					}
+    					
+    					
                         
+                        </script>
+
                           <!-- Post content-->
                         <h5 id="description">코스에 대한 설명을 입력하세요</h5>
                         <input class="form-control" name="contents" type="text" value="${updateCourse.courseContents }" style="height:300px">
