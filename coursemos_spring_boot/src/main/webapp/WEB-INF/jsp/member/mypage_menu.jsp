@@ -18,7 +18,7 @@
                     <a class="list-group-item list-group-item-action list-group-item-light p-3" href="/company/list">제휴 관리</a>
                     <a class="list-group-item list-group-item-action list-group-item-light p-3" href="/review/list">작성한 후기 목록</a>
                     <a class="list-group-item list-group-item-action list-group-item-light p-3" href="/member/coupon/list">다운받은 할인권 목록</a>
-                    <a class="list-group-item list-group-item-action list-group-item-light p-3" href="/user/report">신고함</a>
+                    <a class="list-group-item list-group-item-action list-group-item-light p-3" href="/member/report/list">신고함</a>
                 </div>
             </div>
             <!-- Page content wrapper-->
