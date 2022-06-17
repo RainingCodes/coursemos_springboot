@@ -44,7 +44,7 @@ import lombok.Setter;
 import lombok.ToString;
 
 @Controller
-@SessionAttributes({"course", "sessionMember"})
+@SessionAttributes("sessionMember")
 @RequestMapping("/course")
 public class CourseController {
 	
@@ -92,7 +92,7 @@ public class CourseController {
 	}
 	
 	@RequestMapping(value="/view", method=RequestMethod.POST)
-	public String onSubmit(@ModelAttribute SessionMember sessionMember, @ModelAttribute Course course, BindingResult result, SessionStatus status, HttpServletRequest request) {
+	public String onSubmit(@ModelAttribute SessionMember sessionMember, @ModelAttribute Course course, BindingResult result) {
 		new CourseValidator().validate(course, result);
 		
 		if (result.hasErrors()) {
