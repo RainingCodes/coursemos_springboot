@@ -74,9 +74,8 @@ public class ReportController {
 		model.addAttribute("courseId", courseId);
 		Course c = courseService.getCourseByCourseId(courseId);
 		Member m = memberService.findMemberById(c.getMemberId());
-		//서비스로 게시글 제목, 글쓴이 가져오는 것 나중에 구현해서 모델에 연결해서 리턴
-		model.addAttribute("reportTitle", c.getCourseName());
 		
+		model.addAttribute("reportTitle", c.getCourseName());
 		if (m != null) {
 			model.addAttribute("reportUserName", m.getNickName());
 		}
@@ -84,13 +83,23 @@ public class ReportController {
 	}
 	
 	@RequestMapping(value = "/report/course/{courseId}", method = RequestMethod.POST)
-	public String courseReportRegister(@PathVariable int courseId, @ModelAttribute SessionMember sessionMember,
+	public ModelAndView courseReportRegister(@PathVariable int courseId, @ModelAttribute SessionMember sessionMember,
 			@ModelAttribute("Report") Report courseReport, BindingResult result) {
 		
 		new ReportValidator().validate(courseReport, result);
 		if (result.hasErrors()) {
-			return "report/courseReport";
+			ModelAndView mav = new ModelAndView("report/courseReport");
+			Course c = courseService.getCourseByCourseId(courseId);
+			Member m = memberService.findMemberById(c.getMemberId());
+			
+			mav.addObject("reportTitle", c.getCourseName());
+			if (m != null) {
+				mav.addObject("reportUserName", m.getNickName());
+			}
+			return mav;
 		}
+		
+		ModelAndView mav = new ModelAndView("alert");
 
 		courseReport.setCourseId(courseId);
 		courseReport.setReviewId(null);
@@ -101,13 +110,15 @@ public class ReportController {
 		courseReport.setMemberId(sessionMember.getId()); // 세션 완성되면 설정하기
 		reportService.insertReport(courseReport);
 		
-		return "redirect:/course/view/"+courseId;
+		mav.addObject("msg", "코스 신고 완료!");
+		mav.addObject("url", "closePage");
+		return mav;
 	}
+	
 	
 	@RequestMapping(value = "/report/review/{reviewId}", method = RequestMethod.GET)
 	public String reviewReportForm(@PathVariable Long reviewId, Model model) {
 		model.addAttribute("reviewId", reviewId);
-		//서비스로 게시글 제목, 글쓴이 가져오는 것 나중에 구현해서 모델에 연결해서 리턴
 		Review r = reviewService.findReviewById(reviewId);
 		Member m = memberService.findMemberById(r.getMemberId());
 		model.addAttribute("reportTitle", r.getReviewContents());
@@ -117,13 +128,20 @@ public class ReportController {
 	}
 	
 	@RequestMapping(value = "/report/review/{reviewId}", method = RequestMethod.POST)
-	public String reviewReportRegister(@PathVariable int reviewId, @ModelAttribute SessionMember sessionMember,
+	public ModelAndView reviewReportRegister(@PathVariable Long reviewId, @ModelAttribute SessionMember sessionMember,
 			@ModelAttribute("Report") Report reviewReport, BindingResult result) {
 		
 		new ReportValidator().validate(reviewReport, result);
 		if (result.hasErrors()) {
-			return "report/reviewReport";
+			ModelAndView mav = new ModelAndView("report/reviewReport");
+			Review r = reviewService.findReviewById(reviewId);
+			Member m = memberService.findMemberById(r.getMemberId());
+			mav.addObject("reportTitle", r.getReviewContents());
+			mav.addObject("reportUserName", m.getNickName());
+			return mav;
 		}
+		
+		ModelAndView mav = new ModelAndView("alert");
 
 		reviewReport.setCourseId(null);
 		reviewReport.setReviewId(reviewId);
@@ -134,7 +152,9 @@ public class ReportController {
 	    reviewReport.setMemberId(sessionMember.getId()); // 세션 완성되면 설정하기
 		reportService.insertReport(reviewReport);
 		
-		return "redirect:/review/registered/"+reviewId;
+		mav.addObject("msg", "리뷰 신고 완료!");
+		mav.addObject("url", "closePage");
+		return mav;
 	}
 	
 	

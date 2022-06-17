@@ -24,6 +24,6 @@ public class Report {
 	private String state;
 	
 	private Integer courseId;
-	private Integer reviewId;
+	private Long reviewId;
 	
 }
