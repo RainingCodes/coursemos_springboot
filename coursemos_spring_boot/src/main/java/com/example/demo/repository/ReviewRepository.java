@@ -9,7 +9,7 @@ import com.example.demo.domain.Review;
 
 
 public interface ReviewRepository extends CrudRepository<Review, String>{
-	List<Review> findReviewByCourseId(Long id);
+	List<Review> findReviewByCourseId(int id);
 
 	List<Review> findReviewByReviewId(Long reviewId);
 

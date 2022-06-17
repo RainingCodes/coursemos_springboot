@@ -177,7 +177,7 @@ public class ReviewController implements ApplicationContextAware{
 
 	
 	@GetMapping(value = "/course/{courseId}/review/list") 
-	public ModelAndView viewList(@PathVariable("courseId") Long id, HttpServletResponse response) throws IOException{
+	public ModelAndView viewList(@PathVariable("courseId") int id, HttpServletResponse response) throws IOException{
 		List<Review> reviews = reviewService.findReviewByCourseId(id);
 		ModelAndView mv = new ModelAndView("review/reviewList");
 

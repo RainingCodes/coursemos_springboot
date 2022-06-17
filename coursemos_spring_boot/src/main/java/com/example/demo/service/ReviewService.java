@@ -22,7 +22,7 @@ public class ReviewService {
 	public void delete(Review review) {
 		reviewRepository.delete(review);
 	}
-	public List<Review> findReviewByCourseId(Long id) {
+	public List<Review> findReviewByCourseId(int id) {
 		return reviewRepository.findReviewByCourseId(id);
 	}
 	public Review findReviewById(Long reviewId) {
