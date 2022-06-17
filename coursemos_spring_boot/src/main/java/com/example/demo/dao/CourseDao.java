@@ -9,7 +9,7 @@ import com.example.demo.domain.Course;
 
 public interface CourseDao {
 
-	Course getCourseByCourseId(int courseId) throws DataAccessException;
+	Course getCourseByCourseId(Long courseId) throws DataAccessException;
 	
 	void insertCourse(Course course) throws DataAccessException;
 
