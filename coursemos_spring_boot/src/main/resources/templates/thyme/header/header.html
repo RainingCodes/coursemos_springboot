@@ -51,8 +51,8 @@
 		        <a href="/"><img alt="로고" src="../../img/logo.png" width="200"></a>
 		    </td>
 		    <td class="right" >
-		      <span class="message"><a href="/mypage"><span th:text="${session.nickName}"></span></a>님 안녕하세요. </span>
-		      <span class="message"><a href="/member/points" id="points"> <span th:text="${session.points}"></span> Points</a></span>
+		      <span class="message"><a href="/mypage"><span th:text="${session.sessionMember.nickName}"></span></a>님 안녕하세요. </span>
+		      <span class="message"><a href="/member/points" id="points"> <span th:text="${session.sessionMember.points}"></span> Points</a></span>
 		      	<span id="tooltip" class="tooltip-text">
 		      		
 				      <table class="table table-striped">
