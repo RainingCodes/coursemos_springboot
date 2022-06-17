@@ -56,7 +56,7 @@ public class ScrapController {
 		return mav;
 	}
 	
-	@RequestMapping("/user/unscrap")
+	@RequestMapping("/member/unscrap")
 	public String deleteScrap(@ModelAttribute SessionMember sessionMember, 
 			@RequestParam("courseId") int courseId) {
 		Scrap scrap = scrapService.getScrapByPrimaryKey(sessionMember.getId(), courseId);
