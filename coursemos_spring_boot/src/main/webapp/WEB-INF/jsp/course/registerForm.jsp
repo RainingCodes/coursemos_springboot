@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <%@ taglib uri="http://www.springframework.org/tags/form" prefix="form"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
@@ -8,6 +9,12 @@
 <meta name="description" content="" />
 <meta name="author" content="" />
 <title>코스 작성</title>
+<c:if test="${sessionMember.check2 != false}"> <!-- if와 동일 -->
+	<%@ include file="../header/IncludeTopMember.jsp"  %>
+</c:if> <!-- if 종료 -->
+<c:if test="${sessionMember.check2 ==false }">
+	<%@ include file="../header/IncludeTop.jsp"  %>
+</c:if> <!-- if 종료 -->
 <style>
 	.error {
 		color:red;
@@ -22,39 +29,6 @@
 <script src="https://code.jquery.com/jquery-latest.min.js"></script>
 <body>
 <!-- Responsive navbar-->
-	<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-		<div class="container">
-			<div>
-				<ul class="navbar-nav ms-auto mb-2 mb-lg-0">
-					<li class="nav-item"><a class="nav-link active" href="#!">코스 등록</a></li>
-					<li class="nav-item"><a class="nav-link active" href="#!">제휴 등록</a></li>
-				</ul>
-			</div>
-			<div align="center">
-				<button class="navbar-brand" type="button" style="border: none;">
-					<img src="../img/logo.png" style="width: 100px;">
-				</button>
-				<!-- <a class="navbar-brand" href="#!">코스모스</a> -->
-			</div>
-			<button class="navbar-toggler" type="button"
-				data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
-				aria-controls="navbarSupportedContent" aria-expanded="false"
-				aria-label="Toggle navigation">
-				<span class="navbar-toggler-icon"></span>
-			</button>
-			<div class="collapse navbar-collapse" id="navbarSupportedContent">
-				<ul class="navbar-nav ms-auto mb-2 mb-lg-0">
-					<li class="nav-item"><a class="nav-link" href="#">OOO님
-							환영합니다!</a></li>
-					<li class="nav-item"><a class="nav-link active" href="#">150
-							Points</a></li>
-					<li class="nav-item"><a class="nav-link active" href="#!">My
-							page</a></li>
-					<li class="nav-item"><a class="nav-link active" href="#!">Logout</a></li>
-				</ul>
-			</div>
-		</div>
-	</nav>
 	<!-- Page content-->
 	<div class="container mt-5">
 		<div class="row" style="margin-left: 25%;">
