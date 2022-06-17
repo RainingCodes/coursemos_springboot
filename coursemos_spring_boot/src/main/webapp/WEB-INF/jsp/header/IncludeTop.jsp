@@ -65,7 +65,7 @@
 	  <tr>
 	  	<td class="left"></td>
 	    <td class="logo">
-	        <a href="/"><img alt="로고" src="../img/logo.png" width="200"></a>
+	        <a href="/"><img alt="로고" src="https://github.com/RainingCodes/img-repository/blob/main/logo.png?raw=true" width="200"></a>
 	    </td>
 	    <td class="right">
 	      <button class="btn btn-outline-primary" v-on:click="login">로그인</button>
