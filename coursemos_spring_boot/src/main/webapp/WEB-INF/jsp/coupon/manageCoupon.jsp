@@ -10,7 +10,6 @@
 </c:if> <!-- if 종료 -->
 <html>
 <head>
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
 <title>제휴 관리</title>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 <script>

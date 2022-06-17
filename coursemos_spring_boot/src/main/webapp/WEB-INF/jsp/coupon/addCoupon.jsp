@@ -1,9 +1,15 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
+<c:if test="${sessionMember.check2 != false}"> <!-- if와 동일 -->
+	<%@ include file="../header/IncludeTopMember.jsp"  %>
+</c:if> <!-- if 종료 -->
+<c:if test="${sessionMember.check2 ==false }">
+	<%@ include file="../header/IncludeTop.jsp"  %>
+</c:if> <!-- if 종료 -->
 <html>
 <head>
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
 <title>쿠폰 등록</title>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 <style type="text/css">

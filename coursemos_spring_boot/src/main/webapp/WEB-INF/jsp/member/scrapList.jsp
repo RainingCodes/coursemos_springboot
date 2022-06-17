@@ -16,7 +16,7 @@
 <body>
 <%@ include file="./mypage_menu.jsp"  %>
 <div class="container">
-<center><h1>스크랩 관리</h1></center>
+<center><h2>스크랩 관리</h2></center>
 <h4>나의 스크랩 리스트</h4>
 <table class="table table-bordered">
 	<tr>

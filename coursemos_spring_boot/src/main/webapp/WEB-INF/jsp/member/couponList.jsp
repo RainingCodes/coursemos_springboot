@@ -10,7 +10,6 @@
 </c:if> <!-- if 종료 -->
 <html>
 <head>
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
 <title>다운받은 할인권 관리</title>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 </head>
@@ -21,7 +20,7 @@
 <fmt:formatDate value="${now}" pattern="yyyy-MM-dd" var="nowDate" />        <%-- 오늘날짜 --%>
 
 <div class="container">
-<center><h1>다운받은 할인권 관리</h1></center>
+<center><h2>다운받은 할인권 관리</h2></center>
 <h4>사용 가능 할인권 리스트</h4>
 <table class="table">
 	<tr>

@@ -10,11 +10,11 @@
 </c:if> <!-- if 종료 -->
 <html>
 <head>
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
 <title>제휴 등록</title>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 <style>
-    #map {
+    #companyMap {
+   		margin: 0;
         width: 400px;
         height: 400px;
         border: 1px #a8a8a8 solid;
@@ -23,6 +23,12 @@
 		color:red;
 		font-size:15px;
 		font-weight:bold;
+	}
+	input {
+    	font-size : 15px;
+    }
+    .form {
+		text-align:left;
 	}
 </style>
 </head>
@@ -33,32 +39,32 @@
 	<form:form modelAttribute="Company">
 	<tr>
 		<td class="text-center"><b>지도에서<br>위치찾기</b></td>
-		<td>
+		<td class="form">
 			<input id="keyword1" type="text" placeholder="장소를 입력하세요.">
 			<button onclick="searchPlaces(); return false;" type="button">위치 찾기</button>
 			<button id="javascript_btn1" type="button">주소 불러오기</button>
-			<div id="map"></div>
+			<div id="companyMap"></div>
 		</td>
 	</tr>
 	<tr>
 		<td class="text-center"><form:label path="companyId">사업자등록번호</form:label></td>
-		<td><form:input path="companyId" placeholder="0000000000"/> <form:errors path="companyId" cssClass="error"/><br></td>
+		<td class="form"><form:input path="companyId" placeholder="0000000000"/> <form:errors path="companyId" cssClass="error"/><br></td>
 	</tr>
 	<tr>
 		<td class="text-center"><form:label path="place.placeName">가게명</form:label></td>
-		<td><form:input path="place.placeName" size="35" placeholder="주소 찾기 시 자동 추가됩니다"/> <form:errors path="place.placeName" cssClass="error"/><br></td>
+		<td class="form"><form:input path="place.placeName" size="35" placeholder="주소 찾기 시 자동 추가됩니다"/> <form:errors path="place.placeName" cssClass="error"/><br></td>
 	</tr>
 	<tr>
 		<td class="text-center"><form:label path="phone">전화번호</form:label></td>
-		<td><form:input path="phone"  size="35" placeholder="주소 찾기 시 값이 존재하면 자동 추가됩니다"/> <form:errors path="phone" cssClass="error"/><br></td>
+		<td class="form"><form:input path="phone"  size="35" placeholder="주소 찾기 시 값이 존재하면 자동 추가됩니다"/> <form:errors path="phone" cssClass="error"/><br></td>
 	</tr>
 	<tr>
 		<td class="text-center"><form:label path="address">주소</form:label></td>
-		<td><form:input path="address"  size="50" placeholder="주소 찾기 시 자동 추가됩니다"/> <form:errors path="address" cssClass="error"/><br></td>
+		<td class="form"><form:input path="address"  size="50" placeholder="주소 찾기 시 자동 추가됩니다"/> <form:errors path="address" cssClass="error"/><br></td>
 	</tr>
 	<tr>
 		<td class="text-center"><form:label path="place.taste">장소 분위기 선택하기</form:label></td>
-		<td><form:radiobuttons path="place.taste" items="${tasteCodes}" itemLabel="label" itemValue="code" /> <form:errors path="place.taste" cssClass="error"/></td>
+		<td class="form"><form:radiobuttons path="place.taste" items="${tasteCodes}" itemLabel="label" itemValue="code" /> <form:errors path="place.taste" cssClass="error"/></td>
 	</tr>
 	<tr>
 		<td colspan="2" class="text-center"><input type="submit" value="접수하기" /></td>
@@ -80,7 +86,7 @@
 // 마커를 클릭하면 장소명을 표출할 인포윈도우 입니다
 var infowindow = new kakao.maps.InfoWindow({zIndex:1});
 
-var mapContainer = document.getElementById('map'), // 지도를 표시할 div 
+var mapContainer = document.getElementById('companyMap'), // 지도를 표시할 div 
     mapOption = {
         center: new kakao.maps.LatLng(37.566826, 126.9786567), // 지도의 중심좌표
         level: 3 // 지도의 확대 레벨
