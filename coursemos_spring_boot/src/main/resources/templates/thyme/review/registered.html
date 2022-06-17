@@ -28,8 +28,11 @@ function update (){
    location.href=link;
 }
 function del (){
-	   var link = "/review/delete/"+/*[[${review.reviewId}]]*/ 'null';
-	   location.href=link;
+		var result = confirm("이 리뷰에 관련된 정보가 다 지워집니다. \n 삭제하시겠습니까?");
+		if(result) {
+			 var link = "/review/delete/"+/*[[${review.reviewId}]]*/ 'null';
+			 location.href=link;
+		} 
 	}
 function like (){
 	   var link = "/review/like/"+/*[[${review.reviewId}]]*/ 'null';

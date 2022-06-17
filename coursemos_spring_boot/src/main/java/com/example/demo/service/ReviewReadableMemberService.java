@@ -21,6 +21,9 @@ public class ReviewReadableMemberService {
 		System.out.println(l);
 		return l;
 	}
+	public List<ReviewReadableMember> findReviewReadableMemberByReviewId(Long reviewId) {
+		return reviewReadableMemberRepository.findReviewReadableMemberByReviewId(reviewId);
+	}
 	public boolean findReviewReadableMemberByMemberIdReviewId(Long memberId, Long reviewId) {
 		ReviewReadableMember rrm = reviewReadableMemberRepository.findReviewReadableMemberByMemberIdAndReviewId(memberId, reviewId);
 		if(rrm == null)

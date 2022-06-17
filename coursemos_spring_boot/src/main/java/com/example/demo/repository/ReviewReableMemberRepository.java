@@ -7,6 +7,7 @@ import org.springframework.data.repository.CrudRepository;
 import com.example.demo.domain.ReviewReadableMember;
 
 public interface ReviewReableMemberRepository extends CrudRepository<ReviewReadableMember, String>{
+	List<ReviewReadableMember> findReviewReadableMemberByReviewId(Long reviewId);
 	List<ReviewReadableMember> findReviewReadableMemberByMemberId(Long memberId);
 	ReviewReadableMember findReviewReadableMemberByMemberIdAndReviewId(Long memberId, Long reviewId);
 }

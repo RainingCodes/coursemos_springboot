@@ -33,6 +33,7 @@ import com.example.demo.domain.Course;
 import com.example.demo.domain.Member;
 import com.example.demo.domain.Points;
 import com.example.demo.domain.Review;
+import com.example.demo.domain.ReviewLike;
 import com.example.demo.domain.ReviewReadableMember;
 import com.example.demo.domain.SessionMember;
 import com.example.demo.service.CourseService;
@@ -220,6 +221,18 @@ public class ReviewController implements ApplicationContextAware{
 	public ModelAndView delete(@ModelAttribute SessionMember sessionMember, @PathVariable("reviewId") Long id) {
 		ModelAndView mv = new ModelAndView("redirect:/review/list");
 		Review review = reviewService.findReviewById(id);
+		List<ReviewLike> rll = reviewLikeService.findReviewLikeByReviewId(id);
+		if(rll != null) {
+			for(ReviewLike rl : rll) {
+				reviewLikeService.delete(rl);
+			}
+		}
+		List<ReviewReadableMember> rrml= reviewReadableMemberService.findReviewReadableMemberByReviewId(id);
+		if(rrml != null) {
+			for(ReviewReadableMember rrm : rrml) {
+				reviewReadableMemberService.delete(rrm);
+			}
+		}
 		reviewService.delete(review);
 		return mv;
 	}

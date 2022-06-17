@@ -9,5 +9,6 @@ import com.example.demo.domain.ReviewLike;
 public interface ReviewLikeRepository extends CrudRepository<ReviewLike, String>{
 	List<ReviewLike> findReviewLikeByMemberId(Long memberId);
 	ReviewLike findReviewLikeByReviewIdAndMemberId(Long reviewId, Long memberId);
+	List<ReviewLike> findReviewLikeByReviewId(Long reviewId);
 }
 
