@@ -4,40 +4,76 @@
 <meta charset="UTF-8">
 <title>리뷰 작성 완료</title>
 <header th:replace="~{thyme/header/header :: #header}"></header>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css">
 </head>
 <style>
-div {
-    	text-align : center;
-    }
-    table {
-    	margin:auto; 
-    }
-    
+	div {
+	    	text-align : center;
+	}
+	table {
+		margin : auto;
+	}
+
+	.img img {
+		width:30px;
+		heght:30px;
+	}
 </style>
+<script th:inline="javascript">
+/* <![CDATA[*/
+function update (){
+   var link = "/review/update/"+/*[[${review.reviewId}]]*/ 'null';
+   location.href=link;
+}
+function like (){
+	   var link = "/review/like/"+/*[[${review.reviewId}]]*/ 'null';
+	   location.href=link;
+	}
+function dislike (){
+	   var link = "/review/dislike/"+/*[[${review.reviewId}]]*/ 'null';
+	   location.href=link;
+	}
+/*]]>*/
+</script>
 <body>
-	<div><h3><span th:text="${session.review.courseName}"></span> 리뷰</h3>
-		</div>
-		<table>
+	<div><h3><span th:text="${review.courseName}"></span> 리뷰</h3>
+		<table id="review">
+			<tr>
+				<td><th:block th:unless="${isWriter}"><span th:if="${like}" class="img"><a onclick="like();"><img src="../../img/like1.png"></a></span>
+						<span th:unless="${like}" class="img">
+							<a onclick="dislike()"><img src="../../img/like2.png"></a>
+						</span>
+					</th:block>
+					<th:block th:if="${isWriter}"><span class="img"><img src="../../img/like2.png"></span></th:block>
+				</td>
+				<td><span th:if="${isWriter}"><button class="btn-primary" type="button" onclick="update();">수정하기</button></span></td>
+			</tr>
+			<tr>
+				<td>
+				Likes <span th:text="${review.likes}"></span>
+				</td>
+			</tr>
 			<tr>
 				<td>작성자 : </td>
-				<td th:text="${session.writer}"></td>
+				<td th:text="${writer}"></td>
 			</tr>
 			<tr>
 				<td>작성 날짜 : </td>
-				<td th:text="${session.review.writtenDate}"> </td>
+				<td th:text="${review.writtenDate}"> </td>
 			</tr>
 			<tr>
 				<td>리뷰 내용 : </td>
-				<td th:text="${session.review.reviewContents}"></td>
+				<td th:text="${review.reviewContents}"></td>
 			</tr>
 			<tr>
 				<td>사진 </td>
-				<td><img th:src="@{${session.review.photos}}"/></td>
+				<td><img th:src="@{${review.photos}}"/></td>
 			</tr>
 			<tr>
 			</tr>
 		</table>
-</div>
+		<span th:text="${review.reviewId}"></span>
+	</div>
 	
 </body>
 </html>

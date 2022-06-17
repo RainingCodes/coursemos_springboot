@@ -4,6 +4,7 @@
 <meta charset="UTF-8">
 <title>리뷰작성</title>
 <header th:replace="~{thyme/header/header :: #header}"></header>
+<link rel="stylesheet" th:href="@{../css/style.css}" />
 <script type="text/javascript" src="http://code.jquery.com/jquery-1.12.4.min.js"></script>
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css">
 <script>
@@ -29,31 +30,15 @@ function register(){
 		
 }
 </script>
-<style>
-	textarea{
-	width:500px; 
-	height:100px; 
-    resize:none;
-    }
-    div {
-    	text-align : center;
-    }
-    table {
-    	margin:auto; 
-    }
-    .err {
-    	color : red;
-    }
-</style>
 </head>
 <body>
 
 <div><h3>리뷰 작성하기</h3>
 	<form th:action="@{/review/register}" th:object="${review}" method="post" enctype="multipart/form-data" id="review">
-		<table>
+		<table class="table table-bordered">
 			<tr>
 				<td>작성자 : </td>
-				<td th:text="*{nickName}"></td>
+				<td th:text="${sessionMember.nickName}"></td>
 			</tr>	
 			<tr>
 				<td>작성 날짜 : </td>
@@ -76,7 +61,7 @@ function register(){
 				<td><input type="file" name="photo" ></td>
 			</tr>
 			<tr>
-				<td colspan="2"><button type="button" class="btn-primary" onclick="register();"/>등록하기</button></td>
+				<td colspan="2"><button type="button" class="btn-primary" onclick="register();">등록하기</button></td>
 			</tr>
 		</table>
 	</form> 
