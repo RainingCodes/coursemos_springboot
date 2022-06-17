@@ -54,14 +54,17 @@
 		      <span class="message"><a href="/mypage"><span th:text="${session.sessionMember.nickName}"></span></a>님 안녕하세요. </span>
 		      <span class="message"><a href="/member/points" id="points"> <span th:text="${session.sessionMember.points}"></span> Points</a></span>
 		      	<span id="tooltip" class="tooltip-text">
-		      		
 				      <table class="table table-striped">
 				      	<tbody>
-								<tr th:each="p : ${session.pointList}">
-									<td th:text="${p.getPointsDate()}"></td>
-									<td th:text="${p.getTypeString()}"></td>
-									<td th:text="${p.getTypeString2()}"></td>
+				      		
+								<tr th:each="p, index : ${sessionMember.pointList}">
+									<th:block th:if="${index.index} > ${sessionMember.pointList.size()} - 4">
+										<td th:text="${p.getPointsDate()}"></td>
+										<td th:text="${p.getTypeString()}"></td>
+										<td th:text="${p.getTypeString2()}"></td>
+									</th:block>
 								</tr>
+							
 			        		<tr>
 			        			<td colspan="3"><a href="/member/points">더보기</a>&nbsp;&nbsp;&nbsp;&nbsp;<input type="button" onclick="$('#tooltip').css('display','none');" value="닫기" style="font-size:15px;"></td>
 			        		</tr>
