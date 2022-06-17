@@ -24,11 +24,12 @@ public class ReviewLikeService {
 	}
 	
 	public boolean findReviewLikeByReviewIdMemberId(Long reviewId, Long memberId) {
-		ReviewLike reviewLike = reviewLikeRepository.findReviewLikeByReviewIdAndMemberId(memberId, reviewId);
+		ReviewLike reviewLike = reviewLikeRepository.findReviewLikeByReviewIdAndMemberId(reviewId, memberId);
+		System.out.println(reviewLike);
 		if(reviewLike == null) {
-			return true;
-		} else {
 			return false;
+		} else {
+			return true;
 		}
 	}
 	public void delete(ReviewLike reviewLike) {

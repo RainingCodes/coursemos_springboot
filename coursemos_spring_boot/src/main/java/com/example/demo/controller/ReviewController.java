@@ -134,6 +134,7 @@ public class ReviewController implements ApplicationContextAware{
 		if(!isWriter) {
 			//reviewLike 조회
 			like = reviewLikeService.findReviewLikeByReviewIdMemberId(review.getReviewId(), sessionMember.getId());
+			
 		}
 		mv.addObject("sessionMember", sessionMember);
 		mv.addObject("review", review);
