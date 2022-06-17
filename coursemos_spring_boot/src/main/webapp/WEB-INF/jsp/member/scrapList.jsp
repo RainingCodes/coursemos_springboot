@@ -12,12 +12,22 @@
 <head>
 <meta charset="UTF-8">
 <title>스크랩 관리</title>
+<style>
+.button {
+	text-align:center;
+}
+h2 {
+	text-align:center;
+}
+th {
+	text-align:center;
+}
+</style>
 </head>
 <body>
 <%@ include file="./mypage_menu.jsp"  %>
 <div class="container">
 <center><h2>스크랩 관리</h2></center>
-<h4>나의 스크랩 리스트</h4>
 <table class="table table-bordered">
 	<tr>
 		<th>코스 이름</th>

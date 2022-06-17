@@ -12,11 +12,57 @@
 <title>제휴 관리</title>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 </head>
+<script src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
+<script>
+var check = 1;
+$(document).ready(function () {
+	if(check == 1) {
+		$("#end").hide();
+		$("#apply").hide();
+	}
+	
+	$(document).on("click", "input[name='pro']", function () {
+		check = 1;
+		$("#pro").show();
+		$("#end").hide();
+		$("#apply").hide();
+	});
+	$(document).on("click", "input[name='end']", function () {
+		check = 2;
+		$("#pro").hide();
+		$("#end").show();
+		$("#apply").hide();
+	});	  
+	$(document).on("click", "input[name='apply']", function () {
+		check = 2;
+		$("#pro").hide();
+		$("#end").hide();
+		$("#apply").show();
+	});	 
+});
+</script>
+<style>
+.button {
+	text-align:center;
+}
+h2 {
+	text-align:center;
+}
+th {
+	text-align:center;
+}
+</style>
 <body>
 <%@ include file="../member/mypage_menu.jsp"  %>
 <div class="container">
-<center><h2>제휴 관리</h2></center> 
-<h3>제휴 중</h3>
+<div class="button">
+<input class="btn btn-dark" type='button' name='pro' value='제휴 중'>
+<input class="btn btn-dark" type='button' name='end' value='제휴 종료'>
+<input class="btn btn-dark" type='button' name='apply' value='제휴 신청 및 거부'>
+</div>
+<br><br>
+<div id="pro">
+<h2>제휴 중</h2>
 <table class="table">
 	<tr>
 		<th>등록한 가게</th>
@@ -44,8 +90,10 @@
     </c:if>
 	</c:forEach>
 </table>
+</div>
 
-<h3>제휴 종료</h3>
+<div id="end">
+<h2>제휴 종료</h2>
 <table class="table">
 	<tr>
 		<th>등록한 가게</th>
@@ -73,8 +121,10 @@
     </c:if>
 	</c:forEach>
 </table>
+</div>
 
-<h3>제휴 신청 및 거부</h3>
+<div id="apply">
+<h2>제휴 신청 및 거부</h2>
 <table class="table">
 	<tr>
 		<th>등록한 가게</th>
@@ -102,6 +152,7 @@
     </c:if>
 	</c:forEach>
 </table>
+</div>
 </div>
 </body>
 </html>
