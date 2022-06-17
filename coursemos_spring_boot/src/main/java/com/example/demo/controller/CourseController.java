@@ -1,5 +1,6 @@
 package com.example.demo.controller;
 
+import java.sql.Date;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -20,11 +21,16 @@ import com.example.demo.controller.RegisterMemberController.Taste;
 import com.example.demo.domain.Company;
 import com.example.demo.domain.Coupon;
 import com.example.demo.domain.Course;
+import com.example.demo.domain.Member;
 import com.example.demo.domain.Place;
+import com.example.demo.domain.Points;
+import com.example.demo.domain.SessionMember;
 import com.example.demo.service.CompanyService;
 import com.example.demo.service.CouponService;
 import com.example.demo.service.CourseService;
+import com.example.demo.service.MemberService;
 import com.example.demo.service.PlaceService;
+import com.example.demo.service.PointsService;
 import com.example.demo.validator.CourseValidator;
 
 import lombok.AllArgsConstructor;
@@ -33,7 +39,7 @@ import lombok.Setter;
 import lombok.ToString;
 
 @Controller
-@SessionAttributes("course")
+@SessionAttributes({"course", "sessionMember"})
 @RequestMapping("/course")
 public class CourseController {
 	
@@ -41,6 +47,11 @@ public class CourseController {
 	private CourseService courseService;
 	@Autowired
 	private PlaceService placeService;
+	
+	@Autowired
+	private MemberService memberService;
+	@Autowired
+	private PointsService pointsService;
 	
 	//MemberCouponButton
 	@Autowired
@@ -68,7 +79,7 @@ public class CourseController {
 	}
 	
 	@RequestMapping(value="/view", method=RequestMethod.POST)
-	public String onSubmit(@ModelAttribute Course course, BindingResult result, SessionStatus status, HttpServletRequest request) {
+	public String onSubmit(@ModelAttribute SessionMember sessionMember, @ModelAttribute Course course, BindingResult result, SessionStatus status, HttpServletRequest request) {
 		new CourseValidator().validate(course, result);
 		
 		if (result.hasErrors()) {
@@ -79,10 +90,27 @@ public class CourseController {
 		course.getPlace1().setTaste(course.getTaste());
 		if (course.getPlace2() != null) course.getPlace2().setTaste(course.getTaste());
 		if (course.getPlace3() != null) course.getPlace3().setTaste(course.getTaste());
-
-		course.setMemberId(Long.valueOf(1)); // memberId 임의 설정
+		course.setMemberId(sessionMember.getId()); // memberId 임의 설정
 		
 		courseService.insertCourse(course);
+		
+		java.util.Date date = new java.util.Date();
+		long timeInMilliSeconds = date.getTime();
+		
+		Points points = new Points();
+		points.setMemberId(sessionMember.getId());
+		points.setPointsDate(new Date(timeInMilliSeconds));
+		points.setType(1);
+		
+		Member member= memberService.findMemberById(sessionMember.getId());
+		member.insertPoints(points);
+		member.setPoints(member.getPoints() + 20);
+		pointsService.insertPoints(points);
+		List<Points> pointList = pointsService.findAllByMemberId(sessionMember.getId());
+		
+		sessionMember.setPoints(sessionMember.getPoints() + 20);
+		sessionMember.setPointList(pointList);
+		memberService.save(member);
 		
 		System.out.println("=========inserted course=========");
 		System.out.println(course.toString());
