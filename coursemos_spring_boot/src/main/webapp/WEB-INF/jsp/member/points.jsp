@@ -15,7 +15,7 @@
 
 </head>
 <body>
-
+<%@ include file="./mypage_menu.jsp"  %>
 <div class="container">
 	<h3 style="text-align:center">${sessionMember.nickName}님의 포인트 내역</h3>
 	<div style="display: flex; justify-content : center;" >
