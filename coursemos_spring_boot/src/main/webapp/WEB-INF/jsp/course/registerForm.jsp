@@ -91,15 +91,13 @@
 							<form:radiobutton path="taste" name="taste" value="exp" onclick='getTaste(event)'/>체험적
 							<form:radiobutton path="taste" name="taste" value="ent" onclick='getTaste(event)'/>즐거운
 							<form:radiobutton path="taste" name="taste" value="ret" onclick='getTaste(event)'/>복고풍
-							<form:errors path="taste" cssClass="error"/>
+							<br><form:errors path="taste" cssClass="error"/>
 						</div>	
 						<br><br>						
 						<!-- 지도 -->
 						<h5>코스 경로에 추가할 장소를 입력하세요.</h5>
 						<input class="form-control" id='keyword' style="float:left; width:75%;" onchange='onClickBtn()' placeholder="장소 검색">
-						
-						
-						
+	
 						<div style="float: right; margin-right: 60px;">
 							<input type="button" onclick="onClickBtn()"
 								style="border: none; border-radius: 5px; text-align: center; margin-left:10px; width: 80px; height: 34px;"
@@ -110,9 +108,7 @@
 							style="width: 600px; height: 300px; margin-top: 10px;"></div>
 						<script type="text/javascript"
 							src="//dapi.kakao.com/v2/maps/sdk.js?appkey=c17b5563968f2fffd356919521833ce2&libraries=services"></script>
-						
-						
-						
+		
 						<script>
 							// 마커를 클릭하면 장소명을 표출할 인포윈도우 입니다
 							var infowindow = new kakao.maps.InfoWindow({zIndex:1});
@@ -165,7 +161,6 @@
 								
 
 								if(document.getElementById('address2')){
-									alert("?");
 									let address2 = document.getElementById('address2').value;
 									ps.keywordSearch(address2, placesSearchCB2);
 								}
@@ -280,13 +275,13 @@
 						<input type="hidden" id="place" name="place">
 						<br>
 						<b>1번째 장소</b>
-						<input class="form-control" type="text" placeholder="장소" id='placeName1' name="place1.placeName" style="width: 95%" required><br>	
+						<form:input path="place1" class="form-control" type="text" placeholder="장소" id='placeName1' name="place1.placeName" style="width: 95%"/><br>	
+						<form:errors path="place1.placeName" cssClass="error"/>
 						<input class="form-control" type="text" placeholder="상세 주소(지번)" id='address1' name="address1" onchange="onChangeAddress()" style="width: 95%" required>
 						<input class="form-control" type="text" placeholder="상세 주소(도로명, 없을 경우 생략)" name="road_address1" id='road_address1' style="width: 95%"><br> 									
                         <input type="hidden" id="place1CoordX" name="place1.x">
 						<input type="hidden" id="place1CoordY" name="place1.y">
 						<input type="hidden" id="subway1" name="place1.subway">
-						
 						<script>
 						
 						var cnt = 1; 
