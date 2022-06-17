@@ -137,6 +137,7 @@ public class ReportController {
 		return "redirect:/review/registered/"+reviewId;
 	}
 	
+	
 	@RequestMapping("/member/report/list")
 	public ModelAndView scrapList(@ModelAttribute SessionMember sessionMember) {
 		ModelAndView mav = new ModelAndView("member/reportList");
