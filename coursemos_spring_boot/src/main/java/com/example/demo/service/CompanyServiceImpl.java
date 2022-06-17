@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 
 import com.example.demo.dao.CompanyDao;
 import com.example.demo.domain.Company;
+import com.example.demo.repository.CompanyRepository;
 
 @Service("CompanyServiceImpl")
 @Transactional
@@ -18,6 +19,8 @@ public class CompanyServiceImpl implements CompanyService {
 	@Autowired 
 	@Qualifier("jpaCompanyDao")
 	private CompanyDao companyDao;
+	@Autowired
+	private CompanyRepository companyRepository;
 
 	@Override
 	public List<Company> getAllCompany() {
@@ -31,8 +34,8 @@ public class CompanyServiceImpl implements CompanyService {
 	
 
 	@Override
-	public Company getCompanyByPlaceId(Long placeId) {
-		return companyDao.getCompanyByPlaceId(placeId);
+	public Company getCompanyByPlaceId(Integer placeId) {
+		return companyRepository.findCompanyByPlacePlaceId(placeId);
 	}
 
 	@Override

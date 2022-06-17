@@ -31,7 +31,7 @@ public class Company {
 	private Long companyId;
 	private Long memberId;
 	
-	@Pattern(regexp="\\d{3}-\\d{3,4}-\\d{4}", message="010-0000-0000 형식으로 입력해주세요.")
+	@Pattern(regexp="\\d{2,3}-\\d{3,4}-\\d{4}", message="010-0000-0000 형식으로 입력해주세요.")
 	private String phone;
 	@NotEmpty
 	private String address;

@@ -29,9 +29,8 @@
 
 <button id="javascript_btn1" type="button">역 찾기</button>
 
-<form name="result" method="post" action="<c:url value='/course/search/main'/>">
-	<input type="hidden" name="x" value=0>
-	<input type="hidden" name="y" value=0>
+<form name="result" method="get" action="<c:url value='/course/search/main'/>">
+	<input type="hidden" name="subway" value=0>
 	<input type="submit" value="코스찾기">
 </form>
 
@@ -91,8 +90,6 @@ function javascript_onclikc(){
 			y /= 2;
 		}
 		alert(x+", "+y);
-		document.result.x.value = x;
-		document.result.y.value = y;
 		ps.categorySearch('SW8', placesSearchCategoryCB, {
 	    	location: new kakao.maps.LatLng(y, x)
 	    });
@@ -130,7 +127,11 @@ var bounds = new kakao.maps.LatLngBounds();
 
 function placesSearchCategoryCB (data, status, pagination) {
     if (status === kakao.maps.services.Status.OK) {
-    	markers.push(displayMarker(data[0]));   
+    	markers.push(displayMarker(data[0]));  
+    	var tmp = data[0].place_name;
+    	var tmpSplit = tmp.split(' ');
+        subwayName = tmpSplit[0];
+		document.result.subway.value = subwayName;
     	
     	bounds.extend(new kakao.maps.LatLng(data[0].y, data[0].x));
         map.setBounds(bounds);

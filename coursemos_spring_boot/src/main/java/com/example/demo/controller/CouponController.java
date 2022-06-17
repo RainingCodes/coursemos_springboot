@@ -11,21 +11,27 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.example.demo.domain.Company;
 import com.example.demo.domain.Coupon;
 import com.example.demo.service.CompanyService;
 import com.example.demo.service.CouponService;
+import com.example.demo.service.PlaceService;
 import com.example.demo.validator.CouponValidator;
 
 @Controller
+@SessionAttributes("sessionMember")
 public class CouponController {
 	@Autowired
 	private CompanyService companyService;
+	@Autowired
+	private PlaceService placeService;
 	@Autowired
 	private CouponService couponService;
 	
@@ -50,6 +56,19 @@ public class CouponController {
 
 		mav.addObject("company", company);
 		mav.addObject("couponList", coupons);
+		return mav;
+	}
+	
+	@RequestMapping("/course/view/coupon/{couponId}")
+	public ModelAndView courseCouponList(@PathVariable("couponId") int couponId) {	
+		ModelAndView mav = new ModelAndView("coupon/getCoupon");
+		
+		Coupon coupon = couponService.getCouponByCouponId(couponId);// 쿠폰 정보들 받아오기
+		Company c = companyService.getCompanyByCompanyId(coupon.getCompanyId());
+		String placeName = placeService.getPlaceByPlaceId(c.getPlace().getPlaceId()).getPlaceName();
+		
+		mav.addObject("placeName", placeName);
+		mav.addObject("coupon", coupon);
 		return mav;
 	}
 

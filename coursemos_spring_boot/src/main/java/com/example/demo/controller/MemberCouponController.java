@@ -79,9 +79,11 @@ public class MemberCouponController {
 		return mav;
 	}
 	
+		
 	//코스에서 다운받기
 	@RequestMapping("/course/view/coupon/get")
-	public String getMemberCoupon(@ModelAttribute SessionMember sessionMember, @RequestParam("couponId") int couponId) {
+	public ModelAndView getMemberCoupon(@ModelAttribute SessionMember sessionMember, @RequestParam("couponId") int couponId) {
+		ModelAndView mav = new ModelAndView("alert");
 		Coupon coupon = couponService.getCouponByCouponId(couponId);
 
 		long miliseconds = System.currentTimeMillis();
@@ -99,7 +101,9 @@ public class MemberCouponController {
 		
 		memberCouponService.insertMemberCoupon(memberCoupon);
 		
-		return "redirect:/member/coupon/list";
+		mav.addObject("msg", "쿠폰이 발급되었습니다. 마이페이지에서 확인 가능합니다.");
+		mav.addObject("url", "closePage");
+		return mav;
 	}
 	
 	@Getter @Setter @AllArgsConstructor @ToString

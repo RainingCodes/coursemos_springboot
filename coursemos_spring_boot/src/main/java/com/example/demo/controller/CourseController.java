@@ -164,27 +164,19 @@ public class CourseController {
 		//MemberCouponButton
 	      ArrayList<MemberCouponButton> mcb = new ArrayList<MemberCouponButton>();
 	                  
-	      Place[] arr = {place1, viewCourse.getPlace2(), viewCourse.getPlace3() };
+	      Place[] arr = {viewCourse.getPlace1(), viewCourse.getPlace2(), viewCourse.getPlace3() };
 	      for (Place p : arr) {
-	         System.out.println("==============place ");
 	         if (p != null) {
-	            
-	            System.out.println("==============place 널여부");
 	            Integer id = p.getPlaceId();
-	            System.out.println(id);
+	            Company com = companyService.getCompanyByPlaceId(id);
 	            
-	            if (companyService.getCompanyByPlaceId(id.longValue()) == null) {
-	               System.out.println("없어요");
-	               break;
-	            }
-	            Company com = companyService.getCompanyByPlaceId(id.longValue());
 	            if (com != null) {
-	               System.out.println("==============place company 존재?");
 	               List<Coupon> cou = couponService.getCouponByCompanyId(com.getCompanyId());
 	               for (Coupon c : cou) {
-	                  mcb.add(new MemberCouponButton(com.getPlace().getPlaceName(), c));
+	            	   MemberCouponButton m = new MemberCouponButton(com.getPlace().getPlaceName(), c);
+	            	   mcb.add(m);
 	               }
-	            }         
+	            }
 	         }
 	      }      
 	      List<Review> reviews = reviewService.findReviewByCourseId(courseId);
