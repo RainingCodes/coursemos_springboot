@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.SessionAttributes;
 
@@ -20,16 +21,17 @@ public class ReviewLikeController {
 	@Autowired
 	private ReviewLikeService reviewLikeService;
 	
-	@RequestMapping(value = "/review/like")
+	@RequestMapping(value = "/review/like/{reviewId}")
 	public String like(@ModelAttribute SessionMember sessionMember, @ModelAttribute Review review, HttpSession session,
-			Model model) {
-		reviewLikeService.save(new ReviewLike(sessionMember.getId(), review.getReviewId()));
+			 @PathVariable("reviewId") Long id) {
+		System.out.println(sessionMember);
+		reviewLikeService.save(new ReviewLike(sessionMember.getId(), id));
 		return "redirect:thyme/review/registered";
 	}
-	@RequestMapping(value = "/review/unlike")
-	public String unlike(@ModelAttribute SessionMember sessionMember, @ModelAttribute Review review, HttpSession session,
-			Model model) {
-		reviewLikeService.delete(new ReviewLike(sessionMember.getId(), review.getReviewId()));
+	@RequestMapping(value = "/review/dislike/{reviewId}")
+	public String dislike(@ModelAttribute SessionMember sessionMember, @ModelAttribute Review review, HttpSession session,
+			@PathVariable("reviewId") Long id) {
+		reviewLikeService.delete(new ReviewLike(sessionMember.getId(), id));
 		return "redirect:thyme/review/registered";
 	}
 }

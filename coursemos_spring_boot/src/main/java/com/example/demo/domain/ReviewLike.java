@@ -10,6 +10,7 @@ import javax.persistence.IdClass;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
 
@@ -17,7 +18,7 @@ import lombok.ToString;
 @IdClass(ReviewLikePK.class)
 @ToString @Getter @Setter 
 @SuppressWarnings("serial")
-@AllArgsConstructor 
+@AllArgsConstructor @NoArgsConstructor
 public class ReviewLike implements Serializable{
 	@Id
 	private Long reviewId;

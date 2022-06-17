@@ -37,6 +37,7 @@ function dislike (){
 </script>
 <body>
 	<div><h3><span th:text="${review.courseName}"></span> 리뷰</h3>
+		<span th:text="${isWriter}"></span>
 		<table id="review">
 			<tr>
 				<td><th:block th:unless="${isWriter}"><span th:if="${like}" class="img"><a onclick="like();"><img src="../../img/like1.png"></a></span>

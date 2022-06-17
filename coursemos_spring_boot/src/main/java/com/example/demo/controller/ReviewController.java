@@ -123,25 +123,25 @@ public class ReviewController implements ApplicationContextAware{
 	}
 	
 	@RequestMapping(value = "/review/registered/{reviewId}")
-	public String viewDetail(@ModelAttribute SessionMember sessionMember, HttpSession session, @PathVariable("reviewId") Long id,
-			Model model) {
+	public ModelAndView viewDetail(@ModelAttribute SessionMember sessionMember, @PathVariable("reviewId") Long id) {
+		ModelAndView mv = new ModelAndView("thyme/review/registered");
 		Review review = reviewService.findReviewById(id);
 		Member member = memberService.findMemberById(review.getMemberId());
-		
 		//String courseName = courseService.findCourseNameByCourseId(id); course 완성되면 추가
 		//review.setCourseName(courseName);
-		boolean isWriter = review.getMemberId() == sessionMember.getId();
+		boolean isWriter = review.getMemberId().equals(sessionMember.getId());
 		boolean like = false;
 		if(!isWriter) {
 			//reviewLike 조회
 			like = reviewLikeService.findReviewLikeByReviewIdMemberId(review.getReviewId(), sessionMember.getId());
 		}
-		session.setAttribute("sessionMember", sessionMember);
-		session.setAttribute("writer", member.getNickName());
-		session.setAttribute("review", review);
-		session.setAttribute("isWriter", isWriter);
-		session.setAttribute("like", like);
-		return "thyme/review/registered";
+		mv.addObject("sessionMember", sessionMember);
+		mv.addObject("review", review);
+		mv.addObject("isWriter", isWriter);
+		mv.addObject("like", like); 
+		mv.addObject("writer", member.getNickName());
+
+		return mv;
 	}
 	
 	
@@ -167,13 +167,11 @@ public class ReviewController implements ApplicationContextAware{
 
 	
 	@GetMapping(value = "/course/{courseId}/review/list") 
-	@ResponseBody // 반환 객체를 응답으로 전송
-	public List<Review> viewList(@PathVariable("courseId") Long id, HttpServletResponse response) throws IOException{
+	public ModelAndView viewList(@PathVariable("courseId") Long id, HttpServletResponse response) throws IOException{
 		List<Review> reviews = reviewService.findReviewByCourseId(id);
-		if (reviews == null) 
-			response.sendError(HttpServletResponse.SC_NOT_FOUND); // 404(Not Found)
+		ModelAndView mv = new ModelAndView("review/reviewList");
 
-		return reviews;
+		return mv;
 	}
 	
 	@GetMapping(value = "/review/list")
