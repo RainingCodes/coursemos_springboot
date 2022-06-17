@@ -49,7 +49,7 @@ public class Course {
 	@Column(nullable=false)
 	private String courseContents;
 	
-	private Integer memberId;
+	private Long memberId;
 	
 	private String taste;
 	
@@ -62,13 +62,13 @@ public class Course {
 
 	@OneToOne(cascade=CascadeType.ALL)
     @JoinColumn(name = "placeId1")
-	private Place placeId1;
+	private Place place1;
 	@OneToOne(cascade=CascadeType.ALL)
     @JoinColumn(name = "placeId2")
-	private Place placeId2;
+	private Place place2;
 	@OneToOne(cascade=CascadeType.ALL)
     @JoinColumn(name = "placeId3")
-	private Place placeId3;
+	private Place place3;
 	
 //	@ManyToOne(targetEntity = Place.class, cascade=CascadeType.PERSIST)
 //    @JoinColumn(name = "placeId1")
