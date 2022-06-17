@@ -11,12 +11,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.SessionAttributes;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.support.SessionStatus;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -57,16 +52,18 @@ public class CourseController {
 		private Coupon coupon;
 	}
 	
-	
 	@ModelAttribute("course")
 	public Course formBacking(HttpServletRequest request) {
-		Course course = new Course();
-		return course;
+		if (request.getMethod().equalsIgnoreCase("GET")) {
+			Course course = new Course();
+			return course;
+		}
+		else return new Course();
 	}
 	
 	@RequestMapping(value="/registerForm", method=RequestMethod.GET)
-	public void init() {
-		
+	public String init() {
+		return "course/registerForm";
 	}
 	
 	@RequestMapping(value="/view", method=RequestMethod.POST)
@@ -77,17 +74,18 @@ public class CourseController {
 			System.out.println("Validation Error !!!");
 			return "course/registerForm";
 		}
-				
 		
-		course.setMemberId(1); // memberId 임의 설정
+		course.getPlace1().setTaste(course.getTaste());
+		if (course.getPlace2() != null) course.getPlace2().setTaste(course.getTaste());
+		if (course.getPlace3() != null) course.getPlace3().setTaste(course.getTaste());
+
+		course.setMemberId(Long.valueOf(1)); // memberId 임의 설정
 		
 		courseService.insertCourse(course);
-		
 		
 		System.out.println("=========inserted course=========");
 		System.out.println(course.toString());
 		System.out.println("=================================");
-		//System.out.println(courseService.getCourseByCourseId(course.getCourseId()));
 		System.out.println("submit complete!!!");
 		
 		return "course/view";
@@ -101,12 +99,12 @@ public class CourseController {
 		mav.addObject("course", viewCourse);
 		
 		if (viewCourse.getMemberId() == null) { // DB에 default로 속해져있는 코스(api)이면
-			Place place1 = placeService.getPlaceByPlaceId(viewCourse.getPlaceId1().getPlaceId());
+			Place place1 = placeService.getPlaceByPlaceId(viewCourse.getPlace1().getPlaceId());
 			mav.addObject("place1", place1);
 			System.out.println(place1.getPlaceName());
 			
-			if (viewCourse.getPlaceId2()!=null) {
-				Place place2 = placeService.getPlaceByPlaceId(viewCourse.getPlaceId2().getPlaceId());
+			if (viewCourse.getPlace2()!=null) {
+				Place place2 = placeService.getPlaceByPlaceId(viewCourse.getPlace2().getPlaceId());
 				mav.addObject("place2", place2);
 				System.out.println(place2.getPlaceName());
 			}
@@ -115,8 +113,8 @@ public class CourseController {
 				System.out.println("place2 is null");
 			}
 			
-			if (viewCourse.getPlaceId3()!=null) {
-				Place place3 = placeService.getPlaceByPlaceId(viewCourse.getPlaceId3().getPlaceId());
+			if (viewCourse.getPlace3()!=null) {
+				Place place3 = placeService.getPlaceByPlaceId(viewCourse.getPlace3().getPlaceId());
 				mav.addObject("place3", place3);
 				System.out.println(place3.getPlaceName());
 			}
@@ -208,13 +206,13 @@ public class CourseController {
 		ModelAndView mav = new ModelAndView("course/updateForm");
 		mav.addObject("updateCourse", updateCourse);
 		
-		Place place1 = placeService.getPlaceByPlaceId(updateCourse.getPlaceId1().getPlaceId());
+		Place place1 = placeService.getPlaceByPlaceId(updateCourse.getPlace1().getPlaceId());
 		mav.addObject("place1", place1);
 		
-		Place place2 = placeService.getPlaceByPlaceId(updateCourse.getPlaceId2().getPlaceId());
+		Place place2 = placeService.getPlaceByPlaceId(updateCourse.getPlace2().getPlaceId());
 		mav.addObject("place2", place2);
 		
-		Place place3 = placeService.getPlaceByPlaceId(updateCourse.getPlaceId3().getPlaceId());
+		Place place3 = placeService.getPlaceByPlaceId(updateCourse.getPlace3().getPlaceId());
 		mav.addObject("place3", place3);
 	
 		return mav;
@@ -227,17 +225,4 @@ public class CourseController {
 		
 		return mav;
 	}
-	
-	
-		
-	
-// restful 적용(미완성)
-//	//@RequestMapping(value="/update", method=RequestMethod.POST)
-//	@PostMapping
-//	@ResponseBody
-//	public String updateCourse(@RequestBody String body) {
-//		System.out.println("Request body" + body);
-//		return body;
-//	}
-	
 }
