@@ -45,10 +45,10 @@
     }
     #page {
     	position:absolute;
-        top:250px;
+        top:275px;
         left:200px;
         width:200px;
-        height:70px;
+        height:50px;
     }
 </style>
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.7.1/font/bootstrap-icons.css">
@@ -86,62 +86,64 @@
 		        	<input id="plus" type="button" value="+" onclick="add_Place()"/>
 		        
 					<button type="submit">검색하기</button>
-				</form>
+				</form>		
 				<c:forEach var="cate" items="${tList}">
-					<button class="btn btn-primary" name="taste" onclick="location.href ='/course/detailedSearch.do?taste=${cate.code}&subway=${subway}'">${cate.label}</button>
+					<button class="btn btn-primary" name="taste" onclick="location.href ='/course/detailedSearch.do?taste=${cate.code}&subway=${subway}&x=${x}&y=${y}'">${cate.label}</button>
 				</c:forEach>	
-				
+			
 				<button id="javascript_btn1" type="button">역찾기</button>
 				<div id="resultsubway"></div>
-			
+			  
 				<form name="result" method="post" action="<c:url value='/course/search'/>">
 					<input type="hidden" name="x" value=0>
 					<input type="hidden" name="y" value=0>
+					
 				</form>    
 	   		</div> 
 	        
-			<div id="map"></div>        
-			<div id="searchResult"></div>
-			
-			<div id="page">
-				<c:if test="${!cList.firstPage}">
-					<a href='<c:url value="/course/search2.do">
-						<c:param name="page" value="previous"/></c:url>'>
-					<font color="balck"><B>&lt;&lt; Prev</B></font></a>
-				</c:if> 
-				<c:if test="${!cList.lastPage}">
-					<a href='<c:url value="/course/search2.do">
-						<c:param name="page" value="next"/></c:url>'>
-					<font color="black"><B>Next &gt;&gt;</B></font></a>
-				</c:if>
-            </div>
-              <div id="courseList">
+			<div id="map" ></div>        
+			<div id="searchResult">
+			<c:if test="${cList != null}">
+				<div id="page">
+					<c:if test="${!cList.firstPage}">
+						<a href='<c:url value="/course/search2.do">
+							<c:param name="page" value="previous"/></c:url>'>
+						<font color="balck"><B>&lt;&lt; Prev</B></font></a>
+					</c:if> 
+					<c:if test="${!cList.lastPage}">
+						<a href='<c:url value="/course/search2.do">
+							<c:param name="page" value="next"/></c:url>'>
+						<font color="black"><B>Next &gt;&gt;</B></font></a>
+					</c:if>
+	            </div>
+        	 </c:if>
+            <div id="courseList">
             <c:forEach var="cate" items="${cList.pageList}">
               <div class="accordion accordion-flush" id="accordionFlushExample">
                <div class="accordion-item"> 
                   <h2 class="accordion-header" id="${cate.courseId}"> 
-                    <button class="accordion-button collapsed" type="button"  onclick="javascript:displayCourse('${cate.placeId1.x}' + ',' + '${cate.placeId1.y}', '${cate.placeId2.x}' + ',' + '${cate.placeId2.y}', '${cate.placeId3.x}' + ',' + '${cate.placeId3.y}');"data-bs-toggle="collapse" data-bs-target="#flush-collapseOne_${cate.courseId}" aria-expanded="false" aria-controls="flush-collapseOne_${cate.courseId}">
-                         ${cate.courseId}
-                        | ${cate.courseContents}
+                    <button class="accordion-button collapsed" type="button"  onclick="javascript:displayCourse('${cate.place1.x}' + ',' + '${cate.place1.y}', '${cate.place2.x}' + ',' + '${cate.place2.y}', '${cate.place3.x}' + ',' + '${cate.place3.y}');"data-bs-toggle="collapse" data-bs-target="#flush-collapseOne_${cate.courseId}" aria-expanded="false" aria-controls="flush-collapseOne_${cate.courseId}">
+                         ${cate.courseId} |
+                         ${cate.courseContents}
                         <i class="bi bi-heart-fill"></i> ${cate.likes}
                     </button>
                   </h2>
                   <div id="flush-collapseOne_${cate.courseId}" class="accordion-collapse collapse" aria-labelledby="${cate.courseId}" data-bs-parent="#accordionFlushExample">
                     <div class="accordion-body">
 					<ul class="list-group col-12">
-						<li class="list-group-item list-group-item" onclick="javascript:panTo('${cate.placeId1.x}' + ',' + '${cate.placeId1.y}')" data-bs-toggle="modal" data-bs-target="#exampleModal_${cate.courseId}_0" style="background-color:antiquewhite">
+						<li class="list-group-item list-group-item" onclick="javascript:panTo('${cate.place1.x}' + ',' + '${cate.place1.y}')" data-bs-toggle="modal" data-bs-target="#exampleModal_${cate.courseId}_0" style="background-color:antiquewhite">
 							<div class="mx-sm-5 me-auto">
-							<div class="fw-bold">${cate.placeId1.placeName}</div>
+							<div class="fw-bold">${cate.place1.placeName}</div>
 							</div>
 						</li>
-						<li class="list-group-item list-group-item" onclick="javascript:panTo('${cate.placeId2.x}' + ',' + '${cate.placeId2.y}')" data-bs-toggle="modal" data-bs-target="#exampleModal_${cate.courseId}_1" style="background-color:antiquewhite">
+						<li class="list-group-item list-group-item" onclick="javascript:panTo('${cate.place2.x}' + ',' + '${cate.place2.y}')" data-bs-toggle="modal" data-bs-target="#exampleModal_${cate.courseId}_1" style="background-color:antiquewhite">
 							<div class="mx-sm-5 me-auto">
-							<div class="fw-bold">${cate.placeId2.placeName}</div>
+							<div class="fw-bold">${cate.place2.placeName}</div>
 							</div>
 						</li>
-						<li class="list-group-item list-group-item" onclick="javascript:panTo('${cate.placeId3.x}' + ',' + '${cate.placeId3.y}')" data-bs-toggle="modal" data-bs-target="#exampleModal_${cate.courseId}_2" style="background-color:antiquewhite">
+						<li class="list-group-item list-group-item" onclick="javascript:panTo('${cate.place3.x}' + ',' + '${cate.place3.y}')" data-bs-toggle="modal" data-bs-target="#exampleModal_${cate.courseId}_2" style="background-color:antiquewhite">
 							<div class="mx-sm-5 me-auto">
-							<div class="fw-bold">${cate.placeId3.placeName}</div>
+							<div class="fw-bold">${cate.place3.placeName}</div>
 							</div>
 						</li>
 					</ul>
@@ -154,14 +156,14 @@
               <div class="modal-dialog">
                 <div class="modal-content">
                   <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">${cate.placeId1.placeName}</h5>
+                    <h5 class="modal-title" id="exampleModalLabel">${cate.place1.placeName}</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                   </div>
                   <div class="modal-body">
-					위도 : ${cate.placeId1.x}
-					경도 : ${cate.placeId1.y}
-					근처 대중교통 : ${cate.placeId1.subway}
-					취향 : ${cate.placeId1.taste}
+					위도 : ${cate.place1.x}
+					경도 : ${cate.place1.y}
+					근처 대중교통 : ${cate.place1.subway}
+					취향 : ${cate.place1.taste}
                   </div>
                   <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
@@ -173,14 +175,14 @@
               <div class="modal-dialog">
                 <div class="modal-content">
                   <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">${cate.placeId2.placeName}</h5>
+                    <h5 class="modal-title" id="exampleModalLabel">${cate.place2.placeName}</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                   </div>
                   <div class="modal-body">
-					위도 : ${cate.placeId2.x}
-					경도 : ${cate.placeId2.y}
-					근처 대중교통 : ${cate.placeId2.subway}
-					취향 : ${cate.placeId2.taste}
+					위도 : ${cate.place2.x}
+					경도 : ${cate.place2.y}
+					근처 대중교통 : ${cate.place2.subway}
+					취향 : ${cate.place2.taste}
                   </div>
                   <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
@@ -192,14 +194,14 @@
               <div class="modal-dialog">
                 <div class="modal-content">
                   <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">${cate.placeId3.placeName}</h5>
+                    <h5 class="modal-title" id="exampleModalLabel">${cate.place3.placeName}</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                   </div>
                   <div class="modal-body">
-					위도 : ${cate.placeId3.x}
-					경도 : ${cate.placeId3.y}
-					근처 대중교통 : ${cate.placeId3.subway}
-					취향 : ${cate.placeId3.taste}
+					위도 : ${cate.place3.x}
+					경도 : ${cate.place3.y}
+					근처 대중교통 : ${cate.place3.subway}
+					취향 : ${cate.place3.taste}
                   </div>
                   <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
@@ -208,9 +210,12 @@
               </div>
             </div>
             </c:forEach>
+            
             </div>  
-
-        	<p id="result"></p>
+            <!-- <ul id="placesList"></ul>-->
+            
+            <p id="result"></p>
+         
 
 			<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=c17b5563968f2fffd356919521833ce2&libraries=services"></script>
 
@@ -240,86 +245,32 @@
             	search.appendChild(newPlus);
             	existTwoSearchForm = false;
             }	
-            
-            let url = "";
-            var xhr = "";
-            var num = "";
-            var markers = [];
-            var infos = [];
-            function makeUrl(n1, n2, n3) {
-            	if (n2 == "") {
-    				url = 'http://openapi.seoul.go.kr:8088/6243537573636e7338366274636b76/xml/culturalSpaceInfo/' + n1 + '/' + n1;	
-            	} else if (n3 == "") {
-    				url = 'http://openapi.seoul.go.kr:8088/6243537573636e7338366274636b76/xml/culturalSpaceInfo/' + n1 + '/' + n2;	
+            var mapContainer;
+            var map;
+            window.onload = function() {
+            	var subX = '${x}';
+            	var subY = '${y}';
+            	
+            	if (subX.length == 0) {
+            		mapContainer = document.getElementById('map'), // 지도를 표시할 div 
+                    mapOption = {
+                        center: new kakao.maps.LatLng(37.577552,126.976869), // 지도의 중심좌표
+                        level: 3 // 지도의 확대 레벨
+                    }; 
+                 	// 지도를 생성합니다    
+                 	map = new kakao.maps.Map(mapContainer, mapOption); 	
             	} else {
-    				url = 'http://openapi.seoul.go.kr:8088/6243537573636e7338366274636b76/xml/culturalSpaceInfo/' + n1 + '/' + n3;	
+            		console.log(subX);
+            		mapContainer = document.getElementById('map'), // 지도를 표시할 div 
+                    mapOption = {
+                        center: new kakao.maps.LatLng(parseFloat(subY), parseFloat(subX)), // 지도의 중심좌표
+                        level: 4 // 지도의 확대 레벨
+                    }; 
+                 	// 지도를 생성합니다    
+                 	map = new kakao.maps.Map(mapContainer, mapOption); 	
             	}
-            	console.log(url);
-				xhr = new XMLHttpRequest();
-				xhr.open('GET', url);
-				xhr.onreadystatechange = function () {
-					if (this.readyState == xhr.DONE) { // <== 정상적으로 준비되었을때
-						if(xhr.status == 200||xhr.status == 201){ // <== 호출 상태가 정상적일때
-							makeMarker(xhr);
-			        	}
-					}
-		      	};
-		     	xhr.send('');	
-		     	
-            }
-           
-			function makeMarker(xml) {
-				removeMarker();
-				var x = [];
-				var y = [];
-				var c = [];
-				var p = [];
-				var image = [];
-				var data = [];
-            	var xmlData = xhr.responseXML;
-            	for (var i = 0; i < xmlData.getElementsByTagName("row").length; i++) {
-            		x[i] = xmlData.getElementsByTagName("row")[i].getElementsByTagName("X_COORD")[0].firstChild.nodeValue;
-            		y[i] = xmlData.getElementsByTagName("row")[i].getElementsByTagName("Y_COORD")[0].firstChild.nodeValue;
-     				c[i] = xmlData.getElementsByTagName("row")[i].getElementsByTagName("FAC_NAME")[0].firstChild.nodeValue;
-     				p[i] = xmlData.getElementsByTagName("row")[i].getElementsByTagName("PHNE")[0].firstChild.nodeValue;
-     				image[i] = xmlData.getElementsByTagName("row")[i].getElementsByTagName("MAIN_IMG")[0].firstChild.nodeValue;
-     				data[i] = x[i] + "," + y[i];
-            	
-     				markers[i] = new kakao.maps.Marker({
-                        map: map, // 마커를 표시할 지도
-                        position: new kakao.maps.LatLng(x[i], y[i]) // 마커의 위치
-                    });
-
-                    // 마커에 표시할 인포윈도우를 생성합니다 
-                   infos[i] = new kakao.maps.InfoWindow({
-        					content: c[i] // 인포윈도우에 표시할 내용
-                  
-                    });
-                    
-                    // 마커에 mouseover 이벤트와 mouseout 이벤트를 등록합니다
-                    // 이벤트 리스너로는 클로저를 만들어 등록합니다 
-                    // for문에서 클로저를 만들어 주지 않으면 마지막 마커에만 이벤트가 등록됩니다
-                    kakao.maps.event.addListener(markers[i], 'mouseover', makeOverListener(map, markers[i], infos[i]));
-                    kakao.maps.event.addListener(markers[i], 'mouseout', makeOutListener(infos[i]));
-            	}
-            	
-            		displayCourse(data[0], data[1], data[2]);
-		
-            }
-	
-            // 인포윈도우를 표시하는 클로저를 만드는 함수입니다 
-            function makeOverListener(map, marker, infowindow) {
-                return function() {
-                    infowindow.open(map, marker);
-                };
             }
 
-            // 인포윈도우를 닫는 클로저를 만드는 함수입니다 
-            function makeOutListener(infowindow) {
-                return function() {
-                    infowindow.close();
-                };
-            }
             function panTo(data) {
                 // 이동할 위도 경도 위치를 생성합니다 
                
@@ -329,15 +280,7 @@
                 // 지도 중심을 부드럽게 이동시킵니다
                 // 만약 이동할 거리가 지도 화면보다 크면 부드러운 효과 없이 이동합니다
                 map.panTo(moveLatLon);            
-            }  
-            var mapContainer = document.getElementById('map'), // 지도를 표시할 div 
-               mapOption = {
-                   center: new kakao.maps.LatLng(37.577552,126.976869), // 지도의 중심좌표
-                   level: 3 // 지도의 확대 레벨
-               }; 
-
-            // 지도를 생성합니다    
-            var map = new kakao.maps.Map(mapContainer, mapOption); 
+            }        
 
             // 장소 검색 객체를 생성합니다
             var ps = new kakao.maps.services.Places(); 
@@ -353,7 +296,7 @@
             			x /= 2;
             			y /= 2;
             		}
-            		alert(x + ", " + y);
+            		//alert(x + ", " + y);
             		document.result.x.value = x;
             		document.result.y.value = y;
             		ps.categorySearch('SW8', placesSearchCategoryCB, {
@@ -382,7 +325,7 @@
                 ps.keywordSearch(keyword1, placesSearchCB);
                 if (existTwoSearchForm == true) {
                 	ps.keywordSearch(keyword2, placesSearchCB);
-                	
+
                 }
                 
             }   
@@ -405,7 +348,7 @@
             	
                 if (status === kakao.maps.services.Status.OK) {
 
-                    markers.push(displayMarker(data[0]));        
+                   markers.push(displayMarker(data[0]));        
 
                     y += parseFloat(data[0].y);
                     x += parseFloat(data[0].x);
@@ -415,13 +358,54 @@
                     map.setBounds(bounds);
                 }
             }
-            var polyline;
-
             
+            
+            var MARKER_WIDTH = 33, // 기본, 클릭 마커의 너비
+            MARKER_HEIGHT = 36, // 기본, 클릭 마커의 높이
+            OFFSET_X = 12, // 기본, 클릭 마커의 기준 X좌표
+            OFFSET_Y = MARKER_HEIGHT, // 기본, 클릭 마커의 기준 Y좌표
+            OVER_MARKER_WIDTH = 40, // 오버 마커의 너비
+            OVER_MARKER_HEIGHT = 42, // 오버 마커의 높이
+            OVER_OFFSET_X = 13, // 오버 마커의 기준 X좌표
+            OVER_OFFSET_Y = OVER_MARKER_HEIGHT, // 오버 마커의 기준 Y좌표
+            SPRITE_MARKER_URL = 'https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/markers_sprites2.png', // 스프라이트 마커 이미지 URL
+            SPRITE_WIDTH = 126, // 스프라이트 이미지 너비
+            SPRITE_HEIGHT = 146, // 스프라이트 이미지 높이
+            SPRITE_GAP = 10; // 스프라이트 이미지에서 마커간 간격
+
+        var markerSize = new kakao.maps.Size(MARKER_WIDTH, MARKER_HEIGHT), // 기본, 클릭 마커의 크기
+            markerOffset = new kakao.maps.Point(OFFSET_X, OFFSET_Y), // 기본, 클릭 마커의 기준좌표
+            overMarkerSize = new kakao.maps.Size(OVER_MARKER_WIDTH, OVER_MARKER_HEIGHT), // 오버 마커의 크기
+            overMarkerOffset = new kakao.maps.Point(OVER_OFFSET_X, OVER_OFFSET_Y), // 오버 마커의 기준 좌표
+            spriteImageSize = new kakao.maps.Size(SPRITE_WIDTH, SPRITE_HEIGHT); // 스프라이트 이미지의 크기
+        	var cMarker = [];
+        	
+            // 마커를 생성하고 지도 위에 표시하고, 마커에 mouseover, mouseout, click 이벤트를 등록하는 함수입니다
+            function addMarker(position, normalOrigin, overOrigin, clickOrigin) {
+
+                // 기본 마커이미지, 오버 마커이미지, 클릭 마커이미지를 생성합니다
+                var normalImage = createMarkerImage(markerSize, markerOffset, normalOrigin),
+                    overImage = createMarkerImage(overMarkerSize, overMarkerOffset, overOrigin),
+                    clickImage = createMarkerImage(markerSize, markerOffset, clickOrigin);
+               
+                // 마커를 생성하고 이미지는 기본 마커 이미지를 사용합니다
+                var Marker = new kakao.maps.Marker({
+                    map: map,
+                    position: position,
+                    image: normalImage
+                });
+
+                // 마커 객체에 마커아이디와 마커의 기본 이미지를 추가합니다
+                Marker.normalImage = normalImage;
+                cMarker.push(Marker);
+               
+            }
+            var polyline;
+            var linePath = [], selectedMarker = null; // 클릭한 마커를 담을 변수
             function displayCourse(data0, data1, data2) {
             	// 선을 구성하는 좌표 배열입니다. 이 좌표들을 이어서 선을 표시합니다
             	var latlng0; var latlng1; var latlng2;
-            	var linePath = []
+            	
             	if (data0.length != 1) {
             		var d0 = data0.split(',');
             		latlng0 = new kakao.maps.LatLng(parseFloat(d0[0]), parseFloat(d0[1]));
@@ -455,8 +439,27 @@
             	
             	// 지도에 선을 표시합니다 
             	polyline.setMap(map);  
+            	
+            	 if (cMarker != null) {
+            		 for ( var i = 0; i < cMarker.length; i++ ) {
+            			 cMarker[i].setMap(null);
+                     }   
+            		 cMarker = []; 
+            	 }
+            	 for (var i = 0, len = linePath.length; i < len; i++) {
+                     var gapX = (MARKER_WIDTH + SPRITE_GAP), // 스프라이트 이미지에서 마커로 사용할 이미지 X좌표 간격 값
+                         originY = (MARKER_HEIGHT + SPRITE_GAP) * i, // 스프라이트 이미지에서 기본, 클릭 마커로 사용할 Y좌표 값
+                         overOriginY = (OVER_MARKER_HEIGHT + SPRITE_GAP) * i, // 스프라이트 이미지에서 오버 마커로 사용할 Y좌표 값
+                         normalOrigin = new kakao.maps.Point(0, originY), // 스프라이트 이미지에서 기본 마커로 사용할 영역의 좌상단 좌표
+                         clickOrigin = new kakao.maps.Point(gapX, originY), // 스프라이트 이미지에서 마우스오버 마커로 사용할 영역의 좌상단 좌표
+                         overOrigin = new kakao.maps.Point(gapX * 2, overOriginY); // 스프라이트 이미지에서 클릭 마커로 사용할 영역의 좌상단 좌표
+                         
+                     // 마커를 생성하고 지도위에 표시합니다
+                     addMarker(linePath[i], normalOrigin, overOrigin, clickOrigin, i);
+                 }
             }
-            
+            var infowindow = new kakao.maps.InfoWindow({zIndex:1});
+            // 지도에 마커를 표시하는 함수입니다
             function displayMarker(place) {
                 // 마커를 생성하고 지도에 표시합니다
                 var subwayM = new kakao.maps.Marker({
@@ -475,12 +478,14 @@
 				var nameEl;
 				if (place.category_group_code == 'SW8') {
                 nameEl = document.getElementById('resultsubway'), 
-                itemStr = '<a href="/course/search.do?subway=' + subwayName[0] + '">' + subwayName[0] +'</a> 주변 코스 입니다.';
+                itemStr = '<a href="/course/search.do?subway=' + subwayName[0] + '&x=' + place.x + '&y=' + place.y + '">' + subwayName[0] +'</a> 주변 코스 입니다.';
                 nameEl.innerHTML = itemStr;
 				}
                 return nameEl;
                
-            }  
+            }
+            
+                
             function removeMarker() {
                 for ( var i = 0; i < markers.length; i++ ) {
                     kakao.maps.event.removeListener(markers[i], 'click');
@@ -491,6 +496,23 @@
 
             function placeSubmit() {
             	form.submit();
+            }
+            
+            
+
+            // MakrerImage 객체를 생성하여 반환하는 함수입니다
+            function createMarkerImage(markerSize, offset, spriteOrigin) {
+                var markerImage = new kakao.maps.MarkerImage(
+                    SPRITE_MARKER_URL, // 스프라이트 마커 이미지 URL
+                    markerSize, // 마커의 크기
+                    {
+                        offset: offset, // 마커 이미지에서의 기준 좌표
+                        spriteOrigin: spriteOrigin, // 스트라이프 이미지 중 사용할 영역의 좌상단 좌표
+                        spriteSize: spriteImageSize // 스프라이트 이미지의 크기
+                    }
+                );
+                
+                return markerImage;
             }
             </script>
     </body>

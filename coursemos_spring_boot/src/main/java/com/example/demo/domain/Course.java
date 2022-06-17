@@ -14,8 +14,11 @@ import javax.persistence.InheritanceType;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
+import javax.persistence.PrimaryKeyJoinColumn;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
@@ -64,10 +67,10 @@ public class Course {
     @JoinColumn(name = "placeId1")
 	private Place place1;
 	@OneToOne(cascade=CascadeType.ALL)
-    @JoinColumn(name = "placeId2")
+	@JoinColumn(name = "placeId2")
 	private Place place2;
 	@OneToOne(cascade=CascadeType.ALL)
-    @JoinColumn(name = "placeId3")
+	@JoinColumn(name = "placeId3")
 	private Place place3;
 	
 //	@ManyToOne(targetEntity = Place.class, cascade=CascadeType.PERSIST)

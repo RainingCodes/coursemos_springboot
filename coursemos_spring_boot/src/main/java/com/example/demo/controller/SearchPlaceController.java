@@ -26,6 +26,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.bind.annotation.SessionAttributes;
+import org.springframework.web.bind.support.SessionStatus;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.example.demo.controller.CompanyController.Taste;
@@ -58,19 +59,7 @@ public class SearchPlaceController {
 	public void setTasteService(TasteService tasteService) {
 		this.tasteService = tasteService;
 	}
-	/*
-	@ModelAttribute("tasteCate")
-	protected List<TasteCategory> tasteList() throws Exception {
-		List<TasteCategory> tList = new ArrayList<TasteCategory>();
-		tList.add(new TasteCategory("활동적인"));
-		tList.add(new TasteCategory("힐링되는"));
-		tList.add(new TasteCategory("자연적인"));
-		tList.add(new TasteCategory("체험적인"));
-		tList.add(new TasteCategory("즐거운"));
-		tList.add(new TasteCategory("복고풍"));
-		tList.add(new TasteCategory("잔잔한"));
-		return tList;
-	}*/
+
 	@Getter @Setter @AllArgsConstructor @ToString
 	public class Taste {
 		private String code;
@@ -89,14 +78,17 @@ public class SearchPlaceController {
 		return tasteCodes;	
 	}
 	
+	@SuppressWarnings("unchecked")
 	@RequestMapping("/course/search/main")
 	public String handleRequest(
 			ModelMap model, HttpSession session
 			) throws Exception {
 		List<Taste> tList = referenceData();
-		PagedListHolder<Course> cList = null;
+		PagedListHolder<Course> courseList = (PagedListHolder<Course>) session.getAttribute("cList");
+		session.removeAttribute("courseList");
+		
+		//model.put("cList", courseList);
 		model.put("tList", tList);
-		model.put("cList", cList);
 		return SEARCH_VIEW;
 	}
 	@RequestMapping("/course/search.do")
@@ -111,8 +103,8 @@ public class SearchPlaceController {
 		PagedListHolder<Course> cList = new PagedListHolder<Course>(this.searchService.getCourseList(subway));
 		cList.setPageSize(4);
 		model.put("subway", subway);
-		model.put("x", y);
-		model.put("y", x);
+		model.put("x", x);
+		model.put("y", y);
 		model.put("tList", tList);
 		model.put("cList", cList);
 		return SEARCH_VIEW;

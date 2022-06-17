@@ -101,7 +101,7 @@ public class JpaCourseDao implements CourseDao{
 	@Override
 	public List<Course> getCourseList(String subway) throws DataAccessException {
 		Query query = em.createQuery(
-                "SELECT c FROM Course c WHERE c.placeId1.subway = ?1");
+                "SELECT c FROM Course c WHERE c.place1.subway = ?1");
 				query.setParameter(1, subway);
         return query.getResultList();
 	}
@@ -109,7 +109,7 @@ public class JpaCourseDao implements CourseDao{
 	@Override
 	public List<Course> getCourseListByTaste(String subway, String taste) throws DataAccessException {
 		Query query = em.createQuery(
-                "SELECT c FROM Course c, Place p WHERE c.placeId1.placeId = p.placeId AND p.subway = ?1 AND c.taste =?2");
+                "SELECT c FROM Course c WHERE c.place1.subway = ?1 AND c.taste =?2");
 				query.setParameter(1, subway);
 				query.setParameter(2, taste);
         return query.getResultList();
