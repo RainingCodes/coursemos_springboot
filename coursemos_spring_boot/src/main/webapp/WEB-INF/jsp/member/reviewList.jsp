@@ -32,16 +32,12 @@
 			<tbody>
 				<c:forEach var="review" items="${reviews}" varStatus="status">
 						<tr>
-							<td><c:out value="${reviewId}" /></td>
-							<td><a href="review/registered/${reviewId}"><c:out value="${reviewContents}" /></a></td>
-							<td><c:out value="${writtenDate}" /></td>
-							<td><c:out value="${likes}" /></td>
+							<td><c:out value="${review.reviewId}" /></td>
+							<td><a href="/review/registered/${review.reviewId}"><c:out value="${review.reviewContents}" /></a></td>
+							<td><c:out value="${review.writtenDate}" /></td>
+							<td><c:out value="${review.likes}" /></td>
 						</tr>
 				</c:forEach>
-				<tr>
-					<td>현재 포인트</td>
-					<td colspan="2">${sessionMember.getPoints() }</td>
-				</tr>
 			</tbody>	
 		</table>
 	</div>
