@@ -78,11 +78,10 @@
 								value="검색">
 						</div>
 						<br><br>
-						<div id="map"
-							style="width: 600px; height: 300px; margin-top: 10px;"></div>
+						<div id="map" style="width: 600px; height: 300px; margin: 20px 20px 20px -20px;">
 						<script type="text/javascript"
 							src="//dapi.kakao.com/v2/maps/sdk.js?appkey=c17b5563968f2fffd356919521833ce2&libraries=services"></script>
-		
+						</div>
 						<script>
 							// 마커를 클릭하면 장소명을 표출할 인포윈도우 입니다
 							var infowindow = new kakao.maps.InfoWindow({zIndex:1});
