@@ -92,11 +92,10 @@
 					<!-- 지도 -->
 					<h5 style="font-weight:bold;">코스 경로 미리보기</h5>
 					<!-- 지도를 표시할 div 입니다 -->
-					<div id="map" style="width:100%;height:350px;"></div>
-					
+					<div id="map" style="width:100%;height:350px; margin: 20px 20px 20px 0px">
 					<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=c17b5563968f2fffd356919521833ce2&libraries=services"></script>
+					</div>
 					<script>
-					
 					var MARKER_WIDTH = 33, // 기본, 클릭 마커의 너비
 				    MARKER_HEIGHT = 36, // 기본, 클릭 마커의 높이
 				    OFFSET_X = 12, // 기본, 클릭 마커의 기준 X좌표

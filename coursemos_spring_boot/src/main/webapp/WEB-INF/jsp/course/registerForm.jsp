@@ -78,11 +78,10 @@
 								value="검색">
 						</div>
 						<br><br>
-						<div id="map"
-							style="width: 600px; height: 300px; margin-top: 10px;"></div>
+						<div id="map" style="width: 600px; height: 300px; margin: 20px 20px 20px -20px;">
 						<script type="text/javascript"
 							src="//dapi.kakao.com/v2/maps/sdk.js?appkey=c17b5563968f2fffd356919521833ce2&libraries=services"></script>
-		
+						</div>
 						<script>
 							// 마커를 클릭하면 장소명을 표출할 인포윈도우 입니다
 							var infowindow = new kakao.maps.InfoWindow({zIndex:1});
@@ -146,28 +145,32 @@
 	
 							}        
 					        
-					        function placesSearchCBSubway (data, status, pagination) {
-							    if (status === kakao.maps.services.Status.OK) {
-									//alert(data[0].place_name);		
+							// 역 찾기
+					        function placesSearchCBSubway1 (data, status, pagination) {
+							    if (status === kakao.maps.services.Status.OK) {	
 									document.getElementById('subway1').value = data[0].place_name;
-									
-									if (document.getElementById('subway2')){
-										document.getElementById('subway2').value = data[0].place_name;									
-									}
-									if (document.getElementById('subway3')){
-										document.getElementById('subway3').value = data[0].place_name;									
-									}
 							    } 
 							}
-							
+					        
+					        function placesSearchCBSubway2 (data, status, pagination) {
+							    if (status === kakao.maps.services.Status.OK) {
+										document.getElementById('subway2').value = data[0].place_name;									
+							    } 
+							}
+					        
+					        function placesSearchCBSubway3 (data, status, pagination) {
+							    if (status === kakao.maps.services.Status.OK) {
+										document.getElementById('subway3').value = data[0].place_name;									
+							    } 
+							}
 			
-							// submit할 address 입력 시 호출되는 콜백함수 입니다
+							// address 입력 시 호출되는 콜백함
 							function placesSearchCB1 (data, status, pagination) {
 							    if (status === kakao.maps.services.Status.OK) {
 							        document.getElementById('place1CoordX').value = data[0].y;
 							        document.getElementById('place1CoordY').value = data[0].x;
 							        
-							        places1.categorySearch('SW8', placesSearchCBSubway, { //첫번째 장소 기준으로 역 찾기
+							        places1.categorySearch('SW8', placesSearchCBSubway1, {
 										location: new kakao.maps.LatLng(data[0].y, data[0].x)
 									});
 							        
@@ -178,6 +181,9 @@
 							        document.getElementById('place2CoordX').value = data[0].y;
 							        document.getElementById('place2CoordY').value = data[0].x;
 							        
+							        places1.categorySearch('SW8', placesSearchCBSubway2, {
+										location: new kakao.maps.LatLng(data[0].y, data[0].x)
+									});
 							    } 
 							}
 							function placesSearchCB3 (data, status, pagination) {
@@ -185,10 +191,12 @@
 							        document.getElementById('place3CoordX').value = data[0].y;
 							        document.getElementById('place3CoordY').value = data[0].x;
 							        
+							        places1.categorySearch('SW8', placesSearchCBSubway3, {
+										location: new kakao.maps.LatLng(data[0].y, data[0].x)
+									});
 							    } 
 							}
-							
-							
+								
 							 // 지도에 마커를 표시하는 함수입니다
 							function displayMarker(place) {
 							    
