@@ -43,6 +43,11 @@ public class ReportServiceImpl implements ReportService {
 	public Report getReportById(int reportId) {
 		return reportDao.getReportById(reportId);
 	}
+
+	@Override
+	public List<Report> getReportByMemberId(Long memberId) {
+		return reportDao.getReportByMemberId(memberId);
+	}
 	
 	
 
