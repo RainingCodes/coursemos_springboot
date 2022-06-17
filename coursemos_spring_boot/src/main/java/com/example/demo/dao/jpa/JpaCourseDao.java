@@ -21,7 +21,7 @@ public class JpaCourseDao implements CourseDao{
 	private EntityManager em;
 	
 	@Override
-	public Course getCourseByCourseId(Long courseId) throws DataAccessException {
+	public Course getCourseByCourseId(int courseId) throws DataAccessException {
 		return em.find(Course.class, courseId);
 	}
 
