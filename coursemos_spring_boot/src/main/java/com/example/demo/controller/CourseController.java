@@ -25,6 +25,7 @@ import com.example.demo.domain.Course;
 import com.example.demo.domain.Member;
 import com.example.demo.domain.Place;
 import com.example.demo.domain.Points;
+import com.example.demo.domain.Review;
 import com.example.demo.domain.SessionMember;
 import com.example.demo.service.CompanyService;
 import com.example.demo.service.CouponService;
@@ -32,6 +33,7 @@ import com.example.demo.service.CourseService;
 import com.example.demo.service.MemberService;
 import com.example.demo.service.PlaceService;
 import com.example.demo.service.PointsService;
+import com.example.demo.service.ReviewService;
 import com.example.demo.validator.CourseValidator;
 
 import lombok.AllArgsConstructor;
@@ -53,6 +55,9 @@ public class CourseController {
 	private MemberService memberService;
 	@Autowired
 	private PointsService pointsService;
+	
+	@Autowired
+	private ReviewService reviewService;
 	
 	//MemberCouponButton
 	@Autowired
@@ -182,6 +187,8 @@ public class CourseController {
 	            }         
 	         }
 	      }      
+	      List<Review> reviews = reviewService.findReviewByCourseId(courseId);
+	      mav.addObject("reviews", reviews);
 	      mav.addObject("couponList", mcb);
 		
 		return mav;
