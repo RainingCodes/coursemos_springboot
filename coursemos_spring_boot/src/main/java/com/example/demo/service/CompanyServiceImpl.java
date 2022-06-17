@@ -31,7 +31,7 @@ public class CompanyServiceImpl implements CompanyService {
 	
 
 	@Override
-	public Company getCompanyByPlaceId(int placeId) {
+	public Company getCompanyByPlaceId(Long placeId) {
 		return companyDao.getCompanyByPlaceId(placeId);
 	}
 

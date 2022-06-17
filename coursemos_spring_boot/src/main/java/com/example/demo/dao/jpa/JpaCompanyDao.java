@@ -33,7 +33,7 @@ public class JpaCompanyDao implements CompanyDao {
 	}
 	
 	@Override
-	public Company getCompanyByPlaceId(int placeId) throws DataAccessException {
+	public Company getCompanyByPlaceId(Long placeId) throws DataAccessException {
 		return em.find(Company.class, placeId);
 	}
 

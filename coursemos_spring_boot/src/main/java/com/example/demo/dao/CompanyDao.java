@@ -8,7 +8,7 @@ import com.example.demo.domain.Company;
 public interface CompanyDao {
 	List<Company> getAllCompany() throws DataAccessException;
 	List<Company> getCompanyByMemberId(Long memberId) throws DataAccessException;
-	Company getCompanyByPlaceId(int placeId) throws DataAccessException;
+	Company getCompanyByPlaceId(Long placeId) throws DataAccessException;
 	Company getCompanyByCompanyId(Long companyId) throws DataAccessException;
 	void updateCompany(Company company) throws DataAccessException;
 	void insertCompany(Company company) throws DataAccessException;
