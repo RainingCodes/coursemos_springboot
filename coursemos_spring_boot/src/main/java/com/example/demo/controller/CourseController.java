@@ -165,7 +165,7 @@ public class CourseController {
 				Company com = companyService.getCompanyByPlaceId(id);
 								
 				if (com != null) {
-					List<Coupon> cou = couponService.getCouponByCompanyId(com.getCompanyId());
+					List<Coupon> cou = couponService.getCouponByCompanyId(Long.valueOf(com.getCompanyId()));
 					for (Coupon c : cou) {
 						mcb.add(new MemberCouponButton(com.getPlace().getPlaceName(), c));
 					}
