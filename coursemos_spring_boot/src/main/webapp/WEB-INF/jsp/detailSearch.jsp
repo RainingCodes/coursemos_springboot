@@ -15,7 +15,7 @@
         top:80px;
         left:200px;
         width:350px;
-        height:500px;
+        height:300px;
     }
     .test {
     display: flex;
@@ -103,26 +103,14 @@
 	        
 			<div id="map" ></div>        
 			<div id="searchResult">
-			<c:if test="${cList != null}">
-				<div id="page">
-					<c:if test="${!cList.firstPage}">
-						<a href='<c:url value="/course/search2.do">
-							<c:param name="page" value="previous"/></c:url>'>
-						<font color="balck"><B>&lt;&lt; Prev</B></font></a>
-					</c:if> 
-					<c:if test="${!cList.lastPage}">
-						<a href='<c:url value="/course/search2.do">
-							<c:param name="page" value="next"/></c:url>'>
-						<font color="black"><B>Next &gt;&gt;</B></font></a>
-					</c:if>
-	            </div>
-        	 </c:if>
+			
             <div id="courseList">
-            <c:forEach var="cate" items="${cList.pageList}">
+            <div id="page"> </div>
+            <c:forEach items="${cList.content}" var="cate">
               <div class="accordion accordion-flush" id="accordionFlushExample">
                <div class="accordion-item"> 
                   <h2 class="accordion-header" id="${cate.courseId}"> 
-                    <button class="accordion-button collapsed" type="button"  onclick="javascript:displayCourse('${cate.place1.x}' + ',' + '${cate.place1.y}', '${cate.place2.x}' + ',' + '${cate.place2.y}', '${cate.place3.x}' + ',' + '${cate.place3.y}');"data-bs-toggle="collapse" data-bs-target="#flush-collapseOne_${cate.courseId}" aria-expanded="false" aria-controls="flush-collapseOne_${cate.courseId}">
+                    <button class="accordion-button collapsed" type="button"  onclick="javascript:panTo('${cate.place1.x}' + ',' + '${cate.place1.y}');displayCourse('${cate.place1.x}' + ',' + '${cate.place1.y}', '${cate.place2.x}' + ',' + '${cate.place2.y}', '${cate.place3.x}' + ',' + '${cate.place3.y}');"data-bs-toggle="collapse" data-bs-target="#flush-collapseOne_${cate.courseId}" aria-expanded="false" aria-controls="flush-collapseOne_${cate.courseId}">
                          ${cate.courseId} |
                          ${cate.courseContents}
                         <i class="bi bi-heart-fill"></i> ${cate.likes}
@@ -131,23 +119,30 @@
                   <div id="flush-collapseOne_${cate.courseId}" class="accordion-collapse collapse" aria-labelledby="${cate.courseId}" data-bs-parent="#accordionFlushExample">
                     <div class="accordion-body">
 					<ul class="list-group col-12">
+						<c:if test="${!empty cate.place1}">
 						<li class="list-group-item list-group-item" onclick="javascript:panTo('${cate.place1.x}' + ',' + '${cate.place1.y}')" data-bs-toggle="modal" data-bs-target="#exampleModal_${cate.courseId}_0" style="background-color:antiquewhite">
 							<div class="mx-sm-5 me-auto">
 							<div class="fw-bold">${cate.place1.placeName}</div>
 							</div>
 						</li>
+						</c:if>
+						<c:if test="${!empty cate.place2}">
 						<li class="list-group-item list-group-item" onclick="javascript:panTo('${cate.place2.x}' + ',' + '${cate.place2.y}')" data-bs-toggle="modal" data-bs-target="#exampleModal_${cate.courseId}_1" style="background-color:antiquewhite">
 							<div class="mx-sm-5 me-auto">
 							<div class="fw-bold">${cate.place2.placeName}</div>
 							</div>
 						</li>
+						</c:if>
+						<c:if test="${!empty cate.place3}">
 						<li class="list-group-item list-group-item" onclick="javascript:panTo('${cate.place3.x}' + ',' + '${cate.place3.y}')" data-bs-toggle="modal" data-bs-target="#exampleModal_${cate.courseId}_2" style="background-color:antiquewhite">
 							<div class="mx-sm-5 me-auto">
 							<div class="fw-bold">${cate.place3.placeName}</div>
 							</div>
 						</li>
+						</c:if>
 					</ul>
                     </div>
+                  <a href="/course/view/${cate.courseId}"><i class="bi bi-info-square"></i></a>
                   </div>
                 </div>
             </div>
@@ -210,7 +205,18 @@
               </div>
             </div>
             </c:forEach>
-            
+            <ul class="pager">
+				<c:if test="${!cList.first}">
+					<li class="previous">
+						<a href="/course/detailedSearch.do?size=3&page=${cList.number-1}&taste=${taste}&subway=${subway}&x=${x}&y=${y}">&larr; Newer Posts</a>
+					</li>
+				</c:if>
+				<c:if test="${!cList.last}">
+					<li class="next">
+						<a href="/course/detailedSearch.do?size=3&page=${cList.number+1}&taste=${taste}&subway=${subway}&x=${x}&y=${y}">Older Posts &rarr;</a>
+					</li>
+				</c:if>
+			</ul>
             </div>  
             <!-- <ul id="placesList"></ul>-->
             
@@ -405,7 +411,7 @@
             function displayCourse(data0, data1, data2) {
             	// 선을 구성하는 좌표 배열입니다. 이 좌표들을 이어서 선을 표시합니다
             	var latlng0; var latlng1; var latlng2;
-            	
+            	var n = 0;
             	if (data0.length != 1) {
             		var d0 = data0.split(',');
             		latlng0 = new kakao.maps.LatLng(parseFloat(d0[0]), parseFloat(d0[1]));
@@ -439,7 +445,6 @@
             	
             	// 지도에 선을 표시합니다 
             	polyline.setMap(map);  
-            	
             	 if (cMarker != null) {
             		 for ( var i = 0; i < cMarker.length; i++ ) {
             			 cMarker[i].setMap(null);
@@ -478,14 +483,13 @@
 				var nameEl;
 				if (place.category_group_code == 'SW8') {
                 nameEl = document.getElementById('resultsubway'), 
-                itemStr = '<a href="/course/search.do?subway=' + subwayName[0] + '&x=' + place.x + '&y=' + place.y + '">' + subwayName[0] +'</a> 주변 코스 입니다.';
+                itemStr = '<a href="/course/search.do?size=3&subway=' + subwayName[0] + '&x=' + place.x + '&y=' + place.y + '">' + subwayName[0] +'</a> 주변 코스 입니다.';
                 nameEl.innerHTML = itemStr;
 				}
                 return nameEl;
                
             }
-            
-                
+    
             function removeMarker() {
                 for ( var i = 0; i < markers.length; i++ ) {
                     kakao.maps.event.removeListener(markers[i], 'click');

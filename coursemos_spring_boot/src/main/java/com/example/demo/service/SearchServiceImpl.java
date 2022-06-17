@@ -1,6 +1,7 @@
 package com.example.demo.service;
 
 import java.util.List;
+import java.util.Optional;
 
 import javax.transaction.Transactional;
 
@@ -10,6 +11,7 @@ import org.springframework.beans.support.PagedListHolder;
 import org.springframework.boot.autoconfigure.data.web.SpringDataWebProperties.Pageable;
 import org.springframework.dao.DataAccessException;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
 import com.example.demo.dao.CourseDao;
@@ -17,6 +19,8 @@ import com.example.demo.dao.ReportDao;
 import com.example.demo.dao.TasteCategoryDao;
 import com.example.demo.domain.Course;
 import com.example.demo.domain.Report;
+import com.example.demo.repository.CourseRepository;
+import com.example.demo.repository.SearchRepository;
 
 @Service("SearchServiceImpl")
 @Transactional
@@ -28,11 +32,20 @@ public class SearchServiceImpl implements SearchService {
 		@Autowired 
 		@Qualifier("jpaTasteCategoryDao")
 		TasteCategoryDao tasteCategoryDao;
-		public Course getCourseByCourseId(int courseId) throws DataAccessException {
-			return courseDao.getCourseByCourseId(courseId);
+
+		
+		@Autowired
+		private SearchRepository searchRepository;
+		
+		public void setSearchRepository(SearchRepository searchRepository) {
+			this.searchRepository = searchRepository;
 		}
-	
-	
+		
+		public List<Course> getCourse(int courseId) {
+			List<Course> result = searchRepository.findByCourseId(courseId);
+			return null;
+		}
+		
 		public void insertCourse(Course course) throws DataAccessException {
 			return;
 		}
@@ -91,5 +104,12 @@ public class SearchServiceImpl implements SearchService {
 			// TODO Auto-generated method stub
 			return null;
 		}
+
+		@Override
+		public List<Course> getCourseByCourseId(int courseId) throws DataAccessException {
+			return courseDao.getCourseList("월곡역");
+		}
+		
+
 
 }

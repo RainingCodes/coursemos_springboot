@@ -6,6 +6,9 @@ import javax.transaction.Transactional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import com.example.demo.dao.CourseDao;
@@ -48,5 +51,26 @@ public class CourseServiceImpl implements CourseService{
 		return courseRepository.findCourseListByMemberId(memberId);
 	}
 
+	@Override
+	public List<Course> findBycourseId(int courseId, Sort sort) {
+		return courseRepository.findBycourseId(courseId, sort);
+	}
+	public Page<Course> findAll(Pageable pageable) {
+		return courseRepository.findAll(pageable);
+	}
+
+	public Page<Course> findByPlace1_Subway(String subway, Pageable pageable) {
+		return courseRepository.findByPlace1_Subway(subway, pageable);
+	}
+
+	@Override
+	public Page<Course> findCourse1(String taste, Pageable pageable) {
+		return courseRepository.findCourse1(taste, pageable);
+	}
+	
+	@Override
+	public Page<Course> findCourse2(String subway, String taste, Pageable pageable) {
+		return courseRepository.findCourse2(subway, taste, pageable);
+	}
 	
 }
