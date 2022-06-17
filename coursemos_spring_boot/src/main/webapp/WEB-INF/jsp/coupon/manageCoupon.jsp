@@ -69,7 +69,7 @@ function submitForm() {
 		<td>
         	<a href='<c:url value="/company/list/coupon/detail">
           	<c:param name="couponId" value="${coupon.couponId}"/></c:url>'>
-          	<b>이동하기</b></a>
+          	<button>이동하기</button></a>
      	</td>
     </tr>
     </c:if>

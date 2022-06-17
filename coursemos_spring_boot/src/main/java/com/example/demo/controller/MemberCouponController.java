@@ -14,11 +14,13 @@ import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.example.demo.domain.Coupon;
+import com.example.demo.domain.Member;
 import com.example.demo.domain.MemberCoupon;
 import com.example.demo.domain.SessionMember;
 import com.example.demo.service.CompanyService;
 import com.example.demo.service.CouponService;
 import com.example.demo.service.MemberCouponService;
+import com.example.demo.service.MemberService;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -43,6 +45,8 @@ public class MemberCouponController {
 	private CouponService couponService;
 	@Autowired
 	private CompanyService companyService;
+	@Autowired
+	private MemberService memberService;
 	
 	//리스트
 	@RequestMapping("/company/list/coupon/detail")
@@ -53,8 +57,8 @@ public class MemberCouponController {
 		List<MemberCoupon> memberCoupon =  memberCouponService.getMemberCouponByCouponId(couponId);
 		
 		for (MemberCoupon m : memberCoupon) {
-			//m을 사용해서 나중에 jpa를 이용해 memberid를 키로 해서 닉네임을 받아온다.
-			MemberCouponValue memberCouponValue = new MemberCouponValue(m, "닉네임 jpa 후에 연결");
+			Member member = memberService.findMemberById(m.getMemberId());
+			MemberCouponValue memberCouponValue = new MemberCouponValue(m, member.getNickName());
 			mcList.add(memberCouponValue);
 		}
 		

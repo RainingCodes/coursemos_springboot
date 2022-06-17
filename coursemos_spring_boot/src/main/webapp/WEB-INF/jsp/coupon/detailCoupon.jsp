@@ -13,13 +13,21 @@
 <title>제휴 관리</title>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 </head>
+<style>
+h4 {
+	text-align:center;
+}
+th {
+	text-align:center;
+}
+</style>
 <body>
 <!-- 날짜 설정 -->
 <jsp:useBean id="now" class="java.util.Date" />
 <fmt:formatDate value="${now}" pattern="yyyy-MM-dd" var="nowDate" />        <%-- 오늘날짜 --%>
 
 <div class="container">
-<center><h1>쿠폰 관리</h1></center>
+<center><h1>쿠폰 관리</h1></center><br>
 <h4>'${coupon.couponContents}' 쿠폰 발급 리스트</h4>
 <table class="table">
 	<tr>
