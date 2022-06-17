@@ -49,7 +49,6 @@ function showPopup(){
 </script>
 <body>
 	<div><h3><span th:text="${review.courseName}"></span> 리뷰</h3>
-		<span th:text="${like}"></span>
 		<table id="review">
 			<tr>
 				<td><th:block th:unless="${isWriter}"><span th:unless="${like}" class="img"><a onclick="like();"><img src="../../img/like1.png"></a></span>

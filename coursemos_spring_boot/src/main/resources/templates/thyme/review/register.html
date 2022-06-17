@@ -2,7 +2,7 @@
 <html xmlns:th="http://www.thymeleaf.org"> 
 <head>
 <meta charset="UTF-8">
-<title>리뷰작성</title>
+<title>리뷰 작성</title>
 <header th:replace="~{thyme/header/header :: #header}"></header>
 <link rel="stylesheet" th:href="@{../css/style.css}" />
 <script type="text/javascript" src="http://code.jquery.com/jquery-1.12.4.min.js"></script>
@@ -29,13 +29,31 @@ function register(){
 	
 		
 }
+
 </script>
+<style>
+textarea{
+	width:500px; 
+	height:100px; 
+    resize:none;
+    }
+    div {
+    	text-align : center;
+    }
+    table {
+    	margin : auto;
+    }
+    .err {
+    	color : red;
+    }
+</style>
 </head>
 <body>
 
-<div><h3>리뷰 작성하기</h3>
+<div><h3>리뷰 작성</h3>
+	<span th:text="${review}"></span>
 	<form th:action="@{/review/register}" th:object="${review}" method="post" enctype="multipart/form-data" id="review">
-		<table class="table table-bordered">
+		<table>
 			<tr>
 				<td>작성자 : </td>
 				<td th:text="${sessionMember.nickName}"></td>
@@ -46,7 +64,7 @@ function register(){
 			</tr>
 			<tr>
 				<td>리뷰 내용 : </td>
-				<td><textarea th:field="*{reviewContents}" id="reviewContents" name="reviewContents"></textarea></td>
+				<td><textarea th:text="*{reviewContents}" id="reviewContents" name="reviewContents"></textarea></td>
 			</tr>
 			<tr>
 				<td colspan="2"><span class="err" th:errors="*{reviewContents}"> </span></td> 

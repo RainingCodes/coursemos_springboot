@@ -74,7 +74,11 @@ public class ReviewController implements ApplicationContextAware{
 	@RequestMapping(value = "/review/register/{courseId}", method = RequestMethod.GET)
 	public ModelAndView form(HttpSession session, @ModelAttribute SessionMember sessionMember, @PathVariable("courseId") String id) {
 		ModelAndView mv = new ModelAndView("thyme/review/register");
-		Review review = new Review();
+		Review review;
+		if(session.getAttribute("review") == null)
+			review = new Review();
+		else
+			review = (Review) session.getAttribute("review");
 		review.setMemberId(sessionMember.getId());
 		mv.addObject("sessionMember", sessionMember);
 		mv.addObject("review", review);
@@ -121,6 +125,7 @@ public class ReviewController implements ApplicationContextAware{
 		session.setAttribute("sessionMember", sessionMember);
 		return "redirect:/review/registered/" + Long.toString(review.getReviewId());
 	}
+	
 	
 	@RequestMapping(value = "/review/registered/{reviewId}")
 	public ModelAndView viewDetail(@ModelAttribute SessionMember sessionMember, @PathVariable("reviewId") Long id) {
