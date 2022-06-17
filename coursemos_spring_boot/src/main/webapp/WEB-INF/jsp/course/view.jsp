@@ -289,13 +289,15 @@
 					    })
 					  }
 					  				  
-					</script>
-					<%-- <c:if test="${not empty nickname}"> <!-- 로그인 후 뜨는지 확인 --> --%>
+					</script>					
+					<c:if test="${sessionMember.check2 != false}"> <!-- 로그인 후 뜨는지 확인 -->
 						<button formaction="/course/like" style="border:0;background-color:white;"><img class="image" style="width:50px; height:50px;" src="../../img/like1.png" /></button>
 						<button formaction="/course/scrap" style="border:0;background-color:white;"><img class="scrapImage" style="width:50px; height:50px;" src="../../img/scrap1.png"/></button>
 						<button type="button" onclick="location.href='../view/coupon/get'" style="width:15%; height:60px; border:none; border-radius:5px; text-align: center; background-color:#ced4da;">쿠폰 발급</button>
 						<button type="button" style="width:15%; height:60px; border:none; border-radius:5px; text-align: center; background-color:#ced4da;">신고</button>			
-					<%-- </c:if> --%>
+						<button type="submit" formaction="../${course.courseId}/update" style="width:15%; height:60px; border:none; border-radius:5px; text-align: center; background-color:#ced4da;">수정</button>
+						<button type="submit" formaction="list" style="width:15%; height:60px; border:none; border-radius:5px; text-align: center; background-color:#ced4da;">삭제</button>
+					</c:if>	
 					<script>
 					  var heartImg = document.querySelector(".image");
 					  heartImg.addEventListener("click", invertImg);
@@ -316,12 +318,6 @@
 					  }
 					  
 					</script>
-					<!-- <button type="submit" style="width:20%; height:60px; border:none; border-radius:5px; text-align: center; background-color:#0d6efd; color: white;">스크랩</button> -->
-					<c:if test="${memberId eq course.memberId}"> <!-- 로그인 후 뜨는지 확인 -->
-						<button type="submit" formaction="../${course.courseId}/update" style="width:15%; height:60px; border:none; border-radius:5px; text-align: center; background-color:#ced4da;">수정</button>
-						<button type="submit" formaction="list" style="width:15%; height:60px; border:none; border-radius:5px; text-align: center; background-color:#ced4da;">삭제</button>
-						
-					</c:if>	
 					</div>
 				<br>
 				<br>
