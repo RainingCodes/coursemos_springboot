@@ -26,18 +26,18 @@ public class ScrapController {
 	@Autowired
 	private CourseService courseService;
 	
-//	@RequestMapping("/course/scrap")
-//	public String courseScrap(@ModelAttribute SessionMember sessionMember, 
-//			@RequestParam("courseId") int courseId) {		
-//		Scrap exist = scrapService.getScrapByPrimaryKey(sessionMember.getId(), courseId);
-//		if (exist == null) {
-//			scrapService.insertScrap(new Scrap(sessionMember.getId(), courseId));
-//		} else {
-//			scrapService.deleteScrap(exist);
-//		}
-//		
-//		return "redirect:/course/view/"+courseId;
-//	}
+	@RequestMapping("/course/scrap")
+	public String courseScrap(@ModelAttribute SessionMember sessionMember, 
+			@RequestParam("courseId") int courseId) {		
+		Scrap exist = scrapService.getScrapByPrimaryKey(sessionMember.getId(), courseId);
+		if (exist == null) {
+			scrapService.insertScrap(new Scrap(sessionMember.getId(), courseId));
+		} else {
+			scrapService.deleteScrap(exist);
+		}
+		
+		return "redirect:/course/view/"+courseId;
+	}
 	
 	
 	@RequestMapping("/member/scrap/list")
@@ -56,12 +56,12 @@ public class ScrapController {
 		return mav;
 	}
 	
-//	@RequestMapping("/user/unscrap")
-//	public String deleteScrap(@ModelAttribute SessionMember sessionMember, 
-//			@RequestParam("courseId") int courseId) {
-//		Scrap scrap = scrapService.getScrapByPrimaryKey(sessionMember.getId(), courseId);
-//		scrapService.deleteScrap(scrap);
-//		
-//		return "redirect:/member/scrap/list";
-//	}
+	@RequestMapping("/user/unscrap")
+	public String deleteScrap(@ModelAttribute SessionMember sessionMember, 
+			@RequestParam("courseId") int courseId) {
+		Scrap scrap = scrapService.getScrapByPrimaryKey(sessionMember.getId(), courseId);
+		scrapService.deleteScrap(scrap);
+		
+		return "redirect:/member/scrap/list";
+	}
 }
