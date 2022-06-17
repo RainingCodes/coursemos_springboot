@@ -85,7 +85,7 @@ $(document).ready(function(){
 			      	<tbody>
 			      		<c:set var="listSize" value="${sessionMember.getPointList().size()}" />
 		        		<c:forEach var="points" items="${sessionMember.getPointList()}" varStatus="status">
-							 <c:if test="${status.index >= listSize - 4 }">
+							 <c:if test="${status.index >= listSize - 3 }">
 							<tr>
 								<td>
 									<c:out value="${points.getPointsDate()}" /></td>
