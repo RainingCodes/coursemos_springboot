@@ -26,7 +26,7 @@ public class JpaScrapDao implements ScrapDao {
 	}
 
 	@Override
-	public List<Scrap> getScrapByMemberId(Long memberId) throws DataAccessException {
+	public List<Scrap> getScrapByMemberId(Long memberId) throws DataAccessException { 
 		TypedQuery<Scrap> query = em.createQuery(
                 "select s from Scrap s " + "where s.memberId = ?1", Scrap.class);
 		query.setParameter(1, memberId);

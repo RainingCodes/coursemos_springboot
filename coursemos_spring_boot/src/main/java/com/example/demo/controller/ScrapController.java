@@ -18,11 +18,6 @@ import com.example.demo.domain.SessionMember;
 import com.example.demo.service.CourseService;
 import com.example.demo.service.ScrapService;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.Setter;
-import lombok.ToString;
-
 @Controller
 @SessionAttributes("sessionMember")
 public class ScrapController {
