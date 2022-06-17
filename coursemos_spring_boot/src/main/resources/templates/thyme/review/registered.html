@@ -33,11 +33,22 @@ function dislike (){
 	   var link = "/review/dislike/"+/*[[${review.reviewId}]]*/ 'null';
 	   location.href=link;
 	}
+function showPopup(){
+	
+	var width = 1200;
+	var height = 350;
+
+	var popupX = (window.screen.width / 2) - (width / 2);
+	var popupY= (window.screen.height / 2) - (height / 2);
+	
+	var link = "/report/review/"+/*[[${session.review.reviewId}]]*/ 'null';
+
+	openWin = window.open(link,"신고 페이지","height=" + height  + ", width=" + width  + ", left="+ popupX + ", top="+ popupY / 2);  
+}
 /*]]>*/
 </script>
 <body>
 	<div><h3><span th:text="${review.courseName}"></span> 리뷰</h3>
-		<span th:text="${isWriter}"></span>
 		<table id="review">
 			<tr>
 				<td><th:block th:unless="${isWriter}"><span th:if="${like}" class="img"><a onclick="like();"><img src="../../img/like1.png"></a></span>
@@ -70,10 +81,12 @@ function dislike (){
 				<td>사진 </td>
 				<td><img th:src="@{${review.photos}}"/></td>
 			</tr>
-			<tr>
+			<tr th:if="${isWriter == false}">
+				<td colspan="2">
+				<button class="btn-primary" type="button" onclick="showPopup();">신고하기</button>
+          		</td>
 			</tr>
 		</table>
-		<span th:text="${review.reviewId}"></span>
 	</div>
 	
 </body>
