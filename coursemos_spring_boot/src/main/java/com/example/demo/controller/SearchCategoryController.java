@@ -1,5 +1,6 @@
 package com.example.demo.controller;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -24,12 +25,18 @@ import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.bind.support.SessionStatus;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.example.demo.controller.SearchPlaceController.Taste;
 import com.example.demo.dao.CourseDao;
 import com.example.demo.domain.Course;
 import com.example.demo.domain.CourseList;
 import com.example.demo.domain.TasteCategory;
 import com.example.demo.service.SearchService;
 import com.example.demo.service.TasteService;
+
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.Setter;
+import lombok.ToString;
 @Controller
 @SessionAttributes({"tList", "cList"})
 public class SearchCategoryController {
@@ -47,15 +54,39 @@ public class SearchCategoryController {
 		this.tasteService = tasteService;
 	}
 	
+	@Getter @Setter @AllArgsConstructor @ToString
+	public class Taste {
+		private String code;
+		private String label;
+	}
+	@ModelAttribute("tasteCodes") // return 객체에 이름을 부여하고 view에 전달
+	protected List<Taste> referenceData() throws Exception {
+		ArrayList<Taste> tasteCodes = new ArrayList<>();
+		tasteCodes.add(new Taste("act", "활동적인"));
+		tasteCodes.add(new Taste("hea", "힐링되는"));
+		tasteCodes.add(new Taste("nat", "자연적인"));
+		tasteCodes.add(new Taste("exp", "체험적인"));
+		tasteCodes.add(new Taste("ent", "즐거운"));
+		tasteCodes.add(new Taste("ret", "복고풍"));
+		tasteCodes.add(new Taste("cal", "잔잔한"));
+		return tasteCodes;	
+	}
+	
 	@RequestMapping("/course/detailedSearch.do")
 	public String handleRequest(
+			@RequestParam("subway") String subway,
 			@RequestParam("taste") String taste,
 			ModelMap model
 			) throws Exception {
-		List<TasteCategory> tList = tasteService.getCategory();
-		//String taste = "ent";
-		PagedListHolder<Course> cList = new PagedListHolder<Course>(this.searchService.getCourseListByTaste(taste));
+		List<Taste> tList = referenceData();
+		PagedListHolder<Course> cList;
+		if (subway != "") {
+			cList = new PagedListHolder<Course>(this.searchService.getCourseListByTaste(subway, taste));
+		} else {
+			cList = new PagedListHolder<Course>(this.searchService.getCourseListByTaste(taste));
+		}
 		cList.setPageSize(4);
+		model.put("subway", subway);
 		model.put("tList", tList);
 		model.put("cList", cList);
 		return SEARCH_DETAIL_VIEW;

@@ -7,6 +7,7 @@ import java.io.IOException;
 import java.sql.Date;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 
@@ -20,10 +21,12 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
 import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.context.WebApplicationContext;
 import org.springframework.web.multipart.MultipartFile;
@@ -35,6 +38,7 @@ import com.example.demo.domain.Review;
 import com.example.demo.domain.SessionMember;
 import com.example.demo.service.MemberService;
 import com.example.demo.service.PointsService;
+import com.example.demo.service.ReviewLikeService;
 import com.example.demo.service.ReviewService;
 
 import java.util.List;
@@ -53,7 +57,8 @@ public class ReviewController implements ApplicationContextAware{
 	private ReviewService reviewService;
 	@Autowired
 	private MemberService memberService;
-	
+	@Autowired
+	private ReviewLikeService reviewLikeService;
 	
 	@Override
 	public void setApplicationContext(ApplicationContext applicationContext) throws BeansException {
@@ -71,7 +76,7 @@ public class ReviewController implements ApplicationContextAware{
 		ModelAndView mv = new ModelAndView("thyme/review/register");
 		Review review = new Review();
 		review.setMemberId(sessionMember.getId());
-		review.setNickName(sessionMember.getNickName());
+		mv.addObject("sessionMember", sessionMember);
 		mv.addObject("review", review);
 		return mv;
 	}
@@ -112,16 +117,33 @@ public class ReviewController implements ApplicationContextAware{
 		System.out.println(sessionMember);
 		
 		memberService.save(member);
-		return "forward:/review/registered/" + Long.toString(review.getReviewId());
+		
+		session.setAttribute("sessionMember", sessionMember);
+		return "redirect:/review/registered/" + Long.toString(review.getReviewId());
 	}
 	
 	@RequestMapping(value = "/review/registered/{reviewId}")
 	public String viewDetail(@ModelAttribute SessionMember sessionMember, HttpSession session, @PathVariable("reviewId") Long id,
 			Model model) {
 		Review review = reviewService.findReviewById(id);
+		Member member = memberService.findMemberById(review.getMemberId());
+		
+		//String courseName = courseService.findCourseNameByCourseId(id); course 완성되면 추가
+		//review.setCourseName(courseName);
+		boolean isWriter = review.getMemberId() == sessionMember.getId();
+		boolean like = false;
+		if(!isWriter) {
+			//reviewLike 조회
+			like = reviewLikeService.findReviewLikeByReviewIdMemberId(review.getReviewId(), sessionMember.getId());
+		}
+		session.setAttribute("sessionMember", sessionMember);
+		session.setAttribute("writer", member.getNickName());
 		session.setAttribute("review", review);
+		session.setAttribute("isWriter", isWriter);
+		session.setAttribute("like", like);
 		return "thyme/review/registered";
 	}
+	
 	
 	
 	private String uploadFile(Long memberId, MultipartFile photo) {
@@ -141,5 +163,26 @@ public class ReviewController implements ApplicationContextAware{
 
 		return Long.toString(memberId) + File.separator + filename;
 	}
+	
 
+	
+	@GetMapping(value = "/course/{courseId}/review/list") 
+	@ResponseBody // 반환 객체를 응답으로 전송
+	public List<Review> viewList(@PathVariable("courseId") Long id, HttpServletResponse response) throws IOException{
+		List<Review> reviews = reviewService.findReviewByCourseId(id);
+		if (reviews == null) 
+			response.sendError(HttpServletResponse.SC_NOT_FOUND); // 404(Not Found)
+
+		return reviews;
+	}
+	
+	@GetMapping(value = "/review/list")
+	public ModelAndView myReviewList(@ModelAttribute SessionMember sessionMember, HttpServletResponse response) throws IOException{
+		List<Review> reviews = reviewService.findReviewByMemberId(sessionMember.getId());
+		ModelAndView mv = new ModelAndView("member/reviewList");
+		if (reviews == null) 
+			response.sendError(HttpServletResponse.SC_NOT_FOUND);
+		mv.addObject("reviews", reviews);
+		return mv;
+	}
 }

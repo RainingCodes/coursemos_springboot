@@ -47,8 +47,6 @@ public class Review implements Serializable {
 	@Column(nullable=false) @Setter @Getter
 	private Long courseId;
 	@Transient
-	private String nickName;
-	@Transient
 	private String courseName;
 	public Review() {
 		this.likes = 0;

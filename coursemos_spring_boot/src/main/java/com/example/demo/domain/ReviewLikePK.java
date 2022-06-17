@@ -1,8 +1,6 @@
 package com.example.demo.domain;
 
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.IdClass;
+import java.io.Serializable;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -10,10 +8,9 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
 
-@Entity
-@IdClass(ScrapPK.class)
+@SuppressWarnings("serial")
 @Getter @Setter  @NoArgsConstructor @AllArgsConstructor @ToString
-public class Scrap {
-	@Id Long memberId;
-	@Id int courseId;
+public class ReviewLikePK implements Serializable{
+	Long reviewId;
+	Long memberId;
 }

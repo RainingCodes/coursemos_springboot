@@ -33,9 +33,12 @@ public interface SearchService {
 	
 	
 	void insertCourse(Course course) throws DataAccessException;
+	
 	List<Course> searchCourseListByPlace(String place) throws DataAccessException;
 
 	List<Course> getCourseListByTaste(String taste) throws DataAccessException;
+	
+	List<Course> getCourseListByTaste(String taste, String subway) throws DataAccessException;
 
 	List<Course> getCourseListByLike(int like) throws DataAccessException;
 

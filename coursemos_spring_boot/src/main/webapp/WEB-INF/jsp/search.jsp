@@ -45,10 +45,10 @@
     }
     #page {
     	position:absolute;
-        top:600px;
+        top:250px;
         left:200px;
-        width:300px;
-        height:250px;
+        width:200px;
+        height:70px;
     }
 </style>
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.7.1/font/bootstrap-icons.css">
@@ -88,125 +88,23 @@
 					<button type="submit">검색하기</button>
 				</form>		
 				<c:forEach var="cate" items="${tList}">
-					<button class="btn btn-primary" name="taste" onclick="location.href ='/course/detailedSearch.do?taste=${cate.name}'">${cate.name}</button>
+					<button class="btn btn-primary" name="taste" onclick="location.href ='/course/detailedSearch.do?taste=${cate.code}&subway=${subway}'">${cate.label}</button>
 				</c:forEach>	
 			
 				<button id="javascript_btn1" type="button">역찾기</button>
-				<div id="resultStation"></div>
-			
+				<div id="resultsubway"></div>
+			  
 				<form name="result" method="post" action="<c:url value='/course/search'/>">
 					<input type="hidden" name="x" value=0>
 					<input type="hidden" name="y" value=0>
-					<input type="submit" value="코스찾기">
-				</form> 
+					
+				</form>    
 	   		</div> 
 	        
-			<div id="map"></div>        
+			<div id="map" ></div>        
 			<div id="searchResult"></div>
 			
-			
-         
-            <div id="courseList">
-            <c:forEach var="cate" items="${cList.pageList}">
-              <div class="accordion accordion-flush" id="accordionFlushExample">
-               <div class="accordion-item"> 
-                  <h2 class="accordion-header" id="${cate.courseId}"> 
-                    <button class="accordion-button collapsed" type="button"  onclick="javascript:displayCourse('${cate.placeId1.x}' + ',' + '${cate.placeId1.y}', '${cate.placeId2.x}' + ',' + '${cate.placeId2.y}', '${cate.placeId3.x}' + ',' + '${cate.placeId3.y}');"data-bs-toggle="collapse" data-bs-target="#flush-collapseOne_${cate.courseId}" aria-expanded="false" aria-controls="flush-collapseOne_${cate.courseId}">
-                        ${cate.courseId}
-                      <i class="bi bi-heart-fill"></i>${cate.courseContents}
-                    </button>
-                  </h2>
-                  <div id="flush-collapseOne_${cate.courseId}" class="accordion-collapse collapse" aria-labelledby="${cate.courseId}" data-bs-parent="#accordionFlushExample">
-                    <div class="accordion-body">
-                      <button class="list-group-item d-flex justify-content-between align-items-start" data-bs-toggle="modal" data-bs-target="#exampleModal_${cate.courseId}_0" style="background-color:antiquewhite">
-                        <div class="mx-sm-5 me-auto">
-                          <div class="fw-bold">${cate.placeId1.placeName}</div>
-                        </div>
-                        <i class="bi bi-heart-fill"></i>14
-                      </button>
-                      <button class="list-group-item d-flex justify-content-between align-items-start" data-bs-toggle="modal" data-bs-target="#exampleModal_${cate.courseId}_1" style="background-color:antiquewhite">
-                        <div class="mx-sm-5 me-auto">
-                          <div class="fw-bold">${cate.placeId2.placeName}</div>
-                        </div>
-                        <i class="bi bi-heart-fill"></i>14
-                      </button>
-                      <button class="list-group-item d-flex justify-content-between align-items-start" data-bs-toggle="modal" data-bs-target="#exampleModal_${cate.courseId}_2" style="background-color:antiquewhite">
-                        <div class="mx-sm-5 me-auto">
-                          <div class="fw-bold">${cate.placeId3.placeName}</div>
-                        </div>
-                        <i class="bi bi-heart-fill"></i>14
-                      </button>
-                    </div>
-                  </div>
-                </div>
-            </div>
-            <!-- Modal -->
-            <div class="modal fade" id="exampleModal_${cate.courseId}_0" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-              <div class="modal-dialog">
-                <div class="modal-content">
-                  <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                  </div>
-                  <div class="modal-body">
-					위도 : ${cate.placeId1.x}
-					경도 : ${cate.placeId1.y}
-					근처 대중교통 : ${cate.placeId1.subway}
-					취향 : ${cate.placeId1.taste}
-                  </div>
-                  <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                    <button type="button" class="btn btn-primary">Save changes</button>
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div class="modal fade" id="exampleModal_${cate.courseId}_1" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-              <div class="modal-dialog">
-                <div class="modal-content">
-                  <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                  </div>
-                  <div class="modal-body">
-					위도 : ${cate.placeId2.x}
-					경도 : ${cate.placeId2.y}
-					근처 대중교통 : ${cate.placeId2.subway}
-					취향 : ${cate.placeId2.taste}
-                  </div>
-                  <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                    <button type="button" class="btn btn-primary">Save changes</button>
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div class="modal fade" id="exampleModal_${cate.courseId}_2" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-              <div class="modal-dialog">
-                <div class="modal-content">
-                  <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                  </div>
-                  <div class="modal-body">
-					위도 : ${cate.placeId3.x}
-					경도 : ${cate.placeId3.y}
-					근처 대중교통 : ${cate.placeId3.subway}
-					취향 : ${cate.placeId3.taste}
-                  </div>
-                  <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                    <button type="button" class="btn btn-primary">Save changes</button>
-                  </div>
-                </div>
-              </div>
-            </div>
-            </c:forEach>
-            </div>  
-            <!-- <ul id="placesList"></ul>-->
-            
-            <p id="result"></p>
-            <div id="page">
+			<div id="page">
 				<c:if test="${!cList.firstPage}">
 					<a href='<c:url value="/course/search2.do">
 						<c:param name="page" value="previous"/></c:url>'>
@@ -218,6 +116,106 @@
 					<font color="black"><B>Next &gt;&gt;</B></font></a>
 				</c:if>
             </div>
+         
+            <div id="courseList">
+            <c:forEach var="cate" items="${cList.pageList}">
+              <div class="accordion accordion-flush" id="accordionFlushExample">
+               <div class="accordion-item"> 
+                  <h2 class="accordion-header" id="${cate.courseId}"> 
+                    <button class="accordion-button collapsed" type="button"  onclick="javascript:displayCourse('${cate.placeId1.x}' + ',' + '${cate.placeId1.y}', '${cate.placeId2.x}' + ',' + '${cate.placeId2.y}', '${cate.placeId3.x}' + ',' + '${cate.placeId3.y}');"data-bs-toggle="collapse" data-bs-target="#flush-collapseOne_${cate.courseId}" aria-expanded="false" aria-controls="flush-collapseOne_${cate.courseId}">
+                         ${cate.courseId}
+                        | ${cate.courseContents}
+                        <i class="bi bi-heart-fill"></i> ${cate.likes}
+                    </button>
+                  </h2>
+                  <div id="flush-collapseOne_${cate.courseId}" class="accordion-collapse collapse" aria-labelledby="${cate.courseId}" data-bs-parent="#accordionFlushExample">
+                    <div class="accordion-body">
+					<ul class="list-group col-12">
+						<li class="list-group-item list-group-item" onclick="javascript:panTo('${cate.placeId1.x}' + ',' + '${cate.placeId1.y}')" data-bs-toggle="modal" data-bs-target="#exampleModal_${cate.courseId}_0" style="background-color:antiquewhite">
+							<div class="mx-sm-5 me-auto">
+							<div class="fw-bold">${cate.placeId1.placeName}</div>
+							</div>
+						</li>
+						<li class="list-group-item list-group-item" onclick="javascript:panTo('${cate.placeId2.x}' + ',' + '${cate.placeId2.y}')" data-bs-toggle="modal" data-bs-target="#exampleModal_${cate.courseId}_1" style="background-color:antiquewhite">
+							<div class="mx-sm-5 me-auto">
+							<div class="fw-bold">${cate.placeId2.placeName}</div>
+							</div>
+						</li>
+						<li class="list-group-item list-group-item" onclick="javascript:panTo('${cate.placeId3.x}' + ',' + '${cate.placeId3.y}')" data-bs-toggle="modal" data-bs-target="#exampleModal_${cate.courseId}_2" style="background-color:antiquewhite">
+							<div class="mx-sm-5 me-auto">
+							<div class="fw-bold">${cate.placeId3.placeName}</div>
+							</div>
+						</li>
+					</ul>
+                    </div>
+                  </div>
+                </div>
+            </div>
+            <!-- Modal -->
+            <div class="modal fade" id="exampleModal_${cate.courseId}_0" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+              <div class="modal-dialog">
+                <div class="modal-content">
+                  <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">${cate.placeId1.placeName}</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                  </div>
+                  <div class="modal-body">
+					위도 : ${cate.placeId1.x}
+					경도 : ${cate.placeId1.y}
+					근처 대중교통 : ${cate.placeId1.subway}
+					취향 : ${cate.placeId1.taste}
+                  </div>
+                  <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="modal fade" id="exampleModal_${cate.courseId}_1" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+              <div class="modal-dialog">
+                <div class="modal-content">
+                  <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">${cate.placeId2.placeName}</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                  </div>
+                  <div class="modal-body">
+					위도 : ${cate.placeId2.x}
+					경도 : ${cate.placeId2.y}
+					근처 대중교통 : ${cate.placeId2.subway}
+					취향 : ${cate.placeId2.taste}
+                  </div>
+                  <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="modal fade" id="exampleModal_${cate.courseId}_2" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+              <div class="modal-dialog">
+                <div class="modal-content">
+                  <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">${cate.placeId3.placeName}</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                  </div>
+                  <div class="modal-body">
+					위도 : ${cate.placeId3.x}
+					경도 : ${cate.placeId3.y}
+					근처 대중교통 : ${cate.placeId3.subway}
+					취향 : ${cate.placeId3.taste}
+                  </div>
+                  <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                  </div>
+                </div>
+              </div>
+            </div>
+            </c:forEach>
+            
+            </div>  
+            <!-- <ul id="placesList"></ul>-->
+            
+            <p id="result"></p>
+         
 
 			<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=c17b5563968f2fffd356919521833ce2&libraries=services"></script>
 
@@ -247,95 +245,44 @@
             	search.appendChild(newPlus);
             	existTwoSearchForm = false;
             }	
-            
-            let url = "";
-            var xhr = "";
-            var num = "";
-            var markers = [];
-            var infos = [];
-            function makeUrl(n1, n2, n3) {
-            	if (n2 == "") {
-    				url = 'http://openapi.seoul.go.kr:8088/6243537573636e7338366274636b76/xml/culturalSpaceInfo/' + n1 + '/' + n1;	
-            	} else if (n3 == "") {
-    				url = 'http://openapi.seoul.go.kr:8088/6243537573636e7338366274636b76/xml/culturalSpaceInfo/' + n1 + '/' + n2;	
+            var mapContainer;
+            var map;
+            window.onload = function() {
+            	var subX = '${x}';
+            	var subY = '${y}';
+            	
+            	if (subX.length == 0) {
+            		mapContainer = document.getElementById('map'), // 지도를 표시할 div 
+                    mapOption = {
+                        center: new kakao.maps.LatLng(37.577552,126.976869), // 지도의 중심좌표
+                        level: 3 // 지도의 확대 레벨
+                    }; 
+
+                 	// 지도를 생성합니다    
+                 	map = new kakao.maps.Map(mapContainer, mapOption); 	
             	} else {
-    				url = 'http://openapi.seoul.go.kr:8088/6243537573636e7338366274636b76/xml/culturalSpaceInfo/' + n1 + '/' + n3;	
-            	}
-            	console.log(url);
-				xhr = new XMLHttpRequest();
-				xhr.open('GET', url);
-				xhr.onreadystatechange = function () {
-					if (this.readyState == xhr.DONE) { // <== 정상적으로 준비되었을때
-						if(xhr.status == 200||xhr.status == 201){ // <== 호출 상태가 정상적일때
-							makeMarker(xhr);
-			        	}
-					}
-		      	};
-		     	xhr.send('');	
-		     	
-            }
-           
-			function makeMarker(xml) {
-				removeMarker();
-				var x = [];
-				var y = [];
-				var c = [];
-				var p = [];
-				var image = [];
-				var data = [];
-            	var xmlData = xhr.responseXML;
-            	for (var i = 0; i < xmlData.getElementsByTagName("row").length; i++) {
-            		x[i] = xmlData.getElementsByTagName("row")[i].getElementsByTagName("X_COORD")[0].firstChild.nodeValue;
-            		y[i] = xmlData.getElementsByTagName("row")[i].getElementsByTagName("Y_COORD")[0].firstChild.nodeValue;
-     				c[i] = xmlData.getElementsByTagName("row")[i].getElementsByTagName("FAC_NAME")[0].firstChild.nodeValue;
-     				p[i] = xmlData.getElementsByTagName("row")[i].getElementsByTagName("PHNE")[0].firstChild.nodeValue;
-     				image[i] = xmlData.getElementsByTagName("row")[i].getElementsByTagName("MAIN_IMG")[0].firstChild.nodeValue;
-     				data[i] = x[i] + "," + y[i];
-            	
-     				markers[i] = new kakao.maps.Marker({
-                        map: map, // 마커를 표시할 지도
-                        position: new kakao.maps.LatLng(x[i], y[i]) // 마커의 위치
-                    });
+            		mapContainer = document.getElementById('map'), // 지도를 표시할 div 
+                    mapOption = {
+                        center: new kakao.maps.LatLng(parseFloat(subX), parseFloat(subY)), // 지도의 중심좌표
+                        level: 4 // 지도의 확대 레벨
+                    }; 
 
-                    // 마커에 표시할 인포윈도우를 생성합니다 
-                   infos[i] = new kakao.maps.InfoWindow({
-        					content: c[i] // 인포윈도우에 표시할 내용
-                  
-                    });
-                    
-                    // 마커에 mouseover 이벤트와 mouseout 이벤트를 등록합니다
-                    // 이벤트 리스너로는 클로저를 만들어 등록합니다 
-                    // for문에서 클로저를 만들어 주지 않으면 마지막 마커에만 이벤트가 등록됩니다
-                    kakao.maps.event.addListener(markers[i], 'mouseover', makeOverListener(map, markers[i], infos[i]));
-                    kakao.maps.event.addListener(markers[i], 'mouseout', makeOutListener(infos[i]));
+                 	// 지도를 생성합니다    
+                 	map = new kakao.maps.Map(mapContainer, mapOption); 	
             	}
             	
-            		displayCourse(data[0], data[1], data[2]);
-		
-            }
-	
-            // 인포윈도우를 표시하는 클로저를 만드는 함수입니다 
-            function makeOverListener(map, marker, infowindow) {
-                return function() {
-                    infowindow.open(map, marker);
-                };
             }
 
-            // 인포윈도우를 닫는 클로저를 만드는 함수입니다 
-            function makeOutListener(infowindow) {
-                return function() {
-                    infowindow.close();
-                };
-            }
-            
-            var mapContainer = document.getElementById('map'), // 지도를 표시할 div 
-               mapOption = {
-                   center: new kakao.maps.LatLng(37.577552,126.976869), // 지도의 중심좌표
-                   level: 3 // 지도의 확대 레벨
-               }; 
-
-            // 지도를 생성합니다    
-            var map = new kakao.maps.Map(mapContainer, mapOption); 
+            function panTo(data) {
+                // 이동할 위도 경도 위치를 생성합니다 
+               
+            	var d0 = data.split(',');
+                var moveLatLon = new kakao.maps.LatLng(parseFloat(d0[0]), parseFloat(d0[1]));
+                
+                // 지도 중심을 부드럽게 이동시킵니다
+                // 만약 이동할 거리가 지도 화면보다 크면 부드러운 효과 없이 이동합니다
+                map.panTo(moveLatLon);            
+            }        
 
             // 장소 검색 객체를 생성합니다
             var ps = new kakao.maps.services.Places(); 
@@ -351,7 +298,7 @@
             			x /= 2;
             			y /= 2;
             		}
-            		alert(x + ", " + y);
+            		//alert(x + ", " + y);
             		document.result.x.value = x;
             		document.result.y.value = y;
             		ps.categorySearch('SW8', placesSearchCategoryCB, {
@@ -380,7 +327,7 @@
                 ps.keywordSearch(keyword1, placesSearchCB);
                 if (existTwoSearchForm == true) {
                 	ps.keywordSearch(keyword2, placesSearchCB);
-                	
+
                 }
                 
             }   
@@ -403,7 +350,7 @@
             	
                 if (status === kakao.maps.services.Status.OK) {
 
-                    markers.push(displayMarker(data[0]));        
+                   markers.push(displayMarker(data[0]));        
 
                     y += parseFloat(data[0].y);
                     x += parseFloat(data[0].x);
@@ -457,25 +404,29 @@
             // 지도에 마커를 표시하는 함수입니다
             function displayMarker(place) {
                 // 마커를 생성하고 지도에 표시합니다
-                var stationM = new kakao.maps.Marker({
+                var subwayM = new kakao.maps.Marker({
                     map: map,
                     position: new kakao.maps.LatLng(place.y, place.x) 
                 });
                 
                 // 마커에 클릭이벤트를 등록합니다
-                kakao.maps.event.addListener(stationM, 'click', function() {
+                kakao.maps.event.addListener(subwayM, 'click', function() {
                     // 마커를 클릭하면 장소명이 인포윈도우에 표출됩니다
                     infowindow.setContent('<div style="padding:5px;font-size:12px;">' + place.place_name + '</div>');
-                    infowindow.open(map, stationM);
+                    infowindow.open(map, subwayM);
                 });
+				var subwayName = place.place_name.split(' ');
                 
-                var stationName = place.place_name.split(' ');
-                
-                var nameEl = document.getElementById('resultStation'), 
-                itemStr = '<a href="/course/search.do?station=' + stationName[0] + '">' + stationName[0] +'</a>';
+				var nameEl;
+				if (place.category_group_code == 'SW8') {
+                nameEl = document.getElementById('resultsubway'), 
+                itemStr = '<a href="/course/search.do?subway=' + subwayName[0] + '&x=' + place.x + '&y=' + place.y + '">' + subwayName[0] +'</a> 주변 코스 입니다.';
                 nameEl.innerHTML = itemStr;
+				}
                 return nameEl;
+               
             }
+            
                 
             function removeMarker() {
                 for ( var i = 0; i < markers.length; i++ ) {

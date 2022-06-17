@@ -11,30 +11,31 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>포인트</title>
+<title>리뷰 목록</title>
 
 </head>
 <body>
 <%@ include file="./mypage_menu.jsp"  %>
 <div class="container">
-	<h3 style="text-align:center">${sessionMember.nickName}님의 포인트 내역</h3>
+	<h3 style="text-align:center">${sessionMember.nickName}님이 작성한 리뷰들</h3>
 	<div style="display: flex; justify-content : center;" >
 		<table class="table table-striped" style="width:50%; ">
 			<thead>
 				<tr>
-					<td>날짜</td>
-					<td>내역</td>
-					<td>포인트 변동</td>
+					<td>리뷰 번호</td>
+					<td>내용</td>
+					<td>작성 날짜</td>
+					<td>좋아요 수</td>
 				</tr>
 				
 			</thead>
 			<tbody>
-				<c:forEach var="points" items="${sessionMember.getPointList()}" varStatus="status">
+				<c:forEach var="review" items="${reviews}" varStatus="status">
 						<tr>
-							<td>
-								<c:out value="${points.getPointsDate()}" /></td>
-							<td><c:out value="${points.getTypeString()}" /></td>
-							<td><c:out value="${points.getTypeString2()}" /></td>
+							<td><c:out value="${reviewId}" /></td>
+							<td><a href="review/registered/${reviewId}"><c:out value="${reviewContents}" /></a></td>
+							<td><c:out value="${writtenDate}" /></td>
+							<td><c:out value="${likes}" /></td>
 						</tr>
 				</c:forEach>
 				<tr>

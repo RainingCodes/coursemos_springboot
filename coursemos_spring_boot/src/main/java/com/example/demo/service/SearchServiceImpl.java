@@ -74,11 +74,17 @@ public class SearchServiceImpl implements SearchService {
 
 
 		@Override
-		public List<Course> getCourseList(String station) throws DataAccessException {
+		public List<Course> getCourseList(String subway) throws DataAccessException {
 			// TODO Auto-generated method stub
-			return courseDao.getCourseList(station);
+			return courseDao.getCourseList(subway);
 		}
 
+		@Override
+		public List<Course> getCourseListByTaste(String subway, String taste) throws DataAccessException {
+			// TODO Auto-generated method stub
+			return courseDao.getCourseListByTaste(subway, taste);
+		}
+		
 
 		@Transactional
 		public Page<Course> getCoursePageList(Pageable pageable) throws DataAccessException {

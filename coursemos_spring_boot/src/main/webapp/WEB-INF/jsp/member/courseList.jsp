@@ -11,36 +11,33 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>포인트</title>
+<title>코스 목록</title>
 
 </head>
 <body>
 <%@ include file="./mypage_menu.jsp"  %>
 <div class="container">
-	<h3 style="text-align:center">${sessionMember.nickName}님의 포인트 내역</h3>
+	<h3 style="text-align:center">${sessionMember.nickName}님이 작성한 코스들</h3>
 	<div style="display: flex; justify-content : center;" >
 		<table class="table table-striped" style="width:50%; ">
 			<thead>
 				<tr>
-					<td>날짜</td>
-					<td>내역</td>
-					<td>포인트 변동</td>
+					<td>코스 번호</td>
+					<td>이름</td>
+					<td>작성 날짜</td>
+					<td>좋아요 수</td>
 				</tr>
 				
 			</thead>
 			<tbody>
-				<c:forEach var="points" items="${sessionMember.getPointList()}" varStatus="status">
+				<c:forEach var="course" items="${courses}" varStatus="status">
 						<tr>
-							<td>
-								<c:out value="${points.getPointsDate()}" /></td>
-							<td><c:out value="${points.getTypeString()}" /></td>
-							<td><c:out value="${points.getTypeString2()}" /></td>
+							<td><c:out value="${courseId}" /></td>
+							<td><a><c:out value="${courseName}" /></a></td>
+							<td><c:out value="${writtenDate}" /></td>
+							<td><c:out value="${likes}" /></td>
 						</tr>
 				</c:forEach>
-				<tr>
-					<td>현재 포인트</td>
-					<td colspan="2">${sessionMember.getPoints() }</td>
-				</tr>
 			</tbody>	
 		</table>
 	</div>

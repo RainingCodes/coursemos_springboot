@@ -23,17 +23,18 @@
 <div class="container">
 <center><h1>스크랩 관리</h1></center>
 <h4>나의 스크랩 리스트</h4>
-<table class="table">
+<table class="table table-bordered">
 	<tr>
 		<th>코스 이름</th>
 		<th>코스 취향</th>
 		<th>코스 상세보기</th>
+		<th>스크랩 취소</th>
 	</tr>
 	
 	<c:forEach var="course" items="${courseList}">
 	<tr>
 		<td>${course.courseName}</td>
-		<td>
+		<td align="center">
 		<c:choose>
 			<c:when test="${course.taste eq 'act'}">활동적인</c:when>
 			<c:when test="${course.taste eq 'hea'}">힐링되는</c:when>
@@ -45,7 +46,12 @@
 		</c:choose>
 		</td>
 		<td>
-			<a href='<c:url value="/course/view/${course.courseId}"/>'></a>
+			<a href='<c:url value="/course/view/${course.courseId}"/>'>이동하기</a>
+		</td>
+		<td>
+			<a href='<c:url value="/member/unscrap">
+          	<c:param name="courseId" value="${course.courseId}"/></c:url>'>
+          	취소하기</a>
 		</td>
     </tr>
 	</c:forEach>
