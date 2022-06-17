@@ -1,25 +1,20 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%>
-<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <c:if test="${sessionMember.check2 != false}"> <!-- if와 동일 -->
-	<%@ include file="../header/IncludeTopMember.jsp"  %>
+		<%@ include file="../header/IncludeTopMember.jsp"  %>
 </c:if> <!-- if 종료 -->
 <c:if test="${sessionMember.check2 ==false }">
-	<%@ include file="../header/IncludeTop.jsp"  %>
+		<jsp:forward page="/" /> 
 </c:if> <!-- if 종료 -->
+<!DOCTYPE html>
 <html>
 <head>
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
+<meta charset="UTF-8">
 <title>스크랩 관리</title>
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 </head>
 <body>
 <%@ include file="./mypage_menu.jsp"  %>
-<!-- 날짜 설정 -->
-<jsp:useBean id="now" class="java.util.Date" />
-<fmt:formatDate value="${now}" pattern="yyyy-MM-dd" var="nowDate" />        <%-- 오늘날짜 --%>
-
 <div class="container">
 <center><h1>스크랩 관리</h1></center>
 <h4>나의 스크랩 리스트</h4>

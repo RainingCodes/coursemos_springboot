@@ -1,4 +1,4 @@
-<%@ include file="./mypage_menu.jsp"  %><%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%>
 <c:if test="${sessionMember.check2 != false}"> <!-- if와 동일 -->
@@ -9,12 +9,11 @@
 </c:if> <!-- if 종료 -->
 <html>
 <head>
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
 <title>제휴 관리</title>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 </head>
 <body>
-<%@ include file="./mypage_menu.jsp"  %>
+<%@ include file="../member/mypage_menu.jsp"  %>
 <div class="container">
 <center><h1>제휴 관리</h1></center> 
 <h3>제휴 중</h3>

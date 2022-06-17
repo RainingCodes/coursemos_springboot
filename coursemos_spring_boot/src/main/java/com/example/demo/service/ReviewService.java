@@ -22,14 +22,21 @@ public class ReviewService {
 	public void delete(Review review) {
 		reviewRepository.delete(review);
 	}
-	public List<Review> findReviewByCourseId(String courseId) {
-		return reviewRepository.findReviewByCourseId(courseId);
+	public List<Review> findReviewByCourseId(Long id) {
+		return reviewRepository.findReviewByCourseId(id);
 	}
 	public Review findReviewById(Long reviewId) {
 		List<Review> review = (List<Review>) reviewRepository.findReviewByReviewId(reviewId);
 		if(review.size() == 0)
 			return null;
 		return review.get(0);
+	}
+	public List<Review> findReviewByMemberId(Long memberId) {
+		// TODO Auto-generated method stub
+		List<Review> review = (List<Review>) reviewRepository.findReviewByMemberId(memberId);
+		if(review.size() == 0)
+			return null;
+		return review;
 	}
 
 }

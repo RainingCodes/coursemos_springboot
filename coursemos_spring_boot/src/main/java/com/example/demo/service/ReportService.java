@@ -8,6 +8,7 @@ public interface ReportService {
 	List<Report> getAllCourseReport();
 	List<Report> getAllReviewReport();
 	Report getReportById(int reportId);
+	List<Report> getReportByMemberId(Long memberId);
 	void insertReport(Report report);
 	void updateReport(Report report);
 }

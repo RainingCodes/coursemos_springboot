@@ -32,8 +32,8 @@ public class JpaReportDao implements ReportDao {
 	}
 	
 	@Override
-	public Report getReportById(int ReportId) throws DataAccessException {
-		return em.find(Report.class, ReportId);
+	public Report getReportById(int reportId) throws DataAccessException {
+		return em.find(Report.class, reportId);
 	}
 
 	@Override
@@ -44,6 +44,14 @@ public class JpaReportDao implements ReportDao {
 	@Override
 	public void updateReport(Report report) throws DataAccessException {
 		em.merge(report);
+	}
+
+	@Override
+	public List<Report> getReportByMemberId(Long memberId) throws DataAccessException {
+		TypedQuery<Report> query = em.createQuery(
+                "select r from Report r " + "where r.memberId = ?1", Report.class);
+		query.setParameter(1, memberId);
+        return query.getResultList();
 	}
 
 	

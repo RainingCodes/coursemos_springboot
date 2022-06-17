@@ -75,7 +75,7 @@ $(document).ready(function(){
 	  		<button class="btn btn-outline-primary" id="register_company" onclick="location.href='/company/register'">제휴 등록</button>
 	  	</td>
 	    <td class="logo">
-	        <a href="/"><img alt="로고" src="../img/logo.png" width="200"></a>
+	        <a href="/"><img alt="로고" src="https://github.com/RainingCodes/img-repository/blob/main/logo.png?raw=true" width="200"></a>
 	    </td>
 	    <td class="right">
 	      <span class="message"><a href="/mypage">${sessionMember.nickName} </a>님 안녕하세요. </span>
