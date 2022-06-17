@@ -8,6 +8,13 @@
 <head>
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
   <title>리뷰 신고</title>
+  <style type="text/css">
+  	.error {
+		color:red;
+		font-size:15px;
+		font-weight:bold;
+	}
+  </style>
 </head>
 <body>
 <div class="container">
@@ -30,6 +37,7 @@
 	    <tr>
 	        <td>
 	        	<form:radiobuttons path="reportCategory" items="${ReportCodes}" itemLabel="label" itemValue="code"></form:radiobuttons>
+				<span><br><form:errors path="reportCategory" cssClass="error"/></span>
 	        </td>
 	    </tr>
 	    <tr>
