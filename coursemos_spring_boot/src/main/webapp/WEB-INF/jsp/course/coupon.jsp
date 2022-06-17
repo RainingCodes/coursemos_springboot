@@ -18,16 +18,14 @@ function showPopups(a){
 <body>
 	<div class="card mb-4">
 		<div class="card-header">발급 가능한 쿠폰 목록</div>
-		<div class="card-body">
 			<div class="row">
-				<div class="col-sm-6">
-					<ul class="list-unstyled mb-0">
+				<div>
+					<ul class="list-group">
 						<c:forEach var="couponData" items="${couponList}" varStatus="status">
-							<li>${couponData.placeName}의 쿠폰 : <a href="javascript:void(0);" onclick="showPopups(${couponData.coupon.couponId});">${couponData.coupon.couponContents}</a></li>
+							<li class="list-group-item list-group-item-action">${couponData.placeName}의 쿠폰 : <a href="javascript:void(0);" onclick="showPopups(${couponData.coupon.couponId});">${couponData.coupon.couponContents}</a></li>
 						</c:forEach>
 					</ul>
 				</div>
-			</div>
 		</div>
 	</div>
 </body>
