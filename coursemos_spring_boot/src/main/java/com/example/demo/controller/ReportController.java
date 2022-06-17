@@ -17,9 +17,15 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.example.demo.domain.Course;
+import com.example.demo.domain.Member;
 import com.example.demo.domain.Report;
+import com.example.demo.domain.Review;
 import com.example.demo.domain.SessionMember;
+import com.example.demo.service.CourseService;
+import com.example.demo.service.MemberService;
 import com.example.demo.service.ReportService;
+import com.example.demo.service.ReviewService;
 import com.example.demo.validator.ReportValidator;
 
 import lombok.*;
@@ -29,6 +35,12 @@ import lombok.*;
 public class ReportController {
 	@Autowired
 	private ReportService reportService;
+	@Autowired
+	private ReviewService reviewService;
+	@Autowired
+	private CourseService courseService;
+	@Autowired
+	private MemberService memberService;
 	
 	@Getter @Setter @AllArgsConstructor
 	public class ReportCodes {
@@ -60,11 +72,14 @@ public class ReportController {
 	@RequestMapping(value = "/report/course/{courseId}", method = RequestMethod.GET)
 	public String courseReportForm(@PathVariable int courseId, Model model) {
 		model.addAttribute("courseId", courseId);
-		
+		Course c = courseService.getCourseByCourseId(courseId);
+		Member m = memberService.findMemberById(c.getMemberId());
 		//서비스로 게시글 제목, 글쓴이 가져오는 것 나중에 구현해서 모델에 연결해서 리턴
-		model.addAttribute("reportTitle", "test");
-		model.addAttribute("reportUserName", "test2");
+		model.addAttribute("reportTitle", c.getCourseName());
 		
+		if (m != null) {
+			model.addAttribute("reportUserName", m.getNickName());
+		}
 		return "report/courseReport";
 	}
 	
@@ -86,15 +101,17 @@ public class ReportController {
 		courseReport.setMemberId(sessionMember.getId()); // 세션 완성되면 설정하기
 		reportService.insertReport(courseReport);
 		
-		return "redirect:/view/"+courseId;
+		return "redirect:/course/view/"+courseId;
 	}
 	
 	@RequestMapping(value = "/report/review/{reviewId}", method = RequestMethod.GET)
-	public String reviewReportForm(@PathVariable int reviewId, Model model) {
+	public String reviewReportForm(@PathVariable Long reviewId, Model model) {
 		model.addAttribute("reviewId", reviewId);
 		//서비스로 게시글 제목, 글쓴이 가져오는 것 나중에 구현해서 모델에 연결해서 리턴
-		model.addAttribute("reportTitle", "test");
-		model.addAttribute("reportUserName", "test2");
+		Review r = reviewService.findReviewById(reviewId);
+		Member m = memberService.findMemberById(r.getMemberId());
+		model.addAttribute("reportTitle", r.getReviewContents());
+		model.addAttribute("reportUserName", m.getNickName());
 		
 		return "report/reviewReport";
 	}
@@ -105,7 +122,7 @@ public class ReportController {
 		
 		new ReportValidator().validate(reviewReport, result);
 		if (result.hasErrors()) {
-			return "report/courseReport";
+			return "report/reviewReport";
 		}
 
 		reviewReport.setCourseId(null);
@@ -117,7 +134,7 @@ public class ReportController {
 	    reviewReport.setMemberId(sessionMember.getId()); // 세션 완성되면 설정하기
 		reportService.insertReport(reviewReport);
 		
-		return "redirect:/view/"+reviewId;
+		return "redirect:/review/registered/"+reviewId;
 	}
 	
 	@RequestMapping("/member/report/list")
