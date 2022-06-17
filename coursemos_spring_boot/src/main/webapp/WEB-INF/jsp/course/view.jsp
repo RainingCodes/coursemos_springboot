@@ -304,8 +304,20 @@ function showPopupReport(id){
 					  				  
 					</script>					
 					<c:if test="${sessionMember.check2 != false}"> <!-- 로그인 후 뜨는지 확인 -->
-						<button formaction="/course/like" style="border:0;background-color:white;"><img class="image" style="width:50px; height:50px;" src="../../img/like1.png" /></button>
-						<button formaction="/course/scrap" style="border:0;background-color:white;"><img class="scrapImage" style="width:50px; height:50px;" src="../../img/scrap1.png"/></button>
+						 
+						<c:if test="${myCourseLike == true}">
+							<button formaction="/course/like" style="border:0;background-color:white;"><img class="image" style="width:50px; height:50px;" src="../../img/like2.png" /></button>
+						</c:if>
+						<c:if test="${myCourseLike == false}">
+							<button formaction="/course/like" style="border:0;background-color:white;"><img class="image" style="width:50px; height:50px;" src="../../img/like1.png" /></button>
+						</c:if>
+						
+						<c:if test="${myScrap == true}">
+							<button formaction="/course/scrap" style="border:0;background-color:white;"><img class="scrapImage" style="width:50px; height:50px;" src="../../img/scrap2.png"/></button>
+						</c:if>
+						<c:if test="${myScrap == false}">
+							<button formaction="/course/scrap" style="border:0;background-color:white;"><img class="scrapImage" style="width:50px; height:50px;" src="../../img/scrap1.png"/></button>
+						</c:if>
 						<button type="button" onclick="location.href='../view/coupon/get'" style="width:15%; height:60px; border:none; border-radius:5px; text-align: center; background-color:#ced4da;">쿠폰 발급</button>
 						<button type="button" onclick="showPopupReport(${course.courseId});" style="width:15%; height:60px; border:none; border-radius:5px; text-align: center; background-color:#ced4da;">신고하기</button>			
 					</c:if>	

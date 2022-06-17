@@ -29,11 +29,13 @@ import com.example.demo.domain.Review;
 import com.example.demo.domain.SessionMember;
 import com.example.demo.service.CompanyService;
 import com.example.demo.service.CouponService;
+import com.example.demo.service.CourseLikeService;
 import com.example.demo.service.CourseService;
 import com.example.demo.service.MemberService;
 import com.example.demo.service.PlaceService;
 import com.example.demo.service.PointsService;
 import com.example.demo.service.ReviewService;
+import com.example.demo.service.ScrapService;
 import com.example.demo.validator.CourseValidator;
 
 import lombok.AllArgsConstructor;
@@ -58,6 +60,11 @@ public class CourseController {
 	
 	@Autowired
 	private ReviewService reviewService;
+	
+	@Autowired
+	private CourseLikeService courseLikeService;
+	@Autowired
+	private ScrapService scrapService;
 	
 	//MemberCouponButton
 	@Autowired
@@ -127,7 +134,7 @@ public class CourseController {
 	}
 	
 	@RequestMapping(value="/view/{courseId}", method=RequestMethod.GET)
-	public ModelAndView viewDetail(@PathVariable("courseId") int courseId, HttpServletRequest request) {
+	public ModelAndView viewDetail(@ModelAttribute SessionMember sessionMember, @PathVariable("courseId") int courseId) {
 		ModelAndView mav = new ModelAndView("course/view");
 		
 		Course viewCourse = courseService.getCourseByCourseId(courseId);
@@ -182,7 +189,20 @@ public class CourseController {
 	      List<Review> reviews = reviewService.findReviewByCourseId(courseId);
 	      mav.addObject("reviews", reviews);
 	      mav.addObject("couponList", mcb);
-		
+	      
+	      boolean myCourseLike = false;
+	      boolean myScrap = false;
+	      if (courseLikeService.getCourseLikeByPrimaryKey(sessionMember.getId(), courseId) != null) { // 널이 아니면 값 있으니까 있음
+	    	  myCourseLike = true;
+	      }
+	      if (scrapService.getScrapByPrimaryKey(sessionMember.getId(), courseId) != null) {
+	    	  myScrap = true;
+	      }
+	      System.out.println("좋아요,스크랩관리:"+myCourseLike+" "+myScrap);
+	      
+	      mav.addObject("myCourseLike", myCourseLike);
+	      mav.addObject("myScrap", myScrap);
+	      
 		return mav;
 	}
 
