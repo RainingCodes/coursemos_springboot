@@ -12,7 +12,6 @@ import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.example.demo.domain.Course;
-import com.example.demo.domain.MemberCoupon;
 import com.example.demo.domain.Scrap;
 import com.example.demo.domain.SessionMember;
 import com.example.demo.service.CourseService;
@@ -58,7 +57,7 @@ public class ScrapController {
 		mav.addObject("courseList", courseList);
 		
 		return mav;
-	}
+	} 
 	
 	@RequestMapping("/member/unscrap")
 	public String deleteScrap(@ModelAttribute SessionMember sessionMember, 
