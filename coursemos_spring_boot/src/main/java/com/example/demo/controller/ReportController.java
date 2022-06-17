@@ -17,9 +17,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.servlet.ModelAndView;
 
-import com.example.demo.domain.Course;
 import com.example.demo.domain.Report;
-import com.example.demo.domain.Scrap;
 import com.example.demo.domain.SessionMember;
 import com.example.demo.service.ReportService;
 import com.example.demo.validator.ReportValidator;

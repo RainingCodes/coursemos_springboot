@@ -24,6 +24,7 @@
 					<td>신고 번호</td>
 					<td>신고한 날짜</td>
 					<td>신고유형</td>
+					<td>분류</td>
 					<td>신고한 글 바로가기</td>
 					<td>신고 상태</td>
 				</tr>
@@ -34,10 +35,22 @@
 							<td><c:out value="${report.reportId}" /></td>
 							<td><c:out value="${report.writtenDate}" /></td>
 							<td><c:out value="${report.reportCategory}" /></td>
+							<c:if test="${report.courseId ne null}">
 							<td>
-								<c:if test="${report.courseId }"><a href="report/${report.courseId }"><c:out value="${}" /></a><</c:if>
-								<c:if test="${report.reviewId }"><a href="report/${report.reviewId }"><c:out value="${}" /></a><</c:if>
+								코스
 							</td>
+							<td>
+								<a href='<c:url value="/course/view/${report.courseId}"/>'>이동하기</a>
+							</td>
+							</c:if>
+							<c:if test="${report.reviewId ne null}">
+							<td>
+								리뷰
+							</td>
+							<td>
+								<a href='<c:url value="/review/registerd/${report.reviewId}"/>'>이동하기</a>
+							</td>
+							</c:if>
 							<td><c:out value="${report.state}" /></td>
 						</tr>
 				</c:forEach>
