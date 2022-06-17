@@ -11,6 +11,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.SessionAttributes;
@@ -121,10 +122,10 @@ public class CourseController {
 	}
 	
 	@RequestMapping(value="/view/{courseId}", method=RequestMethod.GET)
-	public ModelAndView viewDetail(@ModelAttribute Course course, HttpServletRequest request) {
+	public ModelAndView viewDetail(@PathVariable("courseId") int courseId, HttpServletRequest request) {
 		ModelAndView mav = new ModelAndView("course/view");
 		
-		Course viewCourse = courseService.getCourseByCourseId(course.getCourseId());
+		Course viewCourse = courseService.getCourseByCourseId(courseId);
 		mav.addObject("course", viewCourse);
 
 			Place place1 = placeService.getPlaceByPlaceId(viewCourse.getPlace1().getPlaceId());
@@ -156,35 +157,36 @@ public class CourseController {
 		System.out.println("=============================");
 		
 		//MemberCouponButton
-		ArrayList<MemberCouponButton> mcb = new ArrayList<MemberCouponButton>();
-						
-		Place[] arr = {course.getPlace1(), course.getPlace2(), course.getPlace3()};
-		for (Place p : arr) {
-			if (p != null) {
-				int id = p.getPlaceId();
-				Company com = companyService.getCompanyByPlaceId(id);
-								
-				if (com != null) {
-					List<Coupon> cou = couponService.getCouponByCompanyId(Long.valueOf(com.getCompanyId()));
-					for (Coupon c : cou) {
-						mcb.add(new MemberCouponButton(com.getPlace().getPlaceName(), c));
-					}
-				}			
-			}
-		}		
-		mav.addObject("couponList", mcb);
+	      ArrayList<MemberCouponButton> mcb = new ArrayList<MemberCouponButton>();
+	                  
+	      Place[] arr = {place1, viewCourse.getPlace2(), viewCourse.getPlace3() };
+	      for (Place p : arr) {
+	         System.out.println("==============place ");
+	         if (p != null) {
+	            
+	            System.out.println("==============place 널여부");
+	            Integer id = p.getPlaceId();
+	            System.out.println(id);
+	            
+	            if (companyService.getCompanyByPlaceId(id.longValue()) == null) {
+	               System.out.println("없어요");
+	               break;
+	            }
+	            Company com = companyService.getCompanyByPlaceId(id.longValue());
+	            if (com != null) {
+	               System.out.println("==============place company 존재?");
+	               List<Coupon> cou = couponService.getCouponByCompanyId(com.getCompanyId());
+	               for (Coupon c : cou) {
+	                  mcb.add(new MemberCouponButton(com.getPlace().getPlaceName(), c));
+	               }
+	            }         
+	         }
+	      }      
+	      mav.addObject("couponList", mcb);
 		
 		return mav;
 	}
-	
-//	//추후 수정
-//	@RequestMapping(value="/view/0", method=RequestMethod.GET)
-//	public String onClickShare(@ModelAttribute Course course, BindingResult result, SessionStatus status, HttpServletRequest request) {
-//		courseService.getCourseByCourseId(0);
-//		course.toString();
-//		return "course/view";
-//	}
-	
+
 	@Getter @Setter @AllArgsConstructor @ToString
 	public class Taste {
 		private String code;
@@ -219,11 +221,14 @@ public class CourseController {
 		Place place1 = placeService.getPlaceByPlaceId(updateCourse.getPlace1().getPlaceId());
 		mav.addObject("place1", place1);
 		
-		Place place2 = placeService.getPlaceByPlaceId(updateCourse.getPlace2().getPlaceId());
-		mav.addObject("place2", place2);
-		
-		Place place3 = placeService.getPlaceByPlaceId(updateCourse.getPlace3().getPlaceId());
-		mav.addObject("place3", place3);
+		if (updateCourse.getPlace2() != null) {
+			Place place2 = placeService.getPlaceByPlaceId(updateCourse.getPlace2().getPlaceId());
+			mav.addObject("place2", place2);			
+		}
+		if (updateCourse.getPlace3() != null) {
+			Place place3 = placeService.getPlaceByPlaceId(updateCourse.getPlace3().getPlaceId());
+			mav.addObject("place3", place3);			
+		}
 	
 		return mav;
 	}
