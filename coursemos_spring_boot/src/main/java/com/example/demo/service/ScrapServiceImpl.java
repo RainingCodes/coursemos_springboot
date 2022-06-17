@@ -40,5 +40,11 @@ public class ScrapServiceImpl implements ScrapService {
 		scrapDao.deleteScrap(scrap);
 	}
 
+	@Override
+	public Scrap getScrapByPrimaryKey(Long memberId, int courseId) {
+		// TODO Auto-generated method stub
+		return scrapDao.getScrapByPrimaryKey(memberId, courseId);
+	}
+
 
 }
