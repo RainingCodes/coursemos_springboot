@@ -10,24 +10,9 @@
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
 <script type="text/javascript" src="http://code.jquery.com/jquery-1.12.4.min.js"></script>
 <style scoped>
-	#map {
-    	margin: 0 25%;
-        border: 1px #a8a8a8 solid;
-        width : 800px;
-        height : 700px;
-    }
 	.searchNMap {
 		padding : 30px;
 	}
-    #map {
-        border: 1px #a8a8a8 solid;
-        float : left;
-        width : 700px;
-        height : 700px;
-    }
-    input {
-    	font-size : 30px;
-    }
     .top {
 		width : 100%;
 	}
@@ -44,7 +29,6 @@
 		object-fit: contain;
 	}
 	search, search2, #plus {
-		
 		margin : 10px;
 	}
 	.message {
