@@ -1,28 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
-<%
-	String inputTitle = request.getParameter("inputTitle");
-	String placeName1 = request.getParameter("placeName1");
-	String placeName2 = request.getParameter("placeName2") == null ? "": request.getParameter("placeName2");
-	String placeName3 = request.getParameter("placeName3") == null ? "": request.getParameter("placeName3");
-	String[] placeNameList = {placeName1, placeName2, placeName3};
-	
-	String address1 = request.getParameter("address1");
-	String address2 = request.getParameter("address2") == null ? "": request.getParameter("address2");
-	String address3 = request.getParameter("address3") == null ? "": request.getParameter("address3");
-	String[] addressList = {address1, address2, address3};
-	
-	String roadAddress1 = request.getParameter("road_address1"); //서울특별시 성북구 화랑로13길 60
-	String roadAddress2 = request.getParameter("road_address2") == null ? "": request.getParameter("road_address2");
-	String roadAddress3 = request.getParameter("road_address3") == null ? "": request.getParameter("road_address3");
-	String roadAddressList[] = {roadAddress1, roadAddress2, roadAddress3};
-	
-	String writtenDate = request.getParameter("writtenDate");
-	String category = request.getParameter("category");
-	String contents = request.getParameter("contents");
-
-%>    
 <!DOCTYPE html>
 <html>
 <head>
@@ -105,29 +83,7 @@
 					<br>
 					<h5 style="font-weight:bold;">코스 경로 살펴보기</h5>
 					<br>
-					<table>
-					
-					
-<%--  					<c:if test="${place1.placeName == null}">
-						<%
-						for (int i = 0; i < 3; i++){ %>
-							<tr>
-								<th><div id="exPlace<%=i+1%>"><%=placeNameList[i] %></div></th>
-							</tr>
-							<tr>
-								<td><div id="exAddress<%=i+1%>">지번 주소: <%=addressList[i]%></div></td>
-							</tr>
-							<tr>
-								<td><div id="exRoadAddress<%=i+1%>">도로명 주소: <%=roadAddressList[i]%></div></td>
-							</tr>
-							<tr>
-								<td><br></td>
-							</tr>
-						<%	
-						} %>
-					</c:if> --%>
-					
-					
+					<table>					
 						<c:if test="${place1.placeName != null}">
 							<tr>
 								<th><div>${place1.placeName }</div></th>

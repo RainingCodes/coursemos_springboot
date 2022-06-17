@@ -68,12 +68,12 @@ public class CourseController {
 	
 	@RequestMapping(value="/view", method=RequestMethod.POST)
 	public String onSubmit(@ModelAttribute Course course, BindingResult result, SessionStatus status, HttpServletRequest request) {
-		new CourseValidator().validate(course, result);
-		
-		if (result.hasErrors()) {
-			System.out.println("Validation Error !!!");
-			return "course/registerForm";
-		}
+//		new CourseValidator().validate(course, result);
+//		
+//		if (result.hasErrors()) {
+//			System.out.println("Validation Error !!!");
+//			return "course/registerForm";
+//		}
 		
 		course.getPlace1().setTaste(course.getTaste());
 		if (course.getPlace2() != null) course.getPlace2().setTaste(course.getTaste());
@@ -85,8 +85,8 @@ public class CourseController {
 		
 		System.out.println("=========inserted course=========");
 		System.out.println(course.toString());
-		System.out.println("=================================");
 		System.out.println("submit complete!!!");
+		System.out.println("=================================");
 		
 		return "course/view";
 	}
@@ -124,19 +124,6 @@ public class CourseController {
 			}	
 		}
 		else {
-//			Place place1 = new Place();
-//			place1.setPlaceId(500);
-//			place1.setTaste("act");
-//			place1.setPlaceName("example PlaceName");
-//			place1.setX(32.5);
-//			place1.setY(127.2);
-//			
-//			//placeService.insertPlace(place1);
-//			mav.addObject("place1", place1);
-//			
-			
-//			String placeName1 = request.getParameter("placeName1");
-//			System.out.println("\n\n\nplaceName은!!!!!!" + placeName1 + "\n\n\n");
 			System.out.println(mav.toString());
 		}
 		
@@ -144,7 +131,7 @@ public class CourseController {
 		System.out.println(viewCourse.toString() + "\n");
 		System.out.println("=============================");
 		
-//		
+		
 //		//MemberCouponButton
 //		ArrayList<MemberCouponButton> mcb = new ArrayList<MemberCouponButton>();
 //						

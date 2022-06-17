@@ -20,46 +20,6 @@
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor" crossorigin="anonymous">
 </head>
 <script src="https://code.jquery.com/jquery-latest.min.js"></script>
-<script>
-	/* $( document ).ready( function() {
-		$("#writtenDate").html(new Date().toISOString().substring(0, 10));
-	}); */
-	
-	
-	
-	function onClickBtn()  {
-	  let name = document.getElementById('keyword').value;
-	  ps.keywordSearch(name, placesSearchCB);
-	}
-	
-	var cnt = 1; 
-	$(document).ready(function () {
-		  $(document).on("click", "input[name='add']", function () {
-			  if(cnt > 3)
-				  alert("최대 입력 값을 초과했습니다.");
-			  else {
-				  cnt++;
-				  if(cnt == 2){
-					  $("#description").before('<hr style="width: 95%"><b>2번째 장소</b>'+ '<br><p><input class="form-control" type="text" placeholder="장소" name="place2.placeName" style="width: 95%" required><br><input class="form-control" type="text" placeholder="상세 주소(지번)" name="address" style="width: 95%" required><input class="form-control" type="text" placeholder="상세 주소(도로명, 없을 경우 지번주소만 표시됩니다.)" name="road_address" style="width: 95%"><br></p>');
-					  $("#description").before('<input type="hidden" name="place2.taste" value="'${course.taste}'"/>');
-					  $("#description").before('<input type="hidden" name="place2.x" value="0.0"/> ');
-					  $("#description").before('<input type="hidden" name="place2.y" value="0.0"/> ');
-					  $("#description").before('<input type="hidden" name="place2.subway" value=""/> ');
-				  }
-				  if (cnt ==3){
-					  $("#description").before('<hr style="width: 95%"><b>3번째 장소</b>'+ '<br><p><input class="form-control" type="text" placeholder="장소" name="place3.placeName" style="width: 95%" required><br><input class="form-control" type="text" placeholder="상세 주소(지번)" name="address" style="width: 95%" required><input class="form-control" type="text" placeholder="상세 주소(도로명, 없을 경우 지번주소만 표시됩니다.)" name="road_address" style="width: 95%"><br></p>');
-					  $("#description").before('<input type="hidden" name="place3.taste" value="'${course.taste}'"/> ');
-					  $("#description").before('<input type="hidden" name="place3.x" value="0.0"/> ');
-					  $("#description").before('<input type="hidden" name="place3.y" value="0.0"/> ');
-					  $("#description").before('<input type="hidden" name="place3.subway" value=""/> ');
-				  }
-				}
-			});
-		});
-	
-	
-</script>
-
 <body>
 <!-- Responsive navbar-->
 	<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
@@ -124,22 +84,24 @@
 						<h5>코스의 분위기를 선택하세요</h5>
 						<div class="selectTaste"
 							style="display: inline-block; width: 300px; line-height: 45px;">
-							<form:radiobutton path="taste" name="taste" value="act"/>활동적인
-							<form:radiobutton path="taste" name="taste" value="cal"/>잔잔한
-							<form:radiobutton path="taste" name="taste" value="hea"/>힐링
-							<form:radiobutton path="taste" name="taste" value="nat"/>자연적인<br>
-							<form:radiobutton path="taste" name="taste" value="exp"/>체험적
-							<form:radiobutton path="taste" name="taste" value="ent"/>즐거운
-							<form:radiobutton path="taste" name="taste" value="ret"/>복고풍
-						</div>
-						<form:errors path="taste" cssClass="error"/>
+							<form:radiobutton path="taste" name="taste" value="act" onclick='getTaste(event)'/>활동적인
+							<form:radiobutton path="taste" name="taste" value="cal" onclick='getTaste(event)'/>잔잔한
+							<form:radiobutton path="taste" name="taste" value="hea" onclick='getTaste(event)'/>힐링
+							<form:radiobutton path="taste" name="taste" value="nat" onclick='getTaste(event)'/>자연적인<br>
+							<form:radiobutton path="taste" name="taste" value="exp" onclick='getTaste(event)'/>체험적
+							<form:radiobutton path="taste" name="taste" value="ent" onclick='getTaste(event)'/>즐거운
+							<form:radiobutton path="taste" name="taste" value="ret" onclick='getTaste(event)'/>복고풍
+							<form:errors path="taste" cssClass="error"/>
+						</div>	
 						<br><br>						
 						<!-- 지도 -->
 						<h5>코스 경로에 추가할 장소를 입력하세요.</h5>
 						<input class="form-control" id='keyword' style="float:left; width:75%;" onchange='onClickBtn()' placeholder="장소 검색">
 						
+						
+						
 						<div style="float: right; margin-right: 60px;">
-							<input type="button" onclick="onClickBtn();"
+							<input type="button" onclick="onClickBtn()"
 								style="border: none; border-radius: 5px; text-align: center; margin-left:10px; width: 80px; height: 34px;"
 								value="검색">
 						</div>
@@ -170,9 +132,11 @@
 							// 장소 검색 객체를 생성합니다
 							var ps = new kakao.maps.services.Places();
 							
-							// 키워드로 장소를 검색합니다
-							ps.keywordSearch('', placesSearchCB); 
-							
+							function onClickBtn()  {
+								  let name = document.getElementById('keyword').value;
+								  ps.keywordSearch(name, placesSearchCB);
+							}
+				
 							// 키워드 검색 완료 시 호출되는 콜백함수 입니다
 							function placesSearchCB (data, status, pagination) {
 							    if (status === kakao.maps.services.Status.OK) {
@@ -188,6 +152,46 @@
 							
 							        // 검색된 장소 위치를 기준으로 지도 범위를 재설정합니다
 							        map.setBounds(bounds);
+							        
+							    } 
+							}
+							
+							function onChangeAddress(){
+								let address1 = document.getElementById('address1').value;
+								ps.keywordSearch(address1, placesSearchCB1);
+
+								if(document.getElementById('address2')){
+									let address2 = document.getElementById('address2').value;
+									ps.keywordSearch(address2, placesSearchCB2);
+								}
+								
+								if(document.getElementById('address3')){
+									let address3 = document.getElementById('address3').value;
+									ps.keywordSearch(address3, placesSearchCB3);
+								}
+	
+							}
+							
+							// submit할 address 입력 시 호출되는 콜백함수 입니다
+							function placesSearchCB1 (data, status, pagination) {
+							    if (status === kakao.maps.services.Status.OK) {
+							        document.getElementById('place1CoordX').value = data[0].y;
+							        document.getElementById('place1CoordY').value = data[0].x;
+							        
+							    } 
+							}
+							function placesSearchCB2 (data, status, pagination) {
+							    if (status === kakao.maps.services.Status.OK) {
+							        document.getElementById('place2CoordX').value = data[0].y;
+							        document.getElementById('place2CoordY').value = data[0].x;
+							        
+							    } 
+							}
+							function placesSearchCB3 (data, status, pagination) {
+							    if (status === kakao.maps.services.Status.OK) {
+							        document.getElementById('place3CoordX').value = data[0].y;
+							        document.getElementById('place3CoordY').value = data[0].x;
+							        
 							    } 
 							}
 							
@@ -237,11 +241,7 @@
 								  document.execCommand("Copy");
 								  alert('복사되었습니다.');
 							}
-							</script>
-						
-						
-						
-						
+						</script>
 						
 						<br><b>마커를 클릭하면 해당 장소의 이름과 주소가 표시됩니다.
 						<br>복사/붙여넣기로 간편하게 아래 폼을 완성해보세요!</b><br>
@@ -252,14 +252,45 @@
 						<br>					
 						<!-- 코스 추가 -->
 						<h5>최대 3군데의 장소를 추가할 수 있습니다 <input type="button" name="add" value="+" id="add_btn" style="border: none; border-radius: 5px; text-align: center; margin-left: 30%; height: 30px;"></h5>
-
+						<input type="hidden" id="place" name="place">
 						<br>
 						<b>1번째 장소</b>
-						<input class="form-control" type="text" placeholder="장소" id='placeName1' name="place1.placeName" style="width: 95%" required><br>
-						<input type="hidden" name="place1.taste" value="'${course.taste}'"/> 
+						<input class="form-control" type="text" placeholder="장소" id='placeName1' name="place1.placeName" style="width: 95%" required><br>	
 						<input class="form-control" type="text" placeholder="상세 주소(지번)" id='address1' name="address1" onchange="onChangeAddress()" style="width: 95%" required>
-						<input class="form-control" type="text" placeholder="상세 주소(도로명, 없을 경우 생략)" name="road_address1" id='road_address1' style="width: 95%"><br> 					
-                      
+						<input class="form-control" type="text" placeholder="상세 주소(도로명, 없을 경우 생략)" name="road_address1" id='road_address1' style="width: 95%"><br> 									
+                        <input type="hidden" id="place1CoordX" name="place1.x">
+						<input type="hidden" id="place1CoordY" name="place1.y">
+						
+						<script>
+						
+						var cnt = 1; 
+						$(document).ready(function () {
+							  $(document).on("click", "input[name='add']", function () {
+								  if(cnt > 3)
+									  alert("최대 입력 값을 초과했습니다.");
+								  else {
+									  cnt++;
+									  if(cnt == 2){
+										  $("#description").before('<hr style="width: 95%"><b>2번째 장소</b>'+ '<br><p><input class="form-control" type="text" placeholder="장소" name="place2.placeName" style="width: 95%" required><br><input class="form-control" type="text" placeholder="상세 주소(지번)" id="address2" onchange="onChangeAddress()" style="width: 95%" required><input class="form-control" type="text" placeholder="상세 주소(도로명, 없을 경우 지번주소만 표시됩니다.)" name="road_address" style="width: 95%"><br></p>');
+										  $("#description").before('<input type="hidden" name="place2.taste" id="place2Taste"/>');
+										  $("#description").before('<input type="hidden" id="place2CoordX" name="place2.x">');
+										  $("#description").before('<input type="hidden" id="place2CoordY" name="place2.y"> ');
+										  $("#description").before('<input type="hidden" name="place2.subway" value=""/> ');
+									  }
+									  if (cnt ==3){
+										  $("#description").before('<hr style="width: 95%"><b>3번째 장소</b>'+ '<br><p><input class="form-control" type="text" placeholder="장소" name="place3.placeName" style="width: 95%" required><br><input class="form-control" type="text" placeholder="상세 주소(지번)" id="address3" onchange="onChangeAddress()" style="width: 95%" required><input class="form-control" type="text" placeholder="상세 주소(도로명, 없을 경우 지번주소만 표시됩니다.)" name="road_address" style="width: 95%"><br></p>');
+										  $("#description").before('<input type="hidden" name="place3.taste" id="place3Taste"/> ');
+										  $("#description").before('<input type="hidden" id="place3CoordX" name="place3.x">');
+										  $("#description").before('<input type="hidden" id="place3CoordY" name="place3.y"> ');
+										  $("#description").before('<input type="hidden" name="place3.subway" value=""/> ');
+									  }
+									}
+								});
+							});
+						
+						</script>
+						
+						
                         <!-- Post content-->
                         <h5 id="description">코스에 대한 설명을 입력하세요</h5>
                         <form:input path="courseContents" class="form-control" name="contents" type="text" style="height:300px"/>
@@ -270,24 +301,6 @@
                     <br><br><br>
                 </div>
                 </form:form>
-                <!-- Side widgets-->
-                <div class="col-lg-4">
-                    <!-- Search widget-->
-                    <!--<div class="card mb-4">
-                        <div class="card-header">Search</div>
-                        <div class="card-body">
-                            <div class="input-group">
-                                <input class="form-control" type="text" placeholder="Enter search term..." aria-label="Enter search term..." aria-describedby="button-search" />
-                                <button class="btn btn-primary" id="button-search" type="button">Go!</button>
-                            </div>
-                        </div>
-                    </div> -->
-					<!-- 위젯-->
-                    <!-- <div class="card mb-4">
-                        <div class="card-header">Side Widget</div>
-                        <div class="card-body">You can put anything you want inside of these side widgets. They are easy to use, and feature the Bootstrap 5 card component!</div>
-                    </div> -->
-                </div>
             </div>
         </div>
         <!-- Footer-->
@@ -296,14 +309,10 @@
         </footer>
         <!-- Bootstrap core JS-->
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
-<!-- Core theme JS-->
+		<!-- Core theme JS-->
         <script src="js/scripts.js"></script>
-	<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.5/dist/umd/popper.min.js" integrity="sha384-Xe+8cL9oJa6tN/veChSP7q+mnSPaj5Bcu9mPX5F5xIGE0DVittaqT5lorf0EI7Vk" crossorigin="anonymous"></script>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/js/bootstrap.min.js" integrity="sha384-kjU+l4N0Yf4ZOJErLsIcvOU2qSb74wXpOhqTvwVx3OElZRweTnQ6d31fXEoRD1Jy" crossorigin="anonymous"></script>
-
-
-
-
+		<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.5/dist/umd/popper.min.js" integrity="sha384-Xe+8cL9oJa6tN/veChSP7q+mnSPaj5Bcu9mPX5F5xIGE0DVittaqT5lorf0EI7Vk" crossorigin="anonymous"></script>
+		<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/js/bootstrap.min.js" integrity="sha384-kjU+l4N0Yf4ZOJErLsIcvOU2qSb74wXpOhqTvwVx3OElZRweTnQ6d31fXEoRD1Jy" crossorigin="anonymous"></script>
 </body>
 <input type="button" name="add" value="+" id="add_btn" style="border:none;border-radius:5px; text-align: center; margin-left:300px; height: 30px;">
 </html>
