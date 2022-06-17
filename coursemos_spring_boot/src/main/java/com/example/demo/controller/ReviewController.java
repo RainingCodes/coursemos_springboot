@@ -32,10 +32,12 @@ import org.springframework.web.context.WebApplicationContext;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.example.demo.domain.Course;
 import com.example.demo.domain.Member;
 import com.example.demo.domain.Points;
 import com.example.demo.domain.Review;
 import com.example.demo.domain.SessionMember;
+import com.example.demo.service.CourseService;
 import com.example.demo.service.MemberService;
 import com.example.demo.service.PointsService;
 import com.example.demo.service.ReviewLikeService;
@@ -59,6 +61,8 @@ public class ReviewController implements ApplicationContextAware{
 	private MemberService memberService;
 	@Autowired
 	private ReviewLikeService reviewLikeService;
+	@Autowired
+	private CourseService courseService;
 	
 	@Override
 	public void setApplicationContext(ApplicationContext applicationContext) throws BeansException {
@@ -75,17 +79,15 @@ public class ReviewController implements ApplicationContextAware{
 	public ModelAndView form(HttpSession session, @ModelAttribute SessionMember sessionMember, @PathVariable("courseId") String id) {
 		ModelAndView mv = new ModelAndView("thyme/review/register");
 		Review review;
-		if(session.getAttribute("review") == null)
-			review = new Review();
-		else
-			review = (Review) session.getAttribute("review");
+
+		review = new Review();
 		review.setMemberId(sessionMember.getId());
 		mv.addObject("sessionMember", sessionMember);
 		mv.addObject("review", review);
 		return mv;
 	}
 	@RequestMapping(value = "/review/register/{courseId}", method = RequestMethod.POST)
-	public String form(HttpSession session, @ModelAttribute SessionMember sessionMember, @Valid Review review, BindingResult result, @PathVariable("courseId") String id,
+	public String form(HttpSession session, @ModelAttribute SessionMember sessionMember, @Valid Review review, BindingResult result, @PathVariable("courseId") int id,
 			Model model) {
 		if(result.hasErrors()) {
 			return "thyme/review/register"; // 검증 오류 발생 시 입력 form으로 이동
@@ -102,7 +104,9 @@ public class ReviewController implements ApplicationContextAware{
 		long timeInMilliSeconds = date.getTime();
 		review.setWrittenDate(new Date(timeInMilliSeconds)); 
 		reviewService.insertReview(review);
-
+		
+		Course course = courseService.getCourseByCourseId(id);
+		review.setCourseName(course.getCourseName());
 		session.setAttribute("review", review);
 		
 		Points points = new Points();
@@ -132,8 +136,6 @@ public class ReviewController implements ApplicationContextAware{
 		ModelAndView mv = new ModelAndView("thyme/review/registered");
 		Review review = reviewService.findReviewById(id);
 		Member member = memberService.findMemberById(review.getMemberId());
-		//String courseName = courseService.findCourseNameByCourseId(id); course 완성되면 추가
-		//review.setCourseName(courseName);
 		boolean isWriter = review.getMemberId().equals(sessionMember.getId());
 		boolean like = false;
 		if(!isWriter) {
@@ -141,6 +143,8 @@ public class ReviewController implements ApplicationContextAware{
 			like = reviewLikeService.findReviewLikeByReviewIdMemberId(review.getReviewId(), sessionMember.getId());
 			
 		}
+		Course course = courseService.getCourseByCourseId(review.getCourseId());
+		review.setCourseName(course.getCourseName());
 		mv.addObject("sessionMember", sessionMember);
 		mv.addObject("review", review);
 		mv.addObject("isWriter", isWriter);

@@ -26,8 +26,6 @@ function register(){
 
 	form.action = window.location.href;
 	form.submit();
-	
-		
 }
 
 </script>
@@ -49,9 +47,7 @@ textarea{
 </style>
 </head>
 <body>
-
-<div><h3>리뷰 작성</h3>
-	<span th:text="${review}"></span>
+<div><h3><span th:text="${review.courseName}"></span>리뷰 작성</h3>
 	<form th:action="@{/review/register}" th:object="${review}" method="post" enctype="multipart/form-data" id="review">
 		<table>
 			<tr>
@@ -64,7 +60,7 @@ textarea{
 			</tr>
 			<tr>
 				<td>리뷰 내용 : </td>
-				<td><textarea th:text="*{reviewContents}" id="reviewContents" name="reviewContents"></textarea></td>
+				<td><input style="height:300px" class="form-control" th:text="*{reviewContents}" id="reviewContents" name="reviewContents"></td>
 			</tr>
 			<tr>
 				<td colspan="2"><span class="err" th:errors="*{reviewContents}"> </span></td> 
@@ -72,7 +68,7 @@ textarea{
 			</tr>
 			<tr>
 				<td>남은글자수 : </td>
-				<td class="txsub"><input type="text" readonly  value="100" name="counter" id="counter"></td>
+				<td class="txsub"><input type="text" class="form-control" readonly  value="100" name="counter" id="counter"></td>
 			</tr>
 			<tr>
 				<td>사진 업로드 : </td>

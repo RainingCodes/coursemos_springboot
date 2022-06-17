@@ -45,7 +45,7 @@ public class Review implements Serializable {
 	@Column(nullable=false) @Setter @Getter
 	private Long memberId;
 	@Column(nullable=false) @Setter @Getter
-	private Long courseId;
+	private int courseId;
 	@Transient
 	private String courseName;
 	public Review() {
