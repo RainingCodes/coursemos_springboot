@@ -16,19 +16,11 @@ div {
 </style>
 <body>
 	<div><h3><span th:text="${session.review.courseName}"></span> 리뷰</h3>
-		<div th:unless="${session.isWriter}">
-			<span th:if="${session.like"}>
-				<a href="/review/unlike/"><img src="../../static/img/like2"></a>
-			</span>
-			<span th:unelss="${session.like"}>
-				<a href="/review/like/"><img src="../../static/img/like1"></a>
-			</span>
 		</div>
-
 		<table>
 			<tr>
 				<td>작성자 : </td>
-				<td th:text="${session.review.nickName}"></td>
+				<td th:text="${session.writer}"></td>
 			</tr>
 			<tr>
 				<td>작성 날짜 : </td>
