@@ -18,7 +18,14 @@
 		<th>reportId</th>
 		<th>category</th>
 		<th>신고자</th>
-		<th>courseId</th>
+		<th>
+			<c:if test="${type == 'course'}">
+				courseId
+			</c:if>
+			<c:if test="${type == 'review'}">
+				reviewId
+			</c:if>
+		</th>
 		<th>완료 처리</th>
 	</tr>
 
@@ -35,7 +42,12 @@
 			${list.memberId}
 		</td>
 		<td>
-			${list.courseId}
+			<c:if test="${type == 'course'}">
+				${list.courseId}
+			</c:if>
+			<c:if test="${type == 'review'}">
+				${list.reviewId}
+			</c:if>
 		</td>
 		<td>
 		<a href='<c:url value="/admin/report/course/process">
