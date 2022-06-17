@@ -20,10 +20,7 @@
 <style>
 
 	#page-content-wrapper {
-		padding-left : 10%;
-	}
-	#sidebar-wrapper {
-		padding-left : 15%;
+		margin:auto;
 	}
 	span {
 		width : 40%;
