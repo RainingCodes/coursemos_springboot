@@ -5,13 +5,18 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
+import javax.servlet.ServletRequest;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+import javax.websocket.Session;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.support.PagedListHolder;
-import org.springframework.boot.autoconfigure.data.web.SpringDataWebProperties.Pageable;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.domain.Sort.Order;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -25,6 +30,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.SessionAttribute;
 import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.bind.support.SessionStatus;
 import org.springframework.web.servlet.ModelAndView;
@@ -34,6 +40,9 @@ import com.example.demo.domain.Course;
 import com.example.demo.domain.Place;
 import com.example.demo.domain.SessionMember;
 import com.example.demo.domain.TasteCategory;
+import com.example.demo.repository.CourseRepository;
+import com.example.demo.repository.SearchRepository;
+import com.example.demo.service.CourseService;
 import com.example.demo.service.SearchService;
 import com.example.demo.service.TasteService;
 
@@ -43,7 +52,7 @@ import lombok.Setter;
 import lombok.ToString;
 
 @Controller
-@SessionAttributes({"tList", "cList"})
+//@SessionAttributes({"tList", "cList"})
 public class SearchPlaceController {
 	private static final String SEARCH_VIEW = "search";
 	private static final String[] method = null;
@@ -54,12 +63,19 @@ public class SearchPlaceController {
 	public void setSearchService(SearchService searchService) {
 		this.searchService = searchService;
 	}
+	
+	@Autowired
+	private CourseService courseService;
+	public void setCourseService(CourseService courseService) {
+		this.courseService = courseService;
+	}
+	
 	@Autowired
 	private TasteService tasteService;
 	public void setTasteService(TasteService tasteService) {
 		this.tasteService = tasteService;
 	}
-
+	
 	@Getter @Setter @AllArgsConstructor @ToString
 	public class Taste {
 		private String code;
@@ -78,19 +94,35 @@ public class SearchPlaceController {
 		return tasteCodes;	
 	}
 	
-	@SuppressWarnings("unchecked")
 	@RequestMapping("/course/search/main")
 	public String handleRequest(
-			ModelMap model, HttpSession session
+			ModelMap model
 			) throws Exception {
 		List<Taste> tList = referenceData();
-		PagedListHolder<Course> courseList = (PagedListHolder<Course>) session.getAttribute("cList");
-		session.removeAttribute("courseList");
-		
-		//model.put("cList", courseList);
 		model.put("tList", tList);
+		
 		return SEARCH_VIEW;
 	}
+	@RequestMapping("/course/search.do")
+	public String handleRequestTest(
+			@RequestParam("subway") String subway,
+			@RequestParam("x") double x,
+			@RequestParam("y") double y,
+			ModelMap model,
+			@PageableDefault(size = 3, sort = "courseId",  direction = Sort.Direction.DESC) Pageable pageable
+			) throws Exception {
+		List<Taste> tList = referenceData();
+		model.put("tList", tList);
+		Sort sort = Sort.by("courseId").descending();
+		Page<Course> cList = courseService.findByPlace1_Subway(subway, pageable);
+		model.put("cList", cList);
+		model.put("subway", subway);
+		model.put("x", x);
+		model.put("y", y);
+		
+		return SEARCH_VIEW;
+	}
+	/*
 	@RequestMapping("/course/search.do")
 	public String handleRequest(
 			@RequestParam("subway") String subway,
@@ -106,7 +138,11 @@ public class SearchPlaceController {
 		model.put("x", x);
 		model.put("y", y);
 		model.put("tList", tList);
+		Sort sort = Sort.by("courseId").descending();
+		//Pageable pageReq = PageRequest.of(4, 5, sort);
+		//Page<Course> cList = courseService.findAll(pageable);
 		model.put("cList", cList);
+		
 		return SEARCH_VIEW;
 	}
 
@@ -124,7 +160,7 @@ public class SearchPlaceController {
 		return SEARCH_VIEW;
 	}
 	
-	
+	*/
 	
 	/*
 	@ModelAttribute("tasteCate")

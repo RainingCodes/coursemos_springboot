@@ -8,7 +8,9 @@ import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.support.PagedListHolder;
-import org.springframework.boot.autoconfigure.data.web.SpringDataWebProperties.Pageable;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -30,6 +32,7 @@ import com.example.demo.dao.CourseDao;
 import com.example.demo.domain.Course;
 import com.example.demo.domain.CourseList;
 import com.example.demo.domain.TasteCategory;
+import com.example.demo.service.CourseService;
 import com.example.demo.service.SearchService;
 import com.example.demo.service.TasteService;
 
@@ -38,7 +41,7 @@ import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
 @Controller
-@SessionAttributes({"tList", "cList"})
+//@SessionAttributes({"tList", "cList"})
 public class SearchCategoryController {
 	private static final String SEARCH_DETAIL_VIEW = "detailSearch";
 	private SearchService searchService;
@@ -54,6 +57,11 @@ public class SearchCategoryController {
 		this.tasteService = tasteService;
 	}
 	
+	@Autowired
+	private CourseService courseService;
+	public void setCourseService(CourseService courseService) {
+		this.courseService = courseService;
+	}
 	@Getter @Setter @AllArgsConstructor @ToString
 	public class Taste {
 		private String code;
@@ -76,22 +84,23 @@ public class SearchCategoryController {
 	public String handleRequest(
 			@RequestParam("subway") String subway,
 			@RequestParam("taste") String taste,
-			ModelMap model
+			ModelMap model,
+			@PageableDefault(size = 3, sort = "courseId",  direction = Sort.Direction.DESC) Pageable pageable
 			) throws Exception {
 		List<Taste> tList = referenceData();
-		PagedListHolder<Course> cList;
-		if (subway != "") {
-			cList = new PagedListHolder<Course>(this.searchService.getCourseListByTaste(subway, taste));
+		//PagedListHolder<Course> cList;
+		Page<Course> cList = null;
+		if (subway == "") {
+			cList = courseService.findCourse1(taste, pageable);
 		} else {
-			cList = new PagedListHolder<Course>(this.searchService.getCourseListByTaste(taste));
+			cList = courseService.findCourse2(subway, taste, pageable);
 		}
-		cList.setPageSize(4);
 		model.put("subway", subway);
 		model.put("tList", tList);
 		model.put("cList", cList);
 		return SEARCH_DETAIL_VIEW;
 	}
-
+/*
 	@RequestMapping("/course/detailedSearch2.do")
 	public String handleRequest2(
 			@RequestParam("page") String page,
@@ -105,7 +114,7 @@ public class SearchCategoryController {
 		else if ("previous".equals(page)) { cList.previousPage(); }
 		return SEARCH_DETAIL_VIEW;
 	}
-	
+	*/
 	/*
 	@PostMapping
 	public ModelAndView submit(HttpServletRequest request,

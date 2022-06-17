@@ -27,10 +27,12 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 
 import com.example.demo.domain.Course;
 import com.example.demo.domain.TasteCategory;
+import com.example.demo.repository.CourseRepository;
 
+@Service
 public interface SearchService {
-	Course getCourseByCourseId(int courseId) throws DataAccessException;
 	
+	List<Course> getCourseByCourseId(int courseId) throws DataAccessException;
 	
 	void insertCourse(Course course) throws DataAccessException;
 	
