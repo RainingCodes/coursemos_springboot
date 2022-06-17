@@ -409,22 +409,27 @@
             var polyline;
             var linePath = [], selectedMarker = null; // 클릭한 마커를 담을 변수
             function displayCourse(data0, data1, data2) {
+            	
+            	linePath = [];
             	// 선을 구성하는 좌표 배열입니다. 이 좌표들을 이어서 선을 표시합니다
             	var latlng0; var latlng1; var latlng2;
             	var n = 0;
             	if (data0.length != 1) {
             		var d0 = data0.split(',');
             		latlng0 = new kakao.maps.LatLng(parseFloat(d0[0]), parseFloat(d0[1]));
+            		bounds.extend(latlng0);
             		linePath[0] = latlng0;
             	}
             	if (data1.length != 1) {
             		var d1 = data1.split(',');
             		latlng1 = new kakao.maps.LatLng(parseFloat(d1[0]), parseFloat(d1[1]));
+            		bounds.extend(latlng1);
             		linePath[1] = latlng1;
             	}
             	if (data2.length != 1) {
             		var d2 = data2.split(',');
             		latlng2 = new kakao.maps.LatLng(parseFloat(d2[0]), parseFloat(d2[1]));
+            		bounds.extend(latlng2);
             		linePath[2] = latlng2;
             	}
 
@@ -441,6 +446,9 @@
             	    strokeOpacity: 0.7, // 선의 불투명도 입니다 1에서 0 사이의 값이며 0에 가까울수록 투명합니다
             	    strokeStyle: 'solid' // 선의 스타일입니다
             	});
+            	
+            	//bound
+            	map.setBounds(bounds);
 
             	
             	// 지도에 선을 표시합니다 
