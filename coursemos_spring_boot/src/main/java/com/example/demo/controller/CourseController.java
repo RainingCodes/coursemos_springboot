@@ -61,19 +61,19 @@ public class CourseController {
 		else return new Course();
 	}
 	
-	@RequestMapping(value="/registerForm", method=RequestMethod.GET)
+	@RequestMapping(value="/register", method=RequestMethod.GET)
 	public String init() {
 		return "course/registerForm";
 	}
 	
 	@RequestMapping(value="/view", method=RequestMethod.POST)
 	public String onSubmit(@ModelAttribute Course course, BindingResult result, SessionStatus status, HttpServletRequest request) {
-//		new CourseValidator().validate(course, result);
-//		
-//		if (result.hasErrors()) {
-//			System.out.println("Validation Error !!!");
-//			return "course/registerForm";
-//		}
+		new CourseValidator().validate(course, result);
+		
+		if (result.hasErrors()) {
+			System.out.println("Validation Error !!!");
+			return "course/registerForm";
+		}
 		
 		course.getPlace1().setTaste(course.getTaste());
 		if (course.getPlace2() != null) course.getPlace2().setTaste(course.getTaste());
