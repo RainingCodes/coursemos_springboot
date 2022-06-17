@@ -231,7 +231,7 @@ public class CourseController {
 		System.out.println(course.getCourseId() + " : delete complete!!!");
 	}
 
-	@RequestMapping(value="/{courseId}/update", method=RequestMethod.POST)
+	@RequestMapping(value="/update/{courseId}", method=RequestMethod.POST)
 	public ModelAndView updateCourse(@ModelAttribute Course course, HttpServletRequest request) {
 		Course updateCourse = courseService.getCourseByCourseId(course.getCourseId());
 		ModelAndView mav = new ModelAndView("course/updateForm");
