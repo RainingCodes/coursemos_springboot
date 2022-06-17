@@ -189,4 +189,12 @@ public class ReviewController implements ApplicationContextAware{
 		mv.addObject("reviews", reviews);
 		return mv;
 	}
+	
+	@RequestMapping(value = "/review/delete/{reviewId}")
+	public ModelAndView delete(@ModelAttribute SessionMember sessionMember, @PathVariable("reviewId") Long id) {
+		ModelAndView mv = new ModelAndView("redirect:/review/list");
+		Review review = reviewService.findReviewById(id);
+		reviewService.delete(review);
+		return mv;
+	}
 }

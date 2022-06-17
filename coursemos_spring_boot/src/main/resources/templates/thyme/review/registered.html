@@ -25,6 +25,10 @@ function update (){
    var link = "/review/update/"+/*[[${review.reviewId}]]*/ 'null';
    location.href=link;
 }
+function del (){
+	   var link = "/review/delete/"+/*[[${review.reviewId}]]*/ 'null';
+	   location.href=link;
+	}
 function like (){
 	   var link = "/review/like/"+/*[[${review.reviewId}]]*/ 'null';
 	   location.href=link;
@@ -58,7 +62,11 @@ function showPopup(){
 					</th:block>
 					<th:block th:if="${isWriter}"><span class="img"><img src="../../img/like2.png"></span></th:block>
 				</td>
-				<td><span th:if="${isWriter}"><button class="btn-primary" type="button" onclick="update();">수정하기</button></span></td>
+				<td><span th:if="${isWriter}"><button class="btn-primary" type="button" onclick="update();">수정하기</button>
+					<button class="btn-primary" type="button" onclick="del();">삭제하기</button>
+				</span>
+				
+				</td>
 			</tr>
 			<tr>
 				<td>
