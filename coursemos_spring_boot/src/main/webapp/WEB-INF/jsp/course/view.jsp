@@ -22,7 +22,7 @@
 <link href="../css/styles.css" rel="stylesheet" />
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor" crossorigin="anonymous">
 <script>
-function showPopup(id){
+function showPopupReport(id){
 	
 	var width = 1200;
 	var height = 350;
@@ -307,7 +307,7 @@ function showPopup(id){
 						<button formaction="/course/like" style="border:0;background-color:white;"><img class="image" style="width:50px; height:50px;" src="../../img/like1.png" /></button>
 						<button formaction="/course/scrap" style="border:0;background-color:white;"><img class="scrapImage" style="width:50px; height:50px;" src="../../img/scrap1.png"/></button>
 						<button type="button" onclick="location.href='../view/coupon/get'" style="width:15%; height:60px; border:none; border-radius:5px; text-align: center; background-color:#ced4da;">쿠폰 발급</button>
-						<button type="button" style="width:15%; height:60px; border:none; border-radius:5px; text-align: center; background-color:#ced4da;">신고</button>			
+						<button type="button" onclick="showPopupReport(${course.courseId});" style="width:15%; height:60px; border:none; border-radius:5px; text-align: center; background-color:#ced4da;">신고하기</button>			
 					</c:if>	
 					<c:if test="${sessionMember.check2 != false and sessionMember.id == course.memberId}">
 					<button type="submit" formaction="../update/${course.courseId}" style="width:15%; height:60px; border:none; border-radius:5px; text-align: center; background-color:#ced4da;">수정</button>
@@ -353,26 +353,7 @@ function showPopup(id){
                         </div>
                     </div> -->
 				<!-- Categories widget-->
-				<div class="card mb-4">
-					<div class="card-header">제휴 업체 둘러보기</div>
-					<div class="card-body">
-						<div class="row">
-							<div class="col-sm-6">
-								<ul class="list-unstyled mb-0">
-									<li><a href="#!">솜솜월드</a></li>
-									<li><a href="#!">향수 공방 'scent'</a></li>
-									<li><a href="#!">고양이카페 '양갱'</a></li>
-								</ul>
-							</div>
-							<div class="col-sm-6">
-								<ul class="list-unstyled mb-0">
-									<li><a href="#!">솜솜 시네마</a></li>
-									<li><a href="#!">목화 카페</a></li>
-								</ul>
-							</div>
-						</div>
-					</div>
-				</div>
+				<%@ include file="./coupon.jsp"  %>
 				<!-- Side widget-->
 				<%@ include file="../review/list.jsp"  %>
 			</div>

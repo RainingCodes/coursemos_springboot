@@ -63,7 +63,14 @@
 								<a href='<c:url value="/review/registered/${report.reviewId}"/>'>이동하기</a>
 							</td>
 							</c:if>
-							<td><c:out value="${report.state}" /></td>
+							<td>
+							
+							<c:choose>
+								<c:when test="${report.state == 'F'}">처리 전</c:when>
+								<c:when test="${report.state == 'T'}">처리 완료</c:when>
+							</c:choose>
+							
+							</td>
 						</tr>
 				</c:forEach>
 			</tbody>	
