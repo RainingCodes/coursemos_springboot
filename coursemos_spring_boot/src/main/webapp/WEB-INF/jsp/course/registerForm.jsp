@@ -275,13 +275,15 @@
 						<input type="hidden" id="place" name="place">
 						<br>
 						<b>1번째 장소</b>
-						<form:input path="place1" class="form-control" type="text" placeholder="장소" id='placeName1' name="place1.placeName" style="width: 95%"/><br>	
+						<form:input path="place1.placeName" class="form-control" type="text" placeholder="장소" id='placeName1' name="place1.placeName" style="width: 95%"/>
 						<form:errors path="place1.placeName" cssClass="error"/>
-						<input class="form-control" type="text" placeholder="상세 주소(지번)" id='address1' name="address1" onchange="onChangeAddress()" style="width: 95%" required>
+						<!-- 지번주소를 입력하면 자동으로 x, y, subway 생성되는데 double형에 대한 required 처리가 어려워서 subway로 대체하여 validate 처리 -->
+						<input class="form-control" type="text" placeholder="상세 주소(지번)" id='address1' name="address1" onchange="onChangeAddress()" style="width: 95%" >
+						<form:input path="place1.subway" type="hidden" id="subway1" name="place1.subway"/>
+						<form:errors path="place1.subway" cssClass="error"/>
 						<input class="form-control" type="text" placeholder="상세 주소(도로명, 없을 경우 생략)" name="road_address1" id='road_address1' style="width: 95%"><br> 									
                         <input type="hidden" id="place1CoordX" name="place1.x">
 						<input type="hidden" id="place1CoordY" name="place1.y">
-						<input type="hidden" id="subway1" name="place1.subway">
 						<script>
 						
 						var cnt = 1; 
@@ -292,14 +294,14 @@
 								  else {
 									  cnt++;
 									  if(cnt == 2){
-										  $("#description").before('<hr style="width: 95%"><b>2번째 장소</b>'+ '<br><p><input class="form-control" type="text" placeholder="장소" name="place2.placeName" style="width: 95%" required><br><input class="form-control" type="text" placeholder="상세 주소(지번)" id="address2" onchange="onChangeAddress()" style="width: 95%" required><input class="form-control" type="text" placeholder="상세 주소(도로명, 없을 경우 지번주소만 표시됩니다.)" name="road_address" style="width: 95%"><br></p>');
+										  $("#description").before('<hr style="width: 95%"><b>2번째 장소</b>'+ '<br><p><input class="form-control" type="text" placeholder="장소" name="place2.placeName" style="width: 95%" required><input class="form-control" type="text" placeholder="상세 주소(지번)" id="address2" onchange="onChangeAddress()" style="width: 95%" required><input class="form-control" type="text" placeholder="상세 주소(도로명, 없을 경우 지번주소만 표시됩니다.)" name="road_address" style="width: 95%"><br></p>');
 										  $("#description").before('<input type="hidden" id="place2Taste" name="place2.taste" />');
 										  $("#description").before('<input type="hidden" id="place2CoordX" name="place2.x">');
 										  $("#description").before('<input type="hidden" id="place2CoordY" name="place2.y"> ');
 										  $("#description").before('<input type="hidden" id="subway2" name="place2.subway">');
 									  }
 									  if (cnt ==3){
-										  $("#description").before('<hr style="width: 95%"><b>3번째 장소</b>'+ '<br><p><input class="form-control" type="text" placeholder="장소" name="place3.placeName" style="width: 95%" required><br><input class="form-control" type="text" placeholder="상세 주소(지번)" id="address3" onchange="onChangeAddress()" style="width: 95%" required><input class="form-control" type="text" placeholder="상세 주소(도로명, 없을 경우 지번주소만 표시됩니다.)" name="road_address" style="width: 95%"><br></p>');
+										  $("#description").before('<hr style="width: 95%"><b>3번째 장소</b>'+ '<br><p><input class="form-control" type="text" placeholder="장소" name="place3.placeName" style="width: 95%" required><input class="form-control" type="text" placeholder="상세 주소(지번)" id="address3" onchange="onChangeAddress()" style="width: 95%" required><input class="form-control" type="text" placeholder="상세 주소(도로명, 없을 경우 지번주소만 표시됩니다.)" name="road_address" style="width: 95%"><br></p>');
 										  $("#description").before('<input type="hidden" id="place3Taste" name="place3.taste" /> ');
 										  $("#description").before('<input type="hidden" id="place3CoordX" name="place3.x">');
 										  $("#description").before('<input type="hidden" id="place3CoordY" name="place3.y"> ');

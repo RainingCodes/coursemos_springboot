@@ -8,6 +8,7 @@ import javax.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
+import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -123,28 +124,27 @@ public class CourseController {
 			}	
 		
 		System.out.println("=========view Detail=========");
-		System.out.println(viewCourse.toString() + "\n");
+		System.out.println(viewCourse.toString());
 		System.out.println("=============================");
 		
-		
-//		//MemberCouponButton
-//		ArrayList<MemberCouponButton> mcb = new ArrayList<MemberCouponButton>();
-//						
-//		Place[] arr = {course.getPlace1(), course.getPlace2(), course.getPlace3()};
-//		for (Place p : arr) {
-//			if (p != null) {
-//				int id = p.getPlaceId();
-//				Company com = companyService.getCompanyByPlaceId(id);
-//								
-//				if (com != null) {
-//					List<Coupon> cou = couponService.getCouponByCompanyId(com.getCompanyId());
-//					for (Coupon c : cou) {
-//						mcb.add(new MemberCouponButton(com.getPlace().getPlaceName(), c));
-//					}
-//				}			
-//			}
-//		}		
-//		mav.addObject("couponList", mcb);
+		//MemberCouponButton
+		ArrayList<MemberCouponButton> mcb = new ArrayList<MemberCouponButton>();
+						
+		Place[] arr = {course.getPlace1(), course.getPlace2(), course.getPlace3()};
+		for (Place p : arr) {
+			if (p != null) {
+				int id = p.getPlaceId();
+				Company com = companyService.getCompanyByPlaceId(id);
+								
+				if (com != null) {
+					List<Coupon> cou = couponService.getCouponByCompanyId(com.getCompanyId());
+					for (Coupon c : cou) {
+						mcb.add(new MemberCouponButton(com.getPlace().getPlaceName(), c));
+					}
+				}			
+			}
+		}		
+		mav.addObject("couponList", mcb);
 		
 		return mav;
 	}
