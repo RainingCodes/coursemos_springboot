@@ -27,16 +27,20 @@ public class ScrapController {
 	private CourseService courseService;
 	
 	@RequestMapping("/course/scrap")
-	public String courseScrap(@ModelAttribute SessionMember sessionMember, 
-			@RequestParam("courseId") int courseId) {		
+	public ModelAndView courseScrap(@ModelAttribute SessionMember sessionMember, 
+			@RequestParam("courseId") int courseId) {
+		ModelAndView mav = new ModelAndView("alert");
 		Scrap exist = scrapService.getScrapByPrimaryKey(sessionMember.getId(), courseId);
 		if (exist == null) {
 			scrapService.insertScrap(new Scrap(sessionMember.getId(), courseId));
+			mav.addObject("msg", "코스를 스크랩하였습니다.");
 		} else {
 			scrapService.deleteScrap(exist);
+			mav.addObject("msg", "스크랩을 취소하였습니다.");
 		}
 		
-		return "redirect:/course/view/"+courseId;
+		mav.addObject("url", "/course/view/"+courseId);
+		return mav;
 	}
 	
 	
