@@ -37,7 +37,14 @@
 							<td><c:out value="${report.reportId}" /></td>
 							<td><c:out value="${report.writtenDate}" /></td>
 							<td>
-							<c:out value="${report.getReportCategory()}" />
+							<c:out value="${report.reportCategory }"></c:out>
+							<c:choose>
+								<c:when test="${report.reportCategory eq 'spam' }">스팸홍보/도배글</c:when>
+								<c:when test="${report.reportCategory eq 'lie' }">허위 정보</c:when>
+								<c:when test="${report.reportCategory eq 'mali' }">악의적 비하</c:when>
+								<c:when test="${report.reportCategory eq 'unpl' }">불쾌한 표현</c:when>
+								<c:when test="${report.reportCategory eq 'ille' }">불법 정보</c:when>
+							</c:choose>
 							</td>
 							<c:if test="${report.courseId ne null}">
 							<td>
@@ -52,7 +59,7 @@
 								리뷰
 							</td>
 							<td>
-								<a href='<c:url value="/review/registerd/${report.reviewId}"/>'>이동하기</a>
+								<a href='<c:url value="/review/registered/${report.reviewId}"/>'>이동하기</a>
 							</td>
 							</c:if>
 							<td><c:out value="${report.state}" /></td>

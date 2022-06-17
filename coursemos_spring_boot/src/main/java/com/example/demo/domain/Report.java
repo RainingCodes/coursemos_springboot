@@ -26,22 +26,4 @@ public class Report {
 	private Integer courseId;
 	private Integer reviewId;
 	
-	public String getReportCategory() {
-		if(reportCategory == null)
-			return null;
-		switch(this.reportCategory) {
-		case "spam" :
-			return "스팸홍보/도배글";
-		case "lie" :
-			return "허위 정보";
-		case "mali" :
-			return "악의적 비하";
-		case "unpl":
-			return "불쾌한 표현";
-		case "ille":
-			return "불법 정보";
-		default:
-			return null;
-		}
-	}
 }
