@@ -84,7 +84,6 @@
 					<h5 style="font-weight:bold;">코스 경로 살펴보기</h5>
 					<br>
 					<table>					
-						<c:if test="${place1.placeName != null}">
 							<tr>
 								<th><div>${place1.placeName }</div></th>
 							</tr>
@@ -94,8 +93,6 @@
 							<tr>
 							<td><br></td>
 							</tr>
-						</c:if>
-						<c:if test="${place2.placeName != null}">
 							<tr>
 								<th><div>${place2.placeName }</div></th>
 							</tr>
@@ -105,8 +102,6 @@
 							<tr>
 							<td><br></td>
 							</tr>
-						</c:if>
-						<c:if test="${place3.placeName != null}">
 							<tr>
 								<th><div>${place3.placeName }</div></th>
 							</tr>
@@ -115,8 +110,7 @@
 							</tr>
 							<tr>
 							<td><br></td>
-							</tr>
-						</c:if>	
+							</tr>	
 					</table>
 					
 					<!-- 지도 -->

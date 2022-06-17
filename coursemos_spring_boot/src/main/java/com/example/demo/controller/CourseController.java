@@ -88,7 +88,7 @@ public class CourseController {
 		System.out.println("submit complete!!!");
 		System.out.println("=================================");
 		
-		return "course/view";
+		return "redirect:/course/view/"+course.getCourseId();
 	}
 	
 	@RequestMapping(value="/view/{courseId}", method=RequestMethod.GET)
@@ -97,8 +97,7 @@ public class CourseController {
 		
 		Course viewCourse = courseService.getCourseByCourseId(course.getCourseId());
 		mav.addObject("course", viewCourse);
-		
-		if (viewCourse.getMemberId() == null) { // DB에 default로 속해져있는 코스(api)이면
+
 			Place place1 = placeService.getPlaceByPlaceId(viewCourse.getPlace1().getPlaceId());
 			mav.addObject("place1", place1);
 			System.out.println(place1.getPlaceName());
@@ -122,10 +121,6 @@ public class CourseController {
 				mav.addObject("place3", new Place());
 				System.out.println("place3 is null");
 			}	
-		}
-		else {
-			System.out.println(mav.toString());
-		}
 		
 		System.out.println("=========view Detail=========");
 		System.out.println(viewCourse.toString() + "\n");
