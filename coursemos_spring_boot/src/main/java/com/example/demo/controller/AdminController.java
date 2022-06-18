@@ -6,8 +6,10 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.example.demo.domain.Company;
@@ -18,6 +20,7 @@ import com.example.demo.domain.Report;
 import com.example.demo.domain.Review;
 import com.example.demo.domain.ReviewLike;
 import com.example.demo.domain.ReviewReadableMember;
+import com.example.demo.domain.SessionMember;
 import com.example.demo.service.CourseService;
 import com.example.demo.service.MemberService;
 import com.example.demo.service.PointsService;
@@ -34,6 +37,7 @@ import lombok.Setter;
 import lombok.ToString;
 
 @Controller
+@SessionAttributes("sessionMember")
 public class AdminController {
 	@Autowired
 	private ReportService reportService;
@@ -53,8 +57,13 @@ public class AdminController {
 	private ReviewReadableMemberService reviewReadableMemberService;
 	
 	@RequestMapping("/admin")
-	public String adminPage() {
-		return "admin/index";
+	public String adminPage(@ModelAttribute SessionMember sessionMember) {
+		
+		if (sessionMember.getId().equals(0L)) {
+			return "admin/index";
+		} else {
+			return "admin/err";
+		}
 	}
 	
 	

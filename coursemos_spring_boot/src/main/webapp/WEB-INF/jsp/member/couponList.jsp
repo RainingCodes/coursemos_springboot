@@ -52,8 +52,8 @@ th {
 
 <div class="container">
 <div class="button">
-<input class="btn btn-dark" type='button' name='pro' value='제휴 중'>
-<input class="btn btn-dark" type='button' name='end' value='제휴 종료'>
+<input class="btn btn-dark" type='button' name='pro' value='사용 가능 쿠폰'>
+<input class="btn btn-dark" type='button' name='end' value='사용 불가 쿠폰'>
 </div>
 <br><br>
 <div id="pro">
