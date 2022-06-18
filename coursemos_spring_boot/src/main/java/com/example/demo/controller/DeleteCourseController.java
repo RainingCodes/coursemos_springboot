@@ -58,7 +58,7 @@ public class DeleteCourseController {
 			placeService.deletePlace(course.getPlace1());
 		}
 		if (course.getPlace2()!=null) {
-			placeService.deletePlace(course.getPlace1());
+			placeService.deletePlace(course.getPlace2());
 		}
 		if (course.getPlace3()!=null) {
 			placeService.deletePlace(course.getPlace3());
