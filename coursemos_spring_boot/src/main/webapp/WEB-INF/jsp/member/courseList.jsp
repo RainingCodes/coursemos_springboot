@@ -42,7 +42,6 @@
 		</table>
 	</div>
 </div>
-<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
-<script>
-</script>
+</body>
+<%@ include file="../footer.jsp"  %>
 </html>
