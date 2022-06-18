@@ -27,19 +27,19 @@
 	<form:form modelAttribute="Coupon">
 	<tr>
 		<td class="text-center"><form:label path="couponContents">쿠폰 내용</form:label></td>
-		<td><form:input path="couponContents" /> <form:errors path="couponContents" cssClass="error"/></td>
+		<td td class="text-left"><form:input path="couponContents" /> <form:errors path="couponContents" cssClass="error"/></td>
 	</tr>
 	<tr>
 		<td class="text-center"><form:label path="period">쿠폰 발급 기간</form:label></td>
-		<td><form:input path="period" placeholder="2000-01-01" />까지 <form:errors path="period" cssClass="error"/></td>
+		<td td class="text-left"><form:input path="period" placeholder="2000-01-01" />까지 <form:errors path="period" cssClass="error"/></td>
 	</tr>
 	<tr>
 		<td class="text-center"><form:label path="day">발급 후 이용기간</form:label></td>
-		<td><form:input path="day" />일 <form:errors path="day" cssClass="error"/></td>
+		<td td class="text-left"><form:input path="day" />일 <form:errors path="day" cssClass="error"/></td>
 	</tr>
 	<tr>
 		<td class="text-center"><form:label path="limit">발급 갯수 제한</form:label></td>
-		<td><form:input path="limit" />개까지 발급 <form:errors path="limit" cssClass="error"/></td>
+		<td class="text-left"><form:input path="limit" />개까지 발급 <form:errors path="limit" cssClass="error"/></td>
 		
 	</tr>
 	<tr>
