@@ -59,8 +59,12 @@ public class AdminController {
 	@RequestMapping("/admin")
 	public String adminPage(@ModelAttribute SessionMember sessionMember) {
 		
-		if (sessionMember.getId().equals(0L)) {
-			return "admin/index";
+		if (sessionMember.getId() != null) {
+			if (sessionMember.getId().equals(0L)) {
+				return "admin/index";
+			} else {
+				return "admin/err";
+			}
 		} else {
 			return "admin/err";
 		}
@@ -79,7 +83,8 @@ public class AdminController {
 	}
 	
 	@RequestMapping("/admin/report/course")
-	public ModelAndView adminReportCourse() {
+	public ModelAndView adminReportCourse(@ModelAttribute SessionMember sessionMember) {
+		if (sessionMember.getId().equals(0L)) {
 		ModelAndView mav = new ModelAndView("admin/report");
 		
 		List<Report> list = reportService.getAllCourseReport();
@@ -108,6 +113,10 @@ public class AdminController {
 		mav.addObject("type", "course");
 		
 		return mav;
+		} else {
+			ModelAndView mav = new ModelAndView("admin/err");
+			return mav;
+		}
 	}	
 	
 	@RequestMapping("/admin/report/*/process")
@@ -127,8 +136,8 @@ public class AdminController {
 	}
 	
 	@RequestMapping("/admin/report/review")
-	public ModelAndView adminReportReview() {
-	
+	public ModelAndView adminReportReview(@ModelAttribute SessionMember sessionMember) {
+		if (sessionMember.getId().equals(0L)) {
 		ModelAndView mav = new ModelAndView("admin/report");
 		
 		List<Report> list = reportService.getAllReviewReport();
@@ -157,16 +166,25 @@ public class AdminController {
 		mav.addObject("type", "review");
 		
 		return mav;
+		} else {
+			ModelAndView mav = new ModelAndView("admin/err");
+			return mav;
+		}
 	}
 	
 	@RequestMapping("/admin/company")
-	public ModelAndView adminCompany() {
+	public ModelAndView adminCompany(@ModelAttribute SessionMember sessionMember) {
+		if (sessionMember.getId().equals(0L)) {
 		ModelAndView mav = new ModelAndView("admin/company");
 		
 		List<Company> list = companyService.getAllCompany();
 		mav.addObject("companyList", list);
 		
 		return mav;
+		} else {
+			ModelAndView mav = new ModelAndView("admin/err");
+			return mav;
+		}
 	}
 	
 	@RequestMapping("/admin/report/course/remove")
