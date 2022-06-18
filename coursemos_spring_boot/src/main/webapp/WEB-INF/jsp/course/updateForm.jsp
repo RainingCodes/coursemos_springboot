@@ -44,6 +44,7 @@
 								<div class="input-group">
 									<input class="form-control" name="courseName" type="text"
 										value="${updateCourse.courseName}" required>
+									<input type="hidden" name="memberId" value="${updateCourse.memberId }">
 								</div>
 							</div>
 						</header>						
@@ -272,11 +273,15 @@
 
 						<br>
 						<b>1번째 장소</b>
-						<input class="form-control" type="text" placeholder="장소" id='placeName1' name="place1.placeName1" style="width: 95%" value="${updateCourse.place1.placeName}"required> 
+						<input type="hidden" name="place1.placeId" value="${updateCourse.place1.placeId}">
+						<form:input path="place1.placeName" class="form-control" type="text" placeholder="장소" id='placeName1' name="place1.placeName1" style="width: 95%" value="${updateCourse.place1.placeName}"/> 
+						<form:errors path="place1.placeName" cssClass="error"/>
 						<input class="form-control" type="text" placeholder="상세 주소(지번)" id='address1' name="address1" onchange="onChangeAddress()" style="width: 95%" required>
 						<input class="form-control" type="text" placeholder="상세 주소(도로명, 없을 경우 생략)" name="road_address1" id='road_address1' style="width: 95%"><br> 											
+						<input type="hidden" id="place1Taste" name="place1.taste" />
 						<input type="hidden" id="place1CoordX" name="place1.x" value="${updateCourse.place1.x}">
 						<input type="hidden" id="place1CoordY" name="place1.y" value="${updateCourse.place1.y}">
+						<input type="hidden" id="subway1" name="place1.subway" value="${updateCourse.place1.subway}">
 						
 						<script>
 	                        var coordscoords = new kakao.maps.LatLng(${updateCourse.place1.x}, ${updateCourse.place1.y});
@@ -289,13 +294,18 @@
 	    					geocoder.coord2Address(coordscoords.getLng(), coordscoords.getLat(), callback1);	
     					</script>
 						
+						<c:if test="${updateCourse.place2 != null }">
 						<b>2번째 장소</b>
-						<input class="form-control" type="text" placeholder="장소" id='placeName2' name="place2.placeName2" style="width: 95%" value="${updateCourse.place2.placeName}"required> 
+						<input type="hidden" name="place2.placeId" value="${updateCourse.place2.placeId}">
+						<form:input path="place2.placeName" class="form-control" type="text" placeholder="장소" id='placeName2' name="place2.placeName2" style="width: 95%" value="${updateCourse.place2.placeName}"/> 
+						<form:errors path="place2.placeName" cssClass="error"/>
 						<input class="form-control" type="text" placeholder="상세 주소(지번)" id='address2' name="address2" onchange="onChangeAddress()" style="width: 95%" required>
 						<input class="form-control" type="text" placeholder="상세 주소(도로명, 없을 경우 생략)" name="road_address2" id='road_address2' style="width: 95%"><br> 					
+						<input type="hidden" id="place2Taste" name="place2.taste" />
 						<input type="hidden" id="place2CoordX" name="place2.x" value="${updateCourse.place2.x}">
 						<input type="hidden" id="place2CoordY" name="place2.y" value="${updateCourse.place2.y}">
-						<c:if test="${updateCourse.place2 != null }">
+						<input type="hidden" id="subway2" name="place2.subway" value="${updateCourse.place2.subway}">
+						
 						<script>
 							if (${updateCourse.place2 != null}){
 	    						var coordscoords2 = new kakao.maps.LatLng(${updateCourse.place2.x}, ${updateCourse.place2.y});
@@ -309,14 +319,19 @@
 	    						geocoder.coord2Address(coordscoords2.getLng(), coordscoords2.getLat(), callback2);
 	    					}
 						</script>
+						<c:if test="${updateCourse.place3 != null }">
 						</c:if>
 						<b>3번째 장소</b>
-						<input class="form-control" type="text" placeholder="장소" id='placeName3' name="place3.placeName3" style="width: 95%" value="${updateCourse.place3.placeName}"required> 
-						<input class="form-control" type="text" placeholder="상세 주소(지번)" id='address3' name="address3" onchange="onChangeAddress()" style="width: 95%" required>
+						<input type="hidden" name="place3.placeId" value="${updateCourse.place3.placeId}">		
+						<form:input path="place3.placeName" class="form-control" type="text" placeholder="장소" id='placeName3' name="place3.placeName3" style="width: 95%" value="${updateCourse.place3.placeName}"/> 
+						<form:errors path="place3.placeName" cssClass="error"/>
+						<input class="form-control" type="text" placeholder="상세 주소(지번)" id='address3' name="address3" onchange="onChangeAddress()" style="width: 95%">
 						<input class="form-control" type="text" placeholder="상세 주소(도로명, 없을 경우 생략)" name="road_address3" id='road_address3' style="width: 95%"><br> 					
+						<input type="hidden" id="place3Taste" name="place3.taste" />
 						<input type="hidden" id="place3CoordX" name="place3.x" value="${updateCourse.place3.x}">
 						<input type="hidden" id="place3CoordY" name="place3.y" value="${updateCourse.place3.y}">
-						<c:if test="${updateCourse.place3 != null }">
+						<input type="hidden" id="subway3" name="place3.subway" value="${updateCourse.place3.subway}">
+						
 						<script>	    					
 	     					if (${updateCourse.place3 != null}){
 	    						var coordscoords3 = new kakao.maps.LatLng(${updateCourse.place3.x}, ${updateCourse.place3.y});						
@@ -333,8 +348,8 @@
 
                           <!-- Post content-->
                         <h5 id="description">코스에 대한 설명을 입력하세요</h5>
-                        <input class="form-control" name="contents" type="text" value="${updateCourse.courseContents }" style="height:300px">
-  
+                       	<form:input path="courseContents" class="form-control" name="contents" type="text" value="${updateCourse.courseContents}" style="height:300px"/>
+                        <form:errors path="courseContents" cssClass="error"/>
                         <br>
                         <button type="submit" style="width:100%; height:40px; border:none; border-radius:5px; text-align: center;">등록하기</button>
                     </article>

@@ -232,31 +232,41 @@ public class CourseController {
 	}
 
 	@RequestMapping(value="/update/{courseId}", method=RequestMethod.POST)
-	public ModelAndView updateCourse(@ModelAttribute Course course, HttpServletRequest request) {
-		Course updateCourse = courseService.getCourseByCourseId(course.getCourseId());
+	public ModelAndView updateCourse(@ModelAttribute Course course,  @PathVariable("courseId") int courseId, HttpServletRequest request) {
+		Course updateCourse = courseService.getCourseByCourseId(courseId);
 		ModelAndView mav = new ModelAndView("course/updateForm");
 		mav.addObject("updateCourse", updateCourse);
 		
-		Place place1 = placeService.getPlaceByPlaceId(updateCourse.getPlace1().getPlaceId());
-		mav.addObject("place1", place1);
-		
-		if (updateCourse.getPlace2() != null) {
-			Place place2 = placeService.getPlaceByPlaceId(updateCourse.getPlace2().getPlaceId());
-			mav.addObject("place2", place2);			
-		}
-		if (updateCourse.getPlace3() != null) {
-			Place place3 = placeService.getPlaceByPlaceId(updateCourse.getPlace3().getPlaceId());
-			mav.addObject("place3", place3);			
-		}
-	
+		System.out.println(updateCourse.toString());
 		return mav;
 	}
 	
 	@RequestMapping(value="/view/{courseId}", method=RequestMethod.POST)
-	public ModelAndView updateSubmit(@ModelAttribute Course course, HttpServletRequest request) {
-		ModelAndView mav = new ModelAndView("redirect:/course/view/"+course.getCourseId());
+	public ModelAndView updateSubmit(@ModelAttribute Course course, @PathVariable("courseId") int courseId, HttpServletRequest request) {
+		ModelAndView mav = new ModelAndView("redirect:/course/view/"+courseId);
+		
+		System.out.println("!!!!!!!!!!!!!!!!!!!!!!");
+		System.out.println(course.toString());
+		System.out.println("!!!!!!!!!!!!!!!!!!!!!!");
+		
 		courseService.updateCourse(course);
 		
 		return mav;
 	}
+	
+//	@RequestMapping(value="/view/{courseId}", method=RequestMethod.POST)
+//	public ModelAndView updateSubmit(Course course, @PathVariable("courseId") int courseId, HttpServletRequest request) {
+//		ModelAndView mav = new ModelAndView("redirect:/course/view/"+courseId);
+//		
+//		Course c = courseService.getCourseByCourseId(course.getCourseId());
+//		System.out.println("!!!!!!!!!!!!!!!!!!!!!!");
+//		System.out.println(course.toString());
+//		System.out.println("!!!!!!!!!!!!!!!!!!!!!!");
+//		
+//		c.setCourseName(course.getCourseName());
+//		
+//		courseService.updateCourse(course);
+//		
+//		return mav;
+//	}
 }
