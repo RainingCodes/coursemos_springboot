@@ -9,14 +9,7 @@
 <title>코스모스</title>
 </head>
 <body>
-
-	<c:if test="${sessionMember.check2 != false}"> <!-- if와 동일 -->
-		<%@ include file="header/IncludeTopMember.jsp"  %>
-	</c:if> <!-- if 종료 -->
-	<c:if test="${sessionMember.check2 ==false }">
-			<%@ include file="header/IncludeTop.jsp"  %>
-	</c:if> <!-- if 종료 -->
+	
 <%@ include file="search.jsp" %>
-<%@ include file="footer.jsp"  %>	
 </body>
 </html>
