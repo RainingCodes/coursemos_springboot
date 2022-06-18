@@ -61,6 +61,9 @@ $(document).ready(function(){
 	  		<button class="btn btn-outline-primary" id="register_course" onclick="location.href='/course/register'">코스 등록</button>
 	  		<button class="btn btn-outline-primary" id="register_company" onclick="location.href='/company/register'">제휴 등록</button>
 	  		<button class="btn btn-outline-primary" id="viewAllCourse" onclick="location.href='/course/list'">추천코스 둘러보기</button>
+	  		<c:if test="${sessionMember.getId() == 0}">
+	  		<button class="btn btn-outline-primary" id="viewAllCourse" onclick="location.href='/admin'">관리 페이지</button>
+	  		</c:if>
 	  	</td>
 	  	</td>
 	    <td class="logo">
