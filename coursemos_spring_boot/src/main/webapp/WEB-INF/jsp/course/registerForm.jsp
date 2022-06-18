@@ -243,14 +243,47 @@
 								  document.execCommand("Copy");
 								  alert('복사되었습니다.');
 							}
+							
+							var copyCnt = 1;
+							function copyTest(a, b, c, d, e, f){
+								
+								
+								if (document.getElementById(a).value != ''){
+									copyCnt++;
+									document.getElementById('placeName'+copyCnt).value = document.getElementById(b).value;
+									document.getElementById('address'+copyCnt).value = document.getElementById(d).value;
+									
+									if (document.getElementById(f).value == ''){ // 도로명 주소가 빈칸일 때
+									document.getElementById('road_address'+copyCnt).value = '';
+									}
+									else{
+										document.getElementById('road_address'+copyCnt).value = document.getElementById(f).value;	
+									}
+									
+									
+								}
+								else{
+									document.getElementById(a).value = document.getElementById(b).value;
+									document.getElementById(c).value = document.getElementById(d).value;
+									if (document.getElementById(f).value == ''){
+										document.getElementById('road_address'+copyCnt).value = '';
+									}
+									else{
+										document.getElementById(e).value = document.getElementById(f).value;																			
+									}
+								}
+								
+							}
 						</script>
 						
 						<br><b>마커를 클릭하면 해당 장소의 이름과 주소가 표시됩니다.
 						<br>복사/붙여넣기로 간편하게 아래 폼을 완성해보세요!</b><br>
-						<br>					
-						<b>장소: </b><input type="text" size="59.5px" style="border:none;" name="resultPlaceName" id="resultPlaceName" readonly><input type="button" style="height:23px;border:none;border-radius:5px;" onclick="copy_to_clipboard('resultPlaceName')" value="복사"><br>
-						<b>지번 주소: </b><input type="text" size="54.5px" style="border:none;" name="resultAddress" id="resultAddress" readonly><input type="button" style="height:23px;border:none;border-radius:5px;" onclick="copy_to_clipboard('resultAddress')" value="복사"><br>
-						<b>도로명 주소: </b><input type="text" size="52px" style="border:none;" name="resultRoadAddress" id="resultRoadAddress" placeholder="없을 경우 지번주소만 표시됩니다." readonly><input type="button" style="height:23px;border:none;border-radius:5px;" onclick="copy_to_clipboard('resultRoadAddress')" value="복사"><br>
+						<br>
+																	
+						<b>장소: </b><input type="text" size="59.5px" style="border:none;" name="resultPlaceName" id="resultPlaceName" readonly>
+						<input type="button" style="height:23px;border:none;border-radius:5px;" onclick="copyTest('placeName1', 'resultPlaceName', 'address1', 'resultAddress', 'road_address1', 'resultRoadAddress')" value="복사"><br>
+						<b>지번 주소: </b><input type="text" size="54.5px" style="border:none;" name="resultAddress" id="resultAddress" readonly><br>
+						<b>도로명 주소: </b><input type="text" size="52px" style="border:none;" name="resultRoadAddress" id="resultRoadAddress" placeholder="없을 경우 지번주소만 표시됩니다." readonly><br>
 						<br>					
 						<!-- 코스 추가 -->
 						<h5>최대 3군데의 장소를 추가할 수 있습니다 <input type="button" name="add" value="+" id="add_btn" style="border: none; border-radius: 5px; text-align: center; margin-left: 30%; height: 30px;"></h5>
@@ -276,14 +309,14 @@
 								  else {
 									  cnt++;
 									  if(cnt == 2){
-										  $("#description").before('<hr style="width: 95%"><b>2번째 장소</b>'+ '<br><p><input class="form-control" type="text" placeholder="장소" name="place2.placeName" style="width: 95%" required><input class="form-control" type="text" placeholder="상세 주소(지번)" id="address2" onchange="onChangeAddress()" style="width: 95%" required><input class="form-control" type="text" placeholder="상세 주소(도로명, 없을 경우 지번주소만 표시됩니다.)" name="road_address" style="width: 95%"><br></p>');
+										  $("#description").before('<hr style="width: 95%"><b>2번째 장소</b>'+ '<br><p><input class="form-control" type="text" placeholder="장소" id="placeName2" name="place2.placeName" style="width: 95%" required><input class="form-control" type="text" placeholder="상세 주소(지번)" id="address2" onchange="onChangeAddress()" style="width: 95%" required><input class="form-control" type="text" placeholder="상세 주소(도로명, 없을 경우 지번주소만 표시됩니다.)" id="road_address2" name="road_address2" style="width: 95%"><br></p>');
 										  $("#description").before('<input type="hidden" id="place2Taste" name="place2.taste" />');
 										  $("#description").before('<input type="hidden" id="place2CoordX" name="place2.x">');
 										  $("#description").before('<input type="hidden" id="place2CoordY" name="place2.y"> ');
 										  $("#description").before('<input type="hidden" id="subway2" name="place2.subway">');
 									  }
 									  if (cnt ==3){
-										  $("#description").before('<hr style="width: 95%"><b>3번째 장소</b>'+ '<br><p><input class="form-control" type="text" placeholder="장소" name="place3.placeName" style="width: 95%" required><input class="form-control" type="text" placeholder="상세 주소(지번)" id="address3" onchange="onChangeAddress()" style="width: 95%" required><input class="form-control" type="text" placeholder="상세 주소(도로명, 없을 경우 지번주소만 표시됩니다.)" name="road_address" style="width: 95%"><br></p>');
+										  $("#description").before('<hr style="width: 95%"><b>3번째 장소</b>'+ '<br><p><input class="form-control" type="text" placeholder="장소" id="placeName3" name="place3.placeName" style="width: 95%" required><input class="form-control" type="text" placeholder="상세 주소(지번)" id="address3" onchange="onChangeAddress()" style="width: 95%" required><input class="form-control" type="text" placeholder="상세 주소(도로명, 없을 경우 지번주소만 표시됩니다.)" id="road_address3" name="road_address3" style="width: 95%"><br></p>');
 										  $("#description").before('<input type="hidden" id="place3Taste" name="place3.taste" /> ');
 										  $("#description").before('<input type="hidden" id="place3CoordX" name="place3.x">');
 										  $("#description").before('<input type="hidden" id="place3CoordY" name="place3.y"> ');
