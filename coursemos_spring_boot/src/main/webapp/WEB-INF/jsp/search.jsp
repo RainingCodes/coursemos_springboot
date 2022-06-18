@@ -18,10 +18,11 @@
 <style scoped>
 .search {
         position:absolute;
-        top:200px;
+        top:150px;
         left:200px;
         width:350px;
-        height:300px;
+        height:150px;
+        align:center;
     }
     .test {
     display: flex;
@@ -44,11 +45,18 @@
 	}
 	#courseList {
         position:absolute;
-        top:520px;
+        top:460px;
         left:200px;
         width:300px;
         height:250px;
     }
+    #searching {
+		position:absolute;
+        top:415px;
+        left:200px;
+        width:300px;
+        height:50px;
+	}
     #page {
     	position:absolute;
         top:495px;
@@ -63,27 +71,29 @@
 </head>
 <body>
             <div class="search">
-            
+
+            	<input id="info" type="button" value="코스 찾기 사용법" onclick="info_Place()"/>
+
 		    	<form id="search" onsubmit="searchPlaces(); return false;" method="post">
 		        	<search>
 		        		<input id="keyword1" type="text" placeholder="장소를 입력하세요.">
 					</search>
-		        	<input id="plus" type="button" value="+" onclick="add_Place()"/>
-		        
-					<button type="submit">검색하기</button>
-				</form>		
+					<input id="plus" type="button" value="+" onclick="add_Place()"/>
+					<button type="submit">위치 검색하기</button>
+					
+				</form>	
+
 				<c:forEach var="cate" items="${tList}">
 					<button class="btn btn-primary" name="taste" onclick="location.href ='/course/detailedSearch.do?taste=${cate.code}&subway=${subway}&x=${x}&y=${y}'">${cate.label}</button>
 				</c:forEach>	
-				<div id="findSubway">
+				<findSubway>
 				<button id="javascript_btn1" type="button">역찾기</button>
-				</div>
+				</findSubway>
 				<div id="resultsubway"></div>
 			  
 				<form name="result" method="post" action="<c:url value='/course/search'/>">
 					<input type="hidden" name="x" value=0>
 					<input type="hidden" name="y" value=0>
-					
 				</form>    
 	   		</div> 
 	        
@@ -92,6 +102,9 @@
 			<div id="searching"> 
 	        	<c:if test="${!empty subway}">
 	        		<b>지금 ${subway} 관련 코스를 보고 계십니다.</b>
+	        	</c:if>
+	        	<c:if test="${empty cList}">
+	        		<b>지금 ${subway} 관련 코스가 없습니다.</b>
 	        	</c:if>
 	        </div>
 			<div id="searchResult">
@@ -285,30 +298,40 @@
                 map.panTo(moveLatLon);            
             }        
 
+            function info_Place() {
+            	alert('STEP1. 검색창에 키워드를 입력후 위치 찾기를 클릭하세요');
+            	alert('STEP2. 역찾기 클릭');
+            }
             // 장소 검색 객체를 생성합니다
             var ps = new kakao.maps.services.Places(); 
             var markers = [];
             var x = 0;
             var y = 0;
             var clickSubwayButton = false;
-
+            var key = false;
             document.getElementById("javascript_btn1").addEventListener("click", javascript_onclikc);
             function javascript_onclikc() {
-            	if (clickSubwayButton == false) {
-            		if (existTwoSearchForm == true) {
-            			x /= 2;
-            			y /= 2;
-            		}
-            		//alert(x + ", " + y);
-            		document.result.x.value = x;
-            		document.result.y.value = y;
-            		ps.categorySearch('SW8', placesSearchCategoryCB, {
-            	    	location: new kakao.maps.LatLng(y, x)
-            	    });
-            		clickSubwayButton = true;
+            	if (key) {
+            		if (clickSubwayButton == false) {
+                		if (existTwoSearchForm == true) {
+                			x /= 2;
+                			y /= 2;
+                		}
+                		//alert(x + ", " + y);
+                		document.result.x.value = x;
+                		document.result.y.value = y;
+                		ps.categorySearch('SW8', placesSearchCategoryCB, {
+                	    	location: new kakao.maps.LatLng(y, x)
+                	    });
+                		clickSubwayButton = true;
+                	}
+            		
+            	} else {
+            		alert('키워드를 입력해주세요!');
             	}
+            	
             }
-
+		
             // 키워드로 장소를 검색합니다
             function searchPlaces() {
             	x = 0;
@@ -326,31 +349,35 @@
                 }
                 // 장소검색 객체를 통해 키워드로 장소검색을 요청합니다
                 ps.keywordSearch(keyword1, placesSearchCB);
+                key = true;
                 if (existTwoSearchForm == true) {
+                	
                 	ps.keywordSearch(keyword2, placesSearchCB);
 
                 }
+                
                 
             }   
                 
             // 검색된 장소 위치를 기준으로 지도 범위를 재설정하기위해
             // LatLngBounds 객체에 좌표를 추가합니다
             var bounds = new kakao.maps.LatLngBounds();
-
+            var middleSubway = false;
             function placesSearchCategoryCB (data, status, pagination) {
                 if (status === kakao.maps.services.Status.OK) {
+                	middleSubway = true;
                 	markers.push(displayMarker(data[0]));   
                 	
                 	bounds.extend(new kakao.maps.LatLng(data[0].y, data[0].x));
                     map.setBounds(bounds);
                 }
             }
-
+			
             // 키워드 검색 완료 시 호출되는 콜백함수 입니다
             function placesSearchCB (data, status, pagination) {
             	
                 if (status === kakao.maps.services.Status.OK) {
-
+                	
                    markers.push(displayMarker(data[0]));        
 
                     y += parseFloat(data[0].y);
@@ -360,6 +387,8 @@
                     bounds.extend(new kakao.maps.LatLng(data[0].y, data[0].x));
                     map.setBounds(bounds);
                 }
+               
+                
             }
             
             
@@ -483,17 +512,20 @@
                     infowindow.setContent('<div style="padding:5px;font-size:12px;">' + place.place_name + '</div>');
                     infowindow.open(map, subwayM);
                 });
-				var subwayName = place.place_name.split(' ');
+                if (middleSubway) {
+					var subwayName = place.place_name.split(' ');
                 
-				var nameEl;
-				if (place.category_group_code == 'SW8') {
-                nameEl = document.getElementById('resultsubway'), 
-                itemStr = '<a href="/course/search.do?size=3&subway=' + subwayName[0] + '&x=' + place.x + '&y=' + place.y + '">' + subwayName[0] +'</a> 주변 코스 보기';
-                nameEl.innerHTML = itemStr;
-				}
-                return nameEl;
-               
+					var nameEl;
+					if (place.category_group_code == 'SW8') {
+	                nameEl = document.getElementById('resultsubway'), 
+	                itemStr = '<p><a href="/course/search.do?size=3&subway=' + subwayName[0] + '&x=' + place.x + '&y=' + place.y + '">' + subwayName[0] +' 주변 코스 보기</a></p>';
+	                nameEl.innerHTML = itemStr;
+					}
+					middleSubway = false;
+	                return nameEl;
+                }
             }
+           
     
             function removeMarker() {
                 for ( var i = 0; i < markers.length; i++ ) {
