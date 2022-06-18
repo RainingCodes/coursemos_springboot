@@ -18,9 +18,5 @@ public interface CourseService {
 	Page<Course> findByPlace1Subway(String subway, Pageable pageable);
 	Page<Course> findCourse1(String taste, Pageable pageable);
 	Page<Course> findCourse2(String subway, String taste, Pageable pageable);
-//	Page<Course> findByPlace1SubwayOrderByLikes(String subway, Pageable pageable);
-//	Page<Course> findCourseW(String subway, Pageable pageable);
-//	Page<Course> findCourseWR(String subway, Pageable pageable);
-//	Page<Course> findCourseL(String subway, Pageable pageable);
 	List<Course> getCourseList();
 }
