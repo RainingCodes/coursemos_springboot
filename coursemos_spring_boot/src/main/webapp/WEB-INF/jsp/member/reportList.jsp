@@ -21,7 +21,7 @@
 <div class="container">
 	<h3 style="text-align:center">${sessionMember.nickName}님의 신고내역</h3>
 	<div style="display: flex; justify-content : center;" >
-		<table class="table table-striped" style="width:50%; ">
+		<table class="table table-striped" style="width:70%; ">
 			<thead>
 				<tr>
 					<td>신고 번호</td>

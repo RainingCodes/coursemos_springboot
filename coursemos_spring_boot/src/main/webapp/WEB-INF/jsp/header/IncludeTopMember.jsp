@@ -34,6 +34,9 @@
 	.message {
 		font-size : 20px;
 	}
+	hr {
+  		background-color: black;
+	}
 </style>
 <script>
 $(document).ready(function(){
