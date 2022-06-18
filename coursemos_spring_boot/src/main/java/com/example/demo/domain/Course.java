@@ -63,13 +63,13 @@ public class Course {
 	@DateTimeFormat(pattern="yyyy-MM-dd")
 	private Date writtenDate;
 
-	@OneToOne(cascade=CascadeType.ALL)
+	@OneToOne(cascade = {CascadeType.MERGE, CascadeType.PERSIST})
     @JoinColumn(name = "placeId1")
 	private Place place1;
-	@OneToOne(cascade=CascadeType.ALL)
+	@OneToOne(cascade = {CascadeType.MERGE, CascadeType.PERSIST})
 	@JoinColumn(name = "placeId2")
 	private Place place2;
-	@OneToOne(cascade=CascadeType.ALL)
+	@OneToOne(cascade = {CascadeType.MERGE, CascadeType.PERSIST})
 	@JoinColumn(name = "placeId3")
 	private Place place3;
 	
