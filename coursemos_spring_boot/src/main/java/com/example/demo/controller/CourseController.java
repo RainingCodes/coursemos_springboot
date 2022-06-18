@@ -224,49 +224,4 @@ public class CourseController {
 		tasteCodes.add(new Taste("cal", "잔잔한"));
 		return tasteCodes;	
 	}
-	
-	@RequestMapping(value="/list", method=RequestMethod.POST)
-	public void deleteCourse(@ModelAttribute Course course, BindingResult result, SessionStatus status, HttpServletRequest request) {
-		courseService.deleteCourse(course);
-		System.out.println(course.getCourseId() + " : delete complete!!!");
-	}
-
-	@RequestMapping(value="/update/{courseId}", method=RequestMethod.POST)
-	public ModelAndView updateCourse(@ModelAttribute Course course,  @PathVariable("courseId") int courseId, HttpServletRequest request) {
-		Course updateCourse = courseService.getCourseByCourseId(courseId);
-		ModelAndView mav = new ModelAndView("course/updateForm");
-		mav.addObject("updateCourse", updateCourse);
-		
-		System.out.println(updateCourse.toString());
-		return mav;
-	}
-	
-	@RequestMapping(value="/view/{courseId}", method=RequestMethod.POST)
-	public ModelAndView updateSubmit(@ModelAttribute Course course, @PathVariable("courseId") int courseId, HttpServletRequest request) {
-		ModelAndView mav = new ModelAndView("redirect:/course/view/"+courseId);
-		
-		System.out.println("!!!!!!!!!!!!!!!!!!!!!!");
-		System.out.println(course.toString());
-		System.out.println("!!!!!!!!!!!!!!!!!!!!!!");
-		
-		courseService.updateCourse(course);
-		
-		return mav;
-	}
-	
-//	@RequestMapping(value="/view/{courseId}", method=RequestMethod.POST)
-//	public ModelAndView updateSubmit(Course course, @PathVariable("courseId") int courseId, HttpServletRequest request) {
-//		ModelAndView mav = new ModelAndView("redirect:/course/view/"+courseId);
-//		
-//		Course c = courseService.getCourseByCourseId(course.getCourseId());
-//		System.out.println("!!!!!!!!!!!!!!!!!!!!!!");
-//		System.out.println(course.toString());
-//		System.out.println("!!!!!!!!!!!!!!!!!!!!!!");
-//		
-//		c.setCourseName(course.getCourseName());
-//		
-//		courseService.updateCourse(course);
-//		
-//		return mav;
-//	}
 }
