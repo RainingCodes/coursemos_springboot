@@ -1,8 +1,11 @@
 package com.example.demo.controller;
 
 
+import java.util.List;
+
 import javax.servlet.http.HttpServletRequest;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -13,11 +16,15 @@ import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.bind.support.SessionStatus;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.example.demo.domain.Course;
 import com.example.demo.domain.SessionMember;
+import com.example.demo.service.CourseService;
 
 @Controller
 @SessionAttributes("sessionMember")
 public class IndexController {
+	@Autowired 
+	CourseService courseService;
 	@RequestMapping("/")
 	public ModelAndView index() {
 		ModelAndView mav = new ModelAndView("index"); 
@@ -62,9 +69,11 @@ public class IndexController {
 		ModelAndView mav = new ModelAndView("member/mypage");
 		return mav;
 	}
-	@RequestMapping("/mycourse")
-	public ModelAndView mycourse() {
-		ModelAndView mav = new ModelAndView("member/mypage");
+	@RequestMapping("/member/course/list")
+	public ModelAndView mycourse(@ModelAttribute("sessionMember") SessionMember sessionMember) {
+		List<Course> courses = courseService.getCourseListByMemberId(sessionMember.getId());
+		ModelAndView mav = new ModelAndView("member/courseList");
+		mav.addObject("courses", courses);
 		return mav;
 	}
 	@RequestMapping("/member/points")
@@ -72,7 +81,6 @@ public class IndexController {
 		ModelAndView mav = new ModelAndView("member/points");
 		return mav;
 	}
-	
 
 }
 
