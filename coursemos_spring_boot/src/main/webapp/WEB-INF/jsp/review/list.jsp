@@ -30,7 +30,12 @@ function showPopup(a){
 				</div>
 				<div class="col-sm-6">
 					<ul class="list-unstyled mb-0">
-						<li><button class="btn-primary" onclick="href.location='/review/register/' + ${courseId}">리뷰 작성하기</button></li>
+						<li>
+						<c:if test="${course.memberId ne sessionMember.id}">
+							<button type="button" class="btn-primary" onclick="location.href='/review/register/' + ${courseId}">리뷰 작성하기</button>
+						</c:if>
+						
+						</li>
 					</ul>
 				</div>
 			</div>
