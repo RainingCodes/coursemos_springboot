@@ -24,7 +24,7 @@ function showPopup(a){
 				<div class="col-sm-6">
 					<ul class="list-unstyled mb-0">
 						<c:forEach var="review" items="${reviews}" varStatus="status">
-							<li><a href="javascript:void(0);" onclick="showPopup(${review.reviewId});">${review.reviewId} : ${review.nickName}님의 리뷰 보기</a></li>
+							<li>${review.reviewId} <a href="javascript:void(0);" onclick="showPopup(${review.reviewId});"> ${review.nickName}님의 리뷰 보기</a></li>
 						</c:forEach>
 					</ul>
 				</div>
