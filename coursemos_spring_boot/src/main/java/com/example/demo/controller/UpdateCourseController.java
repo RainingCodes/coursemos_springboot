@@ -42,12 +42,27 @@ public class UpdateCourseController {
 		System.out.println("!!!!!!!!!!!!!!!!!!!!!!");
 		System.out.println(course.toString());
 		System.out.println("!!!!!!!!!!!!!!!!!!!!!!");
+
 		
-		Place place3 = placeService.getPlaceByPlaceId(course.getPlace3().getPlaceId());
-		if (place3.getPlaceName()==null || place3.getSubway()==null || place3.getX()==0.0 || place3.getY()==0.0 || place3.getTaste() == null) {
-			System.out.println(place3.toString());
-			//placeService.deletePlace(place3);
-		}
+		System.out.println(course.getPlace2());
+		
+		//		
+//		if (course.getPlace2().getPlaceId() !=null) {
+//			Place place2 = placeService.getPlaceByPlaceId(course.getPlace2().getPlaceId());
+//			System.out.println(place2.toString());
+//			if(place2.getTaste() == null) { // 빈 place는 db에서 삭제
+//				placeService.deletePlace(place2);	
+//				course.setPlace1(new Place());
+//			}
+//		}
+//		
+//		if (course.getPlace3().getPlaceId() !=null) {
+//			Place place3 = placeService.getPlaceByPlaceId(course.getPlace3().getPlaceId());			
+//			if(place3.getTaste() == null) {
+//				placeService.deletePlace(place3);	
+//				course.setPlace2(new Place());
+//			}
+//		}
 
 		courseService.updateCourse(course);
 		

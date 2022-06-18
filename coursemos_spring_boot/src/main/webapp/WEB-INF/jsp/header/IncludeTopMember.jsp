@@ -57,6 +57,8 @@ $(document).ready(function(){
 	  	<td class="left">
 	  		<button class="btn btn-outline-primary" id="register_course" onclick="location.href='/course/register'">코스 등록</button>
 	  		<button class="btn btn-outline-primary" id="register_company" onclick="location.href='/company/register'">제휴 등록</button>
+	  		<button class="btn btn-outline-primary" id="viewAllCourse" onclick="location.href='/course/list'">추천코스 둘러보기</button>
+	  	</td>
 	  	</td>
 	    <td class="logo">
 	        <a href="/"><img alt="로고" src="https://github.com/RainingCodes/img-repository/blob/main/logo.png?raw=true" width="200"></a>
