@@ -36,9 +36,6 @@ public class DeleteCourseController {
 	
 	@RequestMapping(value="/", method=RequestMethod.POST)
 	public String deleteCourse(@ModelAttribute Course course, BindingResult result, SessionStatus status, HttpServletRequest request) {
-		courseService.deleteCourse(course);
-		System.out.println(course.getCourseId() + " : delete complete!!!");
-		
 		Review review = reviewService.findReviewById(Long.valueOf(course.getCourseId()));
 		List<ReviewLike> rll = reviewLikeService.findReviewLikeByReviewId(Long.valueOf(course.getCourseId()));
 		if(rll != null) {
@@ -53,6 +50,11 @@ public class DeleteCourseController {
 			}
 		}
 		reviewService.delete(review);
+		
+		courseService.deleteCourse(course);
+		System.out.println(course.getCourseId() + " : delete complete!!!");
+		
+		
 
 		return "index";
 	}
