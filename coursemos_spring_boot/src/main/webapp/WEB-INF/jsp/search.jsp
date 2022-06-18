@@ -4,7 +4,12 @@
     <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 	<%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
     <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%> 
-<%@ include file="header/IncludeTop.jsp"  %>
+<c:if test="${sessionMember.check2 != false}"> <!-- if와 동일 -->
+   <%@ include file="header/IncludeTopMember.jsp"  %>
+</c:if> <!-- if 종료 -->
+<c:if test="${sessionMember.check2 ==false }">
+   <%@ include file="header/IncludeTop.jsp"  %>
+</c:if> <!-- if 종료 -->
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
