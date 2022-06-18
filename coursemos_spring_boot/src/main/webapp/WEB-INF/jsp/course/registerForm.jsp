@@ -48,12 +48,7 @@
 									<form:errors path="courseName" cssClass="error"/>
 								</div>
 							</div>
-						</header>						
-						<form:input path="writtenDate" type="hidden" id="writtenDate"/>						
-						<script>
-							var date = new Date().toISOString().substring(0, 10);
-							document.getElementById("writtenDate").value=date;
-						</script>					
+						</header>											
 						<div class="upload"></div>
 						<h5>코스의 분위기를 선택하세요</h5>
 						<div class="selectTaste"
@@ -128,22 +123,6 @@
 							}
 
 							
-							function onChangeAddress(){
-								let address1 = document.getElementById('address1').value;
-								ps.keywordSearch(address1, placesSearchCB1);
-								
-
-								if(document.getElementById('address2')){
-									let address2 = document.getElementById('address2').value;
-									ps.keywordSearch(address2, placesSearchCB2);
-								}
-								
-								if(document.getElementById('address3')){
-									let address3 = document.getElementById('address3').value;
-									ps.keywordSearch(address3, placesSearchCB3);
-								}
-	
-							}        
 					        
 							// 역 찾기
 					        function placesSearchCBSubway1 (data, status, pagination) {
@@ -196,6 +175,22 @@
 									});
 							    } 
 							}
+							function onChangeAddress(){
+								let address1 = document.getElementById('address1').value;
+								ps.keywordSearch(address1, placesSearchCB1);
+								
+
+								if(document.getElementById('address2')){
+									let address2 = document.getElementById('address2').value;
+									ps.keywordSearch(address2, placesSearchCB2);
+								}
+								
+								if(document.getElementById('address3')){
+									let address3 = document.getElementById('address3').value;
+									ps.keywordSearch(address3, placesSearchCB3);
+								}
+	
+							}        
 								
 							 // 지도에 마커를 표시하는 함수입니다
 							function displayMarker(place) {
@@ -293,9 +288,10 @@
 						<form:input path="place1.placeName" class="form-control" type="text" placeholder="장소" id='placeName1' name="place1.placeName" style="width: 95%"/>
 						<form:errors path="place1.placeName" cssClass="error"/>
 						<!-- 지번주소를 입력하면 자동으로 x, y, subway 생성되는데 double형에 대한 required 처리가 어려워서 subway로 대체하여 validate 처리 -->
-						<input class="form-control" type="text" placeholder="상세 주소(지번)" id='address1' name="address1" onchange="onChangeAddress()" style="width: 95%" >
+						<input class="form-control" type="text" placeholder="상세 주소(지번)" id='address1' name="address1" style="width: 95%" >
 						<form:input path="place1.subway" type="hidden" id="subway1" name="place1.subway"/>
 						<form:errors path="place1.subway" cssClass="error"/>
+						
 						<input class="form-control" type="text" placeholder="상세 주소(도로명, 없을 경우 생략)" name="road_address1" id='road_address1' style="width: 95%"><br> 									
                         <input type="hidden" id="place1CoordX" name="place1.x">
 						<input type="hidden" id="place1CoordY" name="place1.y">
@@ -327,13 +323,13 @@
 							});
 						
 						</script>
-						
-						
                         <!-- Post content-->
                         <h5 id="description">코스에 대한 설명을 입력하세요</h5>
                         <form:input path="courseContents" class="form-control" name="contents" type="text" style="height:300px"/>
                         <form:errors path="courseContents" cssClass="error"/>
                         <br>
+                        <h6 style="text-align:center;">제출 전 역 정보를 불러오기 위해 아래 버튼을 클릭해주세요 !<input type="button" id="btnSubway" value="클릭하면 역 정보를 불러옵니다." onclick="onChangeAddress()"></h6>
+                        
                         <button type="submit" style="width:100%; height:40px; border:none; border-radius:5px; text-align: center;">등록하기</button>
                     </article>
                     <br><br><br>

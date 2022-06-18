@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"> 
+<head>
+<meta charset="UTF-8">
+<title>리뷰 작성</title>
+<header th:replace="~{thyme/header/header :: #header}"></header>
+<link rel="stylesheet" th:href="@{../css/style.css}" />
+<script type="text/javascript" src="http://code.jquery.com/jquery-1.12.4.min.js"></script>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css">
+<script>
+$( document ).ready( function() {
+	$("#writtenDate").html(new Date().toISOString().substring(0, 10));
+	$("#writtenDate").val(new Date().toISOString().substring(0, 10));
+	$("#writtenDate").css("font-weight", "bold");
+	$('#reviewContents').keyup(function (e){
+	      var content = $(this).val();       
+	      $('#counter').val(100-content.length);
+
+	      if(content.length > 100) {
+	      $(this).val($(this).val().substring(0, 100));
+	      }
+	      });
+  } );
+function register(){
+	form = document.getElementById("review");
+
+	form.action = window.location.href;
+	form.submit();
+}
+
+</script>
+<style>
+textarea{
+	width:500px; 
+	height:100px; 
+    resize:none;
+    }
+    div {
+    	text-align : center;
+    }
+    table {
+    	margin : auto;
+    }
+    .err {
+    	color : red;
+    }
+</style>
+</head>
+<body>
+<div><h3><span th:text="${review.courseName}"></span>리뷰 작성</h3>
+	<form th:action="@{/review/register}" th:object="${review}" method="post" enctype="multipart/form-data" id="review">
+		<table>
+			<tr>
+				<td>작성자 : </td>
+				<td th:text="${sessionMember.nickName}"></td>
+			</tr>	
+			<tr>
+				<td>작성 날짜 : </td>
+				<td > <span id="writtenDate" name="writtenDate"></span></td>
+			</tr>
+			<tr>
+				<td>리뷰 내용 : </td>
+				<td><input style="height:300px" class="form-control" th:text="*{reviewContents}" id="reviewContents" name="reviewContents"></td>
+			</tr>
+			<tr>
+				<td colspan="2"><span class="err" th:errors="*{reviewContents}"> </span></td> 
+				
+			</tr>
+			<tr>
+				<td>남은글자수 : </td>
+				<td class="txsub"><input type="text" class="form-control" readonly  value="100" name="counter" id="counter"></td>
+			</tr>
+			<tr>
+				<td>사진 업로드 : </td>
+				<td><input type="file" name="photo" ></td>
+			</tr>
+			<tr>
+				<td colspan="2"><button type="button" class="btn-primary" onclick="register();">등록하기</button></td>
+			</tr>
+		</table>
+	</form> 
+</div>
+</body>
+</body>
+</html>
