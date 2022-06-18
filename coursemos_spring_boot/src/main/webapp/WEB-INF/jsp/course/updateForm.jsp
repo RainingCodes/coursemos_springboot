@@ -277,56 +277,59 @@
 						<input class="form-control" type="text" placeholder="상세 주소(도로명, 없을 경우 생략)" name="road_address1" id='road_address1' style="width: 95%"><br> 											
 						<input type="hidden" id="place1CoordX" name="place1.x" value="${updateCourse.place1.x}">
 						<input type="hidden" id="place1CoordY" name="place1.y" value="${updateCourse.place1.y}">
+						
+						<script>
+	                        var coordscoords = new kakao.maps.LatLng(${updateCourse.place1.x}, ${updateCourse.place1.y});
+	    					var callback1 = function(result1, status1){
+	    						if (status1 == kakao.maps.services.Status.OK){
+	    							document.getElementById("address1").value = result1[0].address.address_name;
+	    							document.getElementById("road_address1").value = result1[0].road_address.address_name;
+	    						}
+	    					}
+	    					geocoder.coord2Address(coordscoords.getLng(), coordscoords.getLat(), callback1);	
+    					</script>
+						
 						<b>2번째 장소</b>
 						<input class="form-control" type="text" placeholder="장소" id='placeName2' name="place2.placeName2" style="width: 95%" value="${updateCourse.place2.placeName}"required> 
 						<input class="form-control" type="text" placeholder="상세 주소(지번)" id='address2' name="address2" onchange="onChangeAddress()" style="width: 95%" required>
 						<input class="form-control" type="text" placeholder="상세 주소(도로명, 없을 경우 생략)" name="road_address2" id='road_address2' style="width: 95%"><br> 					
 						<input type="hidden" id="place2CoordX" name="place2.x" value="${updateCourse.place2.x}">
 						<input type="hidden" id="place2CoordY" name="place2.y" value="${updateCourse.place2.y}">
+						<c:if test="${updateCourse.place2 != null }">
+						<script>
+							if (${updateCourse.place2 != null}){
+	    						var coordscoords2 = new kakao.maps.LatLng(${updateCourse.place2.x}, ${updateCourse.place2.y});
+	    						var callback2 = function(result2, status2){
+	    							if (status2 == kakao.maps.services.Status.OK){
+	    								document.getElementById("address2").value = result2[0].address.address_name;
+	    								document.getElementById("road_address2").value = result2[0].road_address.address_name;
+	    							
+	    							}
+	    						};
+	    						geocoder.coord2Address(coordscoords2.getLng(), coordscoords2.getLat(), callback2);
+	    					}
+						</script>
+						</c:if>
 						<b>3번째 장소</b>
 						<input class="form-control" type="text" placeholder="장소" id='placeName3' name="place3.placeName3" style="width: 95%" value="${updateCourse.place3.placeName}"required> 
 						<input class="form-control" type="text" placeholder="상세 주소(지번)" id='address3' name="address3" onchange="onChangeAddress()" style="width: 95%" required>
 						<input class="form-control" type="text" placeholder="상세 주소(도로명, 없을 경우 생략)" name="road_address3" id='road_address3' style="width: 95%"><br> 					
 						<input type="hidden" id="place3CoordX" name="place3.x" value="${updateCourse.place3.x}">
 						<input type="hidden" id="place3CoordY" name="place3.y" value="${updateCourse.place3.y}">
-						<script>
-						
-                        var coordscoords = new kakao.maps.LatLng(${updateCourse.place1.x}, ${updateCourse.place1.y});
-    					var callback1 = function(result1, status1){
-    						if (status1 == kakao.maps.services.Status.OK){
-    							document.getElementById("address1").value = result1[0].address.address_name;
-    							document.getElementById("road_address1").value = result1[0].road_address.address_name;
-    						}
-    					}
-    					geocoder.coord2Address(coordscoords.getLng(), coordscoords.getLat(), callback1);	
-						
-    					if (${updateCourse.place2 != null}){
-    						var coordscoords2 = new kakao.maps.LatLng(${updateCourse.place2.x}, ${updateCourse.place2.y});
-    						var callback2 = function(result2, status2){
-    							if (status2 == kakao.maps.services.Status.OK){
-    								document.getElementById("address2").value = result2[0].address.address_name;
-    								document.getElementById("road_address2").value = result2[0].road_address.address_name;
-    							
-    							}
-    						};
-    						geocoder.coord2Address(coordscoords2.getLng(), coordscoords2.getLat(), callback2);
-    					}
-    					
-    					
-    					if (${updateCourse.place3 != null}){
-    						var coordscoords3 = new kakao.maps.LatLng(${updateCourse.place3.x}, ${updateCourse.place3.y});						
-    						var callback3 = function(result3, status3){
-    							if (status3 == kakao.maps.services.Status.OK){
-    								document.getElementById("address3").value = result3[0].address.address_name;
-    								document.getElementById("road_address3").value = result3[0].road_address.address_name;
-    							}
-    						};
-    						geocoder.coord2Address(coordscoords3.getLng(), coordscoords3.getLat(), callback3);
-    					}
-    					
-    					
-                        
+						<c:if test="${updateCourse.place3 != null }">
+						<script>	    					
+	     					if (${updateCourse.place3 != null}){
+	    						var coordscoords3 = new kakao.maps.LatLng(${updateCourse.place3.x}, ${updateCourse.place3.y});						
+	    						var callback3 = function(result3, status3){
+	    							if (status3 == kakao.maps.services.Status.OK){
+	    								document.getElementById("address3").value = result3[0].address.address_name;
+	    								document.getElementById("road_address3").value = result3[0].road_address.address_name;
+	    							}
+	    						};
+	    						geocoder.coord2Address(coordscoords3.getLng(), coordscoords3.getLat(), callback3);
+	    					}
                         </script>
+                        </c:if>
 
                           <!-- Post content-->
                         <h5 id="description">코스에 대한 설명을 입력하세요</h5>
