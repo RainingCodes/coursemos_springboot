@@ -96,6 +96,7 @@ public class SearchCategoryController {
 			cList = courseService.findCourse2(subway, taste, pageable);
 		}
 		model.put("subway", subway);
+		model.put("taste", taste);
 		model.put("tList", tList);
 		model.put("cList", cList);
 		return SEARCH_DETAIL_VIEW;
