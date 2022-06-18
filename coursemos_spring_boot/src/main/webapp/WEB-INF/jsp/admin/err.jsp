@@ -11,13 +11,26 @@
 <!DOCTYPE html>
 <html>
 <head>
+<style>
+.admin a {
+font-size:30px;
+font-align:center;
+}
+.admin {
+font-size:30px;
+width: 100%;
+ text-align: center;
+}
+</style>
 <meta charset="UTF-8">
 <title>코스모스 관리페이지</title>
 </head>
 <body>
+<div class="admin">
 해당 페이지는 관리자가 아니면 접근할 수 없습니다.
     <div>
       <button onclick="history.back()">Back</button>
     </div>
+</div>
 </body>
 </html>
