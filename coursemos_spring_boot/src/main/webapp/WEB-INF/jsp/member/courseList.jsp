@@ -33,7 +33,7 @@
 				<c:forEach var="course" items="${courses}" varStatus="status">
 						<tr>
 							<td><c:out value="${course.courseId}" /></td>
-							<td><a href="'/course/view/ + ${course.courseId}'"><c:out value="${course.courseName}" /></a></td>
+							<td><a href="/course/view/ + ${course.courseId}"><c:out value="${course.courseName}" /></a></td>
 							<td><c:out value="${course.writtenDate}" /></td>
 							<td><c:out value="${course.likes}" /></td>
 						</tr>
