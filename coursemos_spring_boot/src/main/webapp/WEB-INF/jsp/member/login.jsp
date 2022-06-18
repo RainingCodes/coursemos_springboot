@@ -89,7 +89,6 @@ function kakaoLogin() {
                     	<div class="loginBtn btn-primary btn-sm" id="login2" onclick="location.href='/login2'">로그인</a></div>
                     	<div class="loginBtn btn-secondary btn-sm" id="join" onclick="location.href='/join'">회원가입</a></div>
                     	<br>
-                    	<div class="loginBtn btn"><a href="/search/pw">비밀번호를 까먹으셨나요?</a></div>
                     	<div class="space">&nbsp;</div>
                 </div>
             </div>
