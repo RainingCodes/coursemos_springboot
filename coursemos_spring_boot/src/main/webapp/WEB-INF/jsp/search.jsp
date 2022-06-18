@@ -4,6 +4,7 @@
     <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 	<%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
     <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%> 
+<%@ include file="header/IncludeTopMockUser.jsp"  %>
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
@@ -28,7 +29,7 @@
     #map {
         position:absolute;
         top:200px;
-        left:600px;
+        left:250px;
         width: 800px;
         height: 600px;
         border: 1px #a8a8a8 solid;
@@ -36,9 +37,23 @@
     .has-search .form-control {
 	    padding-left: 2.375rem;
 	}
+	#searching {
+		position:absolute;
+        top:320px;
+        left:200px;
+        width:300px;
+        height:50px;
+	}
+	#searching {
+		position:absolute;
+        top:200px;
+        left:200px;
+        width:300px;
+        height:250px;
+	}
 	#courseList {
         position:absolute;
-        top:520px;
+        top:420px;
         left:200px;
         width:300px;
         height:250px;
@@ -69,8 +84,9 @@
 				<c:forEach var="cate" items="${tList}">
 					<button class="btn btn-primary" name="taste" onclick="location.href ='/course/detailedSearch.do?taste=${cate.code}&subway=${subway}&x=${x}&y=${y}'">${cate.label}</button>
 				</c:forEach>	
-			
+				<div id="findSubway">
 				<button id="javascript_btn1" type="button">역찾기</button>
+				</div>
 				<div id="resultsubway"></div>
 			  
 				<form name="result" method="post" action="<c:url value='/course/search'/>">
@@ -80,7 +96,13 @@
 				</form>    
 	   		</div> 
 	        
-			<div id="map" ></div>        
+			<div id="map" ></div>    
+			
+			<div id="searching"> 
+	        	<c:if test="${!empty subway}">
+	        		<b>지금 ${subway} 관련 코스를 보고 계십니다.</b>
+	        	</c:if>
+	        </div>
 			<div id="searchResult">
             <div id="courseList">
             <div id="page"> 
