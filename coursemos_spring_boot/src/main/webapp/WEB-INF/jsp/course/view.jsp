@@ -53,7 +53,7 @@ function showPopupReport(id){
 					</header>
 					<div>
 					<!-- Post title-->
-					<div style="margin-left:500px;">작성일: <fmt:formatDate value="${course.writtenDate}" pattern="yyyy-MM-dd"/></div>
+					<div style="margin-left:400px;">작성일: <fmt:formatDate value="${course.writtenDate}" pattern="yyyy-MM-dd"/></div>
 					<input type="hidden" name="courseId" value='${course.courseId }'>
 					<br>
 					<h5 style="font-weight:bold;">코스의 분위기</h5>
@@ -322,7 +322,7 @@ function showPopupReport(id){
 					</c:if>	
 					<c:if test="${sessionMember.check2 != false and sessionMember.id == course.memberId}">
 					<button type="submit" formaction="../update/${course.courseId}" style="width:15%; height:60px; border:none; border-radius:5px; text-align: center; background-color:#ced4da;">수정</button>
-					<button type="submit" formaction="../list" style="width:15%; height:60px; border:none; border-radius:5px; text-align: center; background-color:#ced4da;">삭제</button>
+					<button type="submit" formaction="../.." style="width:15%; height:60px; border:none; border-radius:5px; text-align: center; background-color:#ced4da;">삭제</button>
 					</c:if>	
 
 					<script>
