@@ -192,6 +192,26 @@ public class AdminController {
 			@RequestParam("reportId") Integer reportId) {
 		Course course = courseService.getCourseByCourseId(courseId);
 		
+		List<Review> reviewList = reviewService.findReviewByCourseId(course.getCourseId());
+		if(reviewList != null) {
+			for(Review review : reviewList) {
+				List<ReviewLike> rll = reviewLikeService.findReviewLikeByReviewId(review.getReviewId());
+				if(rll != null) {
+					for(ReviewLike rl : rll) {
+						reviewLikeService.delete(rl);
+					}
+				}
+				List<ReviewReadableMember> rrml= reviewReadableMemberService.findReviewReadableMemberByReviewId(review.getReviewId());
+				if(rrml != null) {
+					for(ReviewReadableMember rrm : rrml) {
+						reviewReadableMemberService.delete(rrm);
+					}
+				}
+				reviewService.delete(review);
+			}
+		}
+
+		
 		Long writerId = course.getMemberId();
 		courseService.deleteCourse(course);	
 		
