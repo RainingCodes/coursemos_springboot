@@ -10,6 +10,13 @@
 <meta charset="UTF-8">
 <title>Search</title>
 <style scoped>
+.search {
+        position:absolute;
+        top:80px;
+        left:200px;
+        width:350px;
+        height:300px;
+    }
     .test {
     display: flex;
     flex-direction: column;
@@ -19,6 +26,9 @@
     }
 
     #map {
+        position:absolute;
+        top:80px;
+        left:600px;
         width: 800px;
         height: 600px;
         border: 1px #a8a8a8 solid;
