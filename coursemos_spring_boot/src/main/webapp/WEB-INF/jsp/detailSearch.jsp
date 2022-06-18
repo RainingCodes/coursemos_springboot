@@ -45,14 +45,14 @@
 	}
 	#courseList {
         position:absolute;
-        top:460px;
+        top:300px;
         left:200px;
         width:300px;
         height:250px;
     }
     #searching {
 		position:absolute;
-        top:415px;
+        top:250px;;
         left:200px;
         width:300px;
         height:50px;
@@ -72,31 +72,12 @@
 <body>
             <div class="search">
 
-            	<input id="info" type="button" value="코스 찾기 사용법" onclick="info_Place()"/>
-
-		    	<form id="search" onsubmit="searchPlaces(); return false;" method="post">
-		        	<search>
-		        		<input id="keyword1" type="text" placeholder="장소를 입력하세요.">
-					</search>
-					<input id="plus" type="button" value="+" onclick="add_Place()"/>
-					<button type="submit">위치 검색하기</button>
-					
-				</form>	
 
 				<c:forEach var="cate" items="${tList}">
 					<button class="btn btn-primary" name="taste" onclick="location.href ='/course/detailedSearch.do?taste=${cate.code}&subway=${subway}&x=${x}&y=${y}'">${cate.label}</button>
-				</c:forEach>	
-				<findSubway>
-				<button id="javascript_btn1" type="button">역찾기</button>
-				<button class="btn btn-primary" onclick="location.href ='/course/search/main'">검색 초기화</button>
-				
-				</findSubway>
+				</c:forEach>
+				<s id="javascript_btn1" type="button"></s>
 				<div id="resultsubway"></div>
-			  
-				<form name="result" method="post" action="<c:url value='/course/search'/>">
-					<input type="hidden" name="x" value=0>
-					<input type="hidden" name="y" value=0>
-				</form>    
 	   		</div> 
 	        
 			<div id="map" ></div>    

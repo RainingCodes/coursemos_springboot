@@ -17,9 +17,8 @@
 <title>SearchNMap</title>
 <style>
 	 #map {
-   		margin: 0;
-        width: 500px;
-        height: 500px;
+        width: 800px;
+        height: 600px;
         border: 1px #a8a8a8 solid;
     }
 	body {
@@ -37,9 +36,9 @@
         </form>
     </div> 
         
-     <div>
+     <center>
 		<div id="map"></div>        
-	</div>
+	</center>
 <form onsubmit="searchPlaces(); return false;">
 	<button class="btn btn-outline-primary" type="submit">검색하기</button>
 </form>

@@ -45,14 +45,14 @@
 	}
 	#courseList {
         position:absolute;
-        top:350px;
+        top:300px;
         left:200px;
         width:300px;
         height:250px;
     }
     #searching {
 		position:absolute;
-        top:300px;;
+        top:250px;;
         left:200px;
         width:300px;
         height:50px;
