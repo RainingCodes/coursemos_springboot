@@ -17,6 +17,7 @@ import com.example.demo.domain.Review;
 import com.example.demo.domain.ReviewLike;
 import com.example.demo.domain.ReviewReadableMember;
 import com.example.demo.service.CourseService;
+import com.example.demo.service.PlaceService;
 import com.example.demo.service.ReviewLikeService;
 import com.example.demo.service.ReviewReadableMemberService;
 import com.example.demo.service.ReviewService;
@@ -28,6 +29,8 @@ public class DeleteCourseController {
 	private CourseService courseService;
 	@Autowired
 	private ReviewService reviewService;
+	@Autowired
+	private PlaceService placeService;
 	@Autowired
 	private ReviewLikeService reviewLikeService;
 	
@@ -51,6 +54,16 @@ public class DeleteCourseController {
 		}
 		reviewService.delete(review);
 		
+		if (course.getPlace1()!=null) {
+			placeService.deletePlace(course.getPlace1());
+		}
+		if (course.getPlace2()!=null) {
+			placeService.deletePlace(course.getPlace1());
+		}
+		if (course.getPlace3()!=null) {
+			placeService.deletePlace(course.getPlace3());
+		}
+
 		courseService.deleteCourse(course);
 		System.out.println(course.getCourseId() + " : delete complete!!!");
 		
