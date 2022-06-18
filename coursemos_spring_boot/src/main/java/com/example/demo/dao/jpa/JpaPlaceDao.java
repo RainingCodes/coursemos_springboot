@@ -41,7 +41,7 @@ public class JpaPlaceDao implements PlaceDao {
 
 	@Override
 	public void deletePlace(Place place) throws DataAccessException {
-		em.remove(place);
+		em.remove(em.merge(place));
 	}
 
 }
