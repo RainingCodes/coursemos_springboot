@@ -37,7 +37,7 @@ $( document ).ready( function() {
 		openWin = window.open("/member/update/check0","비밀번호 확인","height=" + 170  + ", width=" + width  + ", left="+ popupX + ", top="+ popupY / 2);
 	});
 	$('#withdrawal').click( function(){
-		var result = confirm("그 동안 코스모스를 이용한 정보가 다 지워집니다.\n정말 탈퇴하시겠습니까?");
+		var result = confirm("탈퇴하시면 복구 할 수 없습니다.\n정말 탈퇴하시겠습니까?");
 		if(result) {
 			location.href="/member/withdrawal";
 		} 

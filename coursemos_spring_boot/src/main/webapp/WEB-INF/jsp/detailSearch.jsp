@@ -53,30 +53,9 @@
 </style>
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.7.1/font/bootstrap-icons.css">
 <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css">    
+
 </head>
 <body>
- <nav class="navbar navbar-expand-md navbar-dark bg-dark fixed-top">
-            <!-- navbar-brand의 content 변경 -->
-            <a class="navbar-brand" href="#">Fixed navbar</a>
-            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                <ul class="navbar-nav mr-auto">
-                <li class="nav-item active">
-                    <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="#">Link</a>
-                </li>
-                <!-- dropdown 메뉴 삭제 -->
-                <li class="nav-item">
-                    <a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true">Disabled</a>
-                </li>
-                </ul>
-            </div>
-        </nav>
-            
             <div class="search">
             
 		    	<form id="search" onsubmit="searchPlaces(); return false;" method="post">
@@ -92,7 +71,6 @@
 				</c:forEach>	
 			
 				<button id="javascript_btn1" type="button">역찾기</button>
-				<button type="button" onclick="location.href='/course/search/main'">검색초기화</button>
 				<div id="resultsubway"></div>
 			  
 				<form name="result" method="post" action="<c:url value='/course/search'/>">
@@ -104,24 +82,13 @@
 	        
 			<div id="map" ></div>        
 			<div id="searchResult">
-			
             <div id="courseList">
-            <div id="page"> 
+            <div id="page"> <!--  
             <c:if test="${!empty cList}">
-            <c:if test="${!cList.first}">
-					<div class="previous">
-						<a href="/course/search.do?page=${cList.number-1}&subway=${subway}&x=${x}&y=${y}" class="btn btn-outline-dark float-left">&larr; Previous</a>
-					</div>
-				</c:if>
-				<c:if test="${!cList.last}">
-					<div class="next">
-						<a href="/course/search.do?page=${cList.number+1}&subway=${subway}&x=${x}&y=${y}" class="btn btn-outline-dark float-right">&nbsp;&nbsp;&nbsp;&nbsp;Next &rarr;</a>
-					</div>
-				</c:if>
-            <button type="button" onclick="location.href='/course/detailedSearch.do?page=${cList.number-1}&subway=${subway}&x=${x}&y=${y}&sort=likes'" class="btn btn-outline-dark float-right " >좋아요순</button>
-			<button type="button" onclick="location.href='/course/detailedSearch.do?page=${cList.number-1}&subway=${subway}&x=${x}&y=${y}&sort=writtenDate'" class="btn btn-outline-dark float-right" data-bs-toggle="button" >최신순</button>
-			<button type="button" onclick="location.href='/course/detailedSearch.do?page=${cList.number-1}&subway=${subway}&x=${x}&y=${y}&sort=writtenDateR'" class="btn btn-outline-dark float-right ">오래된순</button>
-            </c:if>
+            <button type="button" onclick="location.href='/course/search.do?size=3&subway=${subway}&x=${x}&y=${y}&sort=likes'" class="btn btn-outline-dark float-right " >좋아요순</button>
+			<button type="button" onclick="location.href='/course/search.do?size=3&subway=${subway}&x=${x}&y=${y}&sort=writtenDate'" class="btn btn-outline-dark float-right" data-bs-toggle="button" >최신순</button>
+			<button type="button" onclick="location.href='/course/search.do?size=3&subway=${subway}&x=${x}&y=${y}&sort=writtenDateR'" class="btn btn-outline-dark float-right ">오래된순</button>
+            </c:if>-->
             </div>
             <c:forEach items="${cList.content}" var="cate">
               <div class="accordion accordion-flush" id="accordionFlushExample">
@@ -222,18 +189,16 @@
               </div>
             </div>
             </c:forEach>
-            <ul class="pager">
-				<c:if test="${!cList.first}">
-					<li class="previous">
-						<a href="/course/detailedSearch.do?size=3&page=${cList.number-1}&taste=${taste}&subway=${subway}&x=${x}&y=${y}">&larr; Newer Posts</a>
-					</li>
+             	<c:if test="${!cList.first}">
+					<div class="previous">
+						<a href="/course/detailedSearch.do?size=3&page=${cList.number-1}&taste=${taste}&subway=${subway}&x=${x}&y=${y}" class="btn btn-outline-dark float-left">&larr; Previous</a>
+					</div>
 				</c:if>
 				<c:if test="${!cList.last}">
-					<li class="next">
-						<a href="/course/detailedSearch.do?size=3&page=${cList.number+1}&taste=${taste}&subway=${subway}&x=${x}&y=${y}">Older Posts &rarr;</a>
-					</li>
+					<div class="next">
+						<a href="/course/detailedSearch.do?size=3&page=${cList.number+1}&taste=${taste}&subway=${subway}&x=${x}&y=${y}" class="btn btn-outline-dark float-right">&nbsp;&nbsp;&nbsp;&nbsp;Next &rarr;</a>
+					</div>
 				</c:if>
-			</ul>
             </div>  
             <!-- <ul id="placesList"></ul>-->
             
@@ -426,22 +391,27 @@
             var polyline;
             var linePath = [], selectedMarker = null; // 클릭한 마커를 담을 변수
             function displayCourse(data0, data1, data2) {
+            	
+            	linePath = [];
             	// 선을 구성하는 좌표 배열입니다. 이 좌표들을 이어서 선을 표시합니다
             	var latlng0; var latlng1; var latlng2;
             	var n = 0;
             	if (data0.length != 1) {
             		var d0 = data0.split(',');
             		latlng0 = new kakao.maps.LatLng(parseFloat(d0[0]), parseFloat(d0[1]));
+            		bounds.extend(latlng0);
             		linePath[0] = latlng0;
             	}
             	if (data1.length != 1) {
             		var d1 = data1.split(',');
             		latlng1 = new kakao.maps.LatLng(parseFloat(d1[0]), parseFloat(d1[1]));
+            		bounds.extend(latlng1);
             		linePath[1] = latlng1;
             	}
             	if (data2.length != 1) {
             		var d2 = data2.split(',');
             		latlng2 = new kakao.maps.LatLng(parseFloat(d2[0]), parseFloat(d2[1]));
+            		bounds.extend(latlng2);
             		linePath[2] = latlng2;
             	}
 
@@ -458,6 +428,9 @@
             	    strokeOpacity: 0.7, // 선의 불투명도 입니다 1에서 0 사이의 값이며 0에 가까울수록 투명합니다
             	    strokeStyle: 'solid' // 선의 스타일입니다
             	});
+            	
+            	//bound
+            	map.setBounds(bounds);
 
             	
             	// 지도에 선을 표시합니다 
@@ -500,7 +473,7 @@
 				var nameEl;
 				if (place.category_group_code == 'SW8') {
                 nameEl = document.getElementById('resultsubway'), 
-                itemStr = '<a href="/course/search.do?size=3&subway=' + subwayName[0] + '&x=' + place.x + '&y=' + place.y + '">' + subwayName[0] +'</a> 주변 코스 입니다.';
+                itemStr = '<a href="/course/search.do?size=3&subway=' + subwayName[0] + '&x=' + place.x + '&y=' + place.y + '">' + subwayName[0] +'</a> 주변 코스 보기';
                 nameEl.innerHTML = itemStr;
 				}
                 return nameEl;
