@@ -318,7 +318,9 @@ function showPopupReport(id){
 						<c:if test="${myScrap == false}">
 							<button formaction="/course/scrap" style="border:0;background-color:white;"><img class="scrapImage" style="width:50px; height:50px;" src="../../img/scrap1.png"/></button>
 						</c:if>
+						<c:if test="${sessionMember.id != course.memberId}">
 						<button type="button" onclick="showPopupReport(${course.courseId});" style="width:15%; height:60px; border:none; border-radius:5px; text-align: center; background-color:#ced4da;">신고하기</button>			
+						</c:if>
 					</c:if>	
 					<c:if test="${sessionMember.check2 != false and sessionMember.id == course.memberId}">
 					<button type="submit" formaction="../update/${course.courseId}" style="width:15%; height:60px; border:none; border-radius:5px; text-align: center; background-color:#ced4da;">수정</button>
