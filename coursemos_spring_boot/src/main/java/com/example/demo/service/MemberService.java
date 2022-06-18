@@ -10,15 +10,12 @@ import javax.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.example.demo.dao.jpa.JpaMemberDao;
 import com.example.demo.domain.Member;
 import com.example.demo.repository.MemberRepository;
 
 @Service
 @Transactional 
 public class MemberService {
-
-	private JpaMemberDao memberDao;
 	
 	@Autowired
 	private MemberRepository memberRepository;
