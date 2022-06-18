@@ -133,6 +133,16 @@ public class CourseController {
 		return "redirect:/course/view/"+course.getCourseId();
 	}
 	
+	@RequestMapping("/list")
+	public ModelAndView courseList() {
+		ModelAndView mav = new ModelAndView("/course/list");
+		
+		List<Course> courses = courseService.getCourseList();
+		mav.addObject("courseList", courses);
+		
+		return mav;
+	}
+	
 	@RequestMapping(value="/view/{courseId}", method=RequestMethod.GET)
 	public ModelAndView viewDetail(@ModelAttribute SessionMember sessionMember, @PathVariable("courseId") int courseId) {
 		ModelAndView mav = new ModelAndView("course/view");

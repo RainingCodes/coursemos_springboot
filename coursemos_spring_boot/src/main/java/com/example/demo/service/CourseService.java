@@ -22,4 +22,5 @@ public interface CourseService {
 //	Page<Course> findCourseW(String subway, Pageable pageable);
 //	Page<Course> findCourseWR(String subway, Pageable pageable);
 //	Page<Course> findCourseL(String subway, Pageable pageable);
+	List<Course> getCourseList();
 }

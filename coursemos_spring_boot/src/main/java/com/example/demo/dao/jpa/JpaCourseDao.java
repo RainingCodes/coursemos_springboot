@@ -11,6 +11,7 @@ import org.springframework.dao.DataAccessException;
 import org.springframework.stereotype.Repository;
 
 import com.example.demo.dao.CourseDao;
+import com.example.demo.domain.Coupon;
 import com.example.demo.domain.Course;
 import com.example.demo.domain.TasteCategory;
 
@@ -36,7 +37,7 @@ public class JpaCourseDao implements CourseDao{
 		
 	}
 	@Override
-	public void deleteCourse(Course course) throws DataAccessException {
+	public void deleteCourse(Course course){
 		em.remove(em.merge(course));
 	}
 
@@ -112,6 +113,13 @@ public class JpaCourseDao implements CourseDao{
                 "SELECT c FROM Course c WHERE c.place1.subway = ?1 AND c.taste =?2");
 				query.setParameter(1, subway);
 				query.setParameter(2, taste);
+        return query.getResultList();
+	}
+
+	@Override
+	public List<Course> getCourseList() throws DataAccessException {
+		TypedQuery<Course> query = em.createQuery(
+                "select s from Course s", Course.class);
         return query.getResultList();
 	}
 

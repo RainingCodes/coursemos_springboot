@@ -26,11 +26,11 @@
 <!-- Navigation-->
 
         <!-- Header-->
-        <header class="bg-dark py-5">
-            <div class="container px-4 px-lg-5 my-5">
-                <div class="text-center text-white">
-                    <h1 class="display-4 fw-bolder">코스 목록</h1>
-                    <p class="lead fw-normal text-white-50 mb-0">나에게 딱 맞는 코스를 찾아보세요 !</p>
+        <header class="py-5">
+            <div class="container">
+                <div class="text-center text-black">
+                    <h3 class="display-4 fw-bolder">코스 목록</h3>
+                    <p class="lead fw-normal text-black-50 mb-0">나에게 딱 맞는 코스를 찾아보세요 !</p>
                 </div>
             </div>
         </header>
@@ -38,32 +38,26 @@
         <section class="py-5">
             <div class="container px-4 px-lg-5 mt-5">
                 <div class="row gx-4 gx-lg-5 row-cols-2 row-cols-md-3 row-cols-xl-4 justify-content-center">
-                    		
-                    		<% for(int i = 0; i < 8; i++){ %>
+	                    <c:forEach var="course" items="${courseList}">
 								<div class="col mb-5">
-									<div class="card h-100">
-										<img class="card-img-top"
-											src="https://dummyimage.com/450x300/dee2e6/6c757d.jpg" alt="..." />
-										
+									<div class="card h-100">										
 										<div class="card-body p-4">
 											<div class="text-center">
-												<h5 class="fw-bolder">코스 이름</h5>
-												(코스 가격)
+												<h6 class="fw-bolder">${course.courseName }</h6>
 											</div>
 										</div>
 										<div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
 											<div class="text-center">
-												<a class="btn btn-outline-dark mt-auto" href="view">자세히 보기</a>
+												<a class="btn btn-outline-dark mt-auto" href="/course/view/${course.courseId }">자세히 보기</a>
 											</div>
 										</div>
 									</div>
 								</div>                 		
-                    		
-                    		<%} %>
+                    	</c:forEach>
+
                             </div>
                     </div>
-                </div>
-            </div>
+                    
         </section>
         <!-- Footer-->
         <footer class="py-5 bg-dark">

@@ -45,6 +45,12 @@ public class CourseServiceImpl implements CourseService{
 	public Course getCourseByCourseId(int courseId) {
 		return courseDao.getCourseByCourseId(courseId);
 	}
+	
+	@Override
+	public List<Course> getCourseList(){
+		return courseDao.getCourseList();
+	}
+	
 	@Override
 	public List<Course> getCourseListByMemberId(Long memberId) {
 		// TODO Auto-generated method stub
