@@ -4,7 +4,7 @@
     <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 	<%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
     <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%> 
-<%@ include file="header/IncludeTopMockUser.jsp"  %>
+<%@ include file="header/IncludeTop.jsp"  %>
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
@@ -39,17 +39,10 @@
 	}
 	#searching {
 		position:absolute;
-        top:320px;
+        top:385px;
         left:200px;
         width:300px;
         height:50px;
-	}
-	#searching {
-		position:absolute;
-        top:200px;
-        left:200px;
-        width:300px;
-        height:250px;
 	}
 	#courseList {
         position:absolute;
