@@ -84,11 +84,11 @@
 			<div id="searchResult">
             <div id="courseList">
             <div id="page"> 
-            <c:if test="${!empty cList}">
-            <button type="button" onclick="location.href='/course/search.do?size=3&subway=${subway}&x=${x}&y=${y}&sort=likes'" class="btn btn-outline-dark float-right " >좋아요순</button>
-			<button type="button" onclick="location.href='/course/search.do?size=3&subway=${subway}&x=${x}&y=${y}&sort=writtenDate'" class="btn btn-outline-dark float-right" data-bs-toggle="button" >최신순</button>
-			<button type="button" onclick="location.href='/course/search.do?size=3&subway=${subway}&x=${x}&y=${y}&sort=writtenDateR'" class="btn btn-outline-dark float-right ">오래된순</button>
-            </c:if>
+            <!--<c:if test="${!empty cList}">
+            <button type="button" onclick="location.href='/course/searchSort.do?size=3&subway=${subway}&x=${x}&y=${y}&sort=likes'" class="btn btn-outline-dark float-right " >좋아요순</button>
+			<button type="button" onclick="location.href='/course/searchSort.do?size=3&subway=${subway}&x=${x}&y=${y}&sort=writtenDate'" class="btn btn-outline-dark float-right" data-bs-toggle="button" >최신순</button>
+			<button type="button" onclick="location.href='/course/searchSort.do?size=3&subway=${subway}&x=${x}&y=${y}&sort=writtenDateR'" class="btn btn-outline-dark float-right ">오래된순</button>
+            </c:if>-->
             </div>
             <c:forEach items="${cList.content}" var="cate">
               <div class="accordion accordion-flush" id="accordionFlushExample">
@@ -126,7 +126,7 @@
 						</c:if>
 					</ul>
                     </div>
-                  <a href="/course/view/${cate.courseId}"><i class="bi bi-info-square"></i></a>
+                  <a href="/course/view/${cate.courseId}"><i class="bi bi-info-square"></i>코스 상세 정보</a>
                   </div>
                 </div>
             </div>
@@ -189,6 +189,7 @@
               </div>
             </div>
             </c:forEach>
+            <c:if test="${!empty cList}">
              	<c:if test="${!cList.first}">
 					<div class="previous">
 						<a href="/course/search.do?size=3&page=${cList.number-1}&subway=${subway}&x=${x}&y=${y}" class="btn btn-outline-dark float-left">&larr; Previous</a>
@@ -199,6 +200,7 @@
 						<a href="/course/search.do?size=3&page=${cList.number+1}&subway=${subway}&x=${x}&y=${y}" class="btn btn-outline-dark float-right">&nbsp;&nbsp;&nbsp;&nbsp;Next &rarr;</a>
 					</div>
 				</c:if>
+			</c:if>
             </div>  
             <!-- <ul id="placesList"></ul>-->
             

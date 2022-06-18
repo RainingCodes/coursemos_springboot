@@ -104,11 +104,10 @@ public class SearchPlaceController {
 		return SEARCH_VIEW;
 	}
 	@RequestMapping("/course/search.do")
-	public String handleRequestTest(
+	public String handleRequest(
 			@RequestParam("subway") String subway,
 			@RequestParam("x") double x,
 			@RequestParam("y") double y,
-			@RequestParam(value="sort", required=false, defaultValue="courseId") String sort,
 			ModelMap model
 			,@PageableDefault(size = 3, sort = "courseId",  direction = Sort.Direction.DESC) Pageable pageable
 			) throws Exception {
@@ -120,7 +119,7 @@ public class SearchPlaceController {
 //		} else {
 //			s = Sort.by(sort).descending();
 //		}
-//		pageable = PageRequest.of(1, 3, s); 
+//		pageable = PageRequest.of(-1, 3, s); 
 		Page<Course> cList = courseService.findByPlace1Subway(subway, pageable);
 		model.put("cList", cList);
 		model.put("subway", subway);
@@ -129,6 +128,34 @@ public class SearchPlaceController {
 		
 		return SEARCH_VIEW;
 	}
+//	@RequestMapping("/course/Sort.do")
+//	public String handleRequestSort(
+//			@RequestParam("subway") String subway,
+//			@RequestParam("x") double x,
+//			@RequestParam("y") double y,
+//			@RequestParam(value="sort", required=false, defaultValue="courseId") String sort,
+//			ModelMap model
+//			,@PageableDefault(size = 3, sort = "courseId",  direction = Sort.Direction.DESC) Pageable pageable
+//			) throws Exception {
+//		List<Taste> tList = referenceData();
+//		model.put("tList", tList);
+//		Page<Course> cList = courseService.findByPlace1SubwayOrderByLikes(subway, pageable);
+////		if (sort.equals("writtenDateR")) {
+////			cList = courseService.findCourseWR(subway, pageable);
+////		} else if (sort.equals("likes")){
+////			cList = courseService.findCourseL(subway, pageable);
+////		} else {
+////			cList = courseService.findCourseW(subway, pageable);
+////		}
+		
+		
+//		model.put("cList", cList);
+//		model.put("subway", subway);
+//		model.put("x", x);
+//		model.put("y", y);
+//		
+//		return SEARCH_VIEW;
+//	}
 	/*
 	@RequestMapping("/course/search.do")
 	public String handleRequest(
