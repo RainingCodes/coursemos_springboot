@@ -88,6 +88,8 @@
 				</c:forEach>	
 				<findSubway>
 				<button id="javascript_btn1" type="button">역찾기</button>
+				<button class="btn btn-primary" onclick="location.href ='/course/search/main'">검색 초기화</button>
+				
 				</findSubway>
 				<div id="resultsubway"></div>
 			  
@@ -333,9 +335,9 @@
             	y = 0;
                 removeMarker();
                 var keyword1 = document.getElementById('keyword1').value;
-                
+                var keyword2= "";
                 if (existTwoSearchForm == true) {
-                	var keyword2 = document.getElementById('keyword2').value;
+                	keyword2 = document.getElementById('keyword2').value;
                 }
                 
                 if (!keyword1.replace(/^\s+|\s+$/g, '')) {
@@ -346,9 +348,11 @@
                 ps.keywordSearch(keyword1, placesSearchCB);
                 key = true;
                 if (existTwoSearchForm == true) {
-                	
-                	ps.keywordSearch(keyword2, placesSearchCB);
-
+                	if (keyword2 == "") {
+                		ps.keywordSearch(keyword1, placesSearchCB);
+                	} else {
+                		ps.keywordSearch(keyword2, placesSearchCB);
+                	}
                 }
                 
                 

@@ -240,7 +240,7 @@
 
             <script>
             var existTwoSearchForm = false;
-
+            var existTwoSearchForm = false;
             const add_Place = () => {
             	const search = document.getElementById("search");
             	const search2 = document.createElement('search2');
@@ -261,6 +261,7 @@
             	search.appendChild(newPlus);
             	existTwoSearchForm = false;
             }	
+           
             var mapContainer;
             var map;
             window.onload = function() {
@@ -286,7 +287,9 @@
                  	map = new kakao.maps.Map(mapContainer, mapOption); 	
             	}
             }
-
+			function start() {
+				
+			}
             function panTo(data) {
                 // 이동할 위도 경도 위치를 생성합니다 
                
@@ -338,9 +341,9 @@
             	y = 0;
                 removeMarker();
                 var keyword1 = document.getElementById('keyword1').value;
-                
+                var keyword2= "";
                 if (existTwoSearchForm == true) {
-                	var keyword2 = document.getElementById('keyword2').value;
+                	keyword2 = document.getElementById('keyword2').value;
                 }
                 
                 if (!keyword1.replace(/^\s+|\s+$/g, '')) {
@@ -351,9 +354,11 @@
                 ps.keywordSearch(keyword1, placesSearchCB);
                 key = true;
                 if (existTwoSearchForm == true) {
-                	
-                	ps.keywordSearch(keyword2, placesSearchCB);
-
+                	if (keyword2 == "") {
+                		ps.keywordSearch(keyword1, placesSearchCB);
+                	} else {
+                		ps.keywordSearch(keyword2, placesSearchCB);
+                	}
                 }
                 
                 
