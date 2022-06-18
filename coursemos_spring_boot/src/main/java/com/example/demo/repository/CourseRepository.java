@@ -17,6 +17,8 @@ public interface CourseRepository extends CrudRepository<Course, Integer> {
 	List<Course> findCourseListByMemberId(Long memberId);
 	Page<Course> findAll(Pageable pageable);
 	Page<Course> findByPlace1Subway(String subway, Pageable pageable);
+	//@Query(value="select c from Course c where c.place1.subway = :subway")
+	//Page<Course> findCourse(@Param("subway")String subway, Pageable pageable);
 	@Query(value="select c from Course c where c.taste = :taste")
 	Page<Course> findCourse1(@Param("taste")String taste, Pageable pageable);
 	@Query(value="select c from Course c where c.place1.subway = :subway and c.taste = :taste")

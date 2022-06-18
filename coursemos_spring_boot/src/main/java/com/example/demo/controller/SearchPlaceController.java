@@ -114,13 +114,13 @@ public class SearchPlaceController {
 			) throws Exception {
 		List<Taste> tList = referenceData();
 		model.put("tList", tList);
-		Sort s;
-		if (sort.equals("writtenDateR")) {
-			s = Sort.by("writtenDate").ascending();
-		} else {
-			s = Sort.by(sort).descending();
-		}
-		pageable = PageRequest.of(1, 3, s); 
+//		Sort s;
+//		if (sort.equals("writtenDateR")) {
+//			s = Sort.by("writtenDate").ascending();
+//		} else {
+//			s = Sort.by(sort).descending();
+//		}
+//		pageable = PageRequest.of(1, 3, s); 
 		Page<Course> cList = courseService.findByPlace1Subway(subway, pageable);
 		model.put("cList", cList);
 		model.put("subway", subway);
