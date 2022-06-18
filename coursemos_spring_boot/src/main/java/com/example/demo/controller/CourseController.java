@@ -105,10 +105,11 @@ public class CourseController {
 		if (course.getPlace3() != null) course.getPlace3().setTaste(course.getTaste());
 		course.setMemberId(sessionMember.getId()); // memberId 임의 설정
 		
-		courseService.insertCourse(course);
-		
 		java.util.Date date = new java.util.Date();
 		long timeInMilliSeconds = date.getTime();
+
+		course.setWrittenDate(new Date(timeInMilliSeconds));
+		courseService.insertCourse(course);
 		
 		Points points = new Points();
 		points.setMemberId(sessionMember.getId());
