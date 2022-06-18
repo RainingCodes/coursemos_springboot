@@ -49,6 +49,9 @@
 	.tooltip:hover .tooltiptext {
 	  visibility: hidden;
 	}
+	hr {
+  		background-color: black;
+	}
 </style>
 </head>
 <body>
