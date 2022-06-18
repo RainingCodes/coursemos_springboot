@@ -178,11 +178,13 @@ public class CourseController {
 	            Company com = companyService.getCompanyByPlaceId(id);
 	            
 	            if (com != null) {
-	               List<Coupon> cou = couponService.getCouponByCompanyId(com.getCompanyId());
-	               for (Coupon c : cou) {
-	            	   MemberCouponButton m = new MemberCouponButton(com.getPlace().getPlaceName(), c);
-	            	   mcb.add(m);
-	               }
+	            	if (com.getAccept() == 1) {
+		               List<Coupon> cou = couponService.getCouponByCompanyId(com.getCompanyId());
+		               for (Coupon c : cou) {
+		            	   MemberCouponButton m = new MemberCouponButton(com.getPlace().getPlaceName(), c);
+		            	   mcb.add(m);
+		               }
+	            	}
 	            }
 	         }
 	      }      
