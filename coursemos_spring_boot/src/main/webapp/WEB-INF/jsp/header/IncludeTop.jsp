@@ -54,7 +54,9 @@
 <body>
 	<table class="top">
 	  <tr>
-	  	<td class="left"></td>
+	  	<td class="left">
+	  		<button class="btn btn-outline-primary" id="viewAllCourse" onclick="location.href='/course/list'">추천코스 둘러보기</button>
+	  	</td>
 	    <td class="logo">
 	        <a href="/"><img alt="로고" src="https://github.com/RainingCodes/img-repository/blob/main/logo.png?raw=true" width="200"></a>
 	    </td>
