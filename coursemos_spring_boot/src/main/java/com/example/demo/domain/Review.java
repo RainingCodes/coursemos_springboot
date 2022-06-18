@@ -48,6 +48,8 @@ public class Review implements Serializable {
 	private int courseId;
 	@Transient
 	private String courseName;
+	@Transient
+	private String nickName;
 	public Review() {
 		this.likes = 0;
 	}

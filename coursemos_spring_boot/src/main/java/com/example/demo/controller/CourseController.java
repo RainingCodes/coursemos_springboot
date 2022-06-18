@@ -187,6 +187,10 @@ public class CourseController {
 	         }
 	      }      
 	      List<Review> reviews = reviewService.findReviewByCourseId(courseId);
+	      for(Review r : reviews) {
+	    	  Member member = memberService.findMemberById(r.getMemberId());
+	    	  r.setNickName(member.getNickName());
+	      }
 	      mav.addObject("reviews", reviews);
 	      mav.addObject("couponList", mcb);
 	      
