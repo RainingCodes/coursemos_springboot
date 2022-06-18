@@ -103,7 +103,7 @@ public class CourseController {
 		course.getPlace1().setTaste(course.getTaste());
 		if (course.getPlace2() != null) course.getPlace2().setTaste(course.getTaste());
 		if (course.getPlace3() != null) course.getPlace3().setTaste(course.getTaste());
-		course.setMemberId(sessionMember.getId()); // memberId 임의 설정
+		course.setMemberId(sessionMember.getId());
 		
 		java.util.Date date = new java.util.Date();
 		long timeInMilliSeconds = date.getTime();

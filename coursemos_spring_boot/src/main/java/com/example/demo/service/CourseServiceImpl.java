@@ -75,13 +75,5 @@ public class CourseServiceImpl implements CourseService{
 	public Page<Course> findCourse2(String subway, String taste, Pageable pageable) {
 		return courseRepository.findCourse2(subway, taste, pageable);
 	}
-
-//	@Override
-//	public Page<Course> findByPlace1SubwayOrderByLikes(String subway, Pageable pageable) {
-//		return courseRepository.findByPlace1SubwayOrderByLikes(subway, pageable);
-//	}
-
-	
-
 	
 }

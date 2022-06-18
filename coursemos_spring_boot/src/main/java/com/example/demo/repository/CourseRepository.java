@@ -17,22 +17,10 @@ public interface CourseRepository extends CrudRepository<Course, Integer> {
 	List<Course> findCourseListByMemberId(Long memberId);
 	Page<Course> findAll(Pageable pageable);
 	Page<Course> findByPlace1Subway(String subway, Pageable pageable);
-	//@Query(value="select c from Course c where c.place1.subway = :subway")
-	//Page<Course> findCourse(@Param("subway")String subway, Pageable pageable);
 	@Query(value="select c from Course c where c.taste = :taste")
 	Page<Course> findCourse1(@Param("taste")String taste, Pageable pageable);
 	@Query(value="select c from Course c where c.place1.subway = :subway and c.taste = :taste")
-	Page<Course> findCourse2(@Param("subway")String subway, @Param("taste")String taste, Pageable pageable);
-//	Page<Course> findByPlace1SubwayOrderByLikes(String subway, Pageable pageable);
-//	Page<Course> findBycourseId(Pageable pageable);
-//	@Query(value="select c from Course c where c.place1.subway = :subway OrderBy c.writtenDate DECS")
-//	Page<Course> findCourseW(String subway, Pageable pageable);
-//	@Query(value="select c from Course c where c.place1.subway = :subway OrderBy c.writtenDate ASC")
-//	Page<Course> findCourseWR(String subway, Pageable pageable);
-//	@Query(value="select c from Course c where c.place1.subway = :subway OrderBy c.likes")
-//	Page<Course> findCourseL(String subway, Pageable pageable);
-	
-	
+	Page<Course> findCourse2(@Param("subway")String subway, @Param("taste")String taste, Pageable pageable);	
 }
 
 

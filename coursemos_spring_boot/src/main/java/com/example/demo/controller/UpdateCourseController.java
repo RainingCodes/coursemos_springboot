@@ -22,9 +22,7 @@ import com.example.demo.service.PlaceService;
 public class UpdateCourseController {
 	@Autowired
 	private CourseService courseService;
-	@Autowired
-	private PlaceService placeService;
-	
+
 	@RequestMapping(value="/update/{courseId}", method=RequestMethod.POST)
 	public ModelAndView updateCourse(@ModelAttribute Course course,  @PathVariable("courseId") int courseId, HttpServletRequest request) {
 		Course updateCourse = courseService.getCourseByCourseId(courseId);
@@ -45,24 +43,6 @@ public class UpdateCourseController {
 
 		
 		System.out.println(course.getPlace2());
-		
-		//		
-//		if (course.getPlace2().getPlaceId() !=null) {
-//			Place place2 = placeService.getPlaceByPlaceId(course.getPlace2().getPlaceId());
-//			System.out.println(place2.toString());
-//			if(place2.getTaste() == null) { // 빈 place는 db에서 삭제
-//				placeService.deletePlace(place2);	
-//				course.setPlace1(new Place());
-//			}
-//		}
-//		
-//		if (course.getPlace3().getPlaceId() !=null) {
-//			Place place3 = placeService.getPlaceByPlaceId(course.getPlace3().getPlaceId());			
-//			if(place3.getTaste() == null) {
-//				placeService.deletePlace(place3);	
-//				course.setPlace2(new Place());
-//			}
-//		}
 
 		courseService.updateCourse(course);
 		
