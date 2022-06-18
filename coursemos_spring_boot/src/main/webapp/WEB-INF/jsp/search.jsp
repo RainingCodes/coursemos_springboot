@@ -34,7 +34,7 @@
     #map {
         position:absolute;
         top:200px;
-        left:250px;
+        left:600px;
         width: 800px;
         height: 600px;
         border: 1px #a8a8a8 solid;
@@ -42,16 +42,9 @@
     .has-search .form-control {
 	    padding-left: 2.375rem;
 	}
-	#searching {
-		position:absolute;
-        top:385px;
-        left:200px;
-        width:300px;
-        height:50px;
-	}
 	#courseList {
         position:absolute;
-        top:420px;
+        top:520px;
         left:200px;
         width:300px;
         height:250px;
