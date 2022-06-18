@@ -2,11 +2,7 @@
 <html xmlns:th="http://www.thymeleaf.org"> 
 <head>
 <meta charset="UTF-8">
-<title>리뷰 작성 완료</title>
-
-
-	<header th:replace="~{thyme/header/header :: #header}"></header>
-
+<title>리뷰 상세 보기</title>
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css">
 </head>
 <style>
@@ -28,11 +24,8 @@ function update (){
    location.href=link;
 }
 function del (){
-		var result = confirm("이 리뷰에 관련된 정보가 다 지워집니다. \n 삭제하시겠습니까?");
-		if(result) {
-			 var link = "/review/delete/"+/*[[${review.reviewId}]]*/ 'null';
-			 location.href=link;
-		} 
+	   var link = "/review/delete/"+/*[[${review.reviewId}]]*/ 'null';
+	   location.href=link;
 	}
 function like (){
 	   var link = "/review/like/"+/*[[${review.reviewId}]]*/ 'null';
@@ -53,6 +46,9 @@ function showPopup(){
 	var link = "/report/review/"+/*[[${session.review.reviewId}]]*/ 'null';
 
 	openWin = window.open(link,"신고 페이지","height=" + height  + ", width=" + width  + ", left="+ popupX + ", top="+ popupY / 2);  
+}
+function closePopup(){
+	window.close();
 }
 /*]]>*/
 </script>
@@ -98,6 +94,9 @@ function showPopup(){
 				<td colspan="2">
 				<button class="btn-primary" type="button" onclick="showPopup();">신고하기</button>
           		</td>
+			</tr>
+			<tr>
+				<td colspan="2"><button type="button" class="btn-primary" onclick="closePopup();">창닫기</button></td>
 			</tr>
 		</table>
 	</div>

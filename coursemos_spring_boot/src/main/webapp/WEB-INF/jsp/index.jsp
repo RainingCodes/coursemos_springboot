@@ -17,5 +17,6 @@
 			<%@ include file="header/IncludeTop.jsp"  %>
 	</c:if> <!-- if 종료 -->
 <%@ include file="search.jsp" %>
+<%@ include file="footer.jsp"  %>	
 </body>
 </html>

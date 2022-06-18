@@ -22,6 +22,9 @@ public class ReviewLikeService {
 	public List<ReviewLike> findReviewLikeByMemberId(Long memberId) {
 		return reviewLikeRepository.findReviewLikeByMemberId(memberId);
 	}
+	public List<ReviewLike> findReviewLikeByReviewId(Long reviewId) {
+		return reviewLikeRepository.findReviewLikeByReviewId(reviewId);
+	}
 	
 	public boolean findReviewLikeByReviewIdMemberId(Long reviewId, Long memberId) {
 		ReviewLike reviewLike = reviewLikeRepository.findReviewLikeByReviewIdAndMemberId(reviewId, memberId);

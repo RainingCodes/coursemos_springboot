@@ -19,14 +19,11 @@ import org.springframework.context.ApplicationContextAware;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.validation.FieldError;
-import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.context.WebApplicationContext;
 import org.springframework.web.multipart.MultipartFile;
@@ -36,11 +33,14 @@ import com.example.demo.domain.Course;
 import com.example.demo.domain.Member;
 import com.example.demo.domain.Points;
 import com.example.demo.domain.Review;
+import com.example.demo.domain.ReviewLike;
+import com.example.demo.domain.ReviewReadableMember;
 import com.example.demo.domain.SessionMember;
 import com.example.demo.service.CourseService;
 import com.example.demo.service.MemberService;
 import com.example.demo.service.PointsService;
 import com.example.demo.service.ReviewLikeService;
+import com.example.demo.service.ReviewReadableMemberService;
 import com.example.demo.service.ReviewService;
 
 import java.util.List;
@@ -57,12 +57,16 @@ public class ReviewController implements ApplicationContextAware{
 	private PointsService pointsService;
 	@Autowired
 	private ReviewService reviewService;
+	
 	@Autowired
 	private MemberService memberService;
 	@Autowired
 	private ReviewLikeService reviewLikeService;
 	@Autowired
 	private CourseService courseService;
+	@Autowired
+	private ReviewReadableMemberService reviewReadableMemberService;
+	
 	
 	@Override
 	public void setApplicationContext(ApplicationContext applicationContext) throws BeansException {
@@ -71,9 +75,6 @@ public class ReviewController implements ApplicationContextAware{
 		this.uploadDir = context.getServletContext().getRealPath(this.uploadDirLocal);
 		System.out.println(this.uploadDir);
 	}
-	
-	
-	
 
 	@RequestMapping(value = "/review/register/{courseId}", method = RequestMethod.GET)
 	public ModelAndView form(HttpSession session, @ModelAttribute SessionMember sessionMember, @PathVariable("courseId") String id) {
@@ -127,6 +128,7 @@ public class ReviewController implements ApplicationContextAware{
 		memberService.save(member);
 		
 		session.setAttribute("sessionMember", sessionMember);
+		reviewReadableMemberService.save(new ReviewReadableMember(review.getMemberId(), review.getReviewId()));
 		return "redirect:/review/registered/" + Long.toString(review.getReviewId());
 	}
 	
@@ -134,6 +136,30 @@ public class ReviewController implements ApplicationContextAware{
 	@RequestMapping(value = "/review/registered/{reviewId}")
 	public ModelAndView viewDetail(@ModelAttribute SessionMember sessionMember, @PathVariable("reviewId") Long id) {
 		ModelAndView mv = new ModelAndView("thyme/review/registered");
+		Review review = reviewService.findReviewById(id);
+		Member member = memberService.findMemberById(review.getMemberId());
+		boolean isWriter = review.getMemberId().equals(sessionMember.getId());
+		boolean like = false;
+		if(!isWriter) {
+			//reviewLike 조회
+			like = reviewLikeService.findReviewLikeByReviewIdMemberId(review.getReviewId(), sessionMember.getId());
+			
+		}
+		Course course = courseService.getCourseByCourseId(review.getCourseId());
+		review.setCourseName(course.getCourseName());
+		mv.addObject("sessionMember", sessionMember);
+		mv.addObject("review", review);
+		mv.addObject("isWriter", isWriter);
+		mv.addObject("like", like); 
+		mv.addObject("writer", member.getNickName());
+
+		return mv;
+	}
+	
+	
+	@RequestMapping(value = "/review/view/{reviewId}")
+	public ModelAndView view(@ModelAttribute SessionMember sessionMember, @PathVariable("reviewId") Long id) {
+		ModelAndView mv = new ModelAndView("thyme/review/view");
 		Review review = reviewService.findReviewById(id);
 		Member member = memberService.findMemberById(review.getMemberId());
 		boolean isWriter = review.getMemberId().equals(sessionMember.getId());
@@ -180,7 +206,6 @@ public class ReviewController implements ApplicationContextAware{
 	public ModelAndView viewList(@PathVariable("courseId") int id, HttpServletResponse response) throws IOException{
 		List<Review> reviews = reviewService.findReviewByCourseId(id);
 		ModelAndView mv = new ModelAndView("review/reviewList");
-
 		return mv;
 	}
 	
@@ -188,8 +213,6 @@ public class ReviewController implements ApplicationContextAware{
 	public ModelAndView myReviewList(@ModelAttribute SessionMember sessionMember, HttpServletResponse response) throws IOException{
 		List<Review> reviews = reviewService.findReviewByMemberId(sessionMember.getId());
 		ModelAndView mv = new ModelAndView("member/reviewList");
-		if (reviews == null) 
-			response.sendError(HttpServletResponse.SC_NOT_FOUND);
 		mv.addObject("reviews", reviews);
 		return mv;
 	}
@@ -198,6 +221,18 @@ public class ReviewController implements ApplicationContextAware{
 	public ModelAndView delete(@ModelAttribute SessionMember sessionMember, @PathVariable("reviewId") Long id) {
 		ModelAndView mv = new ModelAndView("redirect:/review/list");
 		Review review = reviewService.findReviewById(id);
+		List<ReviewLike> rll = reviewLikeService.findReviewLikeByReviewId(id);
+		if(rll != null) {
+			for(ReviewLike rl : rll) {
+				reviewLikeService.delete(rl);
+			}
+		}
+		List<ReviewReadableMember> rrml= reviewReadableMemberService.findReviewReadableMemberByReviewId(id);
+		if(rrml != null) {
+			for(ReviewReadableMember rrm : rrml) {
+				reviewReadableMemberService.delete(rrm);
+			}
+		}
 		reviewService.delete(review);
 		return mv;
 	}

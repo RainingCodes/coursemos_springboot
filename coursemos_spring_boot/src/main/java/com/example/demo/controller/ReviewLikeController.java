@@ -28,7 +28,7 @@ public class ReviewLikeController {
 	@RequestMapping(value = "/review/like/{reviewId}")
 	public  ModelAndView like(@ModelAttribute SessionMember sessionMember, @ModelAttribute Review review, HttpSession session,
 			 @PathVariable("reviewId") Long id) {
-		 ModelAndView mv = new ModelAndView("redirect:/review/registered/" + id);
+		 ModelAndView mv = new ModelAndView("redirect:/review/view/" + id);
 		review.setLikes(review.getLikes() + 1);
 		reviewService.insertReview(review);
 		System.out.println(sessionMember);
@@ -47,6 +47,6 @@ public class ReviewLikeController {
 		reviewLikeService.delete(new ReviewLike(id, sessionMember.getId()));
 		mv.addObject(review);
 		mv.addObject(sessionMember);
-		return "redirect:/review/registered/" + id;
+		return "redirect:/review/view/" + id;
 	}
 }
