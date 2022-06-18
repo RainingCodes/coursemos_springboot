@@ -12,7 +12,7 @@
 <style scoped>
 .search {
         position:absolute;
-        top:80px;
+        top:200px;
         left:200px;
         width:350px;
         height:300px;
@@ -27,7 +27,7 @@
 
     #map {
         position:absolute;
-        top:80px;
+        top:200px;
         left:600px;
         width: 800px;
         height: 600px;
@@ -38,14 +38,14 @@
 	}
 	#courseList {
         position:absolute;
-        top:300px;
+        top:520px;
         left:200px;
         width:300px;
         height:250px;
     }
     #page {
     	position:absolute;
-        top:275px;
+        top:495px;
         left:200px;
         width:200px;
         height:50px;
