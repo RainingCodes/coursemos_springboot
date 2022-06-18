@@ -26,9 +26,9 @@ width: 100%;
 </style>
 <body>
 <div class="admin">
-<a href="/admin/report/course">코스 관리 페이지 이동</a><br>
-<a href="/admin/report/review">리뷰 관리 페이지 이동</a><br>
-<a href="/admin/company">제휴 관리</a>
+<a href="/admin/report/course"><button class="btn btn btn-secondary">코스 관리 페이지 이동</button></a><br>
+<a href="/admin/report/review"><button class="btn btn btn-secondary">리뷰 관리 페이지 이동</button></a><br>
+<a href="/admin/company"><button class="btn btn btn-secondary">제휴 관리</button></a>
 </div>
 </body>
 </html>

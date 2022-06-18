@@ -29,7 +29,7 @@ width: 100%;
 <div class="admin">
 해당 페이지는 관리자가 아니면 접근할 수 없습니다.
     <div>
-      <button onclick="history.back()">Back</button>
+      <button class="btn btn-outline-primary" onclick="history.back()">Back</button>
     </div>
 </div>
 </body>
