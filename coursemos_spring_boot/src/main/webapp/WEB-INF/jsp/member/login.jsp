@@ -38,7 +38,7 @@
 .mt-5, .c {
 	text-align : center;
 }
-.container .box {
+t {
 	display:block;
     border: 2px solid transparent;
     color: #615f5fdd;
@@ -79,7 +79,7 @@ function kakaoLogin() {
 
 <div class="container">
         <div class="body d-md-flex align-items-center justify-content-between">
-            <div class="box-2 d-flex flex-column h-100">
+            <div class="box-2 d-flex flex-column h-100" id="t">
                 <div class="mt-5">
                     <p class="mb-1 h-1">로그인</p>
                     	<!--  <div class="loginBtn"><a href="javascript:kakaoLogin()"><img alt="카카오 로그인" src="../img/kakao_login.png" width=200 height=50></a></div>
@@ -94,4 +94,4 @@ function kakaoLogin() {
                 </div>
             </div>
         </div>
-    </div>
+    </div>	
