@@ -126,7 +126,6 @@
     </c:if>
 	</c:forEach>
 </table>
--->
 </div>
 </body>
 </html>
