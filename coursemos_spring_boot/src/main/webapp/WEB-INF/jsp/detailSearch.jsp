@@ -92,6 +92,7 @@
 				</c:forEach>	
 			
 				<button id="javascript_btn1" type="button">역찾기</button>
+				<button type="button" onclick="location.href='/course/search/main'">검색초기화</button>
 				<div id="resultsubway"></div>
 			  
 				<form name="result" method="post" action="<c:url value='/course/search'/>">
@@ -105,7 +106,23 @@
 			<div id="searchResult">
 			
             <div id="courseList">
-            <div id="page"> </div>
+            <div id="page"> 
+            <c:if test="${!empty cList}">
+            <c:if test="${!cList.first}">
+					<div class="previous">
+						<a href="/course/search.do?page=${cList.number-1}&subway=${subway}&x=${x}&y=${y}" class="btn btn-outline-dark float-left">&larr; Previous</a>
+					</div>
+				</c:if>
+				<c:if test="${!cList.last}">
+					<div class="next">
+						<a href="/course/search.do?page=${cList.number+1}&subway=${subway}&x=${x}&y=${y}" class="btn btn-outline-dark float-right">&nbsp;&nbsp;&nbsp;&nbsp;Next &rarr;</a>
+					</div>
+				</c:if>
+            <button type="button" onclick="location.href='/course/detailedSearch.do?page=${cList.number-1}&subway=${subway}&x=${x}&y=${y}&sort=likes'" class="btn btn-outline-dark float-right " >좋아요순</button>
+			<button type="button" onclick="location.href='/course/detailedSearch.do?page=${cList.number-1}&subway=${subway}&x=${x}&y=${y}&sort=writtenDate'" class="btn btn-outline-dark float-right" data-bs-toggle="button" >최신순</button>
+			<button type="button" onclick="location.href='/course/detailedSearch.do?page=${cList.number-1}&subway=${subway}&x=${x}&y=${y}&sort=writtenDateR'" class="btn btn-outline-dark float-right ">오래된순</button>
+            </c:if>
+            </div>
             <c:forEach items="${cList.content}" var="cate">
               <div class="accordion accordion-flush" id="accordionFlushExample">
                <div class="accordion-item"> 

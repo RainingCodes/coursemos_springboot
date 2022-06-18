@@ -51,16 +51,13 @@ public class CourseServiceImpl implements CourseService{
 		return courseRepository.findCourseListByMemberId(memberId);
 	}
 
-	@Override
-	public List<Course> findBycourseId(int courseId, Sort sort) {
-		return courseRepository.findBycourseId(courseId, sort);
-	}
+
 	public Page<Course> findAll(Pageable pageable) {
 		return courseRepository.findAll(pageable);
 	}
 
-	public Page<Course> findByPlace1_Subway(String subway, Pageable pageable) {
-		return courseRepository.findByPlace1_Subway(subway, pageable);
+	public Page<Course> findByPlace1Subway(String subway, Pageable pageable) {
+		return courseRepository.findByPlace1Subway(subway, pageable);
 	}
 
 	@Override

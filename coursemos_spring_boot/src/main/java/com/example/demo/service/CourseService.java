@@ -14,9 +14,8 @@ public interface CourseService {
 	void updateCourse(Course course);
 	Course getCourseByCourseId(int courseId);
 	List<Course> getCourseListByMemberId(Long memberId);
-	List<Course> findBycourseId(int courseId, Sort sort);
 	Page<Course> findAll(Pageable pageable);
-	Page<Course> findByPlace1_Subway(String subway, Pageable pageable);
+	Page<Course> findByPlace1Subway(String subway, Pageable pageable);
 	Page<Course> findCourse1(String taste, Pageable pageable);
 	Page<Course> findCourse2(String subway, String taste, Pageable pageable);
 }

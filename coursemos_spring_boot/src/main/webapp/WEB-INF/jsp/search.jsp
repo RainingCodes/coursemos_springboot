@@ -53,6 +53,7 @@
 </style>
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.7.1/font/bootstrap-icons.css">
 <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css">    
+
 </head>
 <body>
  <nav class="navbar navbar-expand-md navbar-dark bg-dark fixed-top">
@@ -103,9 +104,14 @@
 	        
 			<div id="map" ></div>        
 			<div id="searchResult">
-			
             <div id="courseList">
-            <div id="page"> </div>
+            <div id="page"> 
+            <c:if test="${!empty cList}">
+            <button type="button" onclick="location.href='/course/search.do?size=3&subway=${subway}&x=${x}&y=${y}&sort=likes'" class="btn btn-outline-dark float-right " >좋아요순</button>
+			<button type="button" onclick="location.href='/course/search.do?size=3&subway=${subway}&x=${x}&y=${y}&sort=writtenDate'" class="btn btn-outline-dark float-right" data-bs-toggle="button" >최신순</button>
+			<button type="button" onclick="location.href='/course/search.do?size=3&subway=${subway}&x=${x}&y=${y}&sort=writtenDateR'" class="btn btn-outline-dark float-right ">오래된순</button>
+            </c:if>
+            </div>
             <c:forEach items="${cList.content}" var="cate">
               <div class="accordion accordion-flush" id="accordionFlushExample">
                <div class="accordion-item"> 
@@ -205,18 +211,16 @@
               </div>
             </div>
             </c:forEach>
-            <ul class="pager">
-				<c:if test="${!cList.first}">
-					<li class="previous">
-						<a href="/course/search.do?size=3&page=${cList.number-1}&subway=${subway}&x=${x}&y=${y}">&larr; Newer Posts</a>
-					</li>
+             	<c:if test="${!cList.first}">
+					<div class="previous">
+						<a href="/course/search.do?size=3&page=${cList.number-1}&subway=${subway}&x=${x}&y=${y}" class="btn btn-outline-dark float-left">&larr; Previous</a>
+					</div>
 				</c:if>
 				<c:if test="${!cList.last}">
-					<li class="next">
-						<a href="/course/search.do?size=3&page=${cList.number+1}&subway=${subway}&x=${x}&y=${y}">Older Posts &rarr;</a>
-					</li>
+					<div class="next">
+						<a href="/course/search.do?size=3&page=${cList.number+1}&subway=${subway}&x=${x}&y=${y}" class="btn btn-outline-dark float-right">&nbsp;&nbsp;&nbsp;&nbsp;Next &rarr;</a>
+					</div>
 				</c:if>
-			</ul>
             </div>  
             <!-- <ul id="placesList"></ul>-->
             
@@ -491,7 +495,7 @@
 				var nameEl;
 				if (place.category_group_code == 'SW8') {
                 nameEl = document.getElementById('resultsubway'), 
-                itemStr = '<a href="/course/search.do?size=3&subway=' + subwayName[0] + '&x=' + place.x + '&y=' + place.y + '">' + subwayName[0] +'</a> 주변 코스 입니다.';
+                itemStr = '<a href="/course/search.do?size=3&subway=' + subwayName[0] + '&x=' + place.x + '&y=' + place.y + '">' + subwayName[0] +'</a> 주변 코스 보기';
                 nameEl.innerHTML = itemStr;
 				}
                 return nameEl;

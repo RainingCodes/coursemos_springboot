@@ -108,13 +108,20 @@ public class SearchPlaceController {
 			@RequestParam("subway") String subway,
 			@RequestParam("x") double x,
 			@RequestParam("y") double y,
-			ModelMap model,
-			@PageableDefault(size = 3, sort = "courseId",  direction = Sort.Direction.DESC) Pageable pageable
+			@RequestParam(value="sort", required=false, defaultValue="courseId") String sort,
+			ModelMap model
+			,@PageableDefault(size = 3, sort = "courseId",  direction = Sort.Direction.DESC) Pageable pageable
 			) throws Exception {
 		List<Taste> tList = referenceData();
 		model.put("tList", tList);
-		Sort sort = Sort.by("courseId").descending();
-		Page<Course> cList = courseService.findByPlace1_Subway(subway, pageable);
+		Sort s;
+		if (sort.equals("writtenDateR")) {
+			s = Sort.by("writtenDate").ascending();
+		} else {
+			s = Sort.by(sort).descending();
+		}
+		pageable = PageRequest.of(1, 3, s); 
+		Page<Course> cList = courseService.findByPlace1Subway(subway, pageable);
 		model.put("cList", cList);
 		model.put("subway", subway);
 		model.put("x", x);
