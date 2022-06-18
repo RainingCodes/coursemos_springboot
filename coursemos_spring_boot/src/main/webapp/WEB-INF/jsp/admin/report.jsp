@@ -26,11 +26,13 @@
 				reviewId
 			</c:if>
 		</th>
+		<th>원본 게시글</th>
+		<th>게시글 삭제, 포인트 회수</th>
 		<th>완료 처리</th>
 	</tr>
 
 	<c:forEach var="list" items="${reportList}">
-	<c:if test="${list.state eq 'F'}">
+	<c:if test="${list.state eq false}">
 	<tr>
 		<td>
 			${list.reportId}
@@ -39,18 +41,45 @@
 			${list.reportCategory}
 		</td>
 		<td>
-			${list.memberId}
+			${list.nickname}
 		</td>
 		<td>
+			${list.id}
+		</td>
+		<td>
+			<c:if test="${list.existPost == true}">
 			<c:if test="${type == 'course'}">
-				${list.courseId}
+	        	<a href='<c:url value="/course/view/${list.id}"/>'>
+	          	<b>이동하기</b></a>
 			</c:if>
 			<c:if test="${type == 'review'}">
-				${list.reviewId}
+				<a href='<c:url value="/review/registered/${list.id}"/>'>
+	          	<b>이동하기</b></a>
 			</c:if>
+			</c:if>
+			<c:if test="${list.existPost == false}">삭제됨</c:if>
 		</td>
 		<td>
-		<a href='<c:url value="/admin/report/course/process">
+			<c:if test="${list.existPost == true}">
+			<c:if test="${type == 'course'}">
+	        	<a href='<c:url value="/admin/report/course/remove">
+						<c:param name="courseId" value="${list.id}"/>
+          				<c:param name="reportId" value="${list.reportId}"/>
+          				</c:url>'>
+          		<b>코스 삭제하기</b></a>
+			</c:if>
+			<c:if test="${type == 'review'}">
+				<a href='<c:url value="/admin/report/review/remove">
+						<c:param name="reviewId" value="${list.id}"/>
+          				<c:param name="reportId" value="${list.reportId}"/>
+          				</c:url>'>
+          		<b>리뷰 삭제하기</b></a>
+			</c:if>		
+			</c:if>
+			<c:if test="${list.existPost == false}">삭제됨</c:if>
+		</td>
+		<td>
+		<a href='<c:url value="/admin/report/*/process">
           	<c:param name="reportId" value="${list.reportId}"/></c:url>'>
           	<b>처리하기</b></a>
 		</td>
@@ -58,19 +87,25 @@
     </c:if>
 	</c:forEach>
 </table>
-        
 <h3>처리 완료</h3>
 <table class="table">
 	<tr>
 		<th>reportId</th>
 		<th>category</th>
 		<th>신고자</th>
-		<th>courseId</th>
+		<th>
+			<c:if test="${type == 'course'}">
+				courseId
+			</c:if>
+			<c:if test="${type == 'review'}">
+				reviewId
+			</c:if>
+		</th>
 		<th>완료 처리</th>
 	</tr>
 
 	<c:forEach var="list" items="${reportList}">
-	<c:if test="${list.state eq 'T'}">
+	<c:if test="${list.state eq true}">
 	<tr>
 		<td>
 			${list.reportId}
@@ -79,10 +114,10 @@
 			${list.reportCategory}
 		</td>
 		<td>
-			${list.memberId}
+			${list.nickname}
 		</td>
 		<td>
-			${list.courseId}
+			${list.id}
 		</td>
 		<td>
 			처리 완료
@@ -91,6 +126,7 @@
     </c:if>
 	</c:forEach>
 </table>
+-->
 </div>
 </body>
 </html>

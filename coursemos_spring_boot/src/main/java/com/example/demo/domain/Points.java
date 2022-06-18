@@ -51,6 +51,10 @@ public class Points implements Serializable{
 				return "리뷰 작성";
 			case 3:
 				return "리뷰 열람";
+			case 4:
+				return "코스 신고 - 포인트 회수";
+			case 5:
+				return "리뷰 신고 - 포인트 회수";
 			default :
 				return null;
 		}
@@ -64,6 +68,10 @@ public class Points implements Serializable{
 			return "+20";
 		case 3:
 			return "-5";
+		case 4 :
+			return "-20";
+		case 5 :
+			return "-20";
 		default :
 			return null;
 	}
