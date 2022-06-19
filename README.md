@@ -2,7 +2,7 @@
 
 ## 사전 설정
 1. chrome에서 실행할 것을 권장합니다.
-2.  main>webapp>myIndex.jsp에서 실행시켜야 합니다.
+2.  main>webapp>index.jsp에서 실행시켜야 합니다.
 
 ## 테스트용 ID/PW
 1. somsom / dongduk
@@ -60,6 +60,6 @@
  3. 관리자가 들어온 신고를 확인하고 신고된
  글을 삭제하고 신고 처리 버튼을 눌러 사용자에게 처리 됐음을 알릴 수 있음
  4. 접수된 제휴를 확인하고 허가하거나 거절할 수 있음
- 
+  
  
  [(01-1)최종보고서.pdf](https://github.com/RainingCodes/coursemos_springboot/files/8934958/01-1.pdf)
